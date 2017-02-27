@@ -7,7 +7,14 @@
 ,"cabinet":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/cabinet.html'"
-	,"shortName":"Кабинет"
+	,"shortName":"Кабінет"
+	,"fa":"fa-user"
+	,"parent":"home"
+}
+,"newDoctor":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/newDoctor.html'"
+	,"shortName":"Зареєструватись"
 	,"fa":"fa-user"
 	,"parent":"home"
 }
