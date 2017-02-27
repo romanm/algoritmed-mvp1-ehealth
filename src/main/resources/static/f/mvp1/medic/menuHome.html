@@ -1,0 +1,58 @@
+<ul class="w3-navbar w3-card-2 w3-light-grey">
+	<li class="w3-hide-medium w3-hide-large w3-opennav w3-right"><a
+		class="w3-hover-black" href="javascript:void(0);"
+		onclick="toggleFunction()" title="Toggle Navigation Menu"> <i
+			class="fa fa-bars"></i>
+	</a></li>
+	<li class="w3-left-align"
+		title="Старт сторінка :: mvp-medic"><a
+		href="{{prevousPath()}}"> <i class="fa fa-arrow-circle-o-right"></i>
+		<i class="fa fa-home" aria-hidden="true"></i>
+	</a></li>
+	<li ng-repeat="(k,v) in config" ng-if="v.parent == 'home'"
+		class="w3-hide-small"
+		ng-class="{'w3-dropdown-hover':config.hasChild('menuHome', k)}"><a
+		ng-class="{'w3-green':menuHomeClicked(k)}" href="/v/{{k}}"> <i
+			ng-if="v.fa" class="fa {{v.fa}}"></i> {{v.shortName}} <i
+			ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
+	</a>
+		<div ng-if="config.hasChild('menuHome', k)"
+			class="w3-dropdown-content w3-white w3-card-4">
+			<a ng-repeat="(k2,v2) in config" ng-if="v2.menuHome == k"
+				href="/v/{{k}}/{{k2}}">{{v2.shortName}}</a>
+		</div></li>
+		<!-- 
+	<li class="w3-hide-small w3-right"><a href="#"
+		class="w3-hover-red"> <i class="fa fa-search"></i>
+	</a></li>
+		 -->
+	<li class="w3-hide-small w3-right w3-dropdown-click "><a href="#"
+	ng-click="loglog=!loglog"
+		class="w3-hover-red"> 
+		{{principal.principal.name}}
+		<i ng-if="principal.principal.name" class="fa fa-sign-out"></i>
+		<i ng-if="!principal.principal.name" class="fa fa-sign-in"></i>
+	</a>
+	
+	<div id="Demo" class="w3-dropdown-content w3-border" style="right: 0"
+		ng-class="{'w3-show':loglog}">
+		<b>Логін діалог</b>
+		<div ng-if="principal.principal.name">
+			<a href="/logout">Вийти з логін</a>
+		</div>
+		<form action="/login" method="post">
+			<div>
+				<label> Ім’я користувача : <input type="text"
+					name="username" />
+				</label>
+			</div>
+			<div>
+				<label> Пароль: <input type="password" name="password" />
+				</label>
+			</div>
+			<div>
+				<input type="submit" value="Увійти" />
+			</div>
+		</form>
+	</div></li>
+</ul>

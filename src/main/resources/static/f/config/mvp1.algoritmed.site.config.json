@@ -1,0 +1,14 @@
+{
+"a":"b"
+,"home":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/home.html'"
+}
+,"cabinet":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/cabinet.html'"
+	,"shortName":"Кабинет"
+	,"fa":"fa-user"
+	,"parent":"home"
+}
+}
