@@ -1,9 +1,6 @@
 function initAll ($http, $scope){
 	console.log('----initAll---------------');
-	
-	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 
-	
 	$http.get('/f/config/mvp1.algoritmed.site.config.json').then(
 		function(response) {
 			$scope.config = response.data;
@@ -24,21 +21,20 @@ function initAll ($http, $scope){
 	$scope.menuHomeClicked = function(k){
 		return k == $scope.pagePath[0];
 	}
-	
+
+	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
+	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
 
 	// for steps path to root
 	$scope.prevousPath = function(){
-		if($scope.pagePath.length==1){
-			if($scope.config){
-				return '/v/' + $scope.config[$scope.pagePath[0]].parent;
-			}
-		}else
-		if($scope.pagePath.length<1){
-			return '/';
+		var previousUrl = '/';
+		if(!$scope.config[$scope.pagePath[0]] 
+		|| 'home' == $scope.config[$scope.pagePath[0]].parent
+		){
+			//root
+		}else{
+			previousUrl = '/v/' + $scope.config[$scope.pagePath[0]].parent;
 		}
-		var pp = $scope.pagePath.slice();
-		pp.pop();
-		var previousUrl = '/v/'+pp.toString().replace(',','/');
 		return previousUrl;
 	}
 

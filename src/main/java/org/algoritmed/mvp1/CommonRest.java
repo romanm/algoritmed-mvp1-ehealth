@@ -29,22 +29,19 @@ public class CommonRest {
 				+ "\n" + map
 				+ "\n" + model
 				);
-		setModelAtribute(model, page1, "ng_app");
-		setModelAtribute(model, page1, "ng_template");
-		setModelAtribute(model, page1, "am_include_js");
-		setModelAtribute(model, page1, "ng_controller");
+		String th_template = (String) setModelAtribute(model, page1, "ng_template");
 		logger.info(" --------- \n"
 				+ "/v/{page1}"
 				+ "\n" + map
 				+ "\n" + model
 				);
-		String th_template = (String) getModelAttribute(page1, "th_template");
 		return th_template;
 	}
 
-	private void setModelAtribute(Model model, String page1, String attribute) {
-		Object ngController = getModelAttribute(page1, attribute);
-		model.addAttribute(attribute, ngController);
+	private Object setModelAtribute(Model model, String page1, String attribute) {
+		Object att = getModelAttribute(page1, attribute);
+		model.addAttribute(attribute, att);
+		return att;
 	}
 
 	private Object getModelAttribute(String page1, String attribute) {

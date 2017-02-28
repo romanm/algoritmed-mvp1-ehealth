@@ -5,7 +5,7 @@
 			class="fa fa-bars"></i>
 	</a></li>
 	<li class="w3-left-align"
-		title="Старт сторінка :: mvp-medic"><a
+		title="До старт сторінки :: mvp-medic"><a
 		href="{{prevousPath()}}"> <i class="fa fa-arrow-circle-o-right"></i>
 		<i class="fa fa-home" aria-hidden="true"></i>
 	</a></li>
@@ -33,26 +33,13 @@
 		<i ng-if="principal.principal.name" class="fa fa-sign-out"></i>
 		<i ng-if="!principal.principal.name" class="fa fa-sign-in"></i>
 	</a>
-	
+
 	<div id="Demo" class="w3-dropdown-content w3-border" style="right: 0"
 		ng-class="{'w3-show':loglog}">
 		<b>Логін діалог</b>
 		<div ng-if="principal.principal.name">
 			<a href="/logout">Вийти з логін</a>
 		</div>
-		<form action="/login" method="post">
-			<div>
-				<label> Ім’я користувача : <input type="text"
-					name="username" />
-				</label>
-			</div>
-			<div>
-				<label> Пароль: <input type="password" name="password" />
-				</label>
-			</div>
-			<div>
-				<input type="submit" value="Увійти" />
-			</div>
-		</form>
+		<div ng-include="'/f/mvp1/medic/loginForm.html'"></div>
 	</div></li>
 </ul>
