@@ -29,7 +29,9 @@ public class CommonRest {
 				+ "\n" + map
 				+ "\n" + model
 				);
-		String th_template = (String) setModelAtribute(model, page1, "ng_template");
+		setModelAtribute(model, page1, "ng_template");
+		String th_template = (String) 
+				setModelAtribute(model, page1, "th_template");
 		logger.info(" --------- \n"
 				+ "/v/{page1}"
 				+ "\n" + map

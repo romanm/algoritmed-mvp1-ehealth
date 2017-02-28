@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+<!-- БД основна -->
+	<bean id="dataSourceDb1" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" primary="true">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="${config.dataSourceDb1.url}" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+	<bean id="db1ParamJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSourceDb1" />
+	</bean>
+	<bean id="db1JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSourceDb1" />
+	</bean>
+
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+				<value>classpath:sql.properties</value>
+			</list>
+		</property>
+		<!-- <property name="ignoreUnresolvablePlaceholders" value="true" /> -->
+	</bean>
+
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+
+</beans>

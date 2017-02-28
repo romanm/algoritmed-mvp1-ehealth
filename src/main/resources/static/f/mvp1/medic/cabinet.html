@@ -1,3 +1,35 @@
 <div class="w3-container">
 	<h2>Робочий кабінет лікаря</h2>
+	<div class="w3-row-padding w3-margin-top">
+		<div class="w3-half">
+			<div class="w3-card-2">
+				<header class="w3-container w3-light-grey w3-tiny">Локальна
+					БД</header>
+				<table class="w3-table w3-striped w3-border w3-hoverable">
+					<thead>
+						<tr class="w3-green">
+							<th>ПІБ</th>
+							<th>Д.н.</th>
+						</tr>
+						<tr>
+							<td><input type="text" ng-model="patient.patient_pib"
+								placeholder="Пошук або новий" ng-change="seekPatient()" /></td>
+							<td>_</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="p in medicPatients">
+							<td>{{p.patient_pib}}</td>
+							<td>{{p.patient_dob}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="w3-half">
+			<div class="w3-card-2">
+				<header class="w3-container w3-light-grey w3-tiny">БД страховки</header>
+			</div>
+		</div>
+	</div>
 </div>

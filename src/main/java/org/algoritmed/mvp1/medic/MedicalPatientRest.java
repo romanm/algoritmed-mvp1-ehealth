@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class MedicalPatientRest {
+	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
 	/**
 	 * JDBC доступ до БД через простий SQL
 	 */
@@ -38,4 +42,24 @@ public class MedicalPatientRest {
 		map.put("medicPatients", medicPatients);
 		return map;
 	}
+	
+	/**
+	 * Пошук пацієнтів в БД загальної медичної страховки
+	 * @return
+	 */
+	@GetMapping(value = "/r/seekPatientFromInsurance/{seekPatient}")
+	public @ResponseBody Map<String, Object>  medicalFromInsurancePatients(@PathVariable String seekPatient) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("seekPatient", seekPatient);
+		logger.info("---------------\n"
+				+ "/r/medicalFromInsurance/patients/{seekPatient} " + map);
+		/*
+		Map<String, Object> insuranceSeekPatient = webClient.getFromUrl(configInsuranceServer + "/r/insurance/seekPatient/"
+				+ seekPatient);
+		logger.info(" ---------------\n " + insuranceSeekPatient);
+		map.put("insurancePatients", insuranceSeekPatient.get("insurancePatients"));
+		 * */
+		return map;
+	}
+
 }

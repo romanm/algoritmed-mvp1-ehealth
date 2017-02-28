@@ -1,0 +1,21 @@
+{
+"a":"b"
+,"home":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/home.html'"
+}
+,"cabinet":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/cabinet.html'"
+	,"shortName":"Кабінет"
+	,"fa":"fa-user"
+	,"parent":"home"
+}
+,"newDoctor":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/newDoctor.html'"
+	,"shortName":"Зареєструватись"
+	,"fa":"fa-sign-in"
+	,"parent":"home"
+}
+}
