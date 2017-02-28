@@ -26,7 +26,7 @@ public class MedicalPatientRest {
 	 * JDBC доступ до БД через простий SQL
 	 */
 	@Autowired
-	protected JdbcTemplate dataSourceDb1;
+	protected JdbcTemplate db1JdbcTemplate;
 	/**
 	 * SQL select для зчитування всіх пацієнтів медіка
 	 */
@@ -38,7 +38,7 @@ public class MedicalPatientRest {
 	@GetMapping(value = "/r/medical/patients")
 	public @ResponseBody Map<String, Object>  patients() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, Object>> medicPatients = dataSourceDb1.queryForList(sqlMedicalSelectPatients);
+		List<Map<String, Object>> medicPatients = db1JdbcTemplate.queryForList(sqlMedicalSelectPatients);
 		map.put("medicPatients", medicPatients);
 		return map;
 	}
