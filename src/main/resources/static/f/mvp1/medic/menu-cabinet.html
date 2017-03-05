@@ -1,0 +1,8 @@
+<ul class="w3-navbar w3-light-grey">
+	<li ng-repeat="(k,v) in config.menuCabinet"><a
+		ng-class="{'w3-green':k==departmentPart||(!departmentPart&&$index==0)}"
+		href="/v/{{k=='queue'?'cabinet':k}}"> <i
+			ng-if="v.fa" class="fa {{v.fa}}"
+			ng-class="{'w3-text-red':k=='personal'}"></i> {{v.shortName}}
+	</a></li>
+</ul>

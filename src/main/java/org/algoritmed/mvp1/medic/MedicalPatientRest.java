@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.algoritmed.mvp1.util.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,8 @@ public class MedicalPatientRest {
 	 */
 	@Autowired
 	protected JdbcTemplate db1JdbcTemplate;
+	@Autowired
+	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 	/**
 	 * SQL select для зчитування всіх пацієнтів медіка
 	 */
@@ -43,6 +47,17 @@ public class MedicalPatientRest {
 		return map;
 	}
 	
+	private @Value("${sql.medical.selectPatientById}") String sqlMedicalSelectPatientById;
+	@GetMapping(value = "/r/medical/patient/{patient_id}")
+	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer patient_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("patient_id", patient_id);
+		logger.info("---------------\n"
+				+ "/r/medical/patient/{patient_id}\n" + map);
+		Map<String, Object> patientById = db1ParamJdbcTemplate.queryForMap(sqlMedicalSelectPatientById, map);
+		map.put("patientById", patientById);
+		return map;
+	}
 	/**
 	 * Пошук пацієнтів в БД загальної медичної страховки
 	 * @return
@@ -54,12 +69,15 @@ public class MedicalPatientRest {
 		logger.info("---------------\n"
 				+ "/r/medicalFromInsurance/patients/{seekPatient} " + map);
 		/*
+		 * */
 		Map<String, Object> insuranceSeekPatient = webClient.getFromUrl(configInsuranceServer + "/r/insurance/seekPatient/"
 				+ seekPatient);
 		logger.info(" ---------------\n " + insuranceSeekPatient);
 		map.put("insurancePatients", insuranceSeekPatient.get("insurancePatients"));
-		 * */
 		return map;
 	}
+
+	private @Autowired WebClient webClient;
+	private @Value("${config.insurance.server}") String configInsuranceServer;
 
 }

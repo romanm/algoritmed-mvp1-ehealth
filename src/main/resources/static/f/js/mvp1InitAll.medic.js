@@ -35,8 +35,7 @@ function initAll ($http, $scope){
 		
 	}
 
-
-	$http.get('/f/config/mvp1.algoritmed.site.config.json').then(
+	$http.get('/f/config/mvp1.algoritmed.medic.config.json').then(
 		function(response) {
 			$scope.config = response.data;
 			console.log($scope.config);

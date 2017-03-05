@@ -1,9 +1,45 @@
 function initAll ($http, $scope){
 	console.log('----initAll---------------');
 
+	$scope.param = parameters;
 	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
 
+	if('protocol' == $scope.pagePath.last()){
+		console.log($scope.param);
+		if($scope.param.hid){
+			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
+			console.log(url);
+			$http.get(url).then(
+					function(response) {
+						console.log(response.data);
+						$scope.protocol = response.data;
+						console.log($scope.protocol);
+					}
+					, function(response) {
+						console.log(response);
+					}
+			);
+		}
+		
+	}
+	if('patient' == $scope.pagePath.last()){
+		console.log($scope.param);
+		if($scope.param.id){
+			var url = '/r/medical/patient/'+$scope.param.id;
+			console.log(url);
+			$http.get(url).then(
+				function(response) {
+					console.log(response.data);
+					$scope.patientById = response.data.patientById;
+					console.log($scope.patientById);
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		}
+	}
 	if('cabinet' == $scope.pagePath.last()){
 		$scope.patient = {'patient_pib':'','patient_address':''};
 
@@ -16,7 +52,6 @@ function initAll ($http, $scope){
 						console.log(response);
 //						$scope.dataInsurancePatients = response.data.insurancePatients;
 						$scope.dataInsurancePatients = response.data;
-						console.log($scope.dataInsurancePatients);
 					}, function(response) {
 						console.log(response);
 					}
@@ -36,8 +71,7 @@ function initAll ($http, $scope){
 		
 	}
 
-
-	$http.get('/f/config/mvp1.algoritmed.site.config.json').then(
+	$http.get('/f/config/mvp1.algoritmed.medic.config.json').then(
 		function(response) {
 			$scope.config = response.data;
 			console.log($scope.config);
@@ -85,3 +119,11 @@ if (!Array.prototype.last){
 	}
 }
 
+var parameters = {};
+if(window.location.search){
+//	$.each(window.location.search.split("?")[1].split("&"), function(index, value){
+	angular.forEach(window.location.search.split("?")[1].split("&"), function(value, index){
+		var par = value.split("=");
+		parameters[par[0]] = par[1];
+	});
+}
