@@ -42,5 +42,13 @@ dependencies {
 
 	compile 'org.webjars:angularjs:1.6.0'
 	compile 'org.webjars:font-awesome:4.7.0'
+	
+	/* Lviv front-end Володимир Вознюк <voznyuk.md@gmail.com>  team*/
+	compile 'org.webjars:foundation:6.2.3'
+	//compile 'org.webjars:bootstrap:4.0.0-alpha.6-1'
+	compile 'org.webjars:bootstrap:3.3.7-1'
+	compile 'org.webjars:polymer:1.6.1'
+	/* END */
+	
 
 }

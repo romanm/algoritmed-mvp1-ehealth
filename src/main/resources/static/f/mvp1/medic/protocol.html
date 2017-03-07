@@ -1,6 +1,9 @@
 <div class="w3-container">
 	<h2>
-		Протокол: <span ng-if="param.hid"> {{protocol.shortName}} </span>
+		Протокол: <span ng-if="param.hid"> 
+		<a href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">
+		{{protocol.shortName}} 
+		</a></span>
 	</h2>
 	<h3>{{protocol.name}}</h3>
 	<h4>Симптоми  (включаючі фактори)</h4>
