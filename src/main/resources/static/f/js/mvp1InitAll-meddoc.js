@@ -3,6 +3,17 @@ function initAll ($http, $scope){
 	initAllServer($http, $scope);
 	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
+	if('code' == $scope.pagePath.last()){
+		console.log('----initAll------code---------');
+		$http.get('/f/config/icpc2/ICPC2-en.json').then(
+				function(response) {
+					$scope.icpc = response.data;
+					console.log($scope.icpc);
+				}, function(response) {
+					console.error(response);
+				}
+			);
+	}
 
 	$http.get('/f/config/mvp1.algoritmed.meddoc.config.json').then(
 		function(response) {

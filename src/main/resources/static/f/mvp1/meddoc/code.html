@@ -1,1 +1,10 @@
-code.html
+<div class="w3-container">
+	<h2>Стандарти кодування</h2>
+	<ul>
+		<li ng-repeat="(k,v) in icpc.group">{{k}}
+			<ul>
+				<li ng-repeat="(k2,v2) in v">{{k2}}:{{v2}}
+			</ul>
+		</li>
+	</ul>
+</div>
