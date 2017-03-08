@@ -1,0 +1,38 @@
+{
+"home":{
+	"th_template":"mvp1-meddoc"
+	,"ng_template":"'/f/mvp1/meddoc/home.html'"
+}
+,"protocol":{
+	"th_template":"mvp1-meddoc"
+	,"ng_template":"'/f/mvp1/meddoc/protocol.html'"
+	,"shortName":"Протоколи"
+	,"fa":"fa-book"
+	,"parent":"home"
+}
+,"code":{
+	"th_template":"mvp1-meddoc"
+	,"ng_template":"'/f/mvp1/meddoc/code.html'"
+	,"shortName":"Кодування"
+	,"fa":"fa-qrcode"
+	,"fa2":"fa-barcode"
+	,"parent":"home"
+}
+,"patient":{
+	"th_template":"mvp1-meddoc"
+	,"ng_template":"'/f/mvp1/medic/patient.html'"
+	,"shortName":"Пацієнт"
+	,"fa":"fa-user"
+	,"parent":"cabinet"
+}
+,"p2rotocol2":{
+	"th_template":"mvp1-meddoc"
+	,"ng_template":"'/f/mvp1/medic/protocol.html'"
+	,"shortName":"Протокол"
+	,"parent":"cabinet"
+}
+,"menuCabinet":{
+	"queue":{"shortName":"Черга"}
+	,"patient":{"shortName":"Прийом"}
+}
+}

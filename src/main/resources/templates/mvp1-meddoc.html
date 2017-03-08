@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html ng-app="mvp1App" ng-controller="Mvp1Ctrl as mvp1Ctrl">
 <title>am-mvp1</title>
-
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet" />
 <link href="/f/w3/w3.css" rel="stylesheet" />
 <script src="/webjars/angularjs/1.6.0/angular.min.js"></script>
 <script src="/webjars/angularjs/1.6.0/angular-sanitize.min.js"></script>
 <script src="/f/js/mvp1InitAllServer.js"></script>
-<script src="/f/js/mvp1InitAll.js"></script>
-<script src="/f/js/mvp1App.js"></script>
+<script src="/f/js/mvp1InitAll-meddoc.js"></script>
+<script src="/f/js/mvp1App-meddoc.js"></script>
 <body>
 	<div ng-include="'/f/mvp1/medic/menuBar.html'"></div>
-	<div ng-include="'/f/mvp1/insurance/home.html'"></div>
+	<div th:attr="ng-include=${ng_template}"></div>
 </body>
 </html>

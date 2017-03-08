@@ -1,0 +1,10 @@
+{
+	"name": "International Classification of Primary Care – 2 nd Edition",
+	"shortName": "ICPC-2 – English",
+	"group": {
+		"A": {
+			"A01": "Pain general/multiple sites"
+			,"A02": "Chills"
+		}
+	}
+}
