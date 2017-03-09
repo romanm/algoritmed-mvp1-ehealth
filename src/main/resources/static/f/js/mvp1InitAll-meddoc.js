@@ -5,6 +5,9 @@ function initAll ($http, $scope){
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
 	if('code' == $scope.pagePath.last()){
 		console.log('----initAll------code---------');
+		$scope.isColor = function(color, key){
+			return $scope.icpc.color[color].indexOf(key) >= 0;
+		}
 		$http.get('/f/config/icpc2/ICPC2-en.json').then(
 				function(response) {
 					$scope.icpc = response.data;

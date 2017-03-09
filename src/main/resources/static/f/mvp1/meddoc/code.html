@@ -1,10 +1,35 @@
 <div class="w3-container">
 	<h2>Стандарти кодування</h2>
-	<ul>
-		<li ng-repeat="(k,v) in icpc.group">{{k}}
-			<ul>
-				<li ng-repeat="(k2,v2) in v">{{k2}}:{{v2}}
+	
+	
+	<div class="w3-row-padding w3-margin-top">
+		<div class="w3-threequarter">
+			<ul class="w3-ul w3-border">
+				<li ng-repeat="(k,v) in icpc.group">
+				<span>
+						{{k}}:{{v.name}} </span>
+					<ul class="w3-ul w3-border w3-hoverable">
+						<li ng-repeat="(k2,v2) in v.subgroup"
+						ng-class="{'w3-yellow w3-hover-grey':isColor('yellow',k2)}"
+						>{{k2}}:{{v2}}
+						
+						{{isColor('yellow',k2)}}
+						
+					</ul></li>
 			</ul>
-		</li>
-	</ul>
+		</div>
+		<div class="w3-quarter">
+			<div class="w3-card-2">
+				<header class="w3-container w3-light-grey w3-tiny">Додаткова
+					інформація по ICPC</header>
+					<ul class="w3-ul w3-border w3-hoverable">
+						<li><a href="/f/mvp1/meddoc/icpc2/ICPC-2-English.pdf">
+								ICPC-2-English.pdf </a></li>
+						<li><a href="/f/mvp1/meddoc/icpc2/0000107.pdf">Marc
+								Jamoulle, Januari 1998</a></li>
+					</ul>
+			</div>
+		</div>
+	</div>
+	
 </div>

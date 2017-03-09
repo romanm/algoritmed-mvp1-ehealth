@@ -1,8 +1,17 @@
 {
 	"name": "International Classification of Primary Care – 2 nd Edition",
 	"shortName": "ICPC-2 – English",
-	"group": {
+	"color":{
+	"yellow":[
+	"A70","A71" ,"A72" ,"A73" ,"A74" ,"A75" ,"A76" ,"A77" ,"A78"
+	]
+	,"cyan":[]
+	,"red":[]
+	}
+	,"group": {
 		"A": {
+		"name":"General and Unspecified"
+		,"subgroup":{
 			"A01": "Pain general/multiple sites"
 			,"A02": "Chills "
 			,"A03": "Fever"
@@ -54,8 +63,11 @@
 			,"A97": "No disease"
 			,"A98": "Health maintenance/prevention"
 			,"A99": "General disease NOS"
+			}
 		}
 		,"B": {
+		"name":"Blood, Blood Forming Organs and Immune Mechanism"
+		,"subgroup":{
 			"B02": "Lymph gland(s) enlarged/painful"
 			,"B04": "Blood symptom/complaint"
 			,"B25": "Fear of aids/HIV"
@@ -82,7 +94,10 @@
 			,"B90": "HIV-infection/aids"
 			,"B99": "Blood/lymph/spleen disease other"
 		}
+		}
 		,"D": {
+		"name":"Digestive"
+		,"subgroup":{
 			"D01": "Abdominal pain/cramps general"
 			,"D02": "Abdominal pain epigastric"
 			,"D03": "Heartburn"
@@ -142,8 +157,10 @@
 			,"D98": "Cholecystitis/cholelithiasis"
 			,"D99": "Disease digestive system, other"
 		}
-		
+		}
 		,"F": {
+		"name":"Eye"
+		,"subgroup":{
 			"F01": "Eye pain"
 			,"F02": "Red eye"
 			,"F03": "Eye discharge"
@@ -180,8 +197,10 @@
 			,"F95": "Strabismus"
 			,"F99": "Eye/adnexa disease, other"
 		}
-		
+		}
 		,"H": {
+				"name":"Ear"
+		,"subgroup":{
 			"H01": "Ear pain/earache"
 			,"H02": "Hearing complaint"
 			,"H03": "Tinnitus, ringing/buzzing ear"
@@ -211,8 +230,10 @@
 			,"H86": "Deafness"
 			,"H99": "Ear/mastoid disease, other"
 		}
-		
+		}
 		,"K": {
+		"name":"Cardiovascular"
+		,"subgroup":{
 			"K01": "Heart pain"
 			,"K02": "Pressure/tightness of heart"
 			,"K03": "Cardiovascular pain NOS"
@@ -255,8 +276,10 @@
 			,"K96": "Haemorrhoids"
 			,"K99": "Cardiovascular disease other"
 		}
-		
+		}
 		,"L": {
+		"name":"Musculoskeletal"
+		,"subgroup":{
 			"L01": "Neck symptom/complain"
 			,"L02": "Back symptom/complaint"
 			,"L03": "Low back symptom/complaint"
@@ -311,8 +334,10 @@
 			,"L98": "Acquired deformity of limb"
 			,"L99": "Musculoskeletal disease, other"
 		}
-		
+		}
 		,"N": {
+		"name":"Neurological"
+		,"subgroup":{
 			"N01": "Headache"
 			,"N03": "Pain face"
 			,"N04": "Restless legs"
@@ -351,8 +376,11 @@
 			,"N95": "Tension headache"
 			,"N99": "Neurological disease, other"
 		}
-		
+		}
 		,"P": {
+				"name":"Psychological"
+		,"subgroup":{
+		
 			"P01": "Feeling anxious/nervous/tense "
 			,"P02": "Acute stress reaction"
 			,"P03": "Feeling depressed"
@@ -397,8 +425,11 @@
 			,"P98": "Psychosis NOS/other"
 			,"P99": "Psychological disorders, other"
 		}
+		}
 		
 		,"R": {
+		"name":"Respiratory"
+		,"subgroup":{
 			"R01": "Pain respiratory system"
 			,"R02": "Shortness of breath/dyspnoea"
 			,"R03": "Wheezing"
@@ -443,8 +474,11 @@
 			,"R98": "Hyperventilation syndrome"
 			,"R99": "Respiratory disease other"
 		}
+		}
 		
 		,"S": {
+				"name":"Skin"
+		,"subgroup":{
 			"S01": "Pain/tenderness of skin "
 			,"S02": "Pruritus"
 			,"S03": "Warts"
@@ -503,8 +537,11 @@
 			,"S97": "Chronic ulcer skin"
 			,"S98": "Urticaria"
 			,"S99": "Skin disease, other"
-		}		
+		}
+		}
 		,"T": {
+		"name":"Endocrine/Metabolic and Nutritional"
+		,"subgroup":{
 			"T01": "Excessive thirst"
 			,"T02": "Excessive appetite"
 			,"T03": "Loss of appetite"
@@ -536,9 +573,13 @@
 			,"T92": "Gout"
 			,"T93": "Lipid disorder"
 			,"T99": "Endocrine/metab/nutrit. dis. other"
-		}		
+		}
+		}
 		
 		,"U": {
+				"name":"Urological"
+		,"subgroup":{
+		
 			"U01": "Dysuria/painful urination"
 			,"U02": "Urinary frequency/urgency"
 			,"U04": "Incontinence urine"
@@ -568,8 +609,11 @@
 			,"U98": "Abnormal urine test NOS"
 			,"U99": "Urinary disease, other"
 		}
+		}
 		
 		,"W": {
+		"name":"Pregnancy, Childbearing, Family Planning"
+		,"subgroup":{
 			"W01": "Question of pregnancy"
 			,"W02": "Fear of pregnancy"
 			,"W03": "Antepartum bleeding"
@@ -610,8 +654,11 @@
 			,"W96": "Complications of puerperium other"
 			,"W99": "Disorder pregnancy/delivery, other"
 		}
+		}
 		
 		,"X": {
+		"name":"Female Genital"
+		,"subgroup":{
 			"X01": "Genital pain female"
 			,"X02": "Menstrual pain"
 			,"X03": "Intermenstrual pain"
@@ -666,7 +713,10 @@
 			,"X92": "Chlamydia infection genital (f)"
 			,"X99": "Genital disease female, other"
 		}
+		}
 		,"Y": {
+		"name":"Male Genital"
+		,"subgroup":{
 			"Y01": "Pain in penis"
 			,"Y02": "Pain in testis/scrotum"
 			,"Y03": "Urethral discharge"
@@ -704,8 +754,11 @@
 			,"Y86": "Hydrocoele"
 			,"Y99": "Genital disease male, other"
 		}
+		}
 		
 		,"Z": {
+		"name":"Social Problems"
+		,"subgroup":{
 			"Z01": "Poverty/financial problem"
 			,"Z02": "Food/water problem"
 			,"Z03": "Housing/neighbourhood problem"
@@ -733,6 +786,7 @@
 			,"Z27": "Fear of a social problem"
 			,"Z28": "Limited function/disability (z)"
 			,"Z29": "Social problem NOS"
-		}		
+		}
+		}
 	}
 }
