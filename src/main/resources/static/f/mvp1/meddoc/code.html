@@ -1,35 +1,43 @@
 <div class="w3-container">
 	<h2>Стандарти кодування</h2>
-	
-	
+
 	<div class="w3-row-padding w3-margin-top">
+		<a href="#" ng-click="icpc2Laguage('ua')">ук</a> | <a href="#"
+			ng-click="icpc2Laguage('en')">en</a>
 		<div class="w3-threequarter">
 			<ul class="w3-ul w3-border">
-				<li ng-repeat="(k,v) in icpc.group">
-				<span>
+				<li ng-repeat="(k,v) in icpc.group"><span>
 						{{k}}:{{v.name}} </span>
 					<ul class="w3-ul w3-border w3-hoverable">
 						<li ng-repeat="(k2,v2) in v.subgroup"
-						ng-class="{'w3-yellow w3-hover-grey':isColor('yellow',k2)}"
-						>{{k2}}:{{v2}}
-						
-						{{isColor('yellow',k2)}}
-						
+							ng-class="{'w3-yellow w3-hover-grey':isColor('yellow',k2)}">{{k2}}:{{v2}}
+
+							{{isColor('yellow',k2)}}
 					</ul></li>
 			</ul>
 		</div>
 		<div class="w3-quarter">
 			<div class="w3-card-2">
 				<header class="w3-container w3-light-grey w3-tiny">Додаткова
-					інформація по ICPC</header>
-					<ul class="w3-ul w3-border w3-hoverable">
-						<li><a href="/f/mvp1/meddoc/icpc2/ICPC-2-English.pdf">
-								ICPC-2-English.pdf </a></li>
-						<li><a href="/f/mvp1/meddoc/icpc2/0000107.pdf">Marc
-								Jamoulle, Januari 1998</a></li>
-					</ul>
+					інформація по ICPC2</header>
+				<ul class="w3-ul w3-border w3-hoverable">
+					<li>Улюблена стаття: <a
+						href="/f/mvp1/meddoc/icpc2/2045-709X-21-4.pdf">Extending
+							ICPC-2 PLUS terminology to develop a classification system
+							specific for the study of chiropractic encounters</a></li>
+					<li><a href="/f/mvp1/meddoc/icpc2/ICPC-2-English.pdf">
+							ICPC-2-English.pdf </a></li>
+					<li><a href="/f/mvp1/meddoc/icpc2/0000107.pdf">Marc
+							Jamoulle, Januari 1998</a></li>
+					<li><a
+						href="/f/mvp1/meddoc/icpc2/ICPC2plus_Developer-2004.pdf">ICPC
+							- 2 PLUS</a>, sidere mens eadem mutato</li>
+					<li><a
+						href="/f/mvp1/meddoc/icpc2/Research_and_Audit_Workshop_2011_Workshop_on_ICPC.pdf">ICPC
+							Structure ...</a>, Wonca</li>
+				</ul>
 			</div>
 		</div>
 	</div>
-	
+
 </div>

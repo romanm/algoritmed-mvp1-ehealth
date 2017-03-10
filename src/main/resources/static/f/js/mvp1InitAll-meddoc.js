@@ -5,10 +5,10 @@ function initAll ($http, $scope){
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
 	if('code' == $scope.pagePath.last()){
 		console.log('----initAll------code---------');
-		$scope.isColor = function(color, key){
-			return $scope.icpc.color[color].indexOf(key) >= 0;
-		}
-		$http.get('/f/config/icpc2/ICPC2-en.json').then(
+		$scope.icpc2Laguage = function(lg){
+			var url = '/f/config/icpc2/ICPC2-'+lg+'.json';
+			console.log(url);
+			$http.get(url).then(
 				function(response) {
 					$scope.icpc = response.data;
 					console.log($scope.icpc);
@@ -16,6 +16,12 @@ function initAll ($http, $scope){
 					console.error(response);
 				}
 			);
+		}
+//		$scope.icpc2Laguage('en');
+		$scope.icpc2Laguage('ua');
+		$scope.isColor = function(color, key){
+			return $scope.icpc.color[color].indexOf(key) >= 0;
+		}
 	}
 
 	$http.get('/f/config/mvp1.algoritmed.meddoc.config.json').then(

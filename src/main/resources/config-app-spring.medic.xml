@@ -29,8 +29,9 @@
 			<!-- 
 				<value>classpath:application.properties</value>
 				<value>classpath:application.meddoc.properties</value>
-			 -->
 				<value>classpath:application.medic.properties</value>
+			 -->
+				<value>classpath:application.properties</value>
 				<value>classpath:sql.properties</value>
 			</list>
 		</property>
