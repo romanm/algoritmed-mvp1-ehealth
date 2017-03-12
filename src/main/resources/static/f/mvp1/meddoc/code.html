@@ -5,24 +5,75 @@
 		<a href="#" ng-click="icpc2Laguage('ua')">ук</a> | <a href="#"
 			ng-click="icpc2Laguage('en')">en</a>
 		<div class="w3-threequarter">
+			<div ng-controller="AccordionCtrl as icpc2GroupAccCtrl"
+			>
+			<!-- 
+			<form class="w3-container w3-card-4 w3-light-grey">
+			 -->
+			<form class="w3-container w3-card-4 w3-light-grey w3-text-green">
+				<div class="w3-row">
+					<div class="w3-half w3-container">
+						<input class="w3-check" type="checkbox" id="m"
+						ng-model="icpc.expandAll"
+							ng-click="icpc2GroupAccCtrl.expandAll(icpc,icpc.group)">
+						<label for="m" class="w3-validate">відкрити всі розділи</label>
+					</div>
+					<div class="w3-half w3-container">
+						<div class="w3-row ">
+							<div class="w3-col" style="width: 25px; margin-top: 8px;">
+								<i class="fa fa-search" ng-if="!(icpc.seekParam.length>0)"></i>
+								<i class="fa fa-search-minus" ng-if="icpc.seekParam.length>0"
+									ng-click="icpc.seekParam=''"></i>
+							</div>
+							<div class="w3-rest">
+								<input class="w3-input w3-animate-input" type="text"
+									placeholder="Пошук" style="width: 30%"
+									ng-model="icpc.seekParam">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+				<div class="w3-accordion w3-light-grey">
+
+					<div ng-repeat="(k,o) in icpc.group">
+						<button ng-click="icpc2GroupAccCtrl.expandItem(o)"
+							class="w3-btn-block w3-white w3-border w3-left-align">
+							<div class="w3-large">{{k}} {{o.name}}</div>
+
+						</button>
+						<div class="w3-accordion-content" ng-class="{'w3-show':o.expand}">
+							<div ng-include="'/f/mvp1/meddoc/icpc2-subgroup.html'"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 
 			<ul class="w3-ul w3-border">
-				<li ng-repeat="(k,v) in icpc.group"><span>
-						{{k}}:{{v.name}} </span>
-					<ul class="w3-ul w3-border w3-hoverable">
-						<li ng-repeat="(k2,v2) in v.subgroup"
-							class="w3-hover-grey w3-{{getColor(k2)}}">{{k2}}:{{v2}}
-						
-					</ul></li>
+				<li ng-repeat="(k,o) in icpc.group"><span>
+						{{k}}:{{o.name}} </span>
+					<div ng-include="'/f/mvp1/meddoc/icpc2-subgroup.html'">
+					</div></li>
 			</ul>
+ -->
+
 		</div>
 		<div class="w3-quarter">
-			<ul class="w3-ul w3-border">
-				<li ng-repeat="(k,v) in icpc.color"
-				class="w3-{{k}}"
-				>
-				{{v.name}}
-				</li>
-			</ul>
+			<div class="w3-card-2">
+				<header class="w3-container w3-light-grey w3-tiny">
+					<input class="w3-check" type="checkbox" id="showPartColor"
+					ng-model="icpc.showPartColor"
+						ng-click="clickShowPartColor()"> <label
+						for="showPartColor" class="w3-validate"> показувати частину</label>
+						{{icpc.showPartColor}}
+				</header>
+				<ul class="w3-ul w3-border">
+					<li ng-repeat="(k,v) in icpc.color" class="w3-{{k}}"><input
+						class="w3-check" type="checkbox" id="color-{{k}}"
+						ng-model="v.showPartColor" ng-click="clickShowPartColor(k)">
+						<label for="color-{{k}}" class="w3-validate">{{v.name}}</label></li>
+				</ul>
+			</div>
 			<div class="w3-card-2">
 				<header class="w3-container w3-light-grey w3-tiny">Додаткова
 					інформація по ICPC2</header>

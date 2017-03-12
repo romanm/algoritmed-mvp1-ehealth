@@ -1,0 +1,6 @@
+<ul class="w3-ul w3-border w3-hoverable">
+	<li ng-repeat="(k2,v2) in o.subgroup" 
+			ng-if="isShowPartColor(k2) && isICPCCodeInSeek(k2,v2)"
+		class="w3-hover-grey w3-{{getColor(k2)}}">{{k2}} : {{v2}}
+	</li>
+</ul>
