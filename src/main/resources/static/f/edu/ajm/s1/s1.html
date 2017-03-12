@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<title>am-mvp1-s1</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<!-- 
+<link href="/webjars/angular-material/1.1.3/angular-material.min.css" rel="stylesheet" />
+<link href="/webjars/angular-material-icons/0.7.1/angular-material-icons.css" rel="stylesheet" />
+<script src="/webjars/angularjs/1.6.0/angular.min.js"></script>
+<script src="/webjars/angularjs/1.6.0/angular-sanitize.min.js"></script>
+<script src="/webjars/angularjs/1.6.0/angular-animate.min.js"></script>
+<script src="/webjars/angularjs/1.6.0/angular-aria.min.js"></script>
+<script src="/webjars/angularjs/1.6.0/angular-messages.min.js"></script>
+<script src="/webjars/angularjs/1.6.0/angular-message-format.min.js"></script>
+<script src="/webjars/angular-material/1.1.3/angular-material.min.js"></script>
+<script src="/webjars/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+ -->
+
+<link href="s1.css" rel="stylesheet" />
+<script src="s1.js"></script>
+
+<body>
+
+	<div ng-controller="AppCtrl" layout="column" ng-cloak=""
+		class="sidenav" ng-app="MyApp">
+		<md-toolbar class="">
+		<div class="md-toolbar-tools">
+
+			<md-button class="md-icon-button" aria-label="Home"
+				ng-click="ctrl.showToolbarMenu($event, ctrl.settings)">
+			<i class="material-icons">home</i>
+			</md-icon> </md-button>
+			<h2>MVP</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" aria-label="More"
+				ng-click="toggleRight()" ng-hide="isOpenRight()"> <i
+				class="material-icons">account_circle</i> </md-button>
+		</div>
+		</md-toolbar>
+		<section layout="row" flex="">
+
+			<md-content flex="" layout-padding="">
+
+			<div layout="row" layout-xs="column" layout-align="center center">
+				<h1>eHealth minimal viable product</h1>
+			</div>
+			<div layout="row" layout-xs="column" layout-align="center center">
+				<md-button class="md-raised" ng-click="toggleRight()"
+					ng-hide="isOpenRight()">Увійти</md-button>
+				<md-button class="md-raised md-warn" ng-click="toggleRight()"
+					ng-hide="isOpenRight()">Зареєструватись</md-button>
+			</div>
+
+
+
+
+
+
+			</md-content>
+
+			<md-sidenav class="md-sidenav-right md-whiteframe-4dp"
+				md-component-id="right"> <md-toolbar
+				class="md-theme-dark">
+			<h1 class="md-toolbar-tools">Вхід</h1>
+			</md-toolbar> <md-content ng-controller="RightCtrl" layout-padding="">
+			<form>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Логін</label> <input ng-model="user.firstName" required>
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Пароль</label> <input ng-model="theMax" required> </md-input-container>
+					<md-button ng-click="close()" class="md-raised md-primary">
+					Увійти </md-button>
+				</div>
+
+			</form>
+			<md-divider></md-divider>
+
+			<h1 class="md-toolbar-tools reg">Реєстрація</h1>
+
+
+			<form name="userForm">
+
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Ім’я</label> <input ng-model="user.firstName" required>
+					</md-input-container>
+
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Прізвище</label> <input ng-model="theMax"> </md-input-container>
+				</div>
+
+				<md-input-container class="md-block"> <label>Адреса</label>
+				<input ng-model="user.address"> </md-input-container>
+
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Місто</label> <input ng-model="user.city"> </md-input-container>
+
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Область</label> <md-select ng-model="user.region">
+					<md-option ng-repeat="region in regions" value="{{region.abbrev}}">
+					{{region.abbrev}} </md-option> </md-select> </md-input-container>
+
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Індекс</label> <input name="postalCode" ng-model=""
+						placeholder="79000" required ng-pattern="/^[0-9]{5}$/"
+						md-maxlength="5">
+
+					<div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+						<div ng-message="required" class="my-message">Введіть будь
+							ласка індекс.</div>
+						<div ng-message="pattern" class="my-message">Ви ввели не
+							вірне значення.</div>
+					</div>
+					</md-input-container>
+				</div>
+
+			</form>
+			<md-button ng-click="close()" class="md-raised md-primary">
+			Зареєструватись </md-button>
+	</div>
+	</md-content>
+
+	</md-content>
+
+	</md-sidenav>
+
+</body>
+</html>
+
+

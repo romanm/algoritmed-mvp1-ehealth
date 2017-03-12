@@ -1,0 +1,13 @@
+
+body, md-content {
+  font-family: 'Titillium Web', sans-serif;
+  background: rgb(63,81,181);
+}
+
+h2 {
+  float: center;
+}
+
+h1 {
+  color: white;
+}
