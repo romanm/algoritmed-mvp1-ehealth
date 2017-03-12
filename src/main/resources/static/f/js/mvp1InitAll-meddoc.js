@@ -19,8 +19,14 @@ function initAll ($http, $scope){
 		}
 //		$scope.icpc2Laguage('en');
 		$scope.icpc2Laguage('ua');
-		$scope.isColor = function(color, key){
-			return $scope.icpc.color[color].indexOf(key) >= 0;
+		$scope.getColor = function(key){
+			var color = 'green';
+			angular.forEach($scope.icpc.color, function(value, colorKey) {
+				if(value.codeList.indexOf(key) >= 0){
+					color = colorKey;
+				}
+			});
+			return color;
 		}
 	}
 

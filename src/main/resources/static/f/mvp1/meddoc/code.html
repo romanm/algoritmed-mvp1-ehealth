@@ -10,13 +10,19 @@
 						{{k}}:{{v.name}} </span>
 					<ul class="w3-ul w3-border w3-hoverable">
 						<li ng-repeat="(k2,v2) in v.subgroup"
-							ng-class="{'w3-yellow w3-hover-grey':isColor('yellow',k2)}">{{k2}}:{{v2}}
-
-							{{isColor('yellow',k2)}}
+							class="w3-hover-grey w3-{{getColor(k2)}}">{{k2}}:{{v2}}
+						
 					</ul></li>
 			</ul>
 		</div>
 		<div class="w3-quarter">
+			<ul class="w3-ul w3-border">
+				<li ng-repeat="(k,v) in icpc.color"
+				class="w3-{{k}}"
+				>
+				{{v.name}}
+				</li>
+			</ul>
 			<div class="w3-card-2">
 				<header class="w3-container w3-light-grey w3-tiny">Додаткова
 					інформація по ICPC2</header>
