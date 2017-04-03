@@ -6,12 +6,61 @@ function expandAll (o, expandO){
 
 function initAll ($http, $scope){
 	console.log('----initAll---------------');
+	initAllAlgoritmed($http, $scope);
 	initAllServer($http, $scope);
-	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
-	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
+	if('protocol' == $scope.pagePath.last()){
+		console.log($scope.param);
+		if($scope.param.hid){
+			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
+			console.log(url);
+			$http.get(url).then(
+				function(response) {
+					console.log(response.data);
+					$scope.protocol = response.data;
+					console.log($scope.protocol);
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		}
+		
+	}
+	else
 	if('code' == $scope.pagePath.last()){
 		console.log('----initAll------code---------');
+//		"preferred":'переважно' ,
+		$scope.codeItemsTitle = {
+		"inclusion":'включно',
+		"exclusion":'виключно' ,
+		"icd10":'мкх10' ,
+		"criteria":'критерії' ,
+		"note":'примітки', 
+		"consider":'розглядати' 
+		};
+		$scope.codeItems = {};
+		$scope.codeItemsEn = {};
 //		$scope.seekParam = '';
+		$scope.openIcPc2SubGroup = function(k2){
+			if($scope.codeItems[k2]){
+				$scope.codeItems[k2].open = !$scope.codeItems[k2].open;
+			}else{
+				var url = '/r/meddoc/openIcPc2SubGroup/' + k2;
+				console.log(url);
+				$http.get(url).then(
+					function(response) {
+						console.log(response.data);
+						$scope.codeItems[k2] = response.data.openIcPc2SubGroup;
+						$scope.codeItemsEn[k2] = response.data.openIcPc2SubGroupEn;
+						$scope.codeItems[k2].open = true;
+						console.log($scope.codeItems[k2]);
+					}
+					, function(response) {
+						console.log(response);
+					}
+				);
+			}
+		}
 		$scope.isICPCCodeInSeek = function(k2,v2){
 			var isInSeek = true;
 			if(k2){
@@ -72,6 +121,11 @@ function initAll ($http, $scope){
 					$scope.icpc.seekParam = '';
 					$scope.icpc.expandAll = true;
 					expandAll($scope.icpc, $scope.icpc.group);
+					$scope.icpc.groupKeys = [];
+					angular.forEach($scope.icpc.group, function(value, key) {
+						this.push(key);
+					}, $scope.icpc.groupKeys);
+					$scope.icpc.groupKeys1 = $scope.icpc.groupKeys.splice(0,9)
 					console.log($scope.icpc);
 				}, function(response) {
 					console.error(response);

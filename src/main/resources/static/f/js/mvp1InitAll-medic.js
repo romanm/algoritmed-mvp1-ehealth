@@ -1,10 +1,7 @@
 function initAll ($http, $scope){
 	console.log('----initAll---------------');
-
-	$scope.param = parameters;
-	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
-	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
-
+	initAllAlgoritmed($http, $scope);
+	initAllServer($http, $scope);
 	if('protocol' == $scope.pagePath.last()){
 		console.log($scope.param);
 		if($scope.param.hid){
@@ -23,6 +20,7 @@ function initAll ($http, $scope){
 		}
 		
 	}
+	else
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
 		if($scope.param.id){
@@ -92,25 +90,4 @@ function initAll ($http, $scope){
 		return k == $scope.pagePath[0];
 	}
 
-}
-
-if (!Array.prototype.last){
-	Array.prototype.last = function(){
-		return this[this.length - 1];
-	}
-	Array.prototype.forLast = function(){
-		return this[this.length - 2];
-	}
-	Array.prototype.forForLast = function(){
-		return this[this.length - 3];
-	}
-}
-
-var parameters = {};
-if(window.location.search){
-//	$.each(window.location.search.split("?")[1].split("&"), function(index, value){
-	angular.forEach(window.location.search.split("?")[1].split("&"), function(value, index){
-		var par = value.split("=");
-		parameters[par[0]] = par[1];
-	});
 }

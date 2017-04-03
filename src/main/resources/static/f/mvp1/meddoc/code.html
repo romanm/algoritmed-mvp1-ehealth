@@ -1,9 +1,13 @@
 <div class="w3-container">
 	<h2>Стандарти кодування</h2>
+	
+	<div ng-include="'/f/mvp1/meddoc/menuCode.html'"></div>
 
 	<div class="w3-row-padding w3-margin-top">
+	<span class="no-print">
 		<a href="#" ng-click="icpc2Laguage('ua')">ук</a> | <a href="#"
 			ng-click="icpc2Laguage('en')">en</a>
+	</span>
 		<div class="w3-threequarter">
 			<div ng-controller="AccordionCtrl as icpc2GroupAccCtrl"
 			>
@@ -34,31 +38,29 @@
 					</div>
 				</div>
 			</form>
-				<div class="w3-accordion w3-light-grey">
-
-					<div ng-repeat="(k,o) in icpc.group">
-						<button ng-click="icpc2GroupAccCtrl.expandItem(o)"
-							class="w3-btn-block w3-white w3-border w3-left-align">
-							<div class="w3-large">{{k}} {{o.name}}</div>
-
-						</button>
-						<div class="w3-accordion-content" ng-class="{'w3-show':o.expand}">
-							<div ng-include="'/f/mvp1/meddoc/icpc2-subgroup.html'"></div>
+				<div class="w3-row">
+					<div class="w3-half">
+						<div class="w3-accordion w3-light-grey">
+							<div ng-repeat="k in icpc.groupKeys1" ng-init="o = icpc.group[k]"
+								ng-include="'/f/mvp1/meddoc/icpc2-group-accItem.html'">
+							</div>
+						</div>
+					</div>
+					<div class="w3-half">
+						<div class="w3-accordion w3-light-grey">
+							<div ng-repeat="k in icpc.groupKeys" ng-init="o = icpc.group[k]"
+								ng-include="'/f/mvp1/meddoc/icpc2-group-accItem.html'"></div>
 						</div>
 					</div>
 				</div>
+				<!-- 
+				<div class="w3-accordion w3-light-grey">
+					<div ng-repeat="(k,o) in icpc.group" ng-include="'/f/mvp1/meddoc/icpc2-group-accItem.html'"></div>
+				</div>
+				 -->
 			</div>
-			<!-- 
-			<ul class="w3-ul w3-border">
-				<li ng-repeat="(k,o) in icpc.group"><span>
-						{{k}}:{{o.name}} </span>
-					<div ng-include="'/f/mvp1/meddoc/icpc2-subgroup.html'">
-					</div></li>
-			</ul>
- -->
-
 		</div>
-		<div class="w3-quarter">
+		<div class="w3-quarter no-print">
 			<div class="w3-card-2">
 				<header class="w3-container w3-light-grey w3-tiny">
 					<input class="w3-check" type="checkbox" id="showPartColor"

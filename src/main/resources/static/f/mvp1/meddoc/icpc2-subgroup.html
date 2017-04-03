@@ -1,6 +1,12 @@
 <ul class="w3-ul w3-border w3-hoverable">
-	<li ng-repeat="(k2,v2) in o.subgroup" 
-			ng-if="isShowPartColor(k2) && isICPCCodeInSeek(k2,v2)"
-		class="w3-hover-grey w3-{{getColor(k2)}}">{{k2}} : {{v2}}
+	<li ng-repeat="(k2,v2) in o.subgroup"
+		ng-if="isShowPartColor(k2) && isICPCCodeInSeek(k2,v2)"
+		class="w3-hover-grey w3-{{getColor(k2)}}">
+		<div ng-click="openIcPc2SubGroup(k2)">{{k2}} : {{v2}}</div>
+		<ul class="w3-ul w3-border w3-light-grey" ng-if="codeItems[k2].open">
+			<li ng-repeat="(k3,v3) in codeItemsTitle" ng-if="codeItemsEn[k2][k3]"><b>{{v3}}:</b>
+				{{codeItems[k2][k3]}} <span ng-if="!codeItems[k2][k3]">
+					{{codeItemsEn[k2][k3]}} </span></li>
+		</ul>
 	</li>
 </ul>

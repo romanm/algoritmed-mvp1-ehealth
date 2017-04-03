@@ -17,6 +17,13 @@
 	,"fa":"fa-sign-in"
 	,"parent":"home"
 }
+,"info":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/info.html'"
+	,"shortName":"Інформація"
+	,"fa":"fa-info"
+	,"parent":"home"
+}
 ,"patient":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/patient.html'"

@@ -7,7 +7,6 @@
 		console.log('---mvp1App-----Mvp1Ctrl--------');
 		initAll($http, $scope);
 	});
-	
 
 	app.controller('AccordionCtrl', function ($scope) {
 		console.log('---AccordionCtrl------------');
