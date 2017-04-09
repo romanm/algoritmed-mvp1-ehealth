@@ -1,6 +1,8 @@
 package org.algoritmed.mvp1.meddoc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -22,6 +24,23 @@ public class MedDocRest {
 	private @Value("${sql.meddoc.openIcPc2SubGroup.en}") String sqlMeddocOpenIcPc2SubGroupEn;
 	private @Value("${sql.meddoc.openIcPc2SubGroup}") String sqlMeddocOpenIcPc2SubGroup;
 
+	String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	int ID_LENGTH = 4;
+
+	@GetMapping(value = "/r/meddoc/amGenerateID")
+	public @ResponseBody List<String> amGenerateID() {
+		ArrayList<String> list = new ArrayList<>();
+		for (int j = 0; j < 10; j++) {
+			String amGenerateID = "";
+			for (int i = 0; i < ID_LENGTH; i++) {
+				int round = (int) Math.round(Math.floor(Math.random() * ALPHABET.length()));
+				amGenerateID += ALPHABET.charAt(round);
+			}
+			if(!list.contains(amGenerateID))
+				list.add(amGenerateID);
+		}
+		return list;
+	}
 	@GetMapping(value = "/r/meddoc/openIcPc2SubGroup/{code}")
 	public @ResponseBody Map<String, Object> openIcPc2SubGroup(@PathVariable String code) {
 		Map<String, Object> map = new HashMap<String, Object>();

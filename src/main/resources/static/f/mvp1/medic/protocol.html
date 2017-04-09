@@ -1,57 +1,6 @@
 <div class="w3-container">
-	<h2>
-		Протокол: <span ng-if="param.hid"> 
-		<a href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">
-		{{protocol.shortName}} 
-		</a></span>
-	</h2>
-	<h3>{{protocol.name}}</h3>
-	<h4>Симптоми  (включаючі фактори)</h4>
-	<ol>
-		<li ng-repeat="incSym in protocol.includeSymptoms">{{incSym}}</li>
-	</ol>
-	<div ng-if="protocol.riskFactors">
-		<h5>Фактори ризику</h5>
-		<ol>
-			<li ng-repeat="incSym in protocol.riskFactors">{{incSym}}</li>
-		</ol>
-	</div>
-	<div ng-if="protocol.labor">
-		<h5>Обстеження лабораторні</h5>
-		<ol>
-			<li ng-repeat="incSym in protocol.labor">{{incSym}}</li>
-		</ol>
-	</div>
-	<div ng-if="protocol.findings">
-		<h5>Обстеження інструментальні</h5>
-		<ol>
-			<li ng-repeat="incSym in protocol.findings">{{incSym}}</li>
-		</ol>
-	</div>
-	<div ng-if="protocol.diffDs">
-		<h5>Діференціальна діагностика</h5>
-		<ul>
-			<li ng-repeat="(k,v) in protocol.diffDs">{{v.name}}
-				<ol>
-					<li ng-repeat="incSym in v.findings">{{incSym}}</li>
-				</ol>
-			</li>
-		</ul>
-	</div>
-	<h4>Лікування</h4>
-	<ol>
-		<li ng-repeat="t in protocol.therapy">{{t}}</li>
-	</ol>
-	<div ng-if="protocol.therapyRegime">
-		<h5>Схеми лікуванн</h5>
-		<ol>
-			<li ng-repeat="incSym in protocol.therapyRegime">{{incSym}}</li>
-		</ol>
-	</div>
-	<h4>Повторний контроль</h4>
-	{{protocol.repeatedControl}}
-	<h4>Госпіталізація (при наявності)</h4>
-	<ol>
-		<li ng-repeat="h in protocol.hospitalizationIf">{{h}}</li>
-	</ol>
+	<div
+		ng-include="'/f/mvp1/meddoc/viewModel/'+protocol.viewModel+'/'+protocol.viewModel+'.html'"></div>
+	<div ng-if="!protocol.viewModel"
+		ng-include="'/f/mvp1/meddoc/viewModel/protocol0.html'"></div>
 </div>

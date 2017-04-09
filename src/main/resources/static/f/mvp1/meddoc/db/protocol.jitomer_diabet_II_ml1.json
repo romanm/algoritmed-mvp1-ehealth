@@ -1,0 +1,38 @@
+{
+"version":"0.0.1"
+,"viewModel":"vm_0_0_1"
+,"name":"Локальный протокол ведения пациентов с сахарным диабетом II типа на уровне ПМСП"
+,"shortName":"Локальный протокол ведения пациентов с сахарным диабетом II типа на уровне ПМСП"
+,"startEventId":"3nL9"
+,"process":{
+ "3nL9":{"type":"task", "name":"Пациент с подозрением на сахарный диабет", "outgoing":["Mr70"]}
+,"aVqk":{"type":"task", "name":"Регистратура (регистратор) амбулатории ОПСМ, ЖЦРБ", "ingoing":["Mr70"], "outgoing":["qRYg"]}
+,"qf1b":{"type":"task", "name":"Врач ОП (семейный врач)", "ingoing":["qRYg"], "outgoing":["qf1b"]}
+,"uJ6z":{"type":"task", "name":"Медицинская сестра, помощник врача ОПСМ", "ingoing":["qf1b"], "outgoing":["RDRl", "qf1b"]}
+,"RDRl":{"type":"task", "name":"Выполнение назначений врача. Организация обследования. Диспансеризация. Профилактическая работа."
+, "ingoing":["uJ6z"]}
+,"Mr70":{"type":"flow", "sourceRef":"3nL9", "targetRef":"aVqk"}
+,"qRYg":{"type":"flow", "sourceRef":"aVqk", "targetRef":"qf1b"}
+,"L63x":{"type":"flow", "sourceRef":"qf1b", "targetRef":"uJ6z"}
+,"Y8fz":{"type":"flow", "sourceRef":"uJ6z", "targetRef":"qf1b"}
+,"R0Go":{"type":"flow", "sourceRef":"uJ6z", "targetRef":"RDRl"}
+}
+,"diagram_01":[
+{"tag":"div","class":"w3-row"
+	,"childs":[
+		{"tag":"div","class":"w3-quarter"
+		}
+		,{"tag":"div","class":"w3-threequarter"
+		,"childs":[
+			{"tag":"div","class":"w3-container w3-card-2 w3-center", "ref":"3nL9"}
+			,{"tag":"div","class":"w3-container w3-center", "ref":"Mr70"}
+			,{"tag":"div","class":"w3-container w3-card-2 w3-center", "ref":"aVqk"}
+			,{"tag":"div","class":"w3-container w3-center", "ref":"qRYg"}
+			,{"tag":"div","class":"w3-container w3-card-2 w3-center", "ref":"qf1b"}
+		]
+		}
+	]
+}
+,{"tag":"div","class":"w3-card-2"}
+]
+}

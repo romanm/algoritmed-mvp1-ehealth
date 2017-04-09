@@ -9,6 +9,18 @@ function initAll ($http, $scope){
 	initAllAlgoritmed($http, $scope);
 	initAllServer($http, $scope);
 	if('protocol' == $scope.pagePath.last()){
+		$scope.amGenerateID = [];
+		$scope.getAmGenerateID = function(){
+			$http.get('/r/meddoc/amGenerateID').then(
+				function(response) {
+					$scope.amGenerateID = $scope.amGenerateID.concat(response.data);
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		};
+		$scope.getAmGenerateID();
 		console.log($scope.param);
 		if($scope.param.hid){
 			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
