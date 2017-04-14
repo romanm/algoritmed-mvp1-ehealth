@@ -1,0 +1,56 @@
+<div class="w3-container">
+<h2>
+<span class="w3-tiny w3-orange">тестування</span>
+Центральний реєстр пацієнтів
+</h2>
+	<div class="w3-row">
+		<div class="w3-third w3-container">
+			<h3>Зчитування пацієнта по ID</h3>
+			<span class="w3-tiny"> {{urlPatient1}} </span>
+			
+			<ul class="w3-ul">
+				<li>{{ehealthapi1.keys.pip}}:
+					{{ehealthapi1.patient.last_name}},
+					{{ehealthapi1.patient.first_name}}
+					{{ehealthapi1.patient.second_name}}</li>
+				<li>{{ehealthapi1.keys.birth_date}}:
+					{{ehealthapi1.patient.birth_date}}</li>
+				<li>{{ehealthapi1.keys.addresses}}:
+					<ul class="w3-ul">
+						<li ng-repeat="adress in ehealthapi1.patient.addresses">
+					{{adress.type}}
+					{{adress.country}}
+					{{adress.area}}
+					{{adress.region}}
+					{{adress.city}}
+					{{adress.street}}
+					{{adress.building}}
+					{{adress.apartment}}
+					{{adress.zip}}
+						
+						</li>
+					</ul>
+
+				</li>
+			</ul>
+			<hr/>
+			<!-- 
+			{{ehealthapi1.patient}}
+			 -->
+		</div>
+		<div class="w3-third w3-container">
+			<h3>Пошук пацієнта</h3>
+			<span class="w3-tiny"> {{urlPatient1seek}} </span>
+			<div class="w3-tiny"> Знайдено: {{ehealthapi1.patientSeek.length}} </div>
+			
+			<div ng-repeat="p in ehealthapi1.patientSeek">{{p.last_name}},
+				{{p.first_name}} {{p.second_name}}</div>
+			<!-- 
+			{{ehealthapi1.patientSeek}}
+			 -->
+		</div>
+		<div class="w3-third w3-container">
+			<h3>Запис пацієнта</h3>
+		</div>
+	</div>
+</div>
