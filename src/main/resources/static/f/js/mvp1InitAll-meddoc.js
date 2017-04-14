@@ -21,15 +21,13 @@ function initAll ($http, $scope){
 			);
 		};
 		$scope.getAmGenerateID();
-		console.log($scope.param);
 		if($scope.param.hid){
 			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
 			console.log(url);
 			$http.get(url).then(
 				function(response) {
-					console.log(response.data);
 					$scope.protocol = response.data;
-					console.log($scope.protocol);
+					initProtocol();
 				}
 				, function(response) {
 					console.log(response);
@@ -164,17 +162,20 @@ function initAll ($http, $scope){
 		}
 	);
 
-}
+	// initProtocol 
+	var initProtocol = function(){
+		console.log('----initProtocol------------');
+		$scope.protocol.init = {'taskList':[]}
+		angular.forEach($scope.protocol.process, function(value, key) {
+			if('task' == value.type){
+				$scope.protocol.init.taskList.push(key)
+			}
+		});
+		console.log($scope.protocol);
+		$scope.taskNumer = function(taskKey){
+			return $scope.protocol.init.taskList.indexOf(taskKey) + 1;
+		}
+	};
+	// initProtocol END
 
-if (!Array.prototype.last){
-	Array.prototype.last = function(){
-		return this[this.length - 1];
-	}
-	Array.prototype.forLast = function(){
-		return this[this.length - 2];
-	}
-	Array.prototype.forForLast = function(){
-		return this[this.length - 3];
-	}
 }
-

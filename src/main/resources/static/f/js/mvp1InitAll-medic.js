@@ -2,20 +2,62 @@ function initAll ($http, $scope){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
 	initAllServer($http, $scope);
+	console.log('----initAll---------------' + $scope.pagePath.last());
+	if('testMvpPatient' == $scope.pagePath.last()){
+		console.log('----initAll---------------' + $scope.pagePath.last());
+		$scope.ehealthapi1 = {
+				"keys":{
+					"pip":"ПІП"
+					,"birth_date":"дата народження"
+					,"addresses":"Адреса"
+				}
+		};
+		console.log($scope.ehealthapi1);
+		$scope.urlPatient1 = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/persons/1';
+		console.log($scope.urlPatient1);
+		$http.get($scope.urlPatient1).then(
+			function(response) {
+				console.log(response.data);
+				$scope.ehealthapi1.patient = response.data.data;
+				console.log($scope.ehealthapi1.patient);
+			}
+			, function(response) {
+				console.log(response);
+			}
+		);
+//		$scope.urlPatient1seek = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/api/persons?first_name=%D0%86%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2';
+		$scope.urlPatient1seek = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/api/persons?first_name=Петро';
+		console.log($scope.urlPatient1seek);
+		$http.get($scope.urlPatient1seek).then(
+			function(response) {
+				console.log(response.data);
+				$scope.ehealthapi1.patientSeek = response.data.data;
+				console.log($scope.ehealthapi1.patientSeek);
+			}
+			, function(response) {
+				console.log(response);
+			}
+		);
+		
+	}else
+	if('testMvpMedic' == $scope.pagePath.last()){
+		console.log('----initAll---------------' + $scope.pagePath.last());
+		
+	}else
 	if('protocol' == $scope.pagePath.last()){
 		console.log($scope.param);
 		if($scope.param.hid){
 			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
 			console.log(url);
 			$http.get(url).then(
-					function(response) {
-						console.log(response.data);
-						$scope.protocol = response.data;
-						console.log($scope.protocol);
-					}
-					, function(response) {
-						console.log(response);
-					}
+				function(response) {
+					console.log(response.data);
+					$scope.protocol = response.data;
+					console.log($scope.protocol);
+				}
+				, function(response) {
+					console.log(response);
+				}
 			);
 		}
 		

@@ -24,6 +24,27 @@
 	,"fa":"fa-info"
 	,"parent":"home"
 }
+,"info-doc":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/info-doc.html'"
+	,"shortName":"Інформація"
+	,"fa":"fa-info"
+	,"parent":"info"
+}
+,"testMvpPatient":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/testMvpPatient.html'"
+	,"shortName":"Центральний реєстр пацієнтів"
+	,"fa":"fa-info"
+	,"parent":"info"
+}
+,"testMvpMedic":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/testMvpMedic.html'"
+	,"shortName":"Центральний реєстр медиків"
+	,"fa":"fa-info"
+	,"parent":"info"
+}
 ,"patient":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/patient.html'"

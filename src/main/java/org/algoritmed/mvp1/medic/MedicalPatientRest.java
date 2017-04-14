@@ -58,6 +58,12 @@ public class MedicalPatientRest {
 		map.put("patientById", patientById);
 		return map;
 	}
+
+	@GetMapping(value = "/r/medical/patient2/{patient_id}")
+	public @ResponseBody Map<String, Object>  patient2(@PathVariable Integer patient_id) {
+		Map<String, Object> map = null;
+		return map;
+	}
 	/**
 	 * Пошук пацієнтів в БД загальної медичної страховки
 	 * @return

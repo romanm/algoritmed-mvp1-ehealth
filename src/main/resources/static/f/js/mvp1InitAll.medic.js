@@ -1,9 +1,11 @@
 function initAll ($http, $scope){
 	console.log('----initAll---------------');
+	console.log('----initAll---------------');
 
 	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
-
+	console.log($scope.pagePath)
+console.log($scope.pagePath.last())
 	if('cabinet' == $scope.pagePath.last()){
 		$scope.patient = {'patient_pib':'','patient_address':''};
 
