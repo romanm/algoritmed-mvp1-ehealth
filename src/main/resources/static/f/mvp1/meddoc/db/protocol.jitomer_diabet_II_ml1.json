@@ -7,20 +7,155 @@
 ,"process":{
  "3nL9":{"type":"task", "name":"Пациент с подозрением на сахарный диабет", "outgoing":["Mr70"]}
 ,"aVqk":{"type":"task", "name":"Регистратура (регистратор) амбулатории ОПСМ, ЖЦРБ", "ingoing":["Mr70"], "outgoing":["qRYg"]}
-,"qf1b":{"type":"task", "name":"Врач ОП (семейный врач)", "ingoing":["qRYg"], "outgoing":["qf1b"]}
-,"uJ6z":{"type":"task", "name":"Медицинская сестра, помощник врача ОПСМ", "ingoing":["qf1b"], "outgoing":["RDRl", "qf1b"]}
+,"qf1b":{"type":"task", "name":"Врач ОП (семейный врач)", "ingoing":["qRYg"], "outgoing":["L63x","jski"]}
+,"uJ6z":{"type":"task", "name":"Медицинская сестра, помощник врача ОПСМ", "ingoing":["L63x"], "outgoing":["R0Go", "Y8fz"]}
 ,"RDRl":{"type":"task", "name":"Выполнение назначений врача. Организация обследования. Диспансеризация. Профилактическая работа."
 , "ingoing":["uJ6z"]}
+,"Rb56":{"type":"task", "name":"Диагностика", "ingoing":["jski"], "outgoing":["gQ9X", "OmHE", "6SAx"]
+	,"list":[
+		{"name":"Сбор жалоб и анамнеза"
+			,"list":[
+				{"name":"жажда"}
+				,{"name":"частое мочеиспускание"}
+				,{"name":"поллакиурия"}
+				,{"name":"быстрая утомляемость"}
+				,{"name":"потеря веса"}
+				,{"name":"зуд в области половых органов"}
+				,{"name":"ухудшение зрения"}
+				,{"name":"рецидивирующая молочница"}
+			]
+		}
+		,{"name":"Выявление факторов риска заболевания и осложнений"
+			,"list":[
+				{"name":"избыточная масса тела"}
+				,{"name":"гиподинамия"}
+				,{"name":"дислипидемия"}
+				,{"name":"курение"}
+				,{"name":"повышенное артериальное давление"}
+			]
+		}
+		,{"name":"Проведение лабораторных исследований"
+			,"list":[
+				{"name":"Уровень глюкозы крови"}
+				,{"name":"Тест толерантности к глюкозе"}
+				,{"name":"Общий холестерин"}
+				,{"name":"ЛПНП"}
+				,{"name":"триглицериды"}
+				,{"name":"Анализ мочи на сахар"}
+				,{"name":"Уровень гликозилированного гемоглобина (HbA 1C )"}
+				,{"name":"Уровень креатенина"}
+				,{"name":"Анализ мочи на микроальбуминурию"}
+				,{"name":"Анализ мочи на протеинурию (>300 мг/сутки)"}
+				,{"name":"УЗИ почек"}
+			]
+		}
+	]
+}
+,"B5wU":{"type":"task", "name":"Ухудшение зрения", "ingoing":["OmHE"], "outgoing":["B1u0"]
+,"list":[
+	{"name":"Наличие факторов риска диабетической ретинопатии"
+		,"list":[
+			{"name":"Плохой контроль уровня глюкозы в крови"}
+			,{"name":"Повышенное АД"}
+			,{"name":"Длительность заболевания"}
+			,{"name":"Микроальбуминурия и протеинурия"}
+			,{"name":"Беременность"}
+			,{"name":"Повышенный уровень триглице - ридов и пониженный гематокрит"}
+			,{"name":"Увеличение количества микро- аневризм сосудов сетчатки"}
+		]
+	}
+	]
+}
+,"6iRY":{"type":"task", "name":"Симптомы поражения почек", "ingoing":["6SAx"], "outgoing":["Z2U6"],"list":[
+	{"name":"Наличие факторов риска диабетической нефропатии"
+		,"list":[
+			{"name":"Гипрегликемия."}
+			,{"name":"Повышенное АД"}
+			,{"name":"Персистирующее выделение мочевого альбумина"}
+			,{"name":"Возраст пациента"}
+			,{"name":"Длительность заболевания"}
+			,{"name":"Наличие ретинопатии"}
+			,{"name":"Курение"}
+			,{"name":"Генетическая предрасположенность"}
+			,{"name":"Повышенный уровень триглицеридов и пониженный гематокрит"}
+			,{"name":"Мужской пол"}
+			,{"name":"Уровень сывороточного гомоцистеина"}
+		]
+	}
+	]
+}
+,"JC6E":{"type":"task", "name":"Поражения ССС при диабете", "ingoing":["nkr5"], "outgoing":["kfLz"],"list":[
+	{"name":"Наличие факторов риска"
+		,"list":[
+			{"name":"Курение"}
+			,{"name":"Дислипидемия"}
+			,{"name":"Повышенное АД"}
+			,{"name":"Гипергликемия."}
+		]
+	}
+	]
+}
+,"jUWM":{"type":"task", "name":"Направление к хирургу", "ingoing":["rEEd"], "outgoing":["5ft4"],"list":[
+	{"name":"Наличие факторов риска"
+		,"list":[
+			{"name":"Курение"}
+			,{"name":"Дислипидемия"}
+			,{"name":"Повышенное АД"}
+			,{"name":"Гипергликемия"}
+			,{"name":"Наличие костной мозоли"}
+			,{"name":"Деформация суставов"}
+			,{"name":"Ампутации в анамнезе"}
+			,{"name":"Язвы н/конечностей в анамнезе"}
+			,{"name":"Микротравматизация"}
+			,{"name":"Мужской пол"}
+		]
+	}
+	]
+}
+,"TmBB":{"type":"task", "name":"Направление к офтальмологу", "ingoing":["B1u0"], "outgoing":[""]
+	,"list":[{"name":"Непрямая офтальмоскопия"}
+			,{"name":"Биомикроскопия со щелевой лампой"}
+	]
+}
+,"bnop":{"type":"task", "name":"Направление к урологу", "ingoing":["Z2U6"], "outgoing":[""]
+	,"list":[{"name":"Определение уровня креатинина"}
+			,{"name":"Определение микроальбуминурии"}
+			,{"name":"протеинурии"}
+			,{"name":"УЗИ почек"}
+	]
+}
+,"D7bM":{"type":"task", "name":"Направление к кардиологу", "ingoing":["kfLz"], "outgoing":[""]
+	,"list":[{"name":"ЭКГ"}
+			,{"name":"Липидограмма"}
+			,{"name":"Контроль АД"}
+	]
+}
+,"yUIu":{"type":"task", "name":"Направление к хирургу", "ingoing":["5ft4"], "outgoing":[""]
+	,"list":[{"name":"Реовазография"}
+			,{"name":"Доплеровское сканирование сосудов"}
+			,{"name":"Термография н/конечностей"}
+	]
+}
 ,"Mr70":{"type":"flow", "sourceRef":"3nL9", "targetRef":"aVqk"}
 ,"qRYg":{"type":"flow", "sourceRef":"aVqk", "targetRef":"qf1b"}
 ,"L63x":{"type":"flow", "sourceRef":"qf1b", "targetRef":"uJ6z"}
-,"Y8fz":{"type":"flow", "sourceRef":"uJ6z", "targetRef":"qf1b"}
 ,"R0Go":{"type":"flow", "sourceRef":"uJ6z", "targetRef":"RDRl"}
+,"Y8fz":{"type":"flow", "sourceRef":"uJ6z", "targetRef":"qf1b"}
+,"jski":{"type":"flow", "sourceRef":"qf1b", "targetRef":"Rb56"}
+,"gQ9X":{"type":"flow", "sourceRef":"Rb56", "targetRef":"qf1b"}
+,"OmHE":{"type":"flow", "sourceRef":"Rb56", "targetRef":"B5wU"}
+,"6SAx":{"type":"flow", "sourceRef":"Rb56", "targetRef":"6iRY"}
+,"nkr5":{"type":"flow", "sourceRef":"Rb56", "targetRef":"JC6E"}
+,"rEEd":{"type":"flow", "sourceRef":"Rb56", "targetRef":"jUWM"}
+,"B1u0":{"type":"flow", "sourceRef":"B5wU", "targetRef":"TmBB"}
+,"Z2U6":{"type":"flow", "sourceRef":"6iRY", "targetRef":"bnop"}
+,"kfLz":{"type":"flow", "sourceRef":"JC6E", "targetRef":"D7bM"}
+,"5ft4":{"type":"flow", "sourceRef":"jUWM", "targetRef":"yUIu"}
 }
 ,"diagram_01":[
 {"class":"w3-row"
 	,"childs":[
-		{"class":"w3-third w3-container  w3-cell w3-cell-bottom"
+		{"class":"w3-third w3-container w3-cell w3-cell-bottom"
 		,"childs":[
 			{"class":"w3-container w3-card-2 w3-center", "ref":"RDRl"}
 			,{"ref":"R0Go" ,"class":"w3-container  w3-center", "arrow":"up"}
@@ -32,18 +167,68 @@
 			{"class":"w3-container w3-card-2 w3-center", "ref":"3nL9"}
 			,{"ref":"Mr70", "class":"w3-container w3-center"}
 			,{"class":"w3-container w3-card-2 w3-center", "ref":"aVqk"}
-			,{"class":"w3-container w3-center", "ref":"qRYg", "targetRefNumer":true}
-			,{"class":"w3-container  w3-cell", "arrow":"left"
+			,{"class":"w3-container w3-center", "ref":"qRYg"}
+			,{"class":"w3-row"
 				,"childs":[
-					{"ref":"L63x" ,"class":"", "arrow":"left", "targetRefNumer":true}
-					,{"ref":"Y8fz" ,"class":"", "arrow":"right", "sourceRefNumer":true}
+					{"class":"w3-col l1 m1 w3-center"
+						,"childs":[
+							{"ref":"L63x", "arrow":"left", "targetRefNumer":true}
+							,{"ref":"Y8fz", "arrow":"right", "sourceRefNumer":true}
+						]
+					}
+					,{"class":"w3-col l11 m11 w3-center w3-card-2", "style":"padding: 20px 0;", "ref":"qf1b"}
 				]
 			}
-			,{"class":"w3-container  w3-cell w3-card-2 w3-center", "ref":"qf1b"}
+			,{"class":"w3-row"
+				,"childs":[
+					{"ref":"jski", "class":"w3-half w3-center"}
+					,{"ref":"gQ9X", "arrow":"up", "class":"w3-half w3-center", "sourceRefNumer":false}
+				]
+			}
 		]
 		}
 	]
 }
-,{"tag":"div","class":"w3-card-2"}
+,{"class":"w3-card-2 w3-container"
+	,"childs":[
+		{"class":"w3-large", "ref":"Rb56"}
+	]
+}
+,{"class":"w3-row"
+	,"childs":[
+		{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"OmHE", "class":"w3-center"}
+				,{"ref":"B5wU", "class":"w3-container w3-card-2 w3-large "}
+				,{"ref":"B1u0", "class":"w3-center"}
+				,{"ref":"TmBB", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"6SAx", "class":"w3-center"}
+				,{"ref":"6iRY", "class":"w3-container w3-card-2 w3-large"}
+				,{"ref":"Z2U6", "class":"w3-center"}
+				,{"ref":"bnop", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"nkr5", "class":"w3-center"}
+				,{"ref":"JC6E", "class":"w3-container w3-card-2 w3-large"}
+				,{"ref":"kfLz", "class":"w3-center"}
+				,{"ref":"D7bM", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"rEEd", "class":"w3-center"}
+				,{"ref":"jUWM", "class":"w3-container w3-card-2 w3-large"}
+				,{"ref":"5ft4", "class":"w3-center"}
+				,{"ref":"yUIu", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+	]
+}
 ]
 }

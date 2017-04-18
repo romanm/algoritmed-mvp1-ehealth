@@ -1,0 +1,35 @@
+<div ng-switch-when="task">
+	<div class="w3-center">
+		<span class="w3-tiny"> {{taskNumer(v.ref)}} </span>
+		{{protocol.process[v.ref].name}}
+	</div>
+	<div ng-if="protocol.process[v.ref].list" class="w3-medium">
+		<ul class="w3-ul " ng-init="vList = protocol.process[v.ref].list">
+			<li ng-repeat="l in vList"><span class="w3-left"> </span>
+				{{l.name}}<span ng-if="l.list" class="am-list w3-hoverable">: <span
+					ng-repeat="l2 in l.list"> <span>{{l2.name}}</span>{{$last?'.':','}} </span>
+			</span></li>
+		</ul>
+	</div>
+</div>
+<div ng-switch-when="flow" class="w3-xlarge"
+	title="{{taskNumer(protocol.process[v.ref].sourceRef)
+	}}->{{taskNumer(protocol.process[v.ref].targetRef)}}"
+	ng-switch="v.arrow">
+	<span class="w3-tiny" ng-if="v.targetRefNumer && 'left' == v.arrow">
+		{{taskNumer(protocol.process[v.ref].targetRef)}} </span> <span
+		class="w3-tiny" ng-if="v.sourceRefNumer">
+		{{taskNumer(protocol.process[v.ref].sourceRef)}} </span> <span
+		ng-switch-when="right">⇨</span> <span ng-switch-when="left">⇦</span><span
+		ng-switch-when="up">⇧</span> <span ng-switch-default>⇩</span> <span
+		class="w3-tiny" ng-if="v.targetRefNumer && 'left' != v.arrow">
+		{{taskNumer(protocol.process[v.ref].targetRef)}} </span>
+</div>
+
+<div ng-repeat="v2 in v.childs" ng-init="i=$index; v=v2;"
+title="{{v2.class}}-{{v2.style}}"
+	style="{{v2.style}}"
+	ng-class="v2.class"
+	ng-switch="protocol.process[v2.ref].type"
+	ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/child_block_1.html'">
+</div>

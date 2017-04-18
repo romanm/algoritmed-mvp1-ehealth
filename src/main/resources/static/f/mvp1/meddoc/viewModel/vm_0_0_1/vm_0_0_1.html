@@ -6,64 +6,44 @@
 		href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">модель даних</a>
 </div>
 
-<div ng-repeat="v1 in protocol.diagram_01" ng-init="i1=$index">
-	<div ng-class="v1.class">
-		<div ng-repeat="v2 in v1.childs" ng-class="v2.class"
-			ng-init="i2=$index">
-			<div ng-repeat="v3 in v2.childs" ng-class="v3.class"
-				ng-init="i3=$index" ng-switch="protocol.process[v3.ref].type">
-				<div ng-switch-when="task">
-					<span class="w3-tiny"> {{taskNumer(v3.ref)}} </span>
-					{{protocol.process[v3.ref].name}}
-				</div>
-				<div ng-switch-when="flow" class="w3-xlarge"
-					title="{{taskNumer(protocol.process[v3.ref].sourceRef)}}->{{taskNumer(protocol.process[v3.ref].targetRef)}}"
-					ng-switch="v3.arrow">
-					<span ng-switch-when="left">⇦</span><span ng-switch-when="up">⇧</span> <span ng-switch-default>⇩</span>
-					<span class="w3-tiny" ng-if="v3.targetRefNumer">
-						{{taskNumer(protocol.process[v3.ref].targetRef)}} </span>
-				</div>
-				<div ng-repeat="v4 in v3.childs" ng-init="i4=$index"
-				ng-switch="protocol.process[v4.ref].type"
-				>
-					<div ng-switch-when="flow" class="w3-xlarge"
-						title="{{taskNumer(protocol.process[v4.ref].sourceRef)}}->{{taskNumer(protocol.process[v4.ref].targetRef)}}"
-						ng-switch="v4.arrow">
-						<span class="w3-tiny"
-							ng-if="v4.targetRefNumer && 'left' == v4.arrow">
-							{{taskNumer(protocol.process[v4.ref].targetRef)}} </span>
-						<span class="w3-tiny"
-							ng-if="v4.sourceRefNumer">
-							{{taskNumer(protocol.process[v4.ref].sourceRef)}} </span>
-						<span ng-switch-when="right">⇨</span>
-						<span ng-switch-when="left">⇦</span><span ng-switch-when="up">⇧</span>
-						<span ng-switch-default>⇩</span> <span class="w3-tiny"
-							ng-if="v4.targetRefNumer && 'left' != v4.arrow"">
-							{{taskNumer(protocol.process[v4.ref].targetRef)}} </span>
-					</div>
-				</div>
-			</div>
-			<span ng-if="!v2.childs">-{{i1}}-{{i2}}-</span>
-		</div>
-	</div>
-	<span ng-if="!v1.childs">-{{i1}}-</span>
+<div ng-repeat="v1 in protocol.diagram_01" ng-init="i=$index; v=v1;"
+	style="{{v1.style}}"
+	ng-class="v1.class" ng-switch="protocol.process[v1.ref].type"
+	ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/child_block_1.html'">
 </div>
 <hr/>
-Технічна частина для розробника
-<div>
 {{amGenerateID}}
-	<span>⇦</span> <span>⇨</span> <span>⇧</span> <span>⇩</span> | <span
-		class="w3-small">⇦</span> <span class="w3-xlarge">⇨</span> <span
-		class="w3-xxlarge">⇧</span> <span class="w3-xxxlarge">⇩</span>
-		<span class="w3-jumbo">⇦</span>
+<h1>
+Технічна частина для розробника
+</h1>
+<div class="w3-row">
+	<div class="w3-col l1 m1 w3-center">
+		<p>50px</p>
+		<p>50px</p>
+	</div>
+	<div class="w3-col l11 m11 w3-center w3-card-2">
+		<p>rest</p>
+	</div>
+</div>
+<div class="w3-row">
+	<div class="w3-col w3-center w3-dark-grey w3-text-light-grey"
+		style="width: 50px">
+		<p>50px</p>
+	</div>
+	<div class="w3-rest w3-green w3-center w3-text-light-grey">
+		<p>rest</p>
+	</div>
+</div>
+<div>
+	<span>⇦</span> <span>⇨</span> <span>⇧</span> <span>⇩</span>
+	| <span class="w3-small">⇦</span> <span class="w3-xlarge">⇨</span> <span
+		class="w3-xxlarge">⇧</span> <span class="w3-xxxlarge">⇩</span> <span
+		class="w3-jumbo">⇦</span>
 </div>
 
 <div ng-repeat="(k,v) in protocol.process" ng-switch="v.type">
 	<div ng-switch-when="task">
-		<span class="w3-tiny"> 
-		{{taskNumer(k)}})
-		
-		{{k}}: </span> {{v.name}}
+		<span class="w3-tiny"> {{taskNumer(k)}}) {{k}}: </span> {{v.name}}
 	</div>
 	<div ng-switch-when="flow">{{v.sourceRef}} -> {{v.targetRef}}</div>
 </div>
