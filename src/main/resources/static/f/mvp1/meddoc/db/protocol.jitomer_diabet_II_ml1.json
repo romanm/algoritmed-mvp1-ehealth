@@ -112,30 +112,74 @@
 	}
 	]
 }
-,"TmBB":{"type":"task", "name":"Направление к офтальмологу", "ingoing":["B1u0"], "outgoing":[""]
+,"TmBB":{"type":"task", "name":"Направление к офтальмологу", "ingoing":["B1u0"], "outgoing":["ymPh"]
 	,"list":[{"name":"Непрямая офтальмоскопия"}
 			,{"name":"Биомикроскопия со щелевой лампой"}
 	]
 }
-,"bnop":{"type":"task", "name":"Направление к урологу", "ingoing":["Z2U6"], "outgoing":[""]
+,"bnop":{"type":"task", "name":"Направление к урологу", "ingoing":["Z2U6"], "outgoing":["vnLC"]
 	,"list":[{"name":"Определение уровня креатинина"}
 			,{"name":"Определение микроальбуминурии"}
 			,{"name":"протеинурии"}
 			,{"name":"УЗИ почек"}
 	]
 }
-,"D7bM":{"type":"task", "name":"Направление к кардиологу", "ingoing":["kfLz"], "outgoing":[""]
+,"D7bM":{"type":"task", "name":"Направление к кардиологу", "ingoing":["kfLz"], "outgoing":["K76s"]
 	,"list":[{"name":"ЭКГ"}
 			,{"name":"Липидограмма"}
 			,{"name":"Контроль АД"}
 	]
 }
-,"yUIu":{"type":"task", "name":"Направление к хирургу", "ingoing":["5ft4"], "outgoing":[""]
+,"yUIu":{"type":"task", "name":"Направление к хирургу", "ingoing":["5ft4"], "outgoing":["NbLr"]
 	,"list":[{"name":"Реовазография"}
 			,{"name":"Доплеровское сканирование сосудов"}
 			,{"name":"Термография н/конечностей"}
 	]
 }
+,"qSUB":{"type":"task", "name":"Осмотр эндокринолога", "ingoing":["ymPh","vnLC","K76s","NbLr"], "outgoing":["qGXY"] 
+	,"titleNote":"(при необходимости – назначение и подбор инсулинотерапии, коррекция медикаментозного лечения)"
+}
+,"w2sO":{"type":"task", "name":"Лечение", "ingoing":["qGXY"], "outgoing":[""]
+	,"list":[
+		{"name":"Изменение образа жизни пациента","list":[
+				{"name":"Отказ от курения (стимулирование пациента к прекращению курения, помощь пациенту – применение никотино-замещающей терапии (для курильщиков выкуривающих более 15 сигарет в день – длительность лечения 8 недель), лечение бупропионом (под контролем АД)"}
+				,{"name":"Подбор физической активности и упражнений (физические упражнения и нагрузки должны выполняться регулярно – через день или каждый третий день). Консультации по физической активности и упражнениям должны быть индивидуальными и учитывать специфику диабета и режима лечения по поддержанию уровня глюкозы. Пациентам, принимающим инсулин, при выполнении упражнений или выполнении физической работы необходимио дать индивидуальный совет, как избежать гипогликемии с помощью приёма карбогидрата, уменьшения дозы инсулина и выбора места инъекции (снижение дозы инсулина до 65 % при наряжённых нагрузках в течение 45 минут). Пациентам, у которых имеются диабетические осложнения, до начала занятия физическими упражнениями должны пройти медицинский осмотр."}
+				,{"name":"Здоровое питание (коррекция веса тела)"}
+				,{"name":"Контроль потребления алкоголя (до 3-х единиц в сутки)"}
+			], "listType":"ul"}
+		,{"name":"Уход за н/конечностями"
+			,"list":[
+				{"name":"профилактика травматизации"}
+				,{"name":"гиперкератоза - омозолелостей"}
+				,{"name":"и др."}
+			] }
+		,{"name":"Диетотерапия."}
+		,{"name":"Оказание помощи пациентам в рамках"
+			,"list":[
+				{"name":"образовательных программ"}
+				,{"name":"телефонных бесед"}
+				,{"name":"как составляющей части многопрофильной программы по изменению образа жизни"}
+			] }
+		,{"name":"Выявление и лечение депрессивных состояний у пациентов с сахарным диабетом"
+			,"list":[
+				{"name":"когнитивная поведенческая терапия"}
+				,{"name":"психотерапевтические программы"}
+				,{"name":"и др."}
+			] }
+	]
+}
+,"9nCf":{"type":"task", "name":"Достигнут целевой результат (уровень HbA 1C около 7 %),", "ingoing":["7cWp"], "outgoing":["T5Qa","DYHM"] 
+	,"titleNote":"качество жизни пациента"
+}
+
+,"dYhq":{"type":"task", "name":"Динамическое наблюдение за пациентом", "ingoing":["DYHM"], "outgoing":[] }
+,"mhCY":{"type":"task", "name":"Медикаментозное лечение", "ingoing":["T5Qa"], "outgoing":["TJ1A"] }
+,"Kmi1":{"type":"task", "name":"Медикаментозное лечение", "ingoing":["TJ1A"], "outgoing":["SkxQ"] }
+,"Oudl":{"type":"task", "name":"Диабетическая нефропатия", "ingoing":["TJ1A"], "outgoing":[] }
+,"H5ka":{"type":"task", "name":"Скрининг", "ingoing":[""], "outgoing":[] }
+,"NzKL":{"type":"task", "name":"Лечение диабетической нефропатии", "ingoing":[""], "outgoing":[] }
+,"XijK":{"type":"task", "name":"Лечение диабетической ретинопатии", "ingoing":[""], "outgoing":[] }
+,"W8sx":{"type":"task", "name":"Диабетические поражения нижних конечностей", "ingoing":[""], "outgoing":[] }
 ,"Mr70":{"type":"flow", "sourceRef":"3nL9", "targetRef":"aVqk"}
 ,"qRYg":{"type":"flow", "sourceRef":"aVqk", "targetRef":"qf1b"}
 ,"L63x":{"type":"flow", "sourceRef":"qf1b", "targetRef":"uJ6z"}
@@ -151,6 +195,16 @@
 ,"Z2U6":{"type":"flow", "sourceRef":"6iRY", "targetRef":"bnop"}
 ,"kfLz":{"type":"flow", "sourceRef":"JC6E", "targetRef":"D7bM"}
 ,"5ft4":{"type":"flow", "sourceRef":"jUWM", "targetRef":"yUIu"}
+,"ymPh":{"type":"flow", "sourceRef":"TmBB", "targetRef":"qSUB"}
+,"vnLC":{"type":"flow", "sourceRef":"bnop", "targetRef":"qSUB"}
+,"K76s":{"type":"flow", "sourceRef":"D7bM", "targetRef":"qSUB"}
+,"NbLr":{"type":"flow", "sourceRef":"yUIu", "targetRef":"qSUB"}
+,"qGXY":{"type":"flow", "sourceRef":"qSUB", "targetRef":"w2sO"}
+,"7cWp":{"type":"flow", "sourceRef":"w2sO", "targetRef":"9nCf"}
+,"T5Qa":{"type":"flow", "sourceRef":"9nCf", "targetRef":"mhCY", "value":"false"}
+,"DYHM":{"type":"flow", "sourceRef":"9nCf", "targetRef":"dYhq", "value":"true"}
+,"TJ1A":{"type":"flow", "sourceRef":"mhCY", "targetRef":"Kmi1"}
+,"SkxQ":{"type":"flow", "sourceRef":"Kmi1", "targetRef":"Oudl"}
 }
 ,"diagram_01":[
 {"class":"w3-row"
@@ -200,35 +254,108 @@
 			,"childs":[
 				{"ref":"OmHE", "class":"w3-center"}
 				,{"ref":"B5wU", "class":"w3-container w3-card-2 w3-large "}
-				,{"ref":"B1u0", "class":"w3-center"}
-				,{"ref":"TmBB", "class":"w3-container w3-card-2 w3-large "}
 			]
 		}
 		,{"class":"w3-quarter"
 			,"childs":[
 				{"ref":"6SAx", "class":"w3-center"}
 				,{"ref":"6iRY", "class":"w3-container w3-card-2 w3-large"}
-				,{"ref":"Z2U6", "class":"w3-center"}
-				,{"ref":"bnop", "class":"w3-container w3-card-2 w3-large "}
 			]
 		}
 		,{"class":"w3-quarter"
 			,"childs":[
 				{"ref":"nkr5", "class":"w3-center"}
 				,{"ref":"JC6E", "class":"w3-container w3-card-2 w3-large"}
-				,{"ref":"kfLz", "class":"w3-center"}
-				,{"ref":"D7bM", "class":"w3-container w3-card-2 w3-large "}
 			]
 		}
 		,{"class":"w3-quarter"
 			,"childs":[
 				{"ref":"rEEd", "class":"w3-center"}
 				,{"ref":"jUWM", "class":"w3-container w3-card-2 w3-large"}
-				,{"ref":"5ft4", "class":"w3-center"}
-				,{"ref":"yUIu", "class":"w3-container w3-card-2 w3-large "}
 			]
 		}
 	]
 }
+,{"class":"w3-row"
+	,"childs":[
+		{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"B1u0", "class":"w3-center"}
+				,{"ref":"TmBB", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"Z2U6", "class":"w3-center"}
+				,{"ref":"bnop", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"kfLz", "class":"w3-center"}
+				,{"ref":"D7bM", "class":"w3-container w3-card-2 w3-large "}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"5ft4", "class":"w3-center"}
+				,{"ref":"yUIu", "class":"w3-container w3-card-2 w3-large"}
+			]
+		}
+	]
+}
+,{"class":"w3-row"
+	,"childs":[
+		{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"ymPh", "class":"w3-center"}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"vnLC", "class":"w3-center"}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"K76s", "class":"w3-center"}
+			]
+		}
+		,{"class":"w3-quarter"
+			,"childs":[
+				{"ref":"NbLr", "class":"w3-center"}
+			]
+		}
+	]
+}
+,{"ref":"qSUB", "class":"w3-container w3-card-2 w3-large"}
+,{"ref":"qGXY", "class":"w3-center"}
+,{"ref":"w2sO", "class":"w3-container w3-card-2 w3-large"}
+,{"ref":"7cWp", "class":"w3-center"}
+,{"ref":"9nCf", "class":"w3-container w3-card-2 w3-large"}
+,{"class":"w3-row"
+	,"childs":[
+		{"class":"w3-half"
+			,"childs":[
+				{"ref":"T5Qa", "class":"w3-center"}
+				,{"ref":"mhCY", "class":"w3-center w3-card-2"}
+				,{"ref":"TJ1A", "class":"w3-center"}
+			]
+		}
+		,{"class":"w3-half"
+			,"childs":[
+				{"ref":"DYHM", "class":"w3-center"}
+				,{"ref":"dYhq", "class":"w3-center w3-card-2"}
+			]
+		}
+	]
+}
+,{"ref":"Kmi1", "class":"w3-container w3-card-2 w3-large" }
+,{"ref":"SkxQ", "class":"w3-center"}
+,{"ref":"Oudl", "class":"w3-container w3-card-2 w3-large" }
+,{"ref":"H5ka", "class":"w3-container w3-card-2 w3-large" }
+,{"ref":"NzKL", "class":"w3-container w3-card-2 w3-large" }
+,{"ref":"XijK", "class":"w3-container w3-card-2 w3-large" }
+,{"ref":"W8sx", "class":"w3-container w3-card-2 w3-large" }
 ]
 }

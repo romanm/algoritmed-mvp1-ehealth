@@ -3,27 +3,41 @@
 		<span class="w3-tiny"> {{taskNumer(v.ref)}} </span>
 		{{protocol.process[v.ref].name}}
 	</div>
+	<div ng-if="protocol.process[v.ref].titleNote" class="w3-medium w3-center">
+		{{protocol.process[v.ref].titleNote}}</div>
 	<div ng-if="protocol.process[v.ref].list" class="w3-medium">
 		<ul class="w3-ul " ng-init="vList = protocol.process[v.ref].list">
-			<li ng-repeat="l in vList"><span class="w3-left"> </span>
-				{{l.name}}<span ng-if="l.list" class="am-list w3-hoverable">: <span
-					ng-repeat="l2 in l.list"> <span>{{l2.name}}</span>{{$last?'.':','}} </span>
+			<li ng-repeat="l in vList" ng-switch="l.listType">
+				{{l.name}}
+				<ul ng-switch-when="ul" class="w3-ul w3-hoverable">
+					<li  ng-repeat="l2 in l.list">
+					{{l2.name}}
+					</li>
+				</ul> <span ng-if="l.list" class="am-list w3-hoverable" ng-switch-default>:
+					<span ng-repeat="l2 in l.list"> <span>{{l2.name}}</span>{{$last?'.':','}}
+				</span>
 			</span></li>
 		</ul>
 	</div>
 </div>
-<div ng-switch-when="flow" class="w3-xlarge"
+
+<div ng-switch-when="flow"
 	title="{{taskNumer(protocol.process[v.ref].sourceRef)
 	}}->{{taskNumer(protocol.process[v.ref].targetRef)}}"
 	ng-switch="v.arrow">
 	<span class="w3-tiny" ng-if="v.targetRefNumer && 'left' == v.arrow">
 		{{taskNumer(protocol.process[v.ref].targetRef)}} </span> <span
 		class="w3-tiny" ng-if="v.sourceRefNumer">
-		{{taskNumer(protocol.process[v.ref].sourceRef)}} </span> <span
-		ng-switch-when="right">⇨</span> <span ng-switch-when="left">⇦</span><span
-		ng-switch-when="up">⇧</span> <span ng-switch-default>⇩</span> <span
-		class="w3-tiny" ng-if="v.targetRefNumer && 'left' != v.arrow">
-		{{taskNumer(protocol.process[v.ref].targetRef)}} </span>
+		{{taskNumer(protocol.process[v.ref].sourceRef)}} </span> 
+		<span
+			class="w3-xlarge"> <span ng-switch-when="right">⇨</span> <span
+			ng-switch-when="left">⇦</span><span ng-switch-when="up">⇧</span> <span
+			ng-switch-default>⇩</span>
+		</span> 
+	<span class="w3-tiny" ng-if="v.targetRefNumer && 'left' != v.arrow">
+		{{taskNumer(protocol.process[v.ref].targetRef)}} </span> <span
+		ng-if="protocol.process[v.ref].value == 'true'">так</span> <span
+		ng-if="protocol.process[v.ref].value == 'false'">ні</span>
 </div>
 
 <div ng-repeat="v2 in v.childs" ng-init="i=$index; v=v2;"
