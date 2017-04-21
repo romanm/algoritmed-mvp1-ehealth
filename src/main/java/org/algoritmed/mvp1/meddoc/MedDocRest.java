@@ -23,6 +23,20 @@ public class MedDocRest {
 
 	private @Value("${sql.meddoc.openIcPc2SubGroup.en}") String sqlMeddocOpenIcPc2SubGroupEn;
 	private @Value("${sql.meddoc.openIcPc2SubGroup}") String sqlMeddocOpenIcPc2SubGroup;
+	@GetMapping(value = "/r/meddoc/openIcPc2SubGroup/{code}")
+
+	public @ResponseBody Map<String, Object> openIcPc2SubGroup(@PathVariable String code) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("code", code);
+		logger.info("---------------\n"
+				+ "/r/meddoc/openIcPc2SubGroup/{code}"
+				+ "\n" + map);
+		Map<String, Object> openIcPc2SubGroup = db1ParamJdbcTemplate.queryForMap(sqlMeddocOpenIcPc2SubGroup, map);
+		map.put("openIcPc2SubGroup", openIcPc2SubGroup);
+		Map<String, Object> openIcPc2SubGroupEn = db1ParamJdbcTemplate.queryForMap(sqlMeddocOpenIcPc2SubGroupEn, map);
+		map.put("openIcPc2SubGroupEn", openIcPc2SubGroupEn);
+		return map;
+	}
 
 	String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int ID_LENGTH = 4;
@@ -40,18 +54,5 @@ public class MedDocRest {
 				list.add(amGenerateID);
 		}
 		return list;
-	}
-	@GetMapping(value = "/r/meddoc/openIcPc2SubGroup/{code}")
-	public @ResponseBody Map<String, Object> openIcPc2SubGroup(@PathVariable String code) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("code", code);
-		logger.info("---------------\n"
-				+ "/r/meddoc/openIcPc2SubGroup/{code}"
-				+ "\n" + map);
-		Map<String, Object> openIcPc2SubGroup = db1ParamJdbcTemplate.queryForMap(sqlMeddocOpenIcPc2SubGroup, map);
-		map.put("openIcPc2SubGroup", openIcPc2SubGroup);
-		Map<String, Object> openIcPc2SubGroupEn = db1ParamJdbcTemplate.queryForMap(sqlMeddocOpenIcPc2SubGroupEn, map);
-		map.put("openIcPc2SubGroupEn", openIcPc2SubGroupEn);
-		return map;
 	}
 }
