@@ -22,6 +22,9 @@ if (!Array.prototype.last){
 	Array.prototype.forForLast = function(){
 		return this[this.length - 3];
 	}
+	Object.prototype.keys = function(){
+		return Object.keys(this);
+	}
 }
 
 var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

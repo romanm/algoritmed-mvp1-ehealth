@@ -6,11 +6,14 @@
 		href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">модель даних</a>
 </div>
 
-<div ng-repeat="v1 in protocol.diagram_01" ng-init="i=$index; v=v1;"
-	style="{{v1.style}}"
-	ng-class="v1.class" ng-switch="protocol.process[v1.ref].type"
+<div ng-repeat="v2 in protocol.diagram_01" ng-init="i=$index; v=v2;"
+title="{{v2.class}}-{{v2.style}}"
+	style="{{v2.style}}"
+	ng-class="v2.class"
+	ng-switch="protocol.process[v2.ref].type"
 	ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/child_block_1.html'">
 </div>
+
 <hr/>
 {{amGenerateID}}
 

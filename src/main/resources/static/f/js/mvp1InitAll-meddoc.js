@@ -234,15 +234,63 @@ function initAll ($http, $scope){
 			if($scope.protocol.menuWidth<(12/2))
 				$scope.protocol.menuWidth++;
 		}
+		$scope.addDiagram01Element = function(objToEdit, k){
+			var diagramElement = objToEdit[objToEdit.editKey.key];
+			if(13 == k){
+				diagramElement.push(
+					{"class":"w3-row"
+						,"childs":[
+							{"class":"w3-third"}
+							,{"class":"w3-twothird"}
+						]
+					}
+				);
+			}else
+			if(14 == k){
+				diagramElement.push(
+					{"class":"w3-row"
+						,"childs":[
+							{"class":"w3-quarter"}
+							,{"class":"w3-quarter"}
+							,{"class":"w3-quarter"}
+							,{"class":"w3-quarter"}
+							]
+					}
+				);
+			}
+			console.log(diagramElement);
+		}
+		$scope.addProcessElement = function(objToEdit, k){
+			$scope.protocol.process[$scope.amGenerateID[0]] 
+				= {'type':'task','name':$scope.amGenerateID[0]};
+			$scope.amGenerateID.splice(0,1);
+			if($scope.amGenerateID.length < 2){
+				$scope.getAmGenerateID();
+			}
+		}
+		$scope.removeElement = function(objToEdit, k){
+			objToEdit.splice(k,1);
+		}
+		$scope.openAddDialog = function(objToEdit, k){
+			objToEdit.openAddDialog =
+				(objToEdit.openAddDialog == k) ? "":k;
+		}
 		$scope.isEditKey = function(objToEdit, k){
-			return objToEdit.editKey == k;
+			if(!objToEdit.editKey)
+				return false;
+			return objToEdit.editKey.key == k;
 		}
 		$scope.editObjPart = function(objToEdit, k){
+			console.log("$scope.editObjPart");
+			console.log($scope.isEditKey(objToEdit, k));
 			if($scope.isEditKey(objToEdit, k)){
 				objToEdit.editKey = null;
+			}else if('dbUuid' == k){
 			}else if('viewModel' == k){
 			}else{
-				objToEdit.editKey = k;
+				if(!objToEdit.editKey || !(typeof objToEdit.editKey === 'object'))
+					objToEdit.editKey = {};
+				objToEdit.editKey.key = k;
 			}
 		}
 		$scope.menuType = function(o){

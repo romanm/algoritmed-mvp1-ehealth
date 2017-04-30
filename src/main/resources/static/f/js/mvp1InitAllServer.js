@@ -15,3 +15,21 @@ function initAllServer ($http, $scope){
 	}
 
 }
+
+console.log("Object.prototype.length");
+console.log(Array.prototype.last);
+if (!Array.prototype.last){
+	console.log("Object.prototype.length");
+	Object.prototype.length = function(){
+		return Object.keys(this).length;
+	}
+	Array.prototype.last = function(){
+		return this[this.length - 1];
+	}
+	Array.prototype.forLast = function(){
+		return this[this.length - 2];
+	}
+	Array.prototype.forForLast = function(){
+		return this[this.length - 3];
+	}
+}

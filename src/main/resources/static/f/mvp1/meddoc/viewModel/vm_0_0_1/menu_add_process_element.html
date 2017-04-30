@@ -1,0 +1,10 @@
+<a href="#" ng-click="addProcessElementType = 'task';addProcessElement()">Блок</a>
+|
+<a href="#" ng-click="addProcessElementType = 'flow'">зв'зок</a>
+{{addProcessElementType}}
+<div ng-if="addProcessElementType == 'flow'">
+Додати зв'зок завдань
+</div>
+<div ng-if="addProcessElementType == 'task'">
+	Блок:
+</div>

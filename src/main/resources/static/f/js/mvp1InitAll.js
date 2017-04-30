@@ -72,8 +72,12 @@ function initAll ($http, $scope){
 	}
 
 }
-
+/*
 if (!Array.prototype.last){
+	console.log("Object.prototype.length");
+	Object.prototype.length = function(){
+		return Object.keys(this).length;
+	}
 	Array.prototype.last = function(){
 		return this[this.length - 1];
 	}
@@ -84,4 +88,5 @@ if (!Array.prototype.last){
 		return this[this.length - 3];
 	}
 }
+ * */
 

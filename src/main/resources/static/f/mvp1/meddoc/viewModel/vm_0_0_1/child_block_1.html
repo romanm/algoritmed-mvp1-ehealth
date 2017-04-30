@@ -40,6 +40,10 @@
 		ng-if="protocol.process[v.ref].value == 'false'">ні</span>
 </div>
 
+<span ng-if="!v2.childs && !(v2.class.indexOf('w3-row')>=0)"
+	class="w3-tiny w3-border w3-yellow" ng-switch-default title="{{v2.childs}}"> Місце без
+	змісту: {{v2.class}} </span>
+
 <div ng-repeat="v2 in v.childs" ng-init="i=$index; v=v2;"
 title="{{v2.class}}-{{v2.style}}"
 	style="{{v2.style}}"
