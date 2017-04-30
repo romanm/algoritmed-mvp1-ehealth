@@ -1,6 +1,7 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.2.RELEASE'
+		springBootVersion = '1.5.3.RELEASE'
+//		springBootVersion = '1.5.2.RELEASE'
 		//springBootVersion = '1.5.1.RELEASE'
 	}
 	repositories {
@@ -34,7 +35,7 @@ dependencies {
 	
 	compile 'org.springframework:spring-jdbc'
 	compile 'commons-dbcp:commons-dbcp'
-	runtime 'com.h2database:h2:1.3.176'
+	runtime 'com.h2database:h2'
 	runtime 'org.postgresql:postgresql'
 
 	compile 'org.apache.poi:poi:3.15'

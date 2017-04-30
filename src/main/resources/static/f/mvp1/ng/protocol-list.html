@@ -1,4 +1,8 @@
 <ul class="w3-ul w3-hoverable">
+	<li ng-repeat="p in dbProtocolListe"><a
+		href="/v/protocol?dbId={{p.protocol_id}}"> {{p.protocol_name}} </a></li>
+</ul>
+<ul class="w3-ul w3-hoverable">
 	<li><a href="/v/protocol?hid=URTI"> ГРВІ </a></li>
 	<li><a href="/v/protocol?hid=Pneumonia"> Пневмонія </a></li>
 	<li><a href="/v/protocol?hid=HTN"> Гіпертонічна хвороба </a></li>

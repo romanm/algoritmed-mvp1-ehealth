@@ -1,0 +1,16 @@
+CREATE SEQUENCE dbid;
+
+DROP TABLE IF EXISTS uuid;
+CREATE TABLE uuid (
+	uuid_dbid INTEGER NOT NULL DEFAULT NEXTVAL('dbid')  PRIMARY KEY,
+	uuid_uuid VARCHAR(36) NOT NULL
+) ;
+
+DROP TABLE IF EXISTS protocol;
+CREATE TABLE protocol (
+	protocol_id INT DEFAULT NEXTVAL('dbid') PRIMARY KEY
+	,protocol_name VARCHAR(100)
+	,protocol_doc VARCHAR(100000)
+	,removed BOOLEAN DEFAULT FALSE
+);
+

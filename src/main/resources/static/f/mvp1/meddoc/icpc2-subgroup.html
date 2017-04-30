@@ -4,9 +4,18 @@
 		class="w3-hover-grey w3-{{getColor(k2)}}">
 		<div ng-click="openIcPc2SubGroup(k2)">{{k2}} : {{v2}}</div>
 		<ul class="w3-ul w3-border w3-light-grey" ng-if="codeItems[k2].open">
-			<li ng-repeat="(k3,v3) in codeItemsTitle" ng-if="codeItemsEn[k2][k3]"><b>{{v3}}:</b>
-				{{codeItems[k2][k3]}} <span ng-if="!codeItems[k2][k3]">
-					{{codeItemsEn[k2][k3]}} </span></li>
-		</ul>
-	</li>
+			<li ng-repeat="(k3,v3) in codeItemsTitle" ng-switch="v3"><b>{{v3}}:</b>
+				<ul class="w3-ul w3-border w3-pale-green" ng-switch-when="виключно">
+					<li ng-repeat="e in codeItems[k2].demoIcpc2UaExclusion">
+						{{e.exclusion}} - {{e.name}} <span class="w3-tiny">
+							{{codeItems[k2][k3].split(';')[$index]}} </span>
+					</li>
+				</ul>
+				<ul class="w3-ul w3-border w3-pale-green" ng-switch-when="мкх10">
+					<li ng-repeat="i in codeItems[k2].meddocIcpc2icd10Code">
+						{{i.icd10}} : {{i.name}}</li>
+				</ul> 
+				<span ng-switch-default> {{codeItems[k2][k3]}} </span>
+				</li>
+		</ul> </li>
 </ul>

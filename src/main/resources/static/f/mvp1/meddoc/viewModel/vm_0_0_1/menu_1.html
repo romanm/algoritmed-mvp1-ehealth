@@ -1,0 +1,28 @@
+<ul class="w3-ul">
+	<li ng-repeat="(k,v) in objToEdit" ng-switch="menuType(v)"><span
+		class="w3-tiny"> {{k}} </span> : 
+		<span ng-switch-when="object"> 
+		<span ng-if="'flow' == v.type">
+			<span>⇨</span>
+			{{taskNumer(v.sourceRef)
+	}}->{{taskNumer(v.targetRef)}}
+		</span>
+		<span ng-if="'task' == v.type">
+				<i class="fa fa-minus" aria-hidden="true"></i> <span class="w3-tiny">
+					{{1 + $index}})</span> {{v.name}}
+		</span> <span ng-if="!v.type"> <i ng-click="editObjPart(objToEdit, k)"
+				class="fa fa-object-group w3-hover-light-grey"></i> <span
+				ng-if="isEditKey(objToEdit, k)">
+					<div ng-init="objToEdit= v"
+						ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_1.html'">
+					</div>
+			</span>
+		</span>
+	</span> <i ng-switch-when="list" class="fa fa-list" aria-hidden="true"></i> <span
+		ng-switch-default> <span class="w3-hover-light-grey"
+			ng-click="editObjPart(objToEdit, k)"> {{v}} </span> <span
+			ng-if="isEditKey(objToEdit, k)"> <textarea
+					class="w3-input w3-border" ng-model="objToEdit[k]" type="text" />
+		</span>
+	</span></li>
+</ul>

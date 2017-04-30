@@ -1,5 +1,5 @@
 <h2>
-	Протокол: <span ng-if="param.hid"> {{protocol.shortName}} </span>
+	Протокол:  {{protocol.shortName}} 
 </h2>
 <div style="text-align: right;" class="w3-tiny">
 	Візувальна модель {{protocol.viewModel}} | <a href=""> </a> <a
@@ -13,37 +13,17 @@
 </div>
 <hr/>
 {{amGenerateID}}
-<h1>
-Технічна частина для розробника
-</h1>
-<div class="w3-row">
-	<div class="w3-col l1 m1 w3-center">
-		<p>50px</p>
-		<p>50px</p>
-	</div>
-	<div class="w3-col l11 m11 w3-center w3-card-2">
-		<p>rest</p>
-	</div>
-</div>
-<div class="w3-row">
-	<div class="w3-col w3-center w3-dark-grey w3-text-light-grey"
-		style="width: 50px">
-		<p>50px</p>
-	</div>
-	<div class="w3-rest w3-green w3-center w3-text-light-grey">
-		<p>rest</p>
-	</div>
-</div>
-<div>
-	<span>⇦</span> <span>⇨</span> <span>⇧</span> <span>⇩</span>
-	| <span class="w3-small">⇦</span> <span class="w3-xlarge">⇨</span> <span
-		class="w3-xxlarge">⇧</span> <span class="w3-xxxlarge">⇩</span> <span
-		class="w3-jumbo">⇦</span>
-</div>
 
-<div ng-repeat="(k,v) in protocol.process" ng-switch="v.type">
-	<div ng-switch-when="task">
-		<span class="w3-tiny"> {{taskNumer(k)}}) {{k}}: </span> {{v.name}}
+
+<div>
+	<a class="w3-btn w3-grey" ng-click="openMy = !openMy">open</a>
+	<div ng-if="openMy">
+		<div>Список всіх завдань і зв'язків між ними</div>
+		<div ng-repeat="(k,v) in protocol.process" ng-switch="v.type">
+			<div ng-switch-when="task">
+				<span class="w3-tiny"> {{taskNumer(k)}}) {{k}}: </span> {{v.name}}
+			</div>
+			<div ng-switch-when="flow">{{v.sourceRef}} -> {{v.targetRef}}</div>
+		</div>
 	</div>
-	<div ng-switch-when="flow">{{v.sourceRef}} -> {{v.targetRef}}</div>
 </div>

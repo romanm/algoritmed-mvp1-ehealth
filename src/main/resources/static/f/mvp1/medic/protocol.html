@@ -1,6 +1,39 @@
 <div class="w3-container">
-	<div
-		ng-include="'/f/mvp1/meddoc/viewModel/'+protocol.viewModel+'/'+protocol.viewModel+'.html'"></div>
 	<div ng-if="!protocol.viewModel"
 		ng-include="'/f/mvp1/meddoc/viewModel/protocol0.html'"></div>
+
+	<div ng-if="'vm_0_0_1' == protocol.viewModel" class="w3-row">
+		<div class="w3-col m{{12 - protocol.menuWidth}}">
+			<div
+				ng-include="'/f/mvp1/meddoc/viewModel/'+protocol.viewModel+'/'+protocol.viewModel+'.html'"></div>
+		</div>
+		<!-- -left 
+			style="position: fixed; right: 0;"
+		-->
+		<div class="w3-col w3-border w3-leftbar m{{protocol.menuWidth}}"
+			>
+			<header class="w3-light-grey w3-tiny">
+				<a class="w3-gray" ng-click="menuWidthPlus()"> <i
+					class="fa fa-angle-left" aria-hidden="true"></i>
+				</a> &nbsp; <a class="w3-gray" ng-click="menuWidthMinus()"> <i
+					class="fa fa-angle-right" aria-hidden="true"></i>
+				</a> &nbsp; меню 
+				| <a href="#"
+												ng-click="saveProtocolDialog()"
+				> <i class="fa fa-floppy-o"
+					aria-hidden="true"></i></a> 
+				| <a href="#"> <i class="fa fa-print" aria-hidden="true"></i>
+				</a>
+			</header>
+			<span class="w3-small">
+			Протокол
+			<span ng-if="protocol.editKey">
+			{{protocol[protocol.editKey]}}
+			</span>
+			</span>
+			<div class="w3-small" ng-init="objToEdit= protocol"
+				ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_1.html'">
+			</div>
+		</div>
+	</div>
 </div>

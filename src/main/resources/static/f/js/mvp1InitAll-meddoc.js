@@ -8,6 +8,27 @@ function initAll ($http, $scope){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
 	initAllServer($http, $scope);
+	$scope.saveProtocolDialog = function(){
+//		console.log($scope.newProtocol);
+		console.log($scope.protocol);
+		var url = '/r/saveProtocol';
+		console.log(url);
+//		$http.post(url, $scope.newProtocol).then(
+		$http.post(url, $scope.protocol).then(
+			function(response) {
+				console.log(response.data);
+				var dbId = response.data.dbUuid.uuid_dbid;
+				var url2 = '/v/protocol?dbId=' + dbId;
+				console.log(url2);
+				window.location.assign(url2)
+//				window.open(url2);
+				//window.open("https://www.w3schools.com");
+			}
+			, function(response) {
+				console.log(response);
+			}
+		);
+	}
 	if('protocol' == $scope.pagePath.last()){
 		$scope.amGenerateID = [];
 		$scope.getAmGenerateID = function(){
@@ -21,6 +42,20 @@ function initAll ($http, $scope){
 			);
 		};
 		$scope.getAmGenerateID();
+		if($scope.param.dbId){
+			var url = '/r/meddoc/dbProtocol/' + $scope.param.dbId;
+			console.log(url);
+			$http.get(url).then(
+				function(response) {
+					$scope.protocol = response.data;
+					console.log($scope.protocol);
+					initProtocol();
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		}else
 		if($scope.param.hid){
 			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
 			console.log(url);
@@ -35,6 +70,25 @@ function initAll ($http, $scope){
 			);
 		}
 		
+	}
+	else
+	if('protocols' == $scope.pagePath.last()){
+		console.log('----initAll------protocols---------');
+		var url = '/r/meddoc/dbProtocolListe';
+		$http.get(url).then(
+			function(response) {
+				console.log(response);
+				console.log(response.data);
+				$scope.dbProtocolListe = response.data.dbProtocolListe;
+				console.log($scope.dbProtocolListe);
+			}
+			, function(response) {
+				console.log(response);
+			}
+		);
+		$scope.openNewProtocolDialog = function(){
+			$scope.protocol = {"shortName":"", "viewModel":"vm_0_0_1","process":{},"diagram_01":[]};
+		}
 	}
 	else
 	if('code' == $scope.pagePath.last()){
@@ -60,8 +114,12 @@ function initAll ($http, $scope){
 				$http.get(url).then(
 					function(response) {
 						console.log(response.data);
+						response.data.openIcPc2SubGroup.demoIcpc2UaExclusion = 
+							response.data.demoIcpc2UaExclusion;
+						response.data.openIcPc2SubGroup.meddocIcpc2icd10Code = 
+							response.data.meddocIcpc2icd10Code;
 						$scope.codeItems[k2] = response.data.openIcPc2SubGroup;
-						$scope.codeItemsEn[k2] = response.data.openIcPc2SubGroupEn;
+//						$scope.codeItemsEn[k2] = response.data.openIcPc2SubGroupEn;
 						$scope.codeItems[k2].open = true;
 						console.log($scope.codeItems[k2]);
 					}
@@ -165,6 +223,36 @@ function initAll ($http, $scope){
 	// initProtocol 
 	var initProtocol = function(){
 		console.log('----initProtocol------------');
+		if(!$scope.protocol.menuWidth){
+			$scope.protocol.menuWidth = 3;
+		}
+		$scope.menuWidthMinus = function(){
+			if($scope.protocol.menuWidth>1)
+				$scope.protocol.menuWidth--;
+		}
+		$scope.menuWidthPlus = function(){
+			if($scope.protocol.menuWidth<(12/2))
+				$scope.protocol.menuWidth++;
+		}
+		$scope.isEditKey = function(objToEdit, k){
+			return objToEdit.editKey == k;
+		}
+		$scope.editObjPart = function(objToEdit, k){
+			if($scope.isEditKey(objToEdit, k)){
+				objToEdit.editKey = null;
+			}else if('viewModel' == k){
+			}else{
+				objToEdit.editKey = k;
+			}
+		}
+		$scope.menuType = function(o){
+			if(Array.isArray(o))
+				return 'list';
+			if(typeof o === 'object')
+				return 'object';
+		}
+		$scope.menuShow = function(o){
+		}
 		$scope.protocol.init = {'taskList':[]}
 		angular.forEach($scope.protocol.process, function(value, key) {
 			if('task' == value.type){
