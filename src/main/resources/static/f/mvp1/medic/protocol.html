@@ -1,16 +1,17 @@
 <div class="w3-container">
-	<div ng-if="!protocol.viewModel"
+	<div ng-if="!protocol.config.viewModel"
 		ng-include="'/f/mvp1/meddoc/viewModel/protocol0.html'"></div>
 
-	<div ng-if="'vm_0_0_1' == protocol.viewModel" class="w3-row">
-		<div class="w3-col m{{12 - protocol.menuWidth}}">
+	<div ng-if="'vm_0_0_1' == protocol.config.viewModel" class="w3-row">
+		<div class="w3-col m{{12 - protocol.config.menuWidth}}">
 			<div
-				ng-include="'/f/mvp1/meddoc/viewModel/'+protocol.viewModel+'/'+protocol.viewModel+'.html'"></div>
+				ng-include="'/f/mvp1/meddoc/viewModel/'
+				+protocol.config.viewModel+'/'+protocol.config.viewModel+'.html'"></div>
 		</div>
 		<!-- -left 
 			style="position: fixed; right: 0;"
 		-->
-		<div class="w3-col w3-border w3-leftbar m{{protocol.menuWidth}}">
+		<div class="w3-col w3-border w3-leftbar m{{protocol.config.menuWidth}}">
 			<header class="w3-light-grey w3-tiny">
 				<a class="w3-gray" ng-click="menuWidthPlus()"> <i
 					class="fa fa-angle-left" aria-hidden="true"></i>

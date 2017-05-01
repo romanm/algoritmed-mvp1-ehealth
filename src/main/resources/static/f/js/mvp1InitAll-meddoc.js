@@ -87,7 +87,7 @@ function initAll ($http, $scope){
 			}
 		);
 		$scope.openNewProtocolDialog = function(){
-			$scope.protocol = {"shortName":"", "viewModel":"vm_0_0_1","process":{},"diagram_01":[]};
+			$scope.protocol = {"title":{"shortName":"","name":""}, "config":{"version":"0.0.1","menuWidth":3,"viewModel":"vm_0_0_1"} ,"process":{},"diagram_01":[]};
 		}
 	}
 	else
@@ -223,16 +223,16 @@ function initAll ($http, $scope){
 	// initProtocol 
 	var initProtocol = function(){
 		console.log('----initProtocol------------');
-		if(!$scope.protocol.menuWidth){
-			$scope.protocol.menuWidth = 3;
+		if(!$scope.protocol.config.menuWidth){
+			$scope.protocol.config.menuWidth = 3;
 		}
 		$scope.menuWidthMinus = function(){
-			if($scope.protocol.menuWidth>1)
-				$scope.protocol.menuWidth--;
+			if($scope.protocol.config.menuWidth>1)
+				$scope.protocol.config.menuWidth--;
 		}
 		$scope.menuWidthPlus = function(){
-			if($scope.protocol.menuWidth<(12/2))
-				$scope.protocol.menuWidth++;
+			if($scope.protocol.config.menuWidth<(12/2))
+				$scope.protocol.config.menuWidth++;
 		}
 		$scope.addDiagram01Element = function(objToEdit, k){
 			var diagramElement = objToEdit[objToEdit.editKey.key];
@@ -269,6 +269,9 @@ function initAll ($http, $scope){
 			}
 		}
 		$scope.removeElement = function(objToEdit, k){
+			var noRemoveList = "diagram_01,process,config,version,init,viewModel,menuWidth".split(",");
+			if(noRemoveList.indexOf(k)>=0)
+				return;
 			objToEdit.splice(k,1);
 		}
 		$scope.openAddDialog = function(objToEdit, k){
@@ -301,15 +304,15 @@ function initAll ($http, $scope){
 		}
 		$scope.menuShow = function(o){
 		}
-		$scope.protocol.init = {'taskList':[]}
+		$scope.protocol.config.init = {'taskList':[]}
 		angular.forEach($scope.protocol.process, function(value, key) {
 			if('task' == value.type){
-				$scope.protocol.init.taskList.push(key)
+				$scope.protocol.config.init.taskList.push(key)
 			}
 		});
 		console.log($scope.protocol);
 		$scope.taskNumer = function(taskKey){
-			return $scope.protocol.init.taskList.indexOf(taskKey) + 1;
+			return $scope.protocol.config.init.taskList.indexOf(taskKey) + 1;
 		}
 	};
 	// initProtocol END

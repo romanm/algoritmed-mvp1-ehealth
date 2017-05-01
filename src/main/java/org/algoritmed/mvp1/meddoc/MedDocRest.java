@@ -111,7 +111,7 @@ public class MedDocRest {
 			Map<String, Object> dbUuid = generateNewUuid(map, dbId);
 			setShortName(dbSaveObj, dbId, map);
 			if(dbSaveObj.notContainsOrStringIsEmpty("name"))
-				dbSaveObj.put("name", "Long name: " + dbSaveObj.getString("shortName"));
+				dbSaveObj.put("name", "Long name: " + dbSaveObj.getString("title.shortName"));
 			dbSaveObj.put("dbUuid", dbUuid);
 			protocolToString(dbSaveObj, map);
 			logger.info("\n ----2-- " + "/r/saveProtocol"
@@ -141,9 +141,11 @@ public class MedDocRest {
 		map.put("doc", protocolAsString);
 	}
 	private void setShortName(HashMap2 dbSaveObj, Integer nextDbId, Map<String, Object> map) {
-		if(dbSaveObj.notContainsOrStringIsEmpty("shortName"))
-			dbSaveObj.put("shortName", "Protocol " + nextDbId);
-		map.put("name", dbSaveObj.getString("shortName"));
+		if(dbSaveObj.notContainsOrStringIsEmpty("title.shortName"))
+			dbSaveObj.getMap("title").put("shortName", "Protocol " + nextDbId);
+		//Значення поля name таблиці protocol
+		//table protocol field name value
+		map.put("name", dbSaveObj.getString("title.shortName"));
 	}
 
 	private @Value("${sql.meddoc.protocol.update}") String sqlMeddocProtocolUpdate;

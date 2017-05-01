@@ -14,14 +14,21 @@ public class HashMap2 extends HashMap<String, Object> {
 	}
 
 	public boolean notContainsOrStringIsEmpty(String key) {
-		if(!this.containsKey(key))
+		if(!this.contains(key))
 			return false;
 		String str = this.getString(key);
 		return null == str || str.equals("");
 	}
-	
-	public String getString(String key) {
-		return (String) this.get(key);
+
+	public Integer getInteger(String keysString) {
+		return (Integer) getObject(keysString);
+	}
+
+	public Map getMap(String keysString) {
+		return (Map) getObject(keysString);
+	}
+	public String getString(String keysString) {
+		return (String) getObject(keysString);
 	}
 
 	String pointSplit = "\\.";
@@ -50,7 +57,4 @@ public class HashMap2 extends HashMap<String, Object> {
 		return object;
 	}
 
-	public Integer getInteger(String keysString) {
-		return (Integer) getObject(keysString);
-	}
 }
