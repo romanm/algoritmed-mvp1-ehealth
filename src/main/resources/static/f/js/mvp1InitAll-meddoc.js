@@ -240,8 +240,8 @@ function initAll ($http, $scope){
 				diagramElement.push(
 					{"class":"w3-row"
 						,"childs":[
-							{"class":"w3-third"}
-							,{"class":"w3-twothird"}
+							{"class":"w3-third w3-container"}
+							,{"class":"w3-twothird w3-container"}
 						]
 					}
 				);
@@ -275,8 +275,17 @@ function initAll ($http, $scope){
 			objToEdit.splice(k,1);
 		}
 		$scope.openAddDialog = function(objToEdit, k){
-			objToEdit.openAddDialog =
-				(objToEdit.openAddDialog == k) ? "":k;
+			console.log(k);
+			console.log(objToEdit[k]);
+			console.log(objToEdit);
+			console.log(Array.isArray(objToEdit));
+			if(Array.isArray(objToEdit)){
+				objToEdit[k].openAddDialog =
+					!objToEdit[k].openAddDialog;
+			}else{
+				objToEdit.openAddDialog =
+					(objToEdit.openAddDialog == k) ? "":k;
+			}
 		}
 		$scope.isEditKey = function(objToEdit, k){
 			if(!objToEdit.editKey)
@@ -284,8 +293,6 @@ function initAll ($http, $scope){
 			return objToEdit.editKey.key == k;
 		}
 		$scope.editObjPart = function(objToEdit, k){
-			console.log("$scope.editObjPart");
-			console.log($scope.isEditKey(objToEdit, k));
 			if($scope.isEditKey(objToEdit, k)){
 				objToEdit.editKey = null;
 			}else if('dbUuid' == k){
@@ -295,6 +302,39 @@ function initAll ($http, $scope){
 					objToEdit.editKey = {};
 				objToEdit.editKey.key = k;
 			}
+		}
+		$scope.addDiagram01Task = function(v, taskKey, editPath){
+			console.log(v);
+			console.log(taskKey);
+			console.log(editPath);
+			var	diagram01Element = {},
+				listToAddElement = $scope.protocol.diagram_01
+				elementToAdd = $scope.protocol.process[taskKey];
+			console.log(elementToAdd);
+			console.log(editPath.split(',').length);
+			console.log(editPath.split(',').length>3);
+			if(editPath.split(',').length > 3){// not diagram01 as parent
+				if(!v.childs){
+					v.childs = [];
+				}
+				listToAddElement = v.childs;
+			}
+			if('task' == elementToAdd.type){
+				diagram01Element = {"ref":taskKey, "class":"w3-container w3-card-2 w3-center"};
+			}
+			console.log(diagram01Element);
+			listToAddElement.push(diagram01Element);
+			console.log(v);
+		}
+		$scope.getParentElement = function(editPath){
+			var el = $scope, parentEl = el, parentKey = '';
+			angular.forEach(editPath.split(','), function(value, key) {
+				if(parentKey != 'childs')
+					parentEl = el;
+				el = el[value];
+				parentKey = value;
+			});
+			return parentEl;
 		}
 		$scope.menuType = function(o){
 			if(Array.isArray(o))

@@ -1,8 +1,9 @@
 <ul class="w3-ul">
-	<li ng-repeat="(k,v) in objToEdit" ng-switch="menuType(v)"><span
-		class="w3-tiny"> {{k}} </span>
-		<span ng-if="isEditKey(objToEdit, k)" class="w3-tiny">
-			<button ng-click="openAddDialog(objToEdit, k)"
+	<li ng-repeat="(k,v) in objToEdit" ng-if="!('openAddDialog' == k)"
+		ng-switch="menuType(v)" ng-init="editPath = editPath + ',' + k">
+		<span class="w3-tiny" title="{{v}}"> {{k}} </span> <span
+		ng-if="isEditKey(objToEdit, k)" class="w3-tiny">
+			<button ng-click="openAddDialog(objToEdit, k, v)"
 				class="w3-btn w3-white w3-border w3-border-blue w3-round">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			</button>
@@ -10,21 +11,19 @@
 				class="w3-btn w3-white w3-border w3-border-blue w3-round">
 				<i class="fa fa-times" aria-hidden="true"></i>
 			</button>
-	</span> : 
-	<span ng-switch-when="list"> <i
+	</span> : <span ng-switch-when="list"> <i
 			ng-click="editObjPart(objToEdit, k)" class="fa fa-list"
-			aria-hidden="true"></i> 
+			aria-hidden="true"></i>
 			<div ng-if="k == objToEdit.openAddDialog"
-					ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_add_'+k+'_element.html'"></div>
+				ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_add_'+k+'_element.html'"></div>
 			<span ng-if="isEditKey(objToEdit, k)">
 				<div ng-init="objToEdit= v"
 					ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_1.html'">
 				</div>
 		</span>
-	</span> <span ng-switch-when="object"> 
-		<span ng-if="'flow' == v.type">
-				<span>⇨</span> {{taskNumer(v.sourceRef)
-				}}->{{taskNumer(v.targetRef)}}
+	</span> <span ng-switch-when="object"> <span ng-if="'flow' == v.type">
+				<span>⇨</span>
+				{{taskNumer(v.sourceRef)}}->{{taskNumer(v.targetRef)}}
 		</span> <span ng-if="'task' == v.type"> <span
 				ng-click="editObjPart(objToEdit, k)" class="w3-hover-light-grey">
 					<i class="fa fa-minus" aria-hidden="true"></i> <span
@@ -32,9 +31,11 @@
 			</span> <span ng-if="isEditKey(objToEdit, k)"> <textarea
 						ng-model="v.name" class="w3-input w3-border"></textarea>
 			</span>
-		</span> <span ng-if="!v.type"> <i
+		</span> <span ng-if="!v.type"> <i title="{{editPath}} - {{objToEdit}}"
 				ng-click="editObjPart(objToEdit, k)"
 				class="fa fa-object-group w3-hover-light-grey"></i>
+				<div ng-if="v.openAddDialog"
+					ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_add_default_element.html'"></div>
 				<div ng-if="k == objToEdit.openAddDialog"
 					ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_add_'+k+'_element.html'"></div>
 				<span ng-if="isEditKey(objToEdit, k)">
@@ -48,5 +49,6 @@
 			ng-if="isEditKey(objToEdit, k)"> <textarea
 					class="w3-input w3-border" ng-model="objToEdit[k]" type="text" />
 		</span>
-	</span></li>
+	</span>
+	</li>
 </ul>

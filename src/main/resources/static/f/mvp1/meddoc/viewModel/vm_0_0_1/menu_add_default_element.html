@@ -1,0 +1,8 @@
+<div ng-if="getParentElement(editPath).isW3Row()">
+	Додати блок:
+	<select ng-model="taskKey" class="w3-select">
+		<option ng-repeat="(k,v) in protocol.process" ng-if="v.type == 'task'"
+			value="{{k}}">{{1 + $index}}) {{v.name}}</option>
+	</select>
+	<button ng-click="addDiagram01Task(v, taskKey, editPath)">OK</button>
+</div>

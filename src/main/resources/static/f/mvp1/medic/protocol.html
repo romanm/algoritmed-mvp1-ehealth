@@ -30,7 +30,7 @@
 				ng-if="protocol.editKey.key">
 					{{protocol[protocol.editKey.key].keys().length}} </span>
 			</span>
-			<div class="w3-small" ng-init="objToEdit= protocol"
+			<div class="w3-small" ng-init="objToEdit= protocol; editPath = 'protocol';"
 				ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/menu_1.html'">
 			</div>
 		</div>
