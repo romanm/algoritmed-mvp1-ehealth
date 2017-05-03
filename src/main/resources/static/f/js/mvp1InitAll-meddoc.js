@@ -86,6 +86,7 @@ function initAll ($http, $scope){
 				console.log(response);
 			}
 		);
+		
 		$scope.openNewProtocolDialog = function(){
 			$scope.protocol = {"title":{"shortName":"","name":""}, "config":{"version":"0.0.1","menuWidth":3,"viewModel":"vm_0_0_1"} ,"process":{},"diagram_01":[]};
 		}
@@ -226,14 +227,6 @@ function initAll ($http, $scope){
 		if(!$scope.protocol.config.menuWidth){
 			$scope.protocol.config.menuWidth = 3;
 		}
-		$scope.menuWidthMinus = function(){
-			if($scope.protocol.config.menuWidth>1)
-				$scope.protocol.config.menuWidth--;
-		}
-		$scope.menuWidthPlus = function(){
-			if($scope.protocol.config.menuWidth<(12/2))
-				$scope.protocol.config.menuWidth++;
-		}
 		$scope.addDiagram01Element = function(objToEdit, k){
 			var diagramElement = objToEdit[objToEdit.editKey.key];
 			if(13 == k){
@@ -274,35 +267,7 @@ function initAll ($http, $scope){
 				return;
 			objToEdit.splice(k,1);
 		}
-		$scope.openAddDialog = function(objToEdit, k){
-			console.log(k);
-			console.log(objToEdit[k]);
-			console.log(objToEdit);
-			console.log(Array.isArray(objToEdit));
-			if(Array.isArray(objToEdit)){
-				objToEdit[k].openAddDialog =
-					!objToEdit[k].openAddDialog;
-			}else{
-				objToEdit.openAddDialog =
-					(objToEdit.openAddDialog == k) ? "":k;
-			}
-		}
-		$scope.isEditKey = function(objToEdit, k){
-			if(!objToEdit.editKey)
-				return false;
-			return objToEdit.editKey.key == k;
-		}
-		$scope.editObjPart = function(objToEdit, k){
-			if($scope.isEditKey(objToEdit, k)){
-				objToEdit.editKey = null;
-			}else if('dbUuid' == k){
-			}else if('viewModel' == k){
-			}else{
-				if(!objToEdit.editKey || !(typeof objToEdit.editKey === 'object'))
-					objToEdit.editKey = {};
-				objToEdit.editKey.key = k;
-			}
-		}
+		
 		$scope.addDiagram01Task = function(v, taskKey, editPath){
 			console.log(v);
 			console.log(taskKey);
@@ -335,12 +300,6 @@ function initAll ($http, $scope){
 				parentKey = value;
 			});
 			return parentEl;
-		}
-		$scope.menuType = function(o){
-			if(Array.isArray(o))
-				return 'list';
-			if(typeof o === 'object')
-				return 'object';
 		}
 		$scope.menuShow = function(o){
 		}

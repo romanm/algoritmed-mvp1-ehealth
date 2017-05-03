@@ -31,6 +31,13 @@
 	,"fa":"fa-info"
 	,"parent":"info"
 }
+,"protocol":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/protocol.html'"
+	,"shortName":"Клінічний протокол"
+	,"fa":"fa-info"
+	,"parent":"info"
+}
 ,"testMvpPatient":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/testMvpPatient.html'"

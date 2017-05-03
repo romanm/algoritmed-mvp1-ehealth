@@ -31,11 +31,8 @@ public class WebClient {
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			logger.info(" ------con-----con----\n " + con);
 			con.setRequestMethod("GET");
-			System.out.println(1);
 			con.setRequestProperty("Content-Type", "application/json"); 
-			System.out.println(2);
 			con.setRequestProperty("charset", "utf-8");
-			System.out.println(3);
 			InputStream requestBody = con.getInputStream();
 			mapResponsed = mapper.readValue(requestBody, Map.class);
 			logger.info(" ----------mapResponsed-----\n " + mapResponsed);

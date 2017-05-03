@@ -3,6 +3,38 @@ function initAll ($http, $scope){
 	initAllAlgoritmed($http, $scope);
 	initAllServer($http, $scope);
 	console.log('----initAll---------------' + $scope.pagePath.last());
+	$scope.readCentralProtocols = function(){
+		console.log("readCentralProtocols");
+		var url = '/r/seekProtocolFromMeddoc/0';
+		$http.get(url).then(
+			function(response) {
+				console.log(response.data);
+				$scope.dbCentralProtocolListe = response.data.protocolBourse.dbProtocolListe;
+				console.log($scope.dbCentralProtocolListe);
+			}, function(response) {
+				console.log(response);
+			}
+		);
+	}
+	if('protocol' == $scope.pagePath.last()){
+		console.log('----initAll-----------' + $scope.pagePath.last());
+		if($scope.param.cdbId){
+			var url = '/r/central/dbProtocol/' + $scope.param.cdbId;
+			console.log(url);
+			$http.get(url).then(
+				function(response) {
+					$scope.protocol = response.data.protocol;
+					console.log($scope.protocol);
+					initProtocol();
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		}
+
+		
+	}else
 	if('testMvpPatient' == $scope.pagePath.last()){
 		console.log('----initAll---------------' + $scope.pagePath.last());
 		$scope.ehealthapi1 = {

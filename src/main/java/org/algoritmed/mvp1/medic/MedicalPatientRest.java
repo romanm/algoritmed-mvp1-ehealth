@@ -64,6 +64,28 @@ public class MedicalPatientRest {
 		Map<String, Object> map = null;
 		return map;
 	}
+	@GetMapping(value = "/r/central/dbProtocol/{cdbId}")
+	public @ResponseBody Map<String, Object> cdbProtocol(@PathVariable Integer cdbId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cdbId", cdbId);
+		String url = configMeddocServer + 
+			"/r/meddoc/dbProtocol/" + cdbId
+			;
+		map.put("url", url);
+		Map<String, Object> protocol = webClient.getFromUrl(url);
+		map.put("protocol", protocol);
+		return map;
+	}
+	@GetMapping(value = "/r/seekProtocolFromMeddoc/{seekProtocol}")
+	public @ResponseBody Map<String, Object>  protocolFromMeddocPatients(@PathVariable String seekProtocol) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("seekProtocol", seekProtocol);
+		String url = configMeddocServer + "/r/meddoc/dbProtocolListe";
+		map.put("url", url);
+		Map<String, Object> protocolBourse = webClient.getFromUrl(url);
+		map.put("protocolBourse", protocolBourse);
+		return map;
+	}
 	/**
 	 * Пошук пацієнтів в БД загальної медичної страховки
 	 * @return
@@ -85,5 +107,6 @@ public class MedicalPatientRest {
 
 	private @Autowired WebClient webClient;
 	private @Value("${config.insurance.server}") String configInsuranceServer;
+	private @Value("${config.meddoc.server}") String configMeddocServer;
 
 }
