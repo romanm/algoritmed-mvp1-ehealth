@@ -90,9 +90,26 @@ function initAll ($http, $scope){
 		$scope.openNewProtocolDialog = function(){
 			$scope.protocol = {"title":{"shortName":"","name":""}, "config":{"version":"0.0.1","menuWidth":3,"viewModel":"vm_0_0_1"} ,"process":{},"diagram_01":[]};
 		}
-	}
-	else
-	if('code' == $scope.pagePath.last()){
+	} else
+	if('icd10' == $scope.pagePath.last()){
+		console.log('----initAll----'+url+'-----------'+$scope.pagePath.last());
+//		$scope.icd = icdUa.icd;
+//		console.log($scope.icd);
+//		var url = '/r/meddoc/icd';
+		var url = '/f/mvp1/meddoc/db/icdUa.json';
+		$http.get(url).then(
+			function(response) {
+				console.log(response.data);
+				$scope.icd = response.data.icd;
+				console.log($scope.icd);
+			} , function(response) {
+				console.log(response);
+			}
+		);
+		/*
+		 * */
+	} else
+	if('code' == $scope.pagePath.last() || 'icpc2' == $scope.pagePath.last()){
 		console.log('----initAll------code---------');
 //		"preferred":'переважно' ,
 		$scope.codeItemsTitle = {

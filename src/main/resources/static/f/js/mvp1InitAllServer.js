@@ -1,12 +1,21 @@
 function initAllServer ($http, $scope){
 	console.log('----initAllServer---------------');
+
+	// for menu colored
+	console.log('for menu colored');
+	$scope.menuHomeClicked = function(k){
+		var menuHomeClicked = k == $scope.pagePath.last();
+		if(!menuHomeClicked){
+			var lastPage = $scope.config[$scope.pagePath.last()];
+			if(lastPage)
+				menuHomeClicked = k == lastPage.parent;
+		}
+		return menuHomeClicked;
+	}
+
 	if('protocol' == $scope.pagePath.last()){
 		console.log('----initAll-----------' + $scope.pagePath.last());
 		$scope.openAddDialog = function(objToEdit, k){
-			console.log(k);
-			console.log(objToEdit[k]);
-			console.log(objToEdit);
-			console.log(Array.isArray(objToEdit));
 			if(Array.isArray(objToEdit)){
 				objToEdit[k].openAddDialog =
 					!objToEdit[k].openAddDialog;
@@ -61,10 +70,8 @@ function initAllServer ($http, $scope){
 
 }
 
-console.log("Object.prototype.length");
-console.log(Array.prototype.last);
+/*
 if (!Array.prototype.last){
-	console.log("Object.prototype.length");
 	Object.prototype.length = function(){
 		return Object.keys(this).length;
 	}
@@ -78,3 +85,4 @@ if (!Array.prototype.last){
 		return this[this.length - 3];
 	}
 }
+ * */

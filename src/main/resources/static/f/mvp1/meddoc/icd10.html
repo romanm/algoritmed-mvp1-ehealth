@@ -1,1 +1,87 @@
-icd10
+<div class="w3-container">
+		<!-- 
+		https://codeforgeek.com/2014/12/highlight-search-result-angular-filter/
+		http://stackoverflow.com/questions/15519713/highlighting-a-filtered-result-in-angularjs
+		 -->
+
+	<div ng-include="'/f/mvp1/meddoc/menuCode.html'"></div>
+
+	<div class="w3-row">
+		<div class="w3-half w3-container">
+			<h2>development</h2>
+			<div class="w3-dropdown-hover">
+				<label>Пошук: <input class="w3-input w3-border"
+					ng-model="searchIcd"></label>
+				<div class="w3-dropdown-content w3-card-2">
+					<div>
+						<a href="#">123</a> |234
+					</div>
+					<a href="#" class="w3-bar-item w3-button">Link 1</a> 
+					<a href="#" class="w3-bar-item w3-button">Link 2</a> 
+					<a href="#" class="w3-bar-item w3-button">Link 3</a>
+				</div>
+			</div>
+			<!-- 
+			<div class="w3-dropdown-click" style="margin-bottom: 73px">
+			 -->
+			<div class="w3-dropdown-click">
+				<button ng-click="myFunction=!myFunction"
+					class="w3-button w3-red w3-hover-pink ">
+					Dropdown &nbsp;<i class="fa fa-caret-down"></i>
+				</button>
+				<div id="myDropdown" 
+				ng-class="{'w3-show':myFunction}"
+				class="w3-dropdown-content w3-card-2">
+					<a style="color: #000" href="javascript:void(0)">Link 1</a> <a
+						style="color: #000" href="javascript:void(0)">Link 2</a> <a
+						style="color: #000" href="javascript:void(0)">Link 3</a>
+				</div>
+			</div>
+			<div>
+			--
+			</div>
+		</div>
+		<div class="w3-half w3-container">
+			<header ng-click="simple=!simple" class="w3-light-grey w3-hover-grey"
+				ng-init="simple=true"> Просто МКХ10
+				<i class="fa fa-caret-down"></i> </header>
+			<div ng-if="simple">
+				<label>Пошук: <input class="w3-input w3-border"
+					ng-model="searchIcd"></label>
+				<ul class="w3-ul">
+					<li ng-repeat="i1 in icd | filter:searchIcd">
+						<div ng-click="i1.open=!i1.open" class="w3-hover-light-gray">
+							{{i1.icd_code}} : {{i1.icd_name}}</div>
+						<ul class="w3-ul" ng-if="i1.childs && i1.open">
+							<li ng-repeat="i2 in i1.childs  | filter:searchIcd">
+								<div ng-click="i2.open=!i2.open" class="w3-hover-light-gray">{{i2.icd_code}}
+									: {{i2.icd_name}}</div>
+								<ul class="w3-ul" ng-if="i2.childs && i2.open">
+									<li ng-repeat="i3 in i2.childs | filter:searchIcd">
+										<div ng-click="i3.open=!i3.open" class="w3-hover-light-gray">{{i3.icd_code}}
+											: {{i3.icd_name}}</div>
+										<ul class="w3-ul" ng-if="i3.childs && i3.open">
+											<li ng-repeat="i4 in i3.childs | filter:searchIcd">
+												<div ng-click="i4.open=!i4.open" class="w3-hover-light-gray">{{i4.icd_code}}
+													: {{i4.icd_name}}</div>
+												<ul class="w3-ul" ng-if="i4.childs && i4.open">
+													<li ng-repeat="i5 in i4.childs | filter:searchIcd">
+														<div ng-click="i5.open=!i5.open"
+															class="w3-hover-light-gray">{{i5.icd_code}} :
+															{{i5.icd_name}}</div>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+</div>

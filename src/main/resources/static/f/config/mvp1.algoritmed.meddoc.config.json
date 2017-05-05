@@ -20,7 +20,7 @@
 ,"code":{
 	"th_template":"mvp1-meddoc"
 	,"ng_template":"'/f/mvp1/meddoc/code.html'"
-	,"shortName":"Кодування"
+	,"shortName":"Стандарти кодування"
 	,"fa":"fa-qrcode"
 	,"fa2":"fa-barcode"
 	,"parent":"home"

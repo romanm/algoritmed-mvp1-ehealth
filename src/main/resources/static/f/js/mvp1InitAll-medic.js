@@ -159,9 +159,4 @@ function initAll ($http, $scope){
 		}
 	);
 
-	// for menu colored
-	$scope.menuHomeClicked = function(k){
-		return k == $scope.pagePath[0];
-	}
-
 }

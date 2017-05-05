@@ -1,5 +1,46 @@
 <div class="w3-top no-print">
+	<div class="w3-bar w3-light-gray">
+		<a class="w3-bar-item w3-button"
+			href="{{prevousPath()}}"> <i class="fa fa-arrow-circle-o-right"></i>
+			<i class="fa fa-home" aria-hidden="true"></i>
+		</a>
+		<div ng-init="vParent='home'">
+			<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent"
+				href="/v/{{k}}" class="w3-bar-item w3-button"
+				ng-class="{'w3-green':menuHomeClicked(k)}">
+				<i ng-if="v.fa" class="fa {{v.fa}}"></i>
+				{{v.shortName}}
+				<i ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
+			</a>
+		</div>
+		<div class="w3-dropdown-click w3-right">
+			<button class="w3-button w3-hover-red" ng-click="logLog=!logLog">
+				{{principal.principal.name}} 
+				<i ng-if="principal.principal.name" class="fa fa-sign-out"></i> 
+				<i ng-if="!principal.principal.name" class="fa fa-sign-in"></i> 
+				<i class="fa fa-caret-down"></i>
+			</button>
+			<div class="w3-dropdown-content w3-bar-block w3-card-4"
+				style="right: 0" ng-class="{'w3-show':logLog}">
+				<b>Логін діалог</b>
+				<div ng-if="principal.principal.name">
+					<a href="/logout">Вийти з логін</a>
+				</div>
+				<div ng-include="'/f/mvp1/medic/loginForm.html'"></div>
+			</div>
+		</div>
+		<!-- 
+		<a href="#" class="w3-bar-item w3-button w3-right w3-hover-red">
+			{{principal.principal.name}}
+			<i ng-if="principal.principal.name" class="fa fa-sign-out"></i>
+			<i ng-if="!principal.principal.name" class="fa fa-sign-in"></i>
+		</a>
+ -->
+	</div>
+<!-- 
+w3-3*.css
 	<div class="w3-card-2" ng-include="'/f/mvp1/medic/menuHome.html'"></div>
+ -->
 	<!-- Navbar on small screens -->
 	<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
 		<ul class="w3-navbar w3-left-align w3-white">

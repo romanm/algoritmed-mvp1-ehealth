@@ -11,10 +11,10 @@
 	</a></li>
 	<li ng-repeat="(k,v) in config" ng-if="v.parent == 'home'"
 		class="w3-hide-small"
-		ng-class="{'w3-dropdown-hover':config.hasChild('menuHome', k)}"><a
-		ng-class="{'w3-green':menuHomeClicked(k)}" href="/v/{{k}}"> <i
-			ng-if="v.fa" class="fa {{v.fa}}"></i> {{v.shortName}} <i
-			ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
+		ng-class="{'w3-dropdown-hover':config.hasChild('menuHome', k)}">
+		<a ng-class="{'w3-green':menuHomeClicked(k)}" href="/v/{{k}}"> 
+		<i ng-if="v.fa" class="fa {{v.fa}}"></i> {{v.shortName}} 
+		<i ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
 	</a>
 		<div ng-if="config.hasChild('menuHome', k)"
 			class="w3-dropdown-content w3-white w3-card-4">

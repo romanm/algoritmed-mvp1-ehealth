@@ -175,7 +175,71 @@ public class MedDocRest {
 	private @Value("${sql.meddoc.demo_icpc2_ua.exclusion}") String sqlMeddocDemoIcpc2UaExclusion;
 	private @Value("${sql.meddoc.icpc2icd10.code}") String sqlMeddocIcpc2icd10Code;
 	private @Value("${sql.meddoc.protocol.select}") String sqlMeddocProtocolSelect;
+	private @Value("${sql.meddoc.icd}") String sqlMeddocIcd;
 	
+	@GetMapping(value = "/r/meddoc/icd")
+	public @ResponseBody Map<String, Object> dbMeddocIcd() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		logger.info("\n"
+				+ "/r/meddoc/icd"
+				+ "\n" + map
+				);
+//		List<Map<String, Object>> dbMeddocIcd = db1JdbcTemplate.queryForList(sqlMeddocIcd);
+//		map.put("dbMeddocIcd", dbMeddocIcd);
+		Map<String, Object> mapChilds
+			, map3 = new HashMap<>();
+		ArrayList<Map<String, Object>> listPath = new ArrayList<>();
+		listPath.add(null);
+		listPath.add(null);
+		String sql = "SELECT * FROM icd "
+				+ "WHERE icd_root = :icd_root "
+				+ "AND icd_level > 1"
+				+ "ORDER BY icd_left_key";
+		List<Map<String, Object>> dbMeddocIcdL1 = db1JdbcTemplate.queryForList("SELECT * FROM icd WHERE icd_id=icd_root");
+		map.put("icd", dbMeddocIcdL1);
+		int i = 0;
+		for (Map<String, Object> map2 : dbMeddocIcdL1) {
+			listPath.set(1, map2);
+			Integer icd_root = (Integer) map2.get("icd_root");
+			if(icd_root<=100000){
+				map3.put("icd_root", icd_root);
+				List<Map<String, Object>> l = db1ParamJdbcTemplate.queryForList(sql, map3);
+				for (Map<String, Object> map4 : l){
+					addMapChilds(listPath, map4);
+					i++;
+//					System.err.print(i);
+//					System.err.println(map4);
+					if(i>200000)
+						break;
+				}
+			}
+		}
+		logger.info("\n"
+				+ "/r/meddoc/icd"
+//				+ "\n" + map
+				);
+		return map;
+	}
+	private void addMapChilds(List<Map<String, Object>> listPath, Map<String, Object> mapIcdItem) {
+		Integer icd_level = (Integer) mapIcdItem.get("icd_level");
+//		System.err.print("listPath" + "="+listPath.size());
+//		System.err.println(listPath);
+//		System.err.print("icd_level=");
+//		System.err.println(icd_level);
+//		System.err.print("mapIcdItem" + "=");
+//		System.err.println(mapIcdItem);
+		if(icd_level>1){
+			Map<String, Object> map = listPath.get(icd_level-1);
+			if(!map.containsKey("childs"))
+				map.put("childs", new ArrayList<List<Map<String, Object>>>());
+			List<Map<String, Object>> listChilds = (List<Map<String, Object>>) map.get("childs");
+			listChilds.add(mapIcdItem);
+		}
+		if(icd_level>=listPath.size())
+			listPath.add(mapIcdItem);
+		else
+			listPath.set(icd_level, mapIcdItem);
+	}
 	@GetMapping(value = "/r/meddoc/dbProtocolListe")
 	public @ResponseBody Map<String, Object> dbProtocolListe() {
 		Map<String, Object> map = new HashMap<String, Object>();
