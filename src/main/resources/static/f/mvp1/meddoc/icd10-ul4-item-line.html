@@ -1,0 +1,5 @@
+<div ng-click="item.open=!item.open" class="w3-hover-light-gray">
+	{{item.icd_code
+	}}<span class="w3-tiny" ng-if="item.open">({{calcFilteredChilds(item)}})</span>
+	: {{item.icd_name}}
+</div>

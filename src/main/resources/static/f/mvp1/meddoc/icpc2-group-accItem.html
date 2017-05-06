@@ -1,7 +1,7 @@
 <button ng-click="icpc2GroupAccCtrl.expandItem(o)"
-	class="w3-btn-block w3-white w3-border w3-left-align">
+	class="w3-button w3-block w3-left-align">
 	<div class="w3-large">{{k}} {{o.name}}</div>
 </button>
-<div class="w3-accordion-content" ng-class="{'w3-show':o.expand}">
+<div class="w3-container" ng-class="{'w3-show':o.expand, 'w3-hide':!o.expand}">
 	<div ng-include="'/f/mvp1/meddoc/icpc2-subgroup.html'"></div>
 </div>

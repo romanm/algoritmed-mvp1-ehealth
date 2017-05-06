@@ -1,0 +1,25 @@
+<ul class="w3-ul">
+	<li ng-repeat="i1 in icd | filter:icdConf.search">
+		<div ng-init="item=i1" ng-include="'/f/mvp1/meddoc/icd10-ul4-item-line.html'"></div>
+		<ul class="w3-ul" ng-if="isOpenedChilds(i1)">
+			<li ng-repeat="i2 in i1.childs  | filter:icdConf.search">
+				<div ng-init="item=i2" ng-include="'/f/mvp1/meddoc/icd10-ul4-item-line.html'"></div>
+				<ul class="w3-ul" ng-if="i2.childs && i2.open">
+					<li ng-repeat="i3 in i2.childs | filter:icdConf.search">
+						<div ng-init="item=i3" ng-include="'/f/mvp1/meddoc/icd10-ul4-item-line.html'"></div>
+						<ul class="w3-ul" ng-if="i3.childs && i3.open">
+							<li ng-repeat="i4 in i3.childs | filter:icdConf.search">
+								<div ng-init="item=i4" ng-include="'/f/mvp1/meddoc/icd10-ul4-item-line.html'"></div>
+								<ul class="w3-ul" ng-if="i4.childs && i4.open">
+									<li ng-repeat="i5 in i4.childs | filter:icdConf.search">
+										<div ng-init="item=i5" ng-include="'/f/mvp1/meddoc/icd10-ul4-item-line.html'"></div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>

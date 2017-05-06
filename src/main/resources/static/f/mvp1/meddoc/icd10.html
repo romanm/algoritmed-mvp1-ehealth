@@ -9,21 +9,64 @@
 	<div class="w3-row">
 		<div class="w3-half w3-container">
 			<h2>development</h2>
+			<div>
+			{{icdConf}}
+			{{icdConf.search}}
+			{{icdConf.search.length}}
+			</div>
 			<div class="w3-dropdown-hover">
 				<label>Пошук: <input class="w3-input w3-border"
-					ng-model="searchIcd"></label>
-				<div class="w3-dropdown-content w3-card-2">
+					ng-model="icdConf.search"></label>
+				<div class="w3-dropdown-content w3-card-2"
+				style="width:500px"
+				>
+					<header class="w3-bar w3-border w3-tiny w3-light-grey">
+						<button class="w3-bar-item w3-button"
+						ng-class="{'w3-green':!icdSeekContent || icdSeekContent=='tree'}"
+							ng-click="icdSeekContent='tree'">
+							<!-- <i class="fa fa-sitemap" aria-hidden="true"></i> -->
+							<i class="fa fa-indent" aria-hidden="true"></i> групи
+						</button>
+						<button ng-click="icdSeekContent='code'"
+						ng-class="{'w3-green':icdSeekContent=='code'}"
+							class="w3-bar-item w3-button">
+							<i class="fa fa-qrcode" aria-hidden="true"></i> код
+						</button>
+						<button ng-click="icdSeekContent='all'"
+						ng-class="{'w3-green':icdSeekContent=='all'}"
+							class="w3-bar-item w3-button">
+							<i class="fa fa-list-alt" aria-hidden="true"></i> гамуз
+						</button>
+					</header>
+					<div ng-if="icdSeekContent=='all'">all</div>
+					<div ng-if="icdSeekContent=='code'">code</div>
+					<div ng-if="!icdSeekContent || icdSeekContent=='tree'"
+					style="max-height: 300px;overflow: auto;"
+						ng-include="'/f/mvp1/meddoc/icd10-ul4.html'"></div>
+					<!-- 
 					<div>
-						<a href="#">123</a> |234
+						<a href="#">
+						<i class="fa fa-indent" aria-hidden="true"></i>
+						групи
+						</a>
+						| <a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i>
+						код</a> 
+						| <a href="#">
+						<i class="fa fa-list-alt" aria-hidden="true"></i>
+						гамуз</a> 
 					</div>
 					<a href="#" class="w3-bar-item w3-button">Link 1</a> 
 					<a href="#" class="w3-bar-item w3-button">Link 2</a> 
 					<a href="#" class="w3-bar-item w3-button">Link 3</a>
+					 -->
 				</div>
 			</div>
+			<a href="#" ng-click="t1=!t1">test</a>
+			<span ng-if="t1">test OK</span>
 			<!-- 
 			<div class="w3-dropdown-click" style="margin-bottom: 73px">
 			 -->
+			 <div></div>
 			<div class="w3-dropdown-click">
 				<button ng-click="myFunction=!myFunction"
 					class="w3-button w3-red w3-hover-pink ">
@@ -41,44 +84,40 @@
 			--
 			</div>
 		</div>
-		<div class="w3-half w3-container">
-			<header ng-click="simple=!simple" class="w3-light-grey w3-hover-grey"
-				ng-init="simple=true"> Просто МКХ10
-				<i class="fa fa-caret-down"></i> </header>
+		<div class="w3-half w3-container" ng-init="seekDb=true">
+			<header ng-click="seekDb=!seekDb" class="w3-light-grey w3-hover-grey">
+				Пошук МКХ10 в БД <i class="fa fa-caret-down"></i>
+			</header>
+			<div ng-if="seekDb">
+				<label>Пошук в БД:
+				<span ng-if="icdDb.count" class="w3-tiny">({{icdDb.count}}/{{icdDb.countAll}})</span>
+				 <input class="w3-input w3-border"
+				ng-change="seekIcdDb()"
+					ng-model="icdConf.search"></label>
+				<div style="max-height: 300px;overflow: auto;">
+					<ul class="w3-ul">
+						<li ng-repeat="i1 in icdDb.meddocIcdCodeP1">
+							{{i1.icd_code}}: {{i1.icd_name}}
+							<ul class="w3-ul">
+								<li ng-repeat="i2 in icdDb.meddocIcdCodeLimit"
+								ng-if="i2.parentId==i1.icd_id"
+								>
+								{{i2.icd_code}}: {{i2.icd_name}}
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="w3-half w3-container" ng-init="simple=false">
+			<header ng-click="simple=!simple" class="w3-light-grey w3-hover-grey">
+				Просто МКХ10 <i class="fa fa-caret-down"></i>
+			</header>
 			<div ng-if="simple">
 				<label>Пошук: <input class="w3-input w3-border"
-					ng-model="searchIcd"></label>
-				<ul class="w3-ul">
-					<li ng-repeat="i1 in icd | filter:searchIcd">
-						<div ng-click="i1.open=!i1.open" class="w3-hover-light-gray">
-							{{i1.icd_code}} : {{i1.icd_name}}</div>
-						<ul class="w3-ul" ng-if="i1.childs && i1.open">
-							<li ng-repeat="i2 in i1.childs  | filter:searchIcd">
-								<div ng-click="i2.open=!i2.open" class="w3-hover-light-gray">{{i2.icd_code}}
-									: {{i2.icd_name}}</div>
-								<ul class="w3-ul" ng-if="i2.childs && i2.open">
-									<li ng-repeat="i3 in i2.childs | filter:searchIcd">
-										<div ng-click="i3.open=!i3.open" class="w3-hover-light-gray">{{i3.icd_code}}
-											: {{i3.icd_name}}</div>
-										<ul class="w3-ul" ng-if="i3.childs && i3.open">
-											<li ng-repeat="i4 in i3.childs | filter:searchIcd">
-												<div ng-click="i4.open=!i4.open" class="w3-hover-light-gray">{{i4.icd_code}}
-													: {{i4.icd_name}}</div>
-												<ul class="w3-ul" ng-if="i4.childs && i4.open">
-													<li ng-repeat="i5 in i4.childs | filter:searchIcd">
-														<div ng-click="i5.open=!i5.open"
-															class="w3-hover-light-gray">{{i5.icd_code}} :
-															{{i5.icd_name}}</div>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
+					ng-model="icdConf.search"></label>
+				<div ng-include="'/f/mvp1/meddoc/icd10-ul4.html'"></div>
 			</div>
 		</div>
 	</div>

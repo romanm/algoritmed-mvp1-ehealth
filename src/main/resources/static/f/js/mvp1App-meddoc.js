@@ -3,14 +3,15 @@
 
 	var app = angular.module('mvp1App', ['ngSanitize']);
 
-	app.controller('Mvp1Ctrl', function($scope, $http) {
+	app.controller('Mvp1Ctrl', function($scope, $http, $filter) {
 		console.log('---mvp1App-----Mvp1Ctrl--------');
-		initAll($http, $scope);
+		initAll($http, $scope, $filter);
 	});
 
 	app.controller('AccordionCtrl', function ($scope) {
 		console.log('---AccordionCtrl------------');
 		this.expandItem = function (o){
+			console.log(o);
 			o.expand = !o.expand;
 		}
 

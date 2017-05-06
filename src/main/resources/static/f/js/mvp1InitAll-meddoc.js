@@ -4,7 +4,7 @@ function expandAll (o, expandO){
 	});
 }
 
-function initAll ($http, $scope){
+function initAll ($http, $scope, $filter){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
 	initAllServer($http, $scope);
@@ -93,8 +93,50 @@ function initAll ($http, $scope){
 	} else
 	if('icd10' == $scope.pagePath.last()){
 		console.log('----initAll----'+url+'-----------'+$scope.pagePath.last());
-//		$scope.icd = icdUa.icd;
-//		console.log($scope.icd);
+		$scope.icdConf = {search:'','x':'y'};
+		console.log($scope.icdConf);
+		/*
+		$scope.$watch('icdConf.search', function(newValue, oldValue) {
+			console.log(newValue+'/'+oldValue);
+			$scope.seekIcdDb();
+		});
+		 * */
+		$scope.seekIcdDb = function(){
+			console.log($scope.icdConf.search);
+			if($scope.icdConf.search.length>1){
+				var url = '/r/meddoc/icdCode/'+$scope.icdConf.search;
+				console.log(url);
+				$http.get(url).then(
+					function(response) {
+						$scope.icdDb = response.data;
+						console.log($scope.icdDb);
+					} , function(response) {
+						console.log(response);
+					}
+				);
+			}
+		}
+		$scope.isOpenedChilds = function(itemO){
+			var isOpenedChilds = itemO.childs && itemO.open;
+			if(!isOpenedChilds){
+				if(typeof itemO.open == "undefined"){
+					if($scope.icdConf.search.length >= 2){
+						var calcFilteredChilds = $scope.calcFilteredChilds(itemO);
+						if( calcFilteredChilds == 0)
+							isOpenedChilds = false;
+						else
+						if(calcFilteredChilds <= 5)
+							isOpenedChilds = true;
+					}
+				}
+			}
+			return isOpenedChilds;
+		}
+		$scope.calcFilteredChilds = function(o){
+			var fc = $filter('filter')(o.childs, $scope.icdConf.search)
+			if(fc)
+				return fc.length;
+		}
 //		var url = '/r/meddoc/icd';
 		var url = '/f/mvp1/meddoc/db/icdUa.json';
 		$http.get(url).then(

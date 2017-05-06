@@ -176,7 +176,44 @@ public class MedDocRest {
 	private @Value("${sql.meddoc.icpc2icd10.code}") String sqlMeddocIcpc2icd10Code;
 	private @Value("${sql.meddoc.protocol.select}") String sqlMeddocProtocolSelect;
 	private @Value("${sql.meddoc.icd}") String sqlMeddocIcd;
-	
+	private @Value("${sql.meddoc.icdCode.limit}") String sqlMeddocIcdCodeLimit;
+	private @Value("${sql.meddoc.icdCode.count}") String sqlMeddocIcdCodeCount;
+	private @Value("${sql.meddoc.icdCodeP1}") String sqlMeddocIcdCodeP1;
+
+	@GetMapping(value = "/r/meddoc/icdCode/{seekIcd}")
+	public @ResponseBody Map<String, Object> dbMeddocIcdCode(@PathVariable String seekIcd) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		seekIcd = "%"+seekIcd+"%";
+		int limit = 20;
+		map.put("limit", limit );
+		map.put("seekIcd", seekIcd);
+		logger.info("\n"
+				+ "/r/meddoc/icdCode/{seekIcd}"
+				+ "\n" + map
+				+ "\n" + sqlMeddocIcdCodeLimit.replace(":seekIcd", "'"+seekIcd+"'")
+				+ "\n" + sqlMeddocIcdCodeCount.replace(":seekIcd", "'"+seekIcd+"'")
+				+ "\n" + sqlMeddocIcdCodeP1.replace(":seekIcd", "'"+seekIcd+"'")
+				);
+		Integer countAll = db1ParamJdbcTemplate.queryForObject(sqlMeddocIcdCodeCount, map, Integer.class);
+		map.put("countAll", countAll);
+		List<Map<String, Object>> meddocIcdCodeLimit = db1ParamJdbcTemplate.queryForList(sqlMeddocIcdCodeLimit, map);
+		map.put("meddocIcdCodeLimit", meddocIcdCodeLimit);
+		int size = meddocIcdCodeLimit.size();
+		map.put("count", size);
+		if(size>0){
+			List<Map<String, Object>> meddocIcdCodeP1 = db1ParamJdbcTemplate.queryForList(sqlMeddocIcdCodeP1, map);
+			int sizeP1 = meddocIcdCodeP1.size();
+			if(sizeP1>0){
+				map.put("meddocIcdCodeP1", meddocIcdCodeP1);
+				map.put("countP1", sizeP1);
+				for (int i = 0; i < sizeP1; i++) {
+					Map<String, Object> p1Item = meddocIcdCodeP1.get(i);
+				}
+			}
+		}
+		return map;
+	}
+
 	@GetMapping(value = "/r/meddoc/icd")
 	public @ResponseBody Map<String, Object> dbMeddocIcd() {
 		Map<String, Object> map = new HashMap<String, Object>();
