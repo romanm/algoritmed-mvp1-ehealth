@@ -9,80 +9,80 @@
 	<div class="w3-row">
 		<div class="w3-half w3-container">
 			<h2>development</h2>
+			<!-- 
 			<div>
-			{{icdConf}}
-			{{icdConf.search}}
-			{{icdConf.search.length}}
+			{{icdConf.keys()}}
+			{{icdConf.selectedItem.icd_code}}
 			</div>
+			 -->
 			<div class="w3-dropdown-hover">
-				<label>Пошук: <input class="w3-input w3-border"
+				<label>Пошук: 
+					<u ng-if="icdConf.selectedItem"
+					ng-bind-html="highlight(
+					icdConf.selectedItem.icd_code+': '+icdConf.selectedItem.icd_name, icdConf.search)"></u>
+					<!-- 
+					<u ng-if="icdConf.selectedItem">
+						{{icdConf.selectedItem.icd_code}}:
+						{{icdConf.selectedItem.icd_name}} </u> 
+						 -->
+					<input class="w3-input w3-border" ng-change="seekIcdPopup()"
 					ng-model="icdConf.search"></label>
 				<div class="w3-dropdown-content w3-card-2"
 				style="width:500px"
 				>
 					<header class="w3-bar w3-border w3-tiny w3-light-grey">
 						<button class="w3-bar-item w3-button"
-						ng-class="{'w3-green':!icdSeekContent || icdSeekContent=='tree'}"
-							ng-click="icdSeekContent='tree'">
+						ng-class="{'w3-green':!icdConf.icdSeekContent || icdConf.icdSeekContent=='tree'}"
+							ng-click="icdConf.icdSeekContent='tree'">
 							<!-- <i class="fa fa-sitemap" aria-hidden="true"></i> -->
 							<i class="fa fa-indent" aria-hidden="true"></i> групи
 						</button>
-						<button ng-click="icdSeekContent='code'"
-						ng-class="{'w3-green':icdSeekContent=='code'}"
+						<button ng-click="icdConf.icdSeekContent='code'"
+							ng-class="{'w3-green':icdConf.icdSeekContent=='code'}"
 							class="w3-bar-item w3-button">
-							<i class="fa fa-qrcode" aria-hidden="true"></i> код
+							<i class="fa fa-qrcode" aria-hidden="true"></i> код 
+							<span ng-if="icdDb.count"> 
+							- <u ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"></u>
+							</span>
 						</button>
-						<button ng-click="icdSeekContent='all'"
-						ng-class="{'w3-green':icdSeekContent=='all'}"
+						<button ng-click="icdConf.icdSeekContent='all'"
+						ng-class="{'w3-green':icdConf.icdSeekContent=='all'}"
 							class="w3-bar-item w3-button">
 							<i class="fa fa-list-alt" aria-hidden="true"></i> гамуз
 						</button>
+						<button class="w3-bar-item w3-button"
+							ng-click="icdConf.selectedItem=null">
+							<i class="fa fa-times" aria-hidden="true"></i> відмінити
+						</button>
 					</header>
-					<div ng-if="icdSeekContent=='all'">all</div>
-					<div ng-if="icdSeekContent=='code'">code</div>
-					<div ng-if="!icdSeekContent || icdSeekContent=='tree'"
-					style="max-height: 300px;overflow: auto;"
-						ng-include="'/f/mvp1/meddoc/icd10-ul4.html'"></div>
-					<!-- 
-					<div>
-						<a href="#">
-						<i class="fa fa-indent" aria-hidden="true"></i>
-						групи
-						</a>
-						| <a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i>
-						код</a> 
-						| <a href="#">
-						<i class="fa fa-list-alt" aria-hidden="true"></i>
-						гамуз</a> 
+					<div style="max-height: 300px; overflow: auto;">
+						<div ng-if="icdConf.icdSeekContent=='all'">all</div>
+						<div ng-if="icdConf.icdSeekContent=='code'"
+							ng-include="'/f/mvp1/meddoc/icd10db-code.html'"></div>
+						<div ng-if="!icdConf.icdSeekContent || icdConf.icdSeekContent=='tree'"
+							ng-include="'/f/mvp1/meddoc/icd10-ul4.html'"></div>
 					</div>
-					<a href="#" class="w3-bar-item w3-button">Link 1</a> 
-					<a href="#" class="w3-bar-item w3-button">Link 2</a> 
-					<a href="#" class="w3-bar-item w3-button">Link 3</a>
-					 -->
-				</div>
-			</div>
-			<a href="#" ng-click="t1=!t1">test</a>
-			<span ng-if="t1">test OK</span>
-			<!-- 
-			<div class="w3-dropdown-click" style="margin-bottom: 73px">
-			 -->
-			 <div></div>
-			<div class="w3-dropdown-click">
-				<button ng-click="myFunction=!myFunction"
-					class="w3-button w3-red w3-hover-pink ">
-					Dropdown &nbsp;<i class="fa fa-caret-down"></i>
-				</button>
-				<div id="myDropdown" 
-				ng-class="{'w3-show':myFunction}"
-				class="w3-dropdown-content w3-card-2">
-					<a style="color: #000" href="javascript:void(0)">Link 1</a> <a
-						style="color: #000" href="javascript:void(0)">Link 2</a> <a
-						style="color: #000" href="javascript:void(0)">Link 3</a>
 				</div>
 			</div>
 			<div>
-			--
+				<a href="#" ng-click="t1=!t1">test</a>
+				<div ng-if="t1">
+					test OK
+					<div class="w3-dropdown-click">
+						<button ng-click="myFunction=!myFunction"
+							class="w3-button w3-red w3-hover-pink ">
+							Dropdown &nbsp;<i class="fa fa-caret-down"></i>
+						</button>
+						<div id="myDropdown" ng-class="{'w3-show':myFunction}"
+							class="w3-dropdown-content w3-card-2">
+							<a style="color: #000" href="javascript:void(0)">Link 1</a> <a
+								style="color: #000" href="javascript:void(0)">Link 2</a> <a
+								style="color: #000" href="javascript:void(0)">Link 3</a>
+						</div>
+					</div>
+				</div>
 			</div>
+
 		</div>
 		<div class="w3-half w3-container" ng-init="seekDb=true">
 			<header ng-click="seekDb=!seekDb" class="w3-light-grey w3-hover-grey">
@@ -90,24 +90,14 @@
 			</header>
 			<div ng-if="seekDb">
 				<label>Пошук в БД:
-				<span ng-if="icdDb.count" class="w3-tiny">({{icdDb.count}}/{{icdDb.countAll}})</span>
+				<span ng-if="icdDb.count" class="w3-tiny"
+				ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"
+				></span>
 				 <input class="w3-input w3-border"
 				ng-change="seekIcdDb()"
 					ng-model="icdConf.search"></label>
-				<div style="max-height: 300px;overflow: auto;">
-					<ul class="w3-ul">
-						<li ng-repeat="i1 in icdDb.meddocIcdCodeP1">
-							{{i1.icd_code}}: {{i1.icd_name}}
-							<ul class="w3-ul">
-								<li ng-repeat="i2 in icdDb.meddocIcdCodeLimit"
-								ng-if="i2.parentId==i1.icd_id"
-								>
-								{{i2.icd_code}}: {{i2.icd_name}}
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+				<div style="max-height: 300px; overflow: auto;"
+					ng-include="'/f/mvp1/meddoc/icd10db-code.html'"></div>
 			</div>
 		</div>
 		<div class="w3-half w3-container" ng-init="simple=false">

@@ -93,7 +93,8 @@ function initAll ($http, $scope, $filter){
 	} else
 	if('icd10' == $scope.pagePath.last()){
 		console.log('----initAll----'+url+'-----------'+$scope.pagePath.last());
-		$scope.icdConf = {search:'','x':'y'};
+//		$scope.icdConf = {search:'','icdSeekContent':'tree'};
+		$scope.icdConf = {search:'','icdSeekContent':'code'};
 		console.log($scope.icdConf);
 		/*
 		$scope.$watch('icdConf.search', function(newValue, oldValue) {
@@ -101,6 +102,24 @@ function initAll ($http, $scope, $filter){
 			$scope.seekIcdDb();
 		});
 		 * */
+		$scope.clickIcdItem = function(item){
+			console.log(item);
+			console.log(item.icd_code.indexOf('-'));
+			console.log(item.icd_code.indexOf('-')<0);
+			if(item.icd_code.indexOf('-')<0){
+				$scope.icdConf.selectedItem = item;
+				var url = '/r/meddoc/icdChildren/' + item.icd_id;
+				$http.get(url).then( function(response) {
+					item.children = response.data.icdChildren;
+					console.log(item.children);
+				});
+			}
+		}
+		$scope.seekIcdPopup = function(){
+			if($scope.icdConf.icdSeekContent=='code'){
+				$scope.seekIcdDb()
+			}
+		}
 		$scope.seekIcdDb = function(){
 			console.log($scope.icdConf.search);
 			if($scope.icdConf.search.length>1){

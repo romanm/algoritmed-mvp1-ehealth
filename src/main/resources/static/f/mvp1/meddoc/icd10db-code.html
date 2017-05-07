@@ -1,0 +1,18 @@
+<div ng-if="!icdConf.search" class="w3-small w3-text-orange">
+	введіть текст для пошуку</div>
+<ul class="w3-ul">
+	<li ng-repeat="i1 in icdDb.meddocIcdCodeP1" ng-init="item=i1">
+		<div ng-include="'/f/mvp1/meddoc/icd10-code-text.html'"></div>
+		<ul class="w3-ul">
+			<li ng-repeat="i2 in icdDb.meddocIcdCodeLimit"
+				ng-if="i2.parentId==i1.icd_id" ng-init="item=i2">
+				<div ng-include="'/f/mvp1/meddoc/icd10-code-text.html'"></div>
+				<ul class="w3-ul" ng-if="i2.children">
+					<li ng-repeat="i3 in i2.children" ng-init="item=i3">
+						<div ng-include="'/f/mvp1/meddoc/icd10-code-text.html'"></div>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>

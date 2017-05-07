@@ -179,6 +179,20 @@ public class MedDocRest {
 	private @Value("${sql.meddoc.icdCode.limit}") String sqlMeddocIcdCodeLimit;
 	private @Value("${sql.meddoc.icdCode.count}") String sqlMeddocIcdCodeCount;
 	private @Value("${sql.meddoc.icdCodeP1}") String sqlMeddocIcdCodeP1;
+	private @Value("${sql.meddoc.icdChildren}") String sqlMeddocIcdChildren;
+	
+	@GetMapping(value = "/r/meddoc/icdChildren/{parentId}")
+	public @ResponseBody Map<String, Object> dbMeddocIcdChildren(@PathVariable Integer parentId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("parentId", parentId);
+		logger.info("\n"
+				+ "/r/meddoc/icdChildren/{parentId}"
+				+ "\n" + map
+				);
+		List<Map<String, Object>> icdChildren = db1ParamJdbcTemplate.queryForList(sqlMeddocIcdChildren, map);
+		map.put("icdChildren", icdChildren);
+		return map;
+	}
 
 	@GetMapping(value = "/r/meddoc/icdCode/{seekIcd}")
 	public @ResponseBody Map<String, Object> dbMeddocIcdCode(@PathVariable String seekIcd) {
