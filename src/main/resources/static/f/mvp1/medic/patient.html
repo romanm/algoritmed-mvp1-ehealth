@@ -17,9 +17,12 @@
 				</header>
 				{{patientById.patient_pib}}
 				<div ng-repeat="ph in patientById.children">
-				{{ph.doctimestamp | date:'short'}}
-				{{ph.keys()}}
-				{{ph.doctype}}
+					<div ng-include="'/f/mvp1/medic/patient/menu-history-record.html'">
+					</div>
+					{{ph.keys()}} 
+					{{ph.doc_id}}
+					/
+					{{ph.doctype}}
 				</div>
 			</div>
 		</div>

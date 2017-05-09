@@ -92,6 +92,22 @@ function initAll ($http, $scope){
 	else
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
+		$scope.removePatientHistoryRecord = function (ph){
+			console.log(ph);
+			var url = '/r/removePatientHistoryRecord';
+			console.log(url);
+			var dbSaveObj = {'doc_id':ph.doc_id};
+			console.log(dbSaveObj);
+			$http.post(url, dbSaveObj).then( function(response) {
+				console.log(response.data);
+				console.log(response.data.numberOfDeletedRows);
+				if(response.data.numberOfDeletedRows>0){
+					var phIndex = $scope.patientById.children.indexOf(ph);
+					console.log(phIndex);
+					$scope.patientById.children.splice(phIndex,1)
+				}
+			});
+		}
 		$scope.newPatientSateRecord = function (){
 			console.log($scope.param);
 			var url = '/r/newPatientSateRecord';

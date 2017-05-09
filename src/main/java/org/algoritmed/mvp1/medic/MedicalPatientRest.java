@@ -64,6 +64,20 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		return map;
 	}
 
+	@PostMapping("/r/removePatientHistoryRecord")
+	public @ResponseBody Map<String, Object> removePatientHistoryRecord(
+			@RequestBody Map<String, Object> dbSaveObj
+			, Principal userPrincipal) {
+		dbSaveObj.put("hello", "/r/removePatientHistoryRecord");
+		logger.info("---------------\n"
+				+ "/r/removePatientHistoryRecord"
+				+ "\n" + dbSaveObj);
+		//delete doc - first level child by patient
+		int numberOfDeletedRows = db1ParamJdbcTemplate.update(sqlDocDelete, dbSaveObj);
+		dbSaveObj.put("numberOfDeletedRows", numberOfDeletedRows);
+		return dbSaveObj;
+	}
+	private @Value("${sql.doc.delete}")				String sqlDocDelete;
 	private @Value("${sql.doc.insert}")				String sqlDocInsert;
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
 	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
