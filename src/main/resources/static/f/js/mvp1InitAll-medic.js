@@ -100,21 +100,17 @@ function initAll ($http, $scope){
 			console.log(dbSaveObj);
 			$http.post(url, dbSaveObj).then( function(response) {
 				console.log(response.data);
+				$scope.patientById.children = response.data.children;
 			});
 		}
 		if($scope.param.id){
 			var url = '/r/medical/patient/'+$scope.param.id;
 			console.log(url);
-			$http.get(url).then(
-				function(response) {
-					console.log(response.data);
-					$scope.patientById = response.data.patientById;
-					console.log($scope.patientById);
-				}
-				, function(response) {
-					console.log(response);
-				}
-			);
+			$http.get(url).then( function(response) {
+				console.log(response.data);
+				$scope.patientById = response.data.patientById;
+				console.log($scope.patientById);
+			});
 		}
 	}
 	if('cabinet' == $scope.pagePath.last()){

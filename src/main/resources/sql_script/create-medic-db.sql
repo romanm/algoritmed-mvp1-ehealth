@@ -5,9 +5,11 @@ doctype_id int auto_increment primary key
 ALTER TABLE doctype ALTER COLUMN doctype_name  RENAME TO doctype;
 ALTER TABLE doctype ADD COLUMN parent_id INT;
 ALTER TABLE doctype ADD FOREIGN KEY (parent_id) REFERENCES (doctype_id);
+DROP TABLE IF EXISTS docbody;
 CREATE TABLE docbody (
-docbody_id int DEFAULT NEXTVAL('dbid') primary key
-,docbody  VARCHAR(100000)
+	docbody_id INTEGER PRIMARY KEY
+	,docbody VARCHAR(100000)
+	,FOREIGN KEY (docbody_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE doc (
 doc_id int DEFAULT NEXTVAL('dbid') primary key
@@ -16,6 +18,8 @@ doc_id int DEFAULT NEXTVAL('dbid') primary key
 , FOREIGN KEY (doctype) REFERENCES doctype (doctype_id)
 , FOREIGN KEY (docbody) REFERENCES docbody (docbody_id)
 );
+ALTER TABLE doc ADD FOREIGN KEY (docbody) REFERENCES docbody (docbody_id);
+
 CREATE TABLE doctimestamp (
 	doctimestamp_id INTEGER PRIMARY KEY AUTO_INCREMENT
 	,doctimestamp TIMESTAMP
@@ -34,5 +38,4 @@ ALTER TABLE doc ADD COLUMN removed BOOLEAN DEFAULT FALSE;
 ALTER TABLE doc ADD FOREIGN KEY (reference,doctype) REFERENCES (doc_id,doctype);
 ALTER TABLE address ADD COLUMN doctype INT NOT null DEFAULT 4;
 ALTER TABLE address ADD FOREIGN KEY (doctype) REFERENCES doctype(doctype_id);
-ALTER TABLE docbody ADD FOREIGN KEY (docbody_id) REFERENCES doc(doc_id);
 

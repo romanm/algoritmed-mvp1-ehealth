@@ -18,7 +18,8 @@
 				{{patientById.patient_pib}}
 				<div ng-repeat="ph in patientById.children">
 				{{ph.doctimestamp | date:'short'}}
-				{{ph}}
+				{{ph.keys()}}
+				{{ph.doctype}}
 				</div>
 			</div>
 		</div>
