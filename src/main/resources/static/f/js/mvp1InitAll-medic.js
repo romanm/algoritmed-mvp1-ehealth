@@ -16,25 +16,6 @@ function initAll ($http, $scope){
 			}
 		);
 	}
-	if('protocol' == $scope.pagePath.last()){
-		console.log('----initAll-----------' + $scope.pagePath.last());
-		if($scope.param.cdbId){
-			var url = '/r/central/dbProtocol/' + $scope.param.cdbId;
-			console.log(url);
-			$http.get(url).then(
-				function(response) {
-					$scope.protocol = response.data.protocol;
-					console.log($scope.protocol);
-					initProtocol();
-				}
-				, function(response) {
-					console.log(response);
-				}
-			);
-		}
-
-		
-	}else
 	if('testMvpPatient' == $scope.pagePath.last()){
 		console.log('----initAll---------------' + $scope.pagePath.last());
 		$scope.ehealthapi1 = {
@@ -77,7 +58,21 @@ function initAll ($http, $scope){
 		
 	}else
 	if('protocol' == $scope.pagePath.last()){
-		console.log($scope.param);
+	console.log('----initAll-----------' + $scope.pagePath.last());
+		if($scope.param.cdbId){
+			var url = '/r/central/dbProtocol/' + $scope.param.cdbId;
+			console.log(url);
+			$http.get(url).then(
+				function(response) {
+					$scope.protocol = response.data.protocol;
+					console.log($scope.protocol);
+					initProtocol();
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		}else
 		if($scope.param.hid){
 			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
 			console.log(url);
@@ -97,6 +92,16 @@ function initAll ($http, $scope){
 	else
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
+		$scope.newPatientSateRecord = function (){
+			console.log($scope.param);
+			var url = '/r/newPatientSateRecord';
+			console.log(url);
+			var dbSaveObj = {'patientId':$scope.param.id};
+			console.log(dbSaveObj);
+			$http.post(url, dbSaveObj).then( function(response) {
+				console.log(response.data);
+			});
+		}
 		if($scope.param.id){
 			var url = '/r/medical/patient/'+$scope.param.id;
 			console.log(url);
@@ -114,7 +119,6 @@ function initAll ($http, $scope){
 	}
 	if('cabinet' == $scope.pagePath.last()){
 		$scope.patient = {'patient_pib':'','patient_address':''};
-
 		$scope.seekPatient = function (){
 			console.log($scope.patient.patient_pib);
 			console.log($scope.patient.patient_pib.length);

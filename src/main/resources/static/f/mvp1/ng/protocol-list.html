@@ -1,29 +1,41 @@
-<header class="w3-container w3-light-grey w3-tiny">
-	<b> Протоколи: </b> 
-	<a ng-class="{'w3-green':showProtocols!='central'}"
-		ng-click="showProtocols='local'" href="#">локальні</a> 
-		| <a ng-class="{'w3-green':showProtocols=='central'}"
-		ng-click="showProtocols='central'; readCentralProtocols()" href="#">центральні</a>
-</header>
-<div ng-if="showProtocols=='central'">
-central
-	<ul class="w3-ul w3-hoverable">
-		<li ng-repeat="p in dbCentralProtocolListe"><a
-		 target="_blank"
-			href="/v/protocol?cdbId={{p.protocol_id}}"> {{p.protocol_name}} </a></li>
-	</ul>
+<div ng-init="openProtocolCard=true; openReceptionCard=false">
+	<header class="w3-container w3-light-grey w3-tiny">
+		<b class="w3-hover-purple"
+			ng-click="openReceptionCard=!openReceptionCard">Прийом не
+			завершений<i class="fa fa-caret-down"></i>:
+		</b>
+	</header>
+	<div ng-if="openReceptionCard">openReceptionCard</div>
+	<header class="w3-container w3-light-grey w3-tiny">
+		<b class="w3-hover-purple" ng-click="openProtocolCard=!openProtocolCard"> Протоколи<i
+			class="fa fa-caret-down"></i>:
+		</b> <a ng-class="{'w3-green':showProtocols!='central'}"
+			ng-click="showProtocols='local'" href="#">локальні</a> | <a
+			ng-class="{'w3-green':showProtocols=='central'}"
+			ng-click="showProtocols='central'; readCentralProtocols()" href="#">центральні</a>
+	</header>
+	<div ng-if="openProtocolCard">
+	<div ng-if="showProtocols=='central'">
+		central
+		<ul class="w3-ul w3-hoverable">
+			<li ng-repeat="p in dbCentralProtocolListe"><a target="_blank"
+				href="/v/protocol?cdbId={{p.protocol_id}}"> {{p.protocol_name}}
+			</a></li>
+		</ul>
+	</div>
+	<div ng-if="showProtocols!='central'">
+		<ul class="w3-ul w3-hoverable">
+			<li ng-repeat="p in dbProtocolListe"><a
+				href="/v/protocol?dbId={{p.protocol_id}}"> {{p.protocol_name}} </a></li>
+		</ul>
+		<ul class="w3-ul w3-hoverable">
+			<li><a href="/v/protocol?hid=URTI"> ГРВІ </a></li>
+			<li><a href="/v/protocol?hid=Pneumonia"> Пневмонія </a></li>
+			<li><a href="/v/protocol?hid=HTN"> Гіпертонічна хвороба </a></li>
+			<li><a href="/v/protocol?hid=jitomer_diabet_II_ml1">Локальный
+					протокол ведения пациентов с сахарным диабетом II типа на уровне
+					ПМСП</a></li>
+		</ul>
+	</div>
 </div>
-<div ng-if="showProtocols!='central'">
-	<ul class="w3-ul w3-hoverable">
-		<li ng-repeat="p in dbProtocolListe"><a
-			href="/v/protocol?dbId={{p.protocol_id}}"> {{p.protocol_name}} </a></li>
-	</ul>
-	<ul class="w3-ul w3-hoverable">
-		<li><a href="/v/protocol?hid=URTI"> ГРВІ </a></li>
-		<li><a href="/v/protocol?hid=Pneumonia"> Пневмонія </a></li>
-		<li><a href="/v/protocol?hid=HTN"> Гіпертонічна хвороба </a></li>
-		<li><a href="/v/protocol?hid=jitomer_diabet_II_ml1">Локальный
-				протокол ведения пациентов с сахарным диабетом II типа на уровне
-				ПМСП</a></li>
-	</ul>
 </div>

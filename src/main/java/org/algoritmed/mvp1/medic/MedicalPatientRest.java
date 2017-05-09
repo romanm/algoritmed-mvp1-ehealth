@@ -1,5 +1,6 @@
 package org.algoritmed.mvp1.medic;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -59,6 +62,18 @@ public class MedicalPatientRest {
 		return map;
 	}
 
+	@PostMapping("/r/newPatientSateRecord")
+	public @ResponseBody Map<String, Object> newPatientSateRecord(
+			@RequestBody Map<String, Object> dbSaveObj
+			, Principal userPrincipal) {
+		logger.info("---------------\n"
+				+ "/r/newPatientSateRecord"
+				+ "\n" + dbSaveObj);
+		dbSaveObj.put("hello", "/r/newPatientSateRecord");
+		return dbSaveObj;
+	}
+
+	
 	@GetMapping(value = "/r/medical/patient2/{patient_id}")
 	public @ResponseBody Map<String, Object>  patient2(@PathVariable Integer patient_id) {
 		Map<String, Object> map = null;

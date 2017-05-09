@@ -45,11 +45,13 @@
 							- <u ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"></u>
 							</span>
 						</button>
+						<!-- 
 						<button ng-click="icdConf.icdSeekContent='all'"
 						ng-class="{'w3-green':icdConf.icdSeekContent=='all'}"
 							class="w3-bar-item w3-button">
 							<i class="fa fa-list-alt" aria-hidden="true"></i> гамуз
 						</button>
+						 -->
 						<button class="w3-bar-item w3-button"
 							ng-click="icdConf.selectedItem=null">
 							<i class="fa fa-times" aria-hidden="true"></i> відмінити
@@ -84,7 +86,7 @@
 			</div>
 
 		</div>
-		<div class="w3-half w3-container" ng-init="seekDb=true">
+		<div class="w3-half w3-container" ng-init="seekDb=false">
 			<header ng-click="seekDb=!seekDb" class="w3-light-grey w3-hover-grey">
 				Пошук МКХ10 в БД <i class="fa fa-caret-down"></i>
 			</header>
