@@ -16,6 +16,10 @@
 					</div>
 				</header>
 				{{patientById.patient_pib}}
+				<div ng-repeat="ph in patientById.children">
+				{{ph.doctimestamp | date:'short'}}
+				{{ph}}
+				</div>
 			</div>
 		</div>
 		<div class="w3-quarter">

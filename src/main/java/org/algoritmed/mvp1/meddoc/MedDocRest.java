@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.HashMap2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +26,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-public class MedDocRest {
+public class MedDocRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedDocRest.class);
 	@Autowired
 	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
-	@Autowired
-	protected JdbcTemplate db1JdbcTemplate;
 	
 	/**
 	 * SQL insert для запису UUID в БД
@@ -68,18 +66,6 @@ public class MedDocRest {
 		UUID uuid = UUID.randomUUID();
 		map.put("uuid", uuid);
 		return uuid;
-	}
-	/**
-	 * SQL select - повертає наступний ID единий для всієй БД.
-	 */
-	private @Value("${sql.nextdbid}") String sqlNextDbId;
-	/**
-	 * Генератор наступного ID единого для всієї БД.
-	 * @return Наступний ID единий для всієй БД.
-	 */
-	protected Integer nextDbId() {
-		Integer nextDbId = db1JdbcTemplate.queryForObject(sqlNextDbId, Integer.class);
-		return nextDbId;
 	}
 
 	@Autowired	ObjectMapper objectMapper;

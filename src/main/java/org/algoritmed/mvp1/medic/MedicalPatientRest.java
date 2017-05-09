@@ -1,16 +1,18 @@
 package org.algoritmed.mvp1.medic;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
-public class MedicalPatientRest {
+public class MedicalPatientRest  extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
-	/**
-	 * JDBC доступ до БД через простий SQL
-	 */
-	@Autowired
-	protected JdbcTemplate db1JdbcTemplate;
+	
 	@Autowired
 	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 	/**
@@ -55,21 +53,44 @@ public class MedicalPatientRest {
 	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer patient_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("patient_id", patient_id);
+		map.put("parent_id", patient_id);
 		logger.info("---------------\n"
-				+ "/r/medical/patient/{patient_id}\n" + map);
+				+ "/r/medical/patient/{patient_id}"
+				+ "\n" + map);
 		Map<String, Object> patientById = db1ParamJdbcTemplate.queryForMap(sqlMedicalSelectPatientById, map);
+		List<Map<String, Object>> children = db1ParamJdbcTemplate.queryForList(sqlDocChildren, map);
+		patientById.put("children", children);
 		map.put("patientById", patientById);
 		return map;
 	}
 
+	private @Value("${sql.doc.insert}")				String sqlDocInsert;
+	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
+	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
+	private @Value("${sql.doc.children}")			String sqlDocChildren;
 	@PostMapping("/r/newPatientSateRecord")
 	public @ResponseBody Map<String, Object> newPatientSateRecord(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
+		dbSaveObj.put("hello", "/r/newPatientSateRecord");
 		logger.info("---------------\n"
 				+ "/r/newPatientSateRecord"
 				+ "\n" + dbSaveObj);
-		dbSaveObj.put("hello", "/r/newPatientSateRecord");
+		//insert doc parent patientId doctype:thing
+		//insert doctimestamp
+		//insert docbody empty
+		Integer nextDbId = nextDbId();
+		dbSaveObj.put("doc_id", nextDbId);
+		dbSaveObj.put("doctype", 5);//patient.thing
+		dbSaveObj.put("parent_id", dbSaveObj.get("patientId"));
+		Timestamp doctimestamp = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		dbSaveObj.put("doctimestamp", doctimestamp);
+		int update = db1ParamJdbcTemplate.update(sqlDocInsert, dbSaveObj);
+		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
+		int update3 = db1ParamJdbcTemplate.update(sqlDocbodyInsertEmpty, dbSaveObj);
+		//return result
+		List<Map<String, Object>> children = db1ParamJdbcTemplate.queryForList(sqlDocChildren, dbSaveObj);
+		dbSaveObj.put("children", children);
 		return dbSaveObj;
 	}
 

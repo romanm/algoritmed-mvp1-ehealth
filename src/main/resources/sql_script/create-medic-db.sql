@@ -3,6 +3,8 @@ doctype_id int auto_increment primary key
 ,doctype_name varchar(10)
 );
 ALTER TABLE doctype ALTER COLUMN doctype_name  RENAME TO doctype;
+ALTER TABLE doctype ADD COLUMN parent_id INT;
+ALTER TABLE doctype ADD FOREIGN KEY (parent_id) REFERENCES (doctype_id);
 CREATE TABLE docbody (
 docbody_id int DEFAULT NEXTVAL('dbid') primary key
 ,docbody  VARCHAR(100000)
@@ -14,10 +16,10 @@ doc_id int DEFAULT NEXTVAL('dbid') primary key
 , FOREIGN KEY (doctype) REFERENCES doctype (doctype_id)
 , FOREIGN KEY (docbody) REFERENCES docbody (docbody_id)
 );
-CREATE TABLE doctymestamp (
-doctymestamp_id int auto_increment primary key
-,doctymestamp TIMESTAMP
-, FOREIGN KEY (doctymestamp_id) REFERENCES doc(doc_id)
+CREATE TABLE doctimestamp (
+	doctimestamp_id INTEGER PRIMARY KEY AUTO_INCREMENT
+	,doctimestamp TIMESTAMP
+	,FOREIGN KEY (doctimestamp_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 ALTER TABLE patient ADD COLUMN doctype int NOT null DEFAULT 1;
 ALTER TABLE patient ADD FOREIGN KEY (doctype) REFERENCES doctype(doctype_id);
