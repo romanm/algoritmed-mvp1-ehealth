@@ -1,5 +1,86 @@
-function initAllServer ($http, $scope){
+function initSeekAll($http, $scope, $filter){
+	$scope.icdConf = {search:'','icdSeekContent':'code'};
+//		$scope.icdConf = {search:'','icdSeekContent':'tree'};
+	$scope.seekIcdPopup = function(){
+		if($scope.icdConf.icdSeekContent=='code'){
+			$scope.seekIcdDb()
+		}
+	};
+	$scope.calcFilteredChilds = function(o){
+		var fc = $filter('filter')(o.childs, $scope.icdConf.search)
+		if(fc)
+			return fc.length;
+	};
+	$scope.isOpenedChilds = function(itemO){
+		var isOpenedChilds = itemO.childs && itemO.open;
+		if(!isOpenedChilds){
+			if(typeof itemO.open == "undefined"){
+				if($scope.icdConf.search.length >= 2){
+					var calcFilteredChilds = $scope.calcFilteredChilds(itemO);
+					if( calcFilteredChilds == 0)
+						isOpenedChilds = false;
+					else
+					if(calcFilteredChilds <= 5)
+						isOpenedChilds = true;
+				}
+			}
+		}
+		return isOpenedChilds;
+	};
+	$scope.$watch("icdConf.selectedItem", function handleChange( newValue, oldValue ) {
+		console.log(newValue);
+		if($scope.editPatientHistory){
+			console.log($scope.editPatientHistory);
+			if(newValue.icd_id){
+				$scope.editPatientHistory.docbody.suspectedDiagnosis.splice(0,0,{
+					'icd_id':newValue.icd_id
+					,'icd_code':newValue.icd_code
+					,'icd_name':newValue.icd_name
+				});
+			}
+			console.log($scope.editPatientHistory.docbody);
+		}
+	});
+	$scope.clickIcdItem = function(item){
+		console.log(item);
+		if(item.icd_code.indexOf('-')<0){
+			$scope.icdConf.selectedItem = item;
+			var url = '/r/meddoc/icdChildren/' + item.icd_id;
+			$http.get(url).then( function(response) {
+				item.children = response.data.icdChildren;
+				console.log(item.children);
+			});
+		}
+	}
+	$scope.readIcdJson = function(){
+		if(!$scope.icd){
+	//		var url = '/r/meddoc/icd';
+			var url = '/f/mvp1/meddoc/db/icdUa.json';
+			$http.get(url).then( function(response) {
+				$scope.icd = response.data.icd;
+			});
+		}
+	};
+	$scope.seekIcdDb = function(){
+		console.log($scope.icdConf.search);
+		if($scope.icdConf.search.length>1){
+			var url = '/r/meddoc/icdCode/'+$scope.icdConf.search;
+			console.log(url);
+			$http.get(url).then(
+				function(response) {
+					$scope.icdDb = response.data;
+					console.log($scope.icdDb);
+				} , function(response) {
+					console.log(response);
+				}
+			);
+		}
+	};
+}
+
+function initAllServer($http, $scope, $filter){
 	console.log('----initAllServer---------------');
+	initSeekAll($http, $scope, $filter);
 
 	// for menu colored
 	console.log('for menu colored');

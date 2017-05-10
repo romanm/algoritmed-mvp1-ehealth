@@ -11,7 +11,7 @@
 						<b> Прийом:</b>
 					</div>
 					<div class="w3-bar-item w3-hover-grey"
-						ng-click="newPatientSateRecord()">
+						ng-click="newPatientHistoryRecord()">
 						<i class="fa fa-pencil" aria-hidden="true"></i> Новий запис
 					</div>
 				</header>
@@ -19,9 +19,24 @@
 				<div ng-repeat="ph in patientById.children">
 					<div ng-include="'/f/mvp1/medic/patient/menu-history-record.html'">
 					</div>
-					<span ng-repeat="(k,v) in ph.docbody"> <a class="w3-tiny"
-						href="#" ng-click="ph.editField=k"> {{translateUa[k]}}
-						</a>{{$last?'.':', '}}
+					<span ng-repeat="(k,v) in ph.docbody"> 
+					<a class="w3-tiny"
+						href="#" ng-click="editPatientHistoryField(ph,k)"> {{translateUa[k]}}
+						</a>
+						<span ng-if="'suspectedDiagnosis'==k">
+						<span ng-repeat="sds in v">
+						<span class="w3-dropdown-hover w3-white w3-border">
+						{{sds.icd_code}}:
+							<div class="w3-dropdown-content w3-card-2">
+								<a class="w3-hover-grey"
+									ng-click="removeSuspectedDiagnosis(v,sds)" href="#"><i
+									class="fa fa-times" aria-hidden="true"></i> відмінити </a>
+							</div>
+						</span>
+						{{sds.icd_name}}
+						</span>
+						</span>
+						{{$last?'.':', '}}
 						<div ng-if="'suspectedDiagnosis'==ph.editField && ph.editField==k">
 							<div ng-include="'/f/mvp1/meddoc/icd10/seek-icd10.html'"></div>
 						</div>

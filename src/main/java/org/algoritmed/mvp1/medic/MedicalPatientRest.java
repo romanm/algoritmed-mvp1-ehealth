@@ -59,11 +59,34 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 				+ "\n" + map);
 		Map<String, Object> patientById = db1ParamJdbcTemplate.queryForMap(sqlMedicalSelectPatientById, map);
 		List<Map<String, Object>> children = db1ParamJdbcTemplate.queryForList(sqlDocChildren, map);
+		for (Map<String, Object> map2 : children) {
+			String docbody = (String) map2.get("docbody");
+			if(docbody!=null){
+				Map<String, Object> docbodyMap = stringToMap(docbody);
+				map2.put("docbody", docbodyMap);
+			}
+		}
 		patientById.put("children", children);
 		map.put("patientById", patientById);
 		return map;
 	}
 
+	@PostMapping("/r/savePatientHistoryRecord")
+	public @ResponseBody Map<String, Object> savePatientHistoryRecord(
+			@RequestBody Map<String, Object> dbSaveObj
+			, Principal userPrincipal) {
+		dbSaveObj.put("hello", "/r/savePatientHistoryRecord");
+		logger.info("---------------\n"
+				+ "/r/savePatientHistoryRecord"
+				+ "\n" + dbSaveObj);
+		Object docbodyObj = dbSaveObj.get("docbody");
+		String docbody = objectToString(docbodyObj);
+		System.err.println(docbody);
+		dbSaveObj.put("docbody_id", dbSaveObj.get("doc_id"));
+		dbSaveObj.put("docbody", docbody);
+		int update = db1ParamJdbcTemplate.update(sqlDocbodyUpdate, dbSaveObj);
+		return dbSaveObj;
+	}
 	@PostMapping("/r/removePatientHistoryRecord")
 	public @ResponseBody Map<String, Object> removePatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
@@ -77,19 +100,20 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		dbSaveObj.put("numberOfDeletedRows", numberOfDeletedRows);
 		return dbSaveObj;
 	}
+	private @Value("${sql.docbody.update}")			String sqlDocbodyUpdate;
 	private @Value("${sql.doc.delete}")				String sqlDocDelete;
 	private @Value("${sql.doc.insert}")				String sqlDocInsert;
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
 	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
 	private @Value("${sql.doc.children}")			String sqlDocChildren;
 	private @Value("${sql.doc.byId}")				String sqlDocById;
-	@PostMapping("/r/newPatientSateRecord")
-	public @ResponseBody Map<String, Object> newPatientSateRecord(
+	@PostMapping("/r/newPatientHistoryRecord")
+	public @ResponseBody Map<String, Object> newPatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		dbSaveObj.put("hello", "/r/newPatientSateRecord");
+		dbSaveObj.put("hello", "/r/newPatientHistoryRecord");
 		logger.info("---------------\n"
-				+ "/r/newPatientSateRecord"
+				+ "/r/newPatientHistoryRecord"
 				+ "\n" + dbSaveObj);
 		//insert doc parent patientId doctype:thing
 		//insert doctimestamp
@@ -104,8 +128,8 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
 		int update3 = db1ParamJdbcTemplate.update(sqlDocbodyInsertEmpty, dbSaveObj);
 		//return result
-		Map<String, Object> newPatientSateRecord = db1ParamJdbcTemplate.queryForMap(sqlDocById, dbSaveObj);
-		dbSaveObj.put("newPatientSateRecord", newPatientSateRecord);
+		Map<String, Object> newPatientHistoryRecord = db1ParamJdbcTemplate.queryForMap(sqlDocById, dbSaveObj);
+		dbSaveObj.put("newPatientHistoryRecord", newPatientHistoryRecord);
 		return dbSaveObj;
 	}
 

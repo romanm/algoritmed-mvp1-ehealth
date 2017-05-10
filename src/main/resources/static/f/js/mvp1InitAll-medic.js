@@ -1,7 +1,7 @@
-function initAll ($http, $scope){
+function initAll ($http, $scope, $filter){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
-	initAllServer($http, $scope);
+	initAllServer($http, $scope, $filter);
 	console.log('----initAll---------------' + $scope.pagePath.last());
 	$scope.readCentralProtocols = function(){
 		console.log("readCentralProtocols");
@@ -92,37 +92,56 @@ function initAll ($http, $scope){
 	else
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
+		$scope.testDialog = function (ph){
+			$scope.editPatientHistory = ph;
+			if(!ph.docbody)
+				ph.docbody = {'suspectedDiagnosis':[],'symptoms':[]};
+			console.log(ph)
+		};
+		$scope.savePatientHistoryRecord = function (ph){
+			console.log(ph);
+			var url = '/r/savePatientHistoryRecord';
+			console.log(url);
+			$http.post(url, ph).then( function(response) {
+				console.log(response.data);
+			});
+		}
 		$scope.removePatientHistoryRecord = function (ph){
 			console.log(ph);
 			var url = '/r/removePatientHistoryRecord';
 			console.log(url);
 			var dbSaveObj = {'doc_id':ph.doc_id};
-			console.log(dbSaveObj);
 			$http.post(url, dbSaveObj).then( function(response) {
-				console.log(response.data);
-				console.log(response.data.numberOfDeletedRows);
+//				console.log(response.data.numberOfDeletedRows);
 				if(response.data.numberOfDeletedRows>0){
 					var phIndex = $scope.patientById.children.indexOf(ph);
 					console.log(phIndex);
 					$scope.patientById.children.splice(phIndex,1)
 				}
 			});
-		}
+		};
 		$scope.translateUa = {
-				'suspectedDiagnosis':'підозра на діагноз'
-				,'symptoms':'симптоми'
+			'suspectedDiagnosis':'підозра на діагноз'
+			,'symptoms':'симптоми'
+		};
+		$scope.editPatientHistoryField = function (ph, k){
+			ph.editField=k;
+			$scope.editPatientHistory = ph;
 		}
-		$scope.newPatientSateRecord = function (){
+		$scope.removeSuspectedDiagnosis = function (v,sds){
+			v.splice(v.indexOf(sds),1);
+		}
+		$scope.newPatientHistoryRecord = function (){
 			console.log($scope.param);
-			var url = '/r/newPatientSateRecord';
+			var url = '/r/newPatientHistoryRecord';
 			console.log(url);
 			var dbSaveObj = {'patientId':$scope.param.id};
 			console.log(dbSaveObj);
 			$http.post(url, dbSaveObj).then( function(response) {
-				response.data.newPatientSateRecord.docbody = {'suspectedDiagnosis':[],'symptoms':[]};
+				response.data.newPatientHistoryRecord.docbody = {'suspectedDiagnosis':[],'symptoms':[]};
 				if(!$scope.patientById.children)
 					$scope.patientById.children = [];
-				$scope.patientById.children.splice(0,0,response.data.newPatientSateRecord);
+				$scope.patientById.children.splice(0,0,response.data.newPatientHistoryRecord);
 			});
 		}
 		if($scope.param.id){

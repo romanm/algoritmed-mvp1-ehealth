@@ -6,8 +6,8 @@ function expandAll (o, expandO){
 
 function initAll ($http, $scope, $filter){
 	console.log('----initAll---------------');
-	initAllAlgoritmed($http, $scope);
-	initAllServer($http, $scope);
+	initAllAlgoritmed($http, $scope, $filter);
+	initAllServer($http, $scope, $filter);
 	$scope.saveProtocolDialog = function(){
 //		console.log($scope.newProtocol);
 		console.log($scope.protocol);
@@ -90,85 +90,6 @@ function initAll ($http, $scope, $filter){
 		$scope.openNewProtocolDialog = function(){
 			$scope.protocol = {"title":{"shortName":"","name":""}, "config":{"version":"0.0.1","menuWidth":3,"viewModel":"vm_0_0_1"} ,"process":{},"diagram_01":[]};
 		}
-	} else
-	if('icd10' == $scope.pagePath.last()){
-		console.log('----initAll----'+url+'-----------'+$scope.pagePath.last());
-//		$scope.icdConf = {search:'','icdSeekContent':'tree'};
-		$scope.icdConf = {search:'','icdSeekContent':'code'};
-		console.log($scope.icdConf);
-		/*
-		$scope.$watch('icdConf.search', function(newValue, oldValue) {
-			console.log(newValue+'/'+oldValue);
-			$scope.seekIcdDb();
-		});
-		 * */
-		$scope.clickIcdItem = function(item){
-			console.log(item);
-			console.log(item.icd_code.indexOf('-'));
-			console.log(item.icd_code.indexOf('-')<0);
-			if(item.icd_code.indexOf('-')<0){
-				$scope.icdConf.selectedItem = item;
-				var url = '/r/meddoc/icdChildren/' + item.icd_id;
-				$http.get(url).then( function(response) {
-					item.children = response.data.icdChildren;
-					console.log(item.children);
-				});
-			}
-		}
-		$scope.seekIcdPopup = function(){
-			if($scope.icdConf.icdSeekContent=='code'){
-				$scope.seekIcdDb()
-			}
-		}
-		$scope.seekIcdDb = function(){
-			console.log($scope.icdConf.search);
-			if($scope.icdConf.search.length>1){
-				var url = '/r/meddoc/icdCode/'+$scope.icdConf.search;
-				console.log(url);
-				$http.get(url).then(
-					function(response) {
-						$scope.icdDb = response.data;
-						console.log($scope.icdDb);
-					} , function(response) {
-						console.log(response);
-					}
-				);
-			}
-		}
-		$scope.isOpenedChilds = function(itemO){
-			var isOpenedChilds = itemO.childs && itemO.open;
-			if(!isOpenedChilds){
-				if(typeof itemO.open == "undefined"){
-					if($scope.icdConf.search.length >= 2){
-						var calcFilteredChilds = $scope.calcFilteredChilds(itemO);
-						if( calcFilteredChilds == 0)
-							isOpenedChilds = false;
-						else
-						if(calcFilteredChilds <= 5)
-							isOpenedChilds = true;
-					}
-				}
-			}
-			return isOpenedChilds;
-		}
-		$scope.calcFilteredChilds = function(o){
-			var fc = $filter('filter')(o.childs, $scope.icdConf.search)
-			if(fc)
-				return fc.length;
-		}
-//		var url = '/r/meddoc/icd';
-		var url = '/f/mvp1/meddoc/db/icdUa.json';
-		$http.get(url).then(
-			function(response) {
-				console.log(response.data);
-				$scope.icd = response.data.icd;
-				console.log($scope.icd);
-			} , function(response) {
-				console.log(response);
-			}
-		);
-		/*
-		 * */
 	} else
 	if('code' == $scope.pagePath.last() || 'icpc2' == $scope.pagePath.last()){
 		console.log('----initAll------code---------');

@@ -39,3 +39,22 @@ ALTER TABLE doc ADD FOREIGN KEY (reference,doctype) REFERENCES (doc_id,doctype);
 ALTER TABLE address ADD COLUMN doctype INT NOT null DEFAULT 4;
 ALTER TABLE address ADD FOREIGN KEY (doctype) REFERENCES doctype(doctype_id);
 
+CREATE TABLE PUBLIC."icd" (
+	"icd_id" INTEGER PRIMARY KEY  AUTO_INCREMENT,
+	"icd_root" INTEGER NOT NULL,
+	"icd_left_key" INTEGER NOT NULL,
+	"icd_right_key" INTEGER NOT NULL,
+	"icd_level" INTEGER NOT NULL,
+	"icd_start" INTEGER NOT NULL,
+	"icd_end" INTEGER,
+	"icd_code" VARCHAR(7) NOT NULL UNIQUE,
+	"icd_name" VARCHAR(255) NOT NULL
+) ;
+DROP TABLE IF EXISTS icd10uatree;
+CREATE TABLE PUBLIC."icd10uatree" (
+	"icd10uatree_id" INTEGER PRIMARY KEY,
+	"icd10uatree_parent_id" INTEGER NOT NULL
+	, FOREIGN KEY ("icd10uatree_id") REFERENCES PUBLIC."icd"("icd_id")
+	, FOREIGN KEY (icd10uatree_parent_id) REFERENCES icd10uatree(icd10uatree_id)
+) ;
+

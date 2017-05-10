@@ -12,7 +12,7 @@
 		<header class="w3-bar w3-border w3-tiny w3-light-grey">
 			<button class="w3-bar-item w3-button"
 				ng-class="{'w3-green':!icdConf.icdSeekContent || icdConf.icdSeekContent=='tree'}"
-				ng-click="icdConf.icdSeekContent='tree'">
+				ng-click="icdConf.icdSeekContent='tree';readIcdJson();">
 				<!-- <i class="fa fa-sitemap" aria-hidden="true"></i> -->
 				<i class="fa fa-indent" aria-hidden="true"></i> групи
 			</button>

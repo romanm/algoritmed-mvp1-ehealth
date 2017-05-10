@@ -1,13 +1,16 @@
  {{ph.doctimestamp | date:'short'}}
-<div class="w3-dropdown-hover">
+<div class="w3-dropdown-hover w3-white w3-border">
 	<i class="fa fa-align-justify" aria-hidden="true"></i>
 	<div class="w3-dropdown-content w3-card-2">
-		<header class="w3-container w3-bar w3-light-grey w3-tiny">
-			<div class="w3-bar-item w3-hover-grey"
-				ng-click="removePatientHistoryRecord(ph)">
-				<i class="fa fa-times" aria-hidden="true"></i>видалити
-			</div>
+		<header class="w3-light-grey w3-small">
+			<a class="w3-hover-grey" href="#"
+				ng-click="savePatientHistoryRecord(ph)"> <i
+				class="fa fa-floppy-o" aria-hidden="true"></i>запис
+			</a> <a class="w3-hover-grey" href="#"
+				ng-click="removePatientHistoryRecord(ph)"> <i
+				class="fa fa-times" aria-hidden="true"></i>видалити
+			</a>
 		</header>
-		<a href="'">якась дія</a>
+		<a href="#" ng-click="testDialog(ph)">якась дія</a>
 	</div>
 </div>

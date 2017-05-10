@@ -14,9 +14,9 @@
 		this.title = 'Some title ' + i + $scope.myHTML;
 	});
 
-	app.controller('Mvp1Ctrl', function($scope, $http) {
+	app.controller('Mvp1Ctrl', function($scope, $http, $filter) {
 		console.log('---mvp1App-----Mvp1Ctrl--------');
-		initAll($http, $scope);
+		initAll($http, $scope, $filter);
 	});
 
 })(window.angular);

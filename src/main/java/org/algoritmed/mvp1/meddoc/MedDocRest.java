@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @Controller
 public class MedDocRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedDocRest.class);
@@ -67,8 +64,6 @@ public class MedDocRest extends DbAlgoritmed{
 		map.put("uuid", uuid);
 		return uuid;
 	}
-
-	@Autowired	ObjectMapper objectMapper;
 
 	@PostMapping("/r/saveProtocol")
 	public @ResponseBody Map<String, Object> saveProtocol(
@@ -119,13 +114,10 @@ public class MedDocRest extends DbAlgoritmed{
 	}
 	private void protocolToString(HashMap2 dbSaveObj, Map<String, Object> map) {
 		String protocolAsString = "{}";
-		try {
-			protocolAsString = objectMapper.writeValueAsString(dbSaveObj);
-		} catch (JsonProcessingException e1) {
-			e1.printStackTrace();
-		}
+		protocolAsString = objectToString(dbSaveObj);
 		map.put("doc", protocolAsString);
 	}
+	
 	private void setShortName(HashMap2 dbSaveObj, Integer nextDbId, Map<String, Object> map) {
 		if(dbSaveObj.notContainsOrStringIsEmpty("title.shortName"))
 			dbSaveObj.getMap("title").put("shortName", "Protocol " + nextDbId);
@@ -147,12 +139,7 @@ public class MedDocRest extends DbAlgoritmed{
 				);
 		String protocolDoc = db1ParamJdbcTemplate.queryForObject(sqlMeddocProtocolById, map, String.class);
 		Map<String, Object> readValue = map;
-		try {
-			readValue = objectMapper.readValue(protocolDoc, Map.class);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		readValue = stringToMap(protocolDoc);
 		return readValue;
 	}
 
