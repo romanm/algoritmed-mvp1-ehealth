@@ -19,10 +19,13 @@
 				<div ng-repeat="ph in patientById.children">
 					<div ng-include="'/f/mvp1/medic/patient/menu-history-record.html'">
 					</div>
-					{{ph.keys()}} 
-					{{ph.doc_id}}
-					/
-					{{ph.doctype}}
+					<span ng-repeat="(k,v) in ph.docbody"> <a class="w3-tiny"
+						href="#" ng-click="ph.editField=k"> {{translateUa[k]}}
+						</a>{{$last?'.':', '}}
+						<div ng-if="'suspectedDiagnosis'==ph.editField && ph.editField==k">
+							<div ng-include="'/f/mvp1/meddoc/icd10/seek-icd10.html'"></div>
+						</div>
+					</span>
 				</div>
 			</div>
 		</div>

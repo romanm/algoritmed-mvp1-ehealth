@@ -108,6 +108,10 @@ function initAll ($http, $scope){
 				}
 			});
 		}
+		$scope.translateUa = {
+				'suspectedDiagnosis':'підозра на діагноз'
+				,'symptoms':'симптоми'
+		}
 		$scope.newPatientSateRecord = function (){
 			console.log($scope.param);
 			var url = '/r/newPatientSateRecord';
@@ -115,8 +119,10 @@ function initAll ($http, $scope){
 			var dbSaveObj = {'patientId':$scope.param.id};
 			console.log(dbSaveObj);
 			$http.post(url, dbSaveObj).then( function(response) {
-				console.log(response.data);
-				$scope.patientById.children = response.data.children;
+				response.data.newPatientSateRecord.docbody = {'suspectedDiagnosis':[],'symptoms':[]};
+				if(!$scope.patientById.children)
+					$scope.patientById.children = [];
+				$scope.patientById.children.splice(0,0,response.data.newPatientSateRecord);
 			});
 		}
 		if($scope.param.id){

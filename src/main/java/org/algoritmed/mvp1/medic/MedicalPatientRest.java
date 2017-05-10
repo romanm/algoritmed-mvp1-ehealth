@@ -82,6 +82,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
 	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
 	private @Value("${sql.doc.children}")			String sqlDocChildren;
+	private @Value("${sql.doc.byId}")				String sqlDocById;
 	@PostMapping("/r/newPatientSateRecord")
 	public @ResponseBody Map<String, Object> newPatientSateRecord(
 			@RequestBody Map<String, Object> dbSaveObj
@@ -103,8 +104,8 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
 		int update3 = db1ParamJdbcTemplate.update(sqlDocbodyInsertEmpty, dbSaveObj);
 		//return result
-		List<Map<String, Object>> children = db1ParamJdbcTemplate.queryForList(sqlDocChildren, dbSaveObj);
-		dbSaveObj.put("children", children);
+		Map<String, Object> newPatientSateRecord = db1ParamJdbcTemplate.queryForMap(sqlDocById, dbSaveObj);
+		dbSaveObj.put("newPatientSateRecord", newPatientSateRecord);
 		return dbSaveObj;
 	}
 
