@@ -1,0 +1,17 @@
+{
+"deadline":[
+{
+"timestamp":"1494504741972","children":[
+{"type":"code.icd10","title":""
+,"bindHtml":
+"<div> <div> МКХ10 (українською) в JSON форматі (<a href='/f/mvp1/meddoc/db/icdUa.json' target='_blank'><i class='fa fa-external-link' aria-hidden='true'></i> скачати </a>) </div> <div> МКХ10 (українською) в SQL script форматі (<a href='/f/mvp1/meddoc/db/icd10-ua.sql' target='_blank'><i class='fa fa-external-link' aria-hidden='true'></i> скачати </a>) </div> <div> Демо використання: <a href='http://meddoc.algoritmed.com/v/icd10'> http://meddoc.algoritmed.com/v/icd10 </a> </div> </div>"
+}
+,
+{"type":"code.icpc2","title":""
+,"bindHtml":
+"<div> <div> ICPC2 (українською) в JSON форматі (<a href='/f/config/icpc2/ICPC2-ua.json' target='_blank'><i class='fa fa-external-link' aria-hidden='true'></i> скачати </a>) </div> <div> ICPC2 (українською) в SQL script форматі (<a href='/f/mvp1/meddoc/db/icpc2-ua.sql' target='_blank'><i class='fa fa-external-link' aria-hidden='true'></i> скачати </a>) </div> <div> Демо використання: <a href='http://meddoc.algoritmed.com/v/icpc2'> http://meddoc.algoritmed.com/v/icpc2 </a> </div> </div>"
+}
+
+]
+}
+]}

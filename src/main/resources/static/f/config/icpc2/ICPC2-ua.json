@@ -1,5 +1,12 @@
 {
-	"name": "Міжнародна класифікація первинної медичної допомоги - 2-е видання",
+"version":"v.0.0.1"
+,"copyright":{
+"year":"2017"
+,"owner":"http://algoritmed.com/"
+}	
+,"license":"https://www.apache.org/licenses/LICENSE-2.0"
+,"uaOriginalSource":"http://demo.icpc2.in.ua/"
+	,"name": "Міжнародна класифікація первинної медичної допомоги - 2-е видання",
 	"shortName": "ICPC-2 – Українською",
 	"color":{
 	"green":{

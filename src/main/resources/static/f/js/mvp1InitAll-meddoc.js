@@ -29,17 +29,22 @@ function initAll ($http, $scope, $filter){
 			}
 		);
 	}
+	if('info' == $scope.pagePath.last()){
+		var url = '/f/config/meddoc/meddoc-info.json';
+		console.log(url);
+		$http.get(url).then(function(response) {
+			$scope.meddocInfo = response.data;
+			$scope.meddocInfo.today = new Date();
+			console.log($scope.meddocInfo);
+		});
+	}else
 	if('protocol' == $scope.pagePath.last()){
 		$scope.amGenerateID = [];
 		$scope.getAmGenerateID = function(){
 			$http.get('/r/meddoc/amGenerateID').then(
 				function(response) {
 					$scope.amGenerateID = $scope.amGenerateID.concat(response.data);
-				}
-				, function(response) {
-					console.log(response);
-				}
-			);
+			});
 		};
 		$scope.getAmGenerateID();
 		if($scope.param.dbId){

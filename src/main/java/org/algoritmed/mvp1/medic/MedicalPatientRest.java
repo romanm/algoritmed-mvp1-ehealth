@@ -171,8 +171,6 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		map.put("seekPatient", seekPatient);
 		logger.info("---------------\n"
 				+ "/r/medicalFromInsurance/patients/{seekPatient} " + map);
-		/*
-		 * */
 		Map<String, Object> insuranceSeekPatient = webClient.getFromUrl(configInsuranceServer + "/r/insurance/seekPatient/"
 				+ seekPatient);
 		logger.info(" ---------------\n " + insuranceSeekPatient);

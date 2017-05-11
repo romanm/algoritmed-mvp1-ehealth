@@ -1,0 +1,22 @@
+<div class="w3-container">
+	<h2>
+		<i class="fa fa-info"></i> Deadline
+	</h2>
+	<!--
+	<div>
+		{{meddocInfo.today}}
+		<p>{{meddocInfo.today.getTime()|date}}</p>
+		{{meddocInfo.today.getTime()}}
+	</div>
+	-->
+
+	<ul class="w3-ul">
+		<li ng-repeat="dl in meddocInfo.deadline"><span> {{dl.timestamp |
+				date}} </span>
+			<ul class="w3-ul">
+				<li ng-repeat="dlc in dl.children">
+					<div ng-bind-html="dlc.bindHtml"></div>
+				</li>
+			</ul></li>
+	</ul>
+</div>

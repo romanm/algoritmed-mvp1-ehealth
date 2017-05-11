@@ -56,7 +56,7 @@ function initSeekAll($http, $scope, $filter){
 		if(!$scope.icd){
 	//		var url = '/r/meddoc/icd';
 			var url = '/f/mvp1/meddoc/db/icdUa.json';
-			$http.get(url).then( function(response) {
+			$http.get(url).then(function(response){
 				$scope.icd = response.data.icd;
 			});
 		}

@@ -1,5 +1,5 @@
-<div ng-class="{'w3-small w3-hover-light-gray':item.icd_code.indexOf('-')>0
+<div
+	ng-class="{'w3-small w3-hover-light-gray':item.icd_code.indexOf('-')>0
 	, 'w3-hover-green':item.icd_code.indexOf('-')<0}"
 	ng-click="clickIcdItem(item)"
-	ng-bind-html="highlight(item.icd_code+': '+item.icd_name, icdConf.search)"
-	></div>
+	ng-bind-html="highlight(item.icd_code+': '+item.icd_name, icdConf.search)"></div>
