@@ -24,9 +24,6 @@ function initAll ($http, $scope, $filter){
 //				window.open(url2);
 				//window.open("https://www.w3schools.com");
 			}
-			, function(response) {
-				console.log(response);
-			}
 		);
 	}
 	if('info' == $scope.pagePath.last()){

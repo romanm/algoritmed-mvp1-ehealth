@@ -22,9 +22,18 @@ ALTER TABLE doc ADD FOREIGN KEY (docbody) REFERENCES docbody (docbody_id);
 
 CREATE TABLE doctimestamp (
 	doctimestamp_id INTEGER PRIMARY KEY AUTO_INCREMENT
-	,doctimestamp TIMESTAMP
+	,created TIMESTAMP
+	,updated TIMESTAMP
 	,FOREIGN KEY (doctimestamp_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE docchecked (
+	docchecked_id INTEGER PRIMARY KEY AUTO_INCREMENT
+	,checked TIMESTAMP
+	,FOREIGN KEY (docchecked_id) REFERENCES doctimestamp(doctimestamp_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+-- ALTER TABLE "doctimestamp" ALTER COLUMN doctimestamp RENAME TO created;
+-- ALTER TABLE "doctimestamp" add COLUMN updated TIMESTAMP;
 ALTER TABLE patient ADD COLUMN doctype int NOT null DEFAULT 1;
 ALTER TABLE patient ADD FOREIGN KEY (doctype) REFERENCES doctype(doctype_id);
 ALTER TABLE patient ADD FOREIGN KEY (patient_id,doctype) REFERENCES doc(doc_id,doctype);
@@ -51,10 +60,10 @@ CREATE TABLE PUBLIC."icd" (
 	"icd_name" VARCHAR(255) NOT NULL
 ) ;
 DROP TABLE IF EXISTS icd10uatree;
-CREATE TABLE PUBLIC."icd10uatree" (
+CREATE TABLE "icd10uatree" (
 	"icd10uatree_id" INTEGER PRIMARY KEY,
 	"icd10uatree_parent_id" INTEGER NOT NULL
-	, FOREIGN KEY ("icd10uatree_id") REFERENCES PUBLIC."icd"("icd_id")
+	, FOREIGN KEY ("icd10uatree_id") REFERENCES "icd"("icd_id")
 	, FOREIGN KEY (icd10uatree_parent_id) REFERENCES icd10uatree(icd10uatree_id)
 ) ;
 

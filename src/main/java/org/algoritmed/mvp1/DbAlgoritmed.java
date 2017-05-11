@@ -1,17 +1,26 @@
 package org.algoritmed.mvp1;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DbAlgoritmed {
+	@Autowired
+	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
+	
+	protected Timestamp now() {
+		return new Timestamp(Calendar.getInstance().getTimeInMillis());
+	}
 	protected Map<String, Object> stringToMap(String protocolDoc) {
 		Map map = null;
 		try {

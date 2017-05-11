@@ -2,7 +2,6 @@ package org.algoritmed.mvp1.medic;
 
 import java.security.Principal;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MedicalPatientRest  extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
 	
-	@Autowired
-	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 	/**
 	 * SQL select для зчитування всіх пацієнтів медіка
 	 */
@@ -85,6 +82,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		dbSaveObj.put("docbody_id", dbSaveObj.get("doc_id"));
 		dbSaveObj.put("docbody", docbody);
 		int update = db1ParamJdbcTemplate.update(sqlDocbodyUpdate, dbSaveObj);
+		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampUpdate, dbSaveObj);
 		return dbSaveObj;
 	}
 	@PostMapping("/r/removePatientHistoryRecord")
@@ -105,8 +103,10 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	private @Value("${sql.doc.insert}")				String sqlDocInsert;
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
 	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
+	private @Value("${sql.doctimestamp.update}")	String sqlDoctimestampUpdate;
 	private @Value("${sql.doc.children}")			String sqlDocChildren;
 	private @Value("${sql.doc.byId}")				String sqlDocById;
+	
 	@PostMapping("/r/newPatientHistoryRecord")
 	public @ResponseBody Map<String, Object> newPatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
@@ -122,8 +122,8 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		dbSaveObj.put("doc_id", nextDbId);
 		dbSaveObj.put("doctype", 5);//patient.thing
 		dbSaveObj.put("parent_id", dbSaveObj.get("patientId"));
-		Timestamp doctimestamp = new Timestamp(Calendar.getInstance().getTimeInMillis());
-		dbSaveObj.put("doctimestamp", doctimestamp);
+		Timestamp created = now();
+		dbSaveObj.put("created", created);
 		int update = db1ParamJdbcTemplate.update(sqlDocInsert, dbSaveObj);
 		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
 		int update3 = db1ParamJdbcTemplate.update(sqlDocbodyInsertEmpty, dbSaveObj);
@@ -132,7 +132,6 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		dbSaveObj.put("newPatientHistoryRecord", newPatientHistoryRecord);
 		return dbSaveObj;
 	}
-
 	
 	@GetMapping(value = "/r/medical/patient2/{patient_id}")
 	public @ResponseBody Map<String, Object>  patient2(@PathVariable Integer patient_id) {
