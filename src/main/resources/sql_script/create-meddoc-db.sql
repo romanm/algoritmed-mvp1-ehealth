@@ -13,26 +13,69 @@ CREATE TABLE protocol (
 	,protocol_doc VARCHAR(100000)
 	,removed BOOLEAN DEFAULT FALSE
 );
-CREATE TABLE PUBLIC."icd" (
-	"icd_id" INTEGER NOT NULL DEFAULT (NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_71D10F2A_A3B6_4A5F_901E_C2CCD0E859D3) AUTO_INCREMENT,
+CREATE TABLE "icd" (
+	"icd_id" INTEGER PRIMARY KEY AUTO_INCREMENT,
 	"icd_root" INTEGER NOT NULL,
 	"icd_left_key" INTEGER NOT NULL,
 	"icd_right_key" INTEGER NOT NULL,
 	"icd_level" INTEGER NOT NULL,
 	"icd_start" INTEGER NOT NULL,
 	"icd_end" INTEGER,
-	"icd_code" VARCHAR(7) NOT NULL,
+	"icd_code" VARCHAR(7) NOT NULL UNIQUE,
 	"icd_name" VARCHAR(255) NOT NULL,
-	CONSTRAINT CONSTRAINT_1 PRIMARY KEY ("icd_id"),
-	CONSTRAINT CONSTRAINT_INDEX_1 PRIMARY KEY ("icd_code")
 ) ;
 CREATE UNIQUE INDEX PRIMARY_KEY_1 ON PUBLIC."icd" (icd_id) ;
 
-CREATE TABLE PUBLIC."icd10uatree" (
-	"icd10uatree_id" INTEGER NOT NULL,
+CREATE TABLE "icd10uatree" (
+	"icd10uatree_id" INTEGER PRIMARY KEY,
 	"icd10uatree_parent_id" INTEGER NOT NULL,
-	CONSTRAINT CONSTRAINT_F PRIMARY KEY ("icd10uatree_id"),
-	CONSTRAINT CONSTRAINT_F6 FOREIGN KEY ("icd10uatree_id") REFERENCES PUBLIC."icd"("icd_id") ON DELETE RESTRICT ON UPDATE RESTRICT
+	FOREIGN KEY ("icd10uatree_id") REFERENCES "icd"("icd_id")
 ) ;
-CREATE UNIQUE INDEX PRIMARY_KEY_F ON PUBLIC."icd10uatree" (icd10uatree_id) ;
+--------doc----------------------------
 
+DROP TABLE IF EXISTS "docchecked";
+DROP TABLE IF EXISTS "doctimestamp";
+DROP TABLE IF EXISTS "docbody";
+DROP TABLE IF EXISTS "doc";
+DROP TABLE IF EXISTS "doctype";
+CREATE TABLE doctype (
+	doctype_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	doctype VARCHAR(10),
+	parent_id INTEGER,
+	FOREIGN KEY (parent_id) REFERENCES doctype(doctype_id)
+) ;
+CREATE TABLE "docbody" (
+	"docbody_id" INTEGER  PRIMARY KEY,
+	"docbody" VARCHAR(100000)
+	--,FOREIGN KEY ("docbody_id") REFERENCES "doc"("doc_id")
+) ;
+CREATE TABLE "doc" (
+	"doc_id" INTEGER DEFAULT NEXTVAL('dbid') PRIMARY KEY ,
+	"doctype" INTEGER,
+	"docbody" INTEGER,
+	"parent_id" INTEGER,
+	"reference" INTEGER,
+	"removed" BOOLEAN DEFAULT FALSE
+	,FOREIGN KEY ("doctype") REFERENCES "doctype"("doctype_id"),
+	FOREIGN KEY ("docbody") REFERENCES "docbody"("docbody_id"),
+	FOREIGN KEY ("parent_id") REFERENCES "doc"("doc_id"),
+	FOREIGN KEY ("reference") REFERENCES "doc"("doc_id")
+) ;
+ALTER TABLE docbody ADD FOREIGN KEY (docbody_id) REFERENCES doc(doc_id);
+INSERT INTO "doc" ("doc_id") SELECT UUID_dbid FROM "uuid";
+ALTER TABLE uuid ADD FOREIGN KEY ("uuid_dbid") REFERENCES "doc"("doc_id");
+--ALTER TABLE doc ADD FOREIGN KEY (docbody) REFERENCES docbody (docbody_id);
+
+CREATE TABLE doctimestamp (
+	doctimestamp_id INTEGER PRIMARY KEY AUTO_INCREMENT
+	,created TIMESTAMP
+	,updated TIMESTAMP
+	,FOREIGN KEY (doctimestamp_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE TABLE docchecked (
+	docchecked_id INTEGER PRIMARY KEY AUTO_INCREMENT
+	,checked TIMESTAMP
+	,FOREIGN KEY (docchecked_id) REFERENCES doctimestamp(doctimestamp_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--------doc----------------------------END

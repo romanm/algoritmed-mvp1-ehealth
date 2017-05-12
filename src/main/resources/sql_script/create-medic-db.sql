@@ -18,7 +18,7 @@ doc_id int DEFAULT NEXTVAL('dbid') primary key
 , FOREIGN KEY (doctype) REFERENCES doctype (doctype_id)
 , FOREIGN KEY (docbody) REFERENCES docbody (docbody_id)
 );
-ALTER TABLE doc ADD FOREIGN KEY (docbody) REFERENCES docbody (docbody_id);
+-- ALTER TABLE doc ADD FOREIGN KEY (docbody) REFERENCES docbody (docbody_id);
 
 CREATE TABLE doctimestamp (
 	doctimestamp_id INTEGER PRIMARY KEY AUTO_INCREMENT
@@ -48,7 +48,7 @@ ALTER TABLE doc ADD FOREIGN KEY (reference,doctype) REFERENCES (doc_id,doctype);
 ALTER TABLE address ADD COLUMN doctype INT NOT null DEFAULT 4;
 ALTER TABLE address ADD FOREIGN KEY (doctype) REFERENCES doctype(doctype_id);
 
-CREATE TABLE PUBLIC."icd" (
+CREATE TABLE "icd" (
 	"icd_id" INTEGER PRIMARY KEY  AUTO_INCREMENT,
 	"icd_root" INTEGER NOT NULL,
 	"icd_left_key" INTEGER NOT NULL,
