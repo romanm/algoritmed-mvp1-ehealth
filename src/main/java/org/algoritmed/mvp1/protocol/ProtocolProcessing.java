@@ -18,25 +18,31 @@ public class ProtocolProcessing extends DbAlgoritmed{
 	
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	
-	private @Value("${sql.count.doc.to.check}")			String sqlCountDocToCheck;
-	private @Value("${sql.doc.to.check}")				String sqlDocToCheck;
-	private @Value("${sql.docchecked.update.checked}")	String sqlDoccheckedUpdateChecked;
-	private @Value("${sql.docchecked.insert}")			String sqlDoccheckedInsert;
+	private @Value("${sql.count.doc.to.check}")	String sqlCountDocToCheck;
+	private @Value("${sql.doc.to.check}")		String sqlDocToCheck;
+	private @Value("${sql.docchecked.checked}")	String sqlDoccheckedChecked;
+	private @Value("${sql.docchecked.insert}")	String sqlDoccheckedInsert;
 	
 	@Scheduled(fixedRate = 15000)
-	private void reportCurrentTime() {
+	private void reportCurrentTime(){
+		System.err.println(sqlDocToCheck);
 		List<Map<String, Object>> listDocToCheck = db1JdbcTemplate.queryForList(sqlDocToCheck);
 		if(listDocToCheck.size()>0){
 			logger.info("The time is now {}", dateFormat.format(new Date()));
 			Map<String, Object> mapDocToCheck = listDocToCheck.get(0);
+			System.err.println(mapDocToCheck);
+			System.err.println(mapDocToCheck.get("docchecked_id"));
+			System.err.println(mapDocToCheck.containsKey("docchecked_id"));
 			if(!mapDocToCheck.containsKey("docchecked_id")||null==mapDocToCheck.get("docchecked_id")){//insert
 				Object object = mapDocToCheck.get("updated");
 				mapDocToCheck.put("checked", object);
 				mapDocToCheck.put("doc_id", mapDocToCheck.get("doctimestamp_id"));
 				mapDocToCheck.put("docchecked_id", mapDocToCheck.get("doctimestamp_id"));
+				System.err.println(sqlDoccheckedInsert);
+				System.err.println(mapDocToCheck);
 				db1ParamJdbcTemplate.update(sqlDoccheckedInsert, mapDocToCheck);
 			}else{//update
-				db1ParamJdbcTemplate.update(sqlDoccheckedUpdateChecked, mapDocToCheck);
+				db1ParamJdbcTemplate.update(sqlDoccheckedChecked, mapDocToCheck);
 			}
 		}else{
 //			logger.info("Nothing to update. The time is now {}", dateFormat.format(new Date()));
