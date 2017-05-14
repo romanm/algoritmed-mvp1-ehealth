@@ -1,10 +1,10 @@
+-- DB medic
 CREATE TABLE doctype (
-doctype_id int auto_increment primary key
-,doctype_name varchar(10)
-);
-ALTER TABLE doctype ALTER COLUMN doctype_name  RENAME TO doctype;
-ALTER TABLE doctype ADD COLUMN parent_id INT;
-ALTER TABLE doctype ADD FOREIGN KEY (parent_id) REFERENCES (doctype_id);
+	doctype_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	doctype VARCHAR(20),
+	parent_id INTEGER,
+	FOREIGN KEY (parent_id) REFERENCES doctype(doctype_id)
+) ;
 DROP TABLE IF EXISTS docbody;
 CREATE TABLE docbody (
 	docbody_id INTEGER PRIMARY KEY

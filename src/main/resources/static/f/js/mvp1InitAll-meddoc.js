@@ -52,6 +52,7 @@ function initAll ($http, $scope, $filter){
 					$scope.protocol = response.data;
 					console.log($scope.protocol);
 					initProtocol();
+	console.log($scope.protocol.config);
 				}
 				, function(response) {
 					console.log(response);
@@ -228,6 +229,30 @@ function initAll ($http, $scope, $filter){
 		if(!$scope.protocol.config.menuWidth){
 			$scope.protocol.config.menuWidth = 3;
 		}
+
+		$scope.protocolConfig = {
+			initDataDictionary:function(data) {
+				console.log('----initDataDictionary------------');
+				console.log(data.protocolDatadictionaryIcd10);
+				if(!$scope.protocol.datadictionary)
+					$scope.protocol.datadictionary = {icd10:[]};
+				else
+					$scope.protocol.datadictionary.icd10 = [];
+				angular.forEach(data.protocolDatadictionaryIcd10, function(ddIcd10, key) {
+					$scope.protocol.datadictionary.icd10.push(ddIcd10);
+				});
+				console.log($scope.protocol.datadictionary);
+			}
+		};
+		$scope.protocol.config.dd = 
+		{openDatadictionaryDialog: false
+			,openDDD:function() {
+				this.openDatadictionaryDialog = !this.openDatadictionaryDialog;
+				$scope.readIcdJson();
+			}
+		};
+		$scope.protocol.config.dd.openDDD();
+
 		$scope.addDiagram01Element = function(objToEdit, k){
 			var diagramElement = objToEdit[objToEdit.editKey.key];
 			if(13 == k){

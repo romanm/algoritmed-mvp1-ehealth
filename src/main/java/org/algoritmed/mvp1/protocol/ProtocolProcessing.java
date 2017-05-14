@@ -25,7 +25,6 @@ public class ProtocolProcessing extends DbAlgoritmed{
 	
 	@Scheduled(fixedRate = 15000)
 	private void reportCurrentTime(){
-		System.err.println(sqlDocToCheck);
 		List<Map<String, Object>> listDocToCheck = db1JdbcTemplate.queryForList(sqlDocToCheck);
 		if(listDocToCheck.size()>0){
 			logger.info("The time is now {}", dateFormat.format(new Date()));

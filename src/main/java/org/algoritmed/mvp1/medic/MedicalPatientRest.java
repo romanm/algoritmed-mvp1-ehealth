@@ -99,9 +99,9 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	}
 	private @Value("${sql.docbody.update}")			String sqlDocbodyUpdate;
 	private @Value("${sql.doc.delete}")				String sqlDocDelete;
-	private @Value("${sql.doc.insert}")				String sqlDocInsert;
+	
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
-	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
+	
 	private @Value("${sql.doctimestamp.update}")	String sqlDoctimestampUpdate;
 	private @Value("${sql.doc.children}")			String sqlDocChildren;
 	private @Value("${sql.doc.byId}")				String sqlDocById;
@@ -120,17 +120,16 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		Integer nextDbId = nextDbId();
 		dbSaveObj.put("doc_id", nextDbId);
 		dbSaveObj.put("doctype", 5);//patient.thing
-		dbSaveObj.put("parent_id", dbSaveObj.get("patientId"));
-		Timestamp created = now();
-		dbSaveObj.put("created", created);
-		int update = db1ParamJdbcTemplate.update(sqlDocInsert, dbSaveObj);
-		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
+		Integer parentId = (Integer) dbSaveObj.get("patientId");
+		insertDocElement(dbSaveObj, parentId);
 		int update3 = db1ParamJdbcTemplate.update(sqlDocbodyInsertEmpty, dbSaveObj);
 		//return result
 		Map<String, Object> newPatientHistoryRecord = db1ParamJdbcTemplate.queryForMap(sqlDocById, dbSaveObj);
 		dbSaveObj.put("newPatientHistoryRecord", newPatientHistoryRecord);
 		return dbSaveObj;
 	}
+
+	
 	
 	@GetMapping(value = "/r/medical/patient2/{patient_id}")
 	public @ResponseBody Map<String, Object>  patient2(@PathVariable Integer patient_id) {

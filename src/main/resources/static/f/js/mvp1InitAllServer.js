@@ -29,17 +29,30 @@ function initSeekAll($http, $scope, $filter){
 	};
 	$scope.$watch("icdConf.selectedItem", function handleChange( newValue, oldValue ) {
 		console.log(newValue);
-		if($scope.editPatientHistory){
-			console.log($scope.editPatientHistory);
-			if(newValue.icd_id){
-				$scope.editPatientHistory.docbody.suspectedDiagnosis.splice(0,0,{
-					'icd_id':newValue.icd_id
-					,'icd_code':newValue.icd_code
-					,'icd_name':newValue.icd_name
-				});
+		if($scope.protocol && $scope.protocol.config.dd.openDatadictionaryDialog){
+			console.log("------------------------------");	
+			console.log($scope.protocol.dbUuid.uuid_dbid);
+			newValue.protocolId = $scope.protocol.dbUuid.uuid_dbid;
+			console.log(newValue);
+			
+			var url = '/r/addDataDictionary';
+			console.log(url);
+			$http.post(url, newValue).then(function(response) {
+				console.log(response.data);
+				$scope.protocolConfig.initDataDictionary(response.data);
+			});
+		}else
+			if($scope.editPatientHistory){
+				console.log($scope.editPatientHistory);
+				if(newValue.icd_id){
+					$scope.editPatientHistory.docbody.suspectedDiagnosis.splice(0,0,{
+						'icd_id':newValue.icd_id
+						,'icd_code':newValue.icd_code
+						,'icd_name':newValue.icd_name
+					});
+				}
+				console.log($scope.editPatientHistory.docbody);
 			}
-			console.log($scope.editPatientHistory.docbody);
-		}
 	});
 	$scope.clickIcdItem = function(item){
 		console.log(item);

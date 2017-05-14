@@ -6,13 +6,6 @@ CREATE TABLE uuid (
 	uuid_uuid VARCHAR(36) NOT NULL
 ) ;
 
-DROP TABLE IF EXISTS protocol;
-CREATE TABLE protocol (
-	protocol_id INT DEFAULT NEXTVAL('dbid') PRIMARY KEY
-	,protocol_name VARCHAR(100)
-	,protocol_doc VARCHAR(100000)
-	,removed BOOLEAN DEFAULT FALSE
-);
 CREATE TABLE "icd" (
 	"icd_id" INTEGER PRIMARY KEY AUTO_INCREMENT,
 	"icd_root" INTEGER NOT NULL,
@@ -40,7 +33,7 @@ DROP TABLE IF EXISTS "doc";
 DROP TABLE IF EXISTS "doctype";
 CREATE TABLE doctype (
 	doctype_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	doctype VARCHAR(10),
+	doctype VARCHAR(20),
 	parent_id INTEGER,
 	FOREIGN KEY (parent_id) REFERENCES doctype(doctype_id)
 ) ;
@@ -77,5 +70,28 @@ CREATE TABLE docchecked (
 	,checked TIMESTAMP
 	,FOREIGN KEY (docchecked_id) REFERENCES doctimestamp(doctimestamp_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 --------doc----------------------------END
+--------protocol----------------------------
+DROP TABLE IF EXISTS protocol;
+CREATE TABLE protocol (
+	protocol_id INT DEFAULT NEXTVAL('dbid') PRIMARY KEY
+	,protocol_name VARCHAR(100)
+	,protocol_doc VARCHAR(100000)
+	,removed BOOLEAN DEFAULT FALSE
+);
+ALTER TABLE "protocol" ADD COLUMN "doctype" integer DEFAULT 2;
+ALTER TABLE "protocol" ADD FOREIGN KEY ("doctype") REFERENCES "doctype"("doctype_id");
+
+DROP TABLE IF EXISTS protocoldd2icd10;
+CREATE TABLE protocoldd2icd10 (
+	protocoldd INTEGER NOT NULL,
+	icd10 INTEGER NOT NULL,
+	doctype INTEGER NOT NULL DEFAULT 7,
+	FOREIGN KEY (protocoldd) REFERENCES doc(doc_id) ON DELETE CASCADE,
+	FOREIGN KEY (doctype) REFERENCES doctype(doctype_id),
+	FOREIGN KEY (icd10) REFERENCES icd(icd_id)
+);
+
+--------protocol----------------------------END
+
+

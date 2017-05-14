@@ -2,8 +2,24 @@
 	Протокол:  {{protocol.title.shortName}} 
 </h2>
 <div style="text-align: right;" class="w3-tiny">
-	Візувальна модель {{protocol.config.viewModel}} | <a href=""> </a> <a
-		href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">модель даних</a>
+	Візуальна модель {{protocol.config.viewModel}} 
+	| <a href="#"
+		ng-click="protocol.config.dd.openDDD()"
+		class="w3-border w3-hover-gray"
+		ng-class="{'w3-green':protocol.config.dd.openDatadictionaryDialog}"
+		title="DataDictionary"><i class="fa fa-qrcode"></i> словник даних
+	</a> 
+	| <span class="w3-border w3-hover-gray"> 
+		<i class="fa fa-file-code-o" aria-hidden="true"></i>
+		<a
+		ng-if="param.hid" href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">
+			 модель даних
+		</a> 
+		<a ng-if="param.dbId" href="/r/meddoc/dbProtocol/{{param.dbId}}">модель даних</a>
+	</span>
+</div>
+<div ng-if="protocol.config.dd.openDatadictionaryDialog" class=" w3-card-2"
+	ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/data-dictionary-1.html'">
 </div>
 
 <div ng-repeat="v2 in protocol.diagram_01" ng-init="i=$index; v=v2;"
@@ -16,7 +32,6 @@ title="{{v2.class}}-{{v2.style}}"
 
 <hr/>
 {{amGenerateID}}
-
 
 <div>
 	<a class="w3-btn w3-grey" ng-click="openMy = !openMy">open</a>

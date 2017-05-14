@@ -1,6 +1,5 @@
 package org.algoritmed.mvp1.meddoc;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +63,40 @@ public class MedDocRest extends DbAlgoritmed{
 		map.put("uuid", uuid);
 		return uuid;
 	}
+	
+	private @Value("${sql.meddoc.protocoldd2icd10.insert}") String sqlMeddocProtocoldd2icd10Insert;
+	private @Value("${sql.meddoc.protocol.datadictionary.icd10}") String sqlMeddocProtocolDatadictionaryIcd10;
+	@PostMapping("/r/addDataDictionary")
+	public @ResponseBody Map<String, Object> addDataDictionary(
+			@RequestBody Map<String, Object> dbSaveObj
+			, Principal userPrincipal) {
+		if(dbSaveObj.containsKey("childs"))
+			dbSaveObj.remove("childs");
+		logger.info("\n ---- " + "/r/addDataDictionary"
+				+ "\n" + dbSaveObj 
+				);
+		Integer parentId = (Integer) dbSaveObj.get("protocolId");
+		dbSaveObj.put("parent_id", parentId);
+		if(dbSaveObj.containsKey("icd_id")){
+			//if icd10
+			
+			//insert to doc parentId = protocolId, doctype = 7-protocol.datadictionary.icd10
+			//insert to doctimestamp
+			//insert to Protocoldd2icd10
+			Integer dbId = nextDbId();
+			dbSaveObj.put("nextDbId", dbId);
+			dbSaveObj.put("doc_id", dbId);
+			dbSaveObj.put("doctype", 7);
+			insertDocElement(dbSaveObj, parentId);
+			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocoldd2icd10Insert, dbSaveObj);
+		}
+		List<Map<String, Object>> protocolDatadictionaryIcd10 = db1ParamJdbcTemplate.queryForList(sqlMeddocProtocolDatadictionaryIcd10, dbSaveObj);
+		dbSaveObj.put("protocolDatadictionaryIcd10", protocolDatadictionaryIcd10);
+		return dbSaveObj;
+	}
 
+	private @Value("${sql.meddoc.protocol.name.update}") String sqlMeddocProtocolNameUpdate;
+	private @Value("${sql.meddoc.docbody.update}") String sqlMeddocDocbodyUpdate;
 	@PostMapping("/r/saveProtocol")
 	public @ResponseBody Map<String, Object> saveProtocol(
 			@RequestBody Map<String, Object> dbSaveObj1
@@ -86,7 +118,8 @@ public class MedDocRest extends DbAlgoritmed{
 					+ "\n" + map 
 					+ "\n" + dbSaveObj 
 					);
-			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocolUpdate, map);
+			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocolNameUpdate, map);
+			int update2 = db1ParamJdbcTemplate.update(sqlMeddocDocbodyUpdate, map);
 		}else{//insert
 			dbId = nextDbId();
 			Map<String, Object> dbUuid = generateNewUuid(map, dbId);
@@ -126,7 +159,6 @@ public class MedDocRest extends DbAlgoritmed{
 		map.put("name", dbSaveObj.getString("title.shortName"));
 	}
 
-	private @Value("${sql.meddoc.protocol.update}") String sqlMeddocProtocolUpdate;
 	private @Value("${sql.meddoc.protocol.insert}") String sqlMeddocProtocolInsert;
 	private @Value("${sql.meddoc.protocol.byId}") String sqlMeddocProtocolById;
 	@GetMapping(value = "/r/meddoc/dbProtocol/{dbId}")

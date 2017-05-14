@@ -12,6 +12,22 @@
 			style="position: fixed; right: 0;"
 		-->
 		<div class="w3-col w3-border w3-leftbar m{{protocol.config.menuWidth}}">
+		<!-- 
+			<header class="w3-tiny ">
+				<div class="w3-row">
+					<div class="w3-col" style="width: 5px">
+						<a class="w3-gray w3-small" ng-click="menuWidthPlus()" href="#">
+							< </a><br /> <a class="w3-gray w3-small" ng-click="menuWidthMinus()">
+							> </a>
+					</div>
+					<div class="w3-rest">
+						<div class="w3-bar w3-border w3-light-grey ">
+							<div class="w3-bar-item">меню</div>
+						</div>
+					</div>
+				</div>
+			</header>
+		 -->
 			<header class="w3-light-grey w3-tiny">
 				<a class="w3-gray" ng-click="menuWidthPlus()"> <i
 					class="fa fa-angle-left" aria-hidden="true"></i>
@@ -25,6 +41,13 @@
 				<button class="w3-btn w3-grey w3-tiny w3-border w3-border-blue w3-round">
 					<i class="fa fa-print" aria-hidden="true"></i>
 				</button>
+				<span>
+					<button ng-click="protocol.config.dd.openDDD()"
+						class="w3-btn  w3-tiny w3-border w3-border-blue w3-round"
+						ng-class="{'w3-green':protocol.config.dd.openDatadictionaryDialog}">
+						<i class="fa fa-qrcode" aria-hidden="true"></i>
+					</button>
+				</span>
 			</header>
 			<span class="w3-small"> Протокол <span
 				ng-if="protocol.editKey.key">

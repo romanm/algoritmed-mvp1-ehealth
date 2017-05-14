@@ -1,0 +1,115 @@
+<!-- 
+<div class="w3-bar w3-border w3-tiny">
+	<div class="w3-bar-item">Data Dictionary</div>
+	<a href="#" class="w3-bar-item w3-hover-light-grey">ICD10</a>
+	<div class="w3-bar-item w3-hover-light-grey">ICPC2</div>
+	<div class="w3-bar-item w3-hover-light-grey">Всі</div>
+	<a href="#" ng-click="protocol.config.dd.openDDD()"
+		ng-class="{'w3-green':protocol.config.dd.openDatadictionaryDialog}"
+		class="w3-bar-item w3-border w3-border-blue w3-round w3-button w3-right">
+		<i class="fa fa-qrcode" aria-hidden="true"></i>
+	</a>
+</div>
+ -->
+
+<div>
+&nbsp;
+</div>
+
+<div class="w3-row">
+	<div class="w3-col m3 ">&nbsp;</div>
+	<div class="w3-col m8 ">
+		<div class="w3-dropdown-hover">
+			<div class="w3-bar w3-light-grey w3-border ">
+				<div class="w3-bar-item" title="Data Dictionary">
+				<i class="fa fa-qrcode"></i>
+				Словник даних</div>
+				<input type="text" class="w3-bar-item w3-input w3-white w3-mobile"
+				ng-model="icdConf.search"
+					placeholder="Пошук д/з, симптом ...">
+				<button class="w3-bar-item w3-button w3-green w3-mobile">
+					<i class=" fa fa-search"></i>
+				</button>
+			</div>
+			<div class="w3-dropdown-content w3-card-2">
+				<div>&nbsp;
+					<u ng-if="icdConf.selectedItem"
+						ng-bind-html="highlight(
+						icdConf.selectedItem.icd_code+': '+icdConf.selectedItem.icd_name, icdConf.search)"></u>
+				</div>
+				<div class="w3-bar w3-tiny w3-border">
+					<a href="#" class="w3-bar-item w3-button"
+						ng-class="{'w3-green':icdConf.icdSeekContent=='tree'}"
+						ng-mouseover="icdConf.icdSeekContent='tree'"
+						><i class="fa fa-indent" aria-hidden="true"></i> групи</a>
+					<a href="#" class="w3-bar-item w3-button"
+						ng-class="{'w3-green':icdConf.icdSeekContent=='code'}"
+						ng-mouseover="icdConf.icdSeekContent='code'"
+						> <i
+							class="fa fa-qrcode" aria-hidden="true"></i> код <span
+							ng-if="icdDb.count"> - <u
+								ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"></u>
+					</span>
+					</a>
+					<a href="#" class="w3-bar-item w3-button"
+						ng-class="{'w3-green':icdConf.icdSeekContent=='symptom'}"
+						ng-mouseover="icdConf.icdSeekContent='symptom'"
+						>симптоми</a>
+				</div>
+				<div style="max-height: 300px; overflow: auto;">
+					<div
+						ng-if="icdConf.icdSeekContent=='symptom'"
+						>symptom</div>
+					<div
+						ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/dd/icd10db-code.html'"
+						ng-if="icdConf.icdSeekContent=='code'"></div>
+					<div
+						ng-if="!icdConf.icdSeekContent || icdConf.icdSeekContent=='tree'"
+						ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/dd/icd10-ul4.html'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="w3-col m1 ">&nbsp;</div>
+</div>
+<div class="w3-row">
+	<div class="w3-half w3-container ">
+		<div class="w3-card-2">
+			<header class="w3-tiny w3-gray">МКХ-10 
+			<sup>
+			{{protocol.datadictionary.icd10.length}}
+			</sup>
+			</header>
+			<div style="max-height: 300px; overflow: auto;">
+				<ul class="w3-ul">
+					<li ng-repeat="icd10 in protocol.datadictionary.icd10"
+						ng-init="item=icd10;list= protocol.datadictionary.icd10"><span
+						class="w3-dropdown-hover w3-white w3-border">
+							{{icd10.icd_code}}
+							<div class="w3-dropdown-content w3-card-2">
+								<!-- 
+									ng-click="removeSuspectedDiagnosis(v,sds)" href="#"><i
+									v.splice(v.indexOf(sds),1)
+									list.splice(list.indexOf(item),1)
+							 -->
+								<a class="w3-hover-grey"
+									ng-click="list.splice(list.indexOf(item),1)" href="#"><i
+									class="fa fa-times" aria-hidden="true"></i>видалити</a>
+							</div>
+					</span> : {{icd10.icd_name}}</li>
+				</ul>
+				<br/>
+			</div>
+		</div>
+	</div>
+	<div class="w3-half w3-container ">
+		<div class="w3-card-2">
+			<header class="w3-tiny w3-gray">симптоми</header>
+		</div>
+	</div>
+</div>
+<!-- 
+	<div ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/dd/icd10-ul4.html'"></div>
+ -->
+
+<div ng-include="'/f/mvp1/meddoc/icd10/seek-icd10.html'"></div>

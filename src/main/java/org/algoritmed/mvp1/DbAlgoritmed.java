@@ -15,6 +15,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DbAlgoritmed {
+	/**
+	 * Запис в абстрактного вузла в "системі документ" БД.
+	 * Базісний елемент системи. 
+	 * @param dbSaveObj
+	 * @param parentId
+	 */
+	protected void insertDocElement(Map<String, Object> dbSaveObj, Integer parentId) {
+		dbSaveObj.put("parent_id", parentId);
+		if(!dbSaveObj.containsKey("created")){
+			Timestamp created = now();
+			dbSaveObj.put("created", created);
+		}
+		int update = db1ParamJdbcTemplate.update(sqlDocInsert, dbSaveObj);
+		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
+	}
+	private @Value("${sql.doctimestamp.insert}")	String sqlDoctimestampInsert;
+	private @Value("${sql.doc.insert}")				String sqlDocInsert;
 	@Autowired
 	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 	
