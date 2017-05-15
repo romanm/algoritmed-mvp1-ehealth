@@ -64,6 +64,17 @@ public class MedDocRest extends DbAlgoritmed{
 		return uuid;
 	}
 	
+	@PostMapping("/r/removeDataDictionary")
+	public @ResponseBody Map<String, Object> removeDataDictionary(
+			@RequestBody Map<String, Object> dbSaveObj
+			, Principal userPrincipal) {
+		logger.info("\n ---- " + "/r/removeDataDictionary"
+				+ "\n" + dbSaveObj 
+				);
+		removeDocElement(dbSaveObj);
+		addList(dbSaveObj);
+		return dbSaveObj;
+	}
 	private @Value("${sql.meddoc.protocoldd2icd10.insert}") String sqlMeddocProtocoldd2icd10Insert;
 	private @Value("${sql.meddoc.protocol.datadictionary.icd10}") String sqlMeddocProtocolDatadictionaryIcd10;
 	@PostMapping("/r/addDataDictionary")
@@ -79,7 +90,6 @@ public class MedDocRest extends DbAlgoritmed{
 		dbSaveObj.put("parent_id", parentId);
 		if(dbSaveObj.containsKey("icd_id")){
 			//if icd10
-			
 			//insert to doc parentId = protocolId, doctype = 7-protocol.datadictionary.icd10
 			//insert to doctimestamp
 			//insert to Protocoldd2icd10
@@ -90,9 +100,16 @@ public class MedDocRest extends DbAlgoritmed{
 			insertDocElement(dbSaveObj, parentId);
 			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocoldd2icd10Insert, dbSaveObj);
 		}
+		addList(dbSaveObj);
+		return dbSaveObj;
+	}
+	private void addList(Map<String, Object> dbSaveObj) {
 		List<Map<String, Object>> protocolDatadictionaryIcd10 = db1ParamJdbcTemplate.queryForList(sqlMeddocProtocolDatadictionaryIcd10, dbSaveObj);
 		dbSaveObj.put("protocolDatadictionaryIcd10", protocolDatadictionaryIcd10);
-		return dbSaveObj;
+		logger.info("\n"
+				+ "addList"
+				+ "\n"+dbSaveObj
+				+ "\n"+dbSaveObj.get("protocolDatadictionaryIcd10"));
 	}
 
 	private @Value("${sql.meddoc.protocol.name.update}") String sqlMeddocProtocolNameUpdate;

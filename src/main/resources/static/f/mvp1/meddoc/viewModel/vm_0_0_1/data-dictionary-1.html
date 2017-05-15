@@ -1,17 +1,3 @@
-<!-- 
-<div class="w3-bar w3-border w3-tiny">
-	<div class="w3-bar-item">Data Dictionary</div>
-	<a href="#" class="w3-bar-item w3-hover-light-grey">ICD10</a>
-	<div class="w3-bar-item w3-hover-light-grey">ICPC2</div>
-	<div class="w3-bar-item w3-hover-light-grey">Всі</div>
-	<a href="#" ng-click="protocol.config.dd.openDDD()"
-		ng-class="{'w3-green':protocol.config.dd.openDatadictionaryDialog}"
-		class="w3-bar-item w3-border w3-border-blue w3-round w3-button w3-right">
-		<i class="fa fa-qrcode" aria-hidden="true"></i>
-	</a>
-</div>
- -->
-
 <div>
 &nbsp;
 </div>
@@ -87,13 +73,11 @@
 						class="w3-dropdown-hover w3-white w3-border">
 							{{icd10.icd_code}}
 							<div class="w3-dropdown-content w3-card-2">
-								<!-- 
-									ng-click="removeSuspectedDiagnosis(v,sds)" href="#"><i
-									v.splice(v.indexOf(sds),1)
-									list.splice(list.indexOf(item),1)
+							<!-- 
+									ng-click="list.splice(list.indexOf(item),1);list.dbRemove(item)" href="#"><i
 							 -->
 								<a class="w3-hover-grey"
-									ng-click="list.splice(list.indexOf(item),1)" href="#"><i
+									ng-click="protocol.fn.dbRemove(item)" href="#"><i
 									class="fa fa-times" aria-hidden="true"></i>видалити</a>
 							</div>
 					</span> : {{icd10.icd_name}}</li>

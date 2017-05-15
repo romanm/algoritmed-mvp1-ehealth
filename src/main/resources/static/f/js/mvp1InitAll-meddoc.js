@@ -230,20 +230,32 @@ function initAll ($http, $scope, $filter){
 			$scope.protocol.config.menuWidth = 3;
 		}
 
-		$scope.protocolConfig = {
+		$scope.protocol.fn = {
 			initDataDictionary:function(data) {
 				console.log('----initDataDictionary------------');
 				console.log(data.protocolDatadictionaryIcd10);
-				if(!$scope.protocol.datadictionary)
-					$scope.protocol.datadictionary = {icd10:[]};
-				else
-					$scope.protocol.datadictionary.icd10 = [];
-				angular.forEach(data.protocolDatadictionaryIcd10, function(ddIcd10, key) {
-					$scope.protocol.datadictionary.icd10.push(ddIcd10);
+				if(!$scope.protocol.datadictionary){
+					$scope.protocol.datadictionary = {icd10:[]}
+				}
+				$scope.protocol.datadictionary.icd10 = data.protocolDatadictionaryIcd10;
+				console.log(this.datadictionary);
+			}, dbRemove : function(item){
+				console.log(this);
+				console.log(item);
+				var obj = $scope;
+				angular.forEach(item.path.split('.'), function(v) {
+					obj = obj[v]
 				});
-				console.log($scope.protocol.datadictionary);
+				console.log(obj);
+				var url = '/r/removeDataDictionary';
+				console.log(url);
+				$http.post(url, item).then(function(response) {
+					console.log(response.data);
+					$scope.protocol.fn.initDataDictionary(response.data);
+					$scope.saveProtocolDialog();
+				});
 			}
-		};
+		}
 		$scope.protocol.config.dd = 
 		{openDatadictionaryDialog: false
 			,openDDD:function() {

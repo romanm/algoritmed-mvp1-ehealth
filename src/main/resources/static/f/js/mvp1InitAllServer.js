@@ -39,7 +39,7 @@ function initSeekAll($http, $scope, $filter){
 			console.log(url);
 			$http.post(url, newValue).then(function(response) {
 				console.log(response.data);
-				$scope.protocolConfig.initDataDictionary(response.data);
+				$scope.protocol.fn.initDataDictionary(response.data);
 			});
 		}else
 			if($scope.editPatientHistory){

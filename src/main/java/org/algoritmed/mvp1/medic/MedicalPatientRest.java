@@ -93,12 +93,12 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 				+ "/r/removePatientHistoryRecord"
 				+ "\n" + dbSaveObj);
 		//delete doc - first level child by patient
-		int numberOfDeletedRows = db1ParamJdbcTemplate.update(sqlDocDelete, dbSaveObj);
-		dbSaveObj.put("numberOfDeletedRows", numberOfDeletedRows);
+		removeDocElement(dbSaveObj);
 		return dbSaveObj;
 	}
+
 	private @Value("${sql.docbody.update}")			String sqlDocbodyUpdate;
-	private @Value("${sql.doc.delete}")				String sqlDocDelete;
+	
 	
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
 	

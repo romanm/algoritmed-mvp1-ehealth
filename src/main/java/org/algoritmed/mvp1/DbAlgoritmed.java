@@ -15,6 +15,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DbAlgoritmed {
+	@Value("${sql.doc.delete}") protected				String sqlDocDelete;
+	protected void removeDocElement(Map<String, Object> dbSaveObj) {
+		int numberOfDeletedRows = db1ParamJdbcTemplate.update(sqlDocDelete, dbSaveObj);
+		dbSaveObj.put("numberOfDeletedRows", numberOfDeletedRows);
+	}
 	/**
 	 * Запис в абстрактного вузла в "системі документ" БД.
 	 * Базісний елемент системи. 
