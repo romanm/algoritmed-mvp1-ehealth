@@ -1,11 +1,41 @@
+<!-- 
 <h2>{{config[pagePath.last()].shortName}}</h2>
+ -->
 <div class="w3-bar w3-light-gray" ng-init="vParent='code'">
-		<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent"
-			href="/v/{{k}}" class="w3-bar-item w3-button"
-			ng-class="{'w3-green':menuHomeClicked(k)}"> <i ng-if="v.fa"
-			class="fa {{v.fa}}"></i> {{v.shortName}} <i
-			ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
+	<div class="w3-bar-item">{{config[vParent].shortName}}:</div>
+	<!-- 
+	 -->
+	<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent"
+		href="/v/{{k}}" class="w3-bar-item w3-button"
+		ng-class="{'w3-green':menuHomeClicked(k)}"> <i ng-if="v.fa"
+		class="fa {{v.fa}}"></i> {{v.shortName}} <i
+		ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
+	</a>
+	<div ng-if="pagePath.last()=='icpc2'" class="w3-bar-item w3-small">
+		<!-- 
+		ng-if="vParent!=pagePath.last()"
+		<i class="fa fa-angle-right" aria-hidden="true"></i>
+		<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+		 -->
+		<i class="fa fa-caret-right" aria-hidden="true"></i>
+		{{config[pagePath.last()].shortName}}:
+		<a href="#"
+		ng-click="icpc.view='view'"
+		ng-class="{'w3-green':icpc.view=='view'}"
+			class="w3-border w3-hover-gray"
+		>
+		<i class="fa fa-eye" aria-hidden="true"></i>
+		перегляд
 		</a>
+		<a href="#"
+		ng-click="icpc.view='seek'"
+		ng-class="{'w3-green':icpc.view=='seek'}"
+			class="w3-border w3-hover-gray"
+		>
+		<i class="fa fa-search" aria-hidden="true"></i>
+		пошук
+		</a>
+	</div>
 </div>
 <!-- 
 <ul class="w3-navbar w3-light-grey">

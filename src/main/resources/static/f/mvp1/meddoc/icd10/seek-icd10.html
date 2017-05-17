@@ -2,11 +2,7 @@
 	<label>Пошук: <u ng-if="icdConf.selectedItem"
 		ng-bind-html="highlight(
 					icdConf.selectedItem.icd_code+': '+icdConf.selectedItem.icd_name, icdConf.search)"></u>
-		<!-- 
-					<u ng-if="icdConf.selectedItem">
-						{{icdConf.selectedItem.icd_code}}:
-						{{icdConf.selectedItem.icd_name}} </u> 
-						 --> <input class="w3-input w3-border" ng-change="seekIcdPopup()"
+		<input class="w3-input w3-border" ng-change="seekIcdPopup()"
 		ng-model="icdConf.search"></label>
 	<div class="w3-dropdown-content w3-card-2" style="width: 500px">
 		<header class="w3-bar w3-border w3-tiny w3-light-grey">

@@ -47,30 +47,20 @@ function initAll ($http, $scope, $filter){
 		if($scope.param.dbId){
 			var url = '/r/meddoc/dbProtocol/' + $scope.param.dbId;
 			console.log(url);
-			$http.get(url).then(
-				function(response) {
-					$scope.protocol = response.data;
-					console.log($scope.protocol);
-					initProtocol();
-	console.log($scope.protocol.config);
-				}
-				, function(response) {
-					console.log(response);
-				}
-			);
+			$http.get(url).then( function(response) {
+				$scope.protocol = response.data;
+				console.log($scope.protocol);
+				initProtocol();
+				console.log($scope.protocol.config);
+			});
 		}else
 		if($scope.param.hid){
 			var url = '/f/mvp1/meddoc/db/protocol.'+$scope.param.hid+'.json';
 			console.log(url);
-			$http.get(url).then(
-				function(response) {
-					$scope.protocol = response.data;
-					initProtocol();
-				}
-				, function(response) {
-					console.log(response);
-				}
-			);
+			$http.get(url).then( function(response) {
+				$scope.protocol = response.data;
+				initProtocol();
+			});
 		}
 		
 	}
@@ -114,22 +104,17 @@ function initAll ($http, $scope, $filter){
 			}else{
 				var url = '/r/meddoc/openIcPc2SubGroup/' + k2;
 				console.log(url);
-				$http.get(url).then(
-					function(response) {
-						console.log(response.data);
-						response.data.openIcPc2SubGroup.demoIcpc2UaExclusion = 
-							response.data.demoIcpc2UaExclusion;
-						response.data.openIcPc2SubGroup.meddocIcpc2icd10Code = 
-							response.data.meddocIcpc2icd10Code;
-						$scope.codeItems[k2] = response.data.openIcPc2SubGroup;
+				$http.get(url).then(function(response) {
+					console.log(response.data);
+					response.data.openIcPc2SubGroup.demoIcpc2UaExclusion = 
+						response.data.demoIcpc2UaExclusion;
+					response.data.openIcPc2SubGroup.meddocIcpc2icd10Code = 
+						response.data.meddocIcpc2icd10Code;
+					$scope.codeItems[k2] = response.data.openIcPc2SubGroup;
 //						$scope.codeItemsEn[k2] = response.data.openIcPc2SubGroupEn;
-						$scope.codeItems[k2].open = true;
-						console.log($scope.codeItems[k2]);
-					}
-					, function(response) {
-						console.log(response);
-					}
-				);
+					$scope.codeItems[k2].open = true;
+					console.log($scope.codeItems[k2]);
+				});
 			}
 		}
 		$scope.isICPCCodeInSeek = function(k2,v2){
@@ -186,22 +171,10 @@ function initAll ($http, $scope, $filter){
 		$scope.icpc2Laguage = function(lg){
 			var url = '/f/config/icpc2/ICPC2-'+lg+'.json';
 			console.log(url);
-			$http.get(url).then(
-				function(response) {
-					$scope.icpc = response.data;
-					$scope.icpc.seekParam = '';
-					$scope.icpc.expandAll = true;
-					expandAll($scope.icpc, $scope.icpc.group);
-					$scope.icpc.groupKeys = [];
-					angular.forEach($scope.icpc.group, function(value, key) {
-						this.push(key);
-					}, $scope.icpc.groupKeys);
-					$scope.icpc.groupKeys1 = $scope.icpc.groupKeys.splice(0,9)
-					console.log($scope.icpc);
-				}, function(response) {
-					console.error(response);
-				}
-			);
+			$http.get(url).then( function(response) {
+				$scope.icpc = response.data;
+				initIcpc2();
+			});
 		}
 //		$scope.icpc2Laguage('en');
 		$scope.icpc2Laguage('ua');
@@ -222,6 +195,22 @@ function initAll ($http, $scope, $filter){
 			console.error(response);
 		}
 	);
+
+	// initIcpc2
+	var initIcpc2 = function(){
+		$scope.icpc.seekParam = '';
+		$scope.icpc.expandAll = true;
+		expandAll($scope.icpc, $scope.icpc.group);
+		$scope.icpc.groupKeys = [];
+		angular.forEach($scope.icpc.group, function(value, key) {
+			this.push(key);
+		}, $scope.icpc.groupKeys);
+		$scope.icpc.groupKeys1 = $scope.icpc.groupKeys.splice(0,9)
+		$scope.icpc.view = 'view';
+		$scope.icpc.view = 'seek';
+		console.log($scope.icpc);
+	}
+	// initIcpc2 END
 
 	// initProtocol 
 	var initProtocol = function(){

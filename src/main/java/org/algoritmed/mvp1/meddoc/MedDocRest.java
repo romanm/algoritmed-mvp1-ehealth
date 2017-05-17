@@ -1,5 +1,7 @@
 package org.algoritmed.mvp1.meddoc;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -198,6 +201,8 @@ public class MedDocRest extends DbAlgoritmed{
 	private @Value("${sql.meddoc.icpc2icd10.code}") String sqlMeddocIcpc2icd10Code;
 	private @Value("${sql.meddoc.protocol.select}") String sqlMeddocProtocolSelect;
 	private @Value("${sql.meddoc.icd}") String sqlMeddocIcd;
+	private @Value("${sql.meddoc.icpc2Code.limit}") String sqlMeddocIcpc2CodeLimit;
+	private @Value("${sql.meddoc.icpc2Code.count}") String sqlMeddocIcpc2CodeCount;
 	private @Value("${sql.meddoc.icdCode.limit}") String sqlMeddocIcdCodeLimit;
 	private @Value("${sql.meddoc.icdCode.count}") String sqlMeddocIcdCodeCount;
 	private @Value("${sql.meddoc.icdCodeP1}") String sqlMeddocIcdCodeP1;
@@ -216,19 +221,36 @@ public class MedDocRest extends DbAlgoritmed{
 		return map;
 	}
 
-	@GetMapping(value = "/r/meddoc/icdCode/{seekIcd}")
-	public @ResponseBody Map<String, Object> dbMeddocIcdCode(@PathVariable String seekIcd) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		seekIcd = "%"+seekIcd+"%";
-		int limit = 20;
-		map.put("limit", limit );
-		map.put("seekIcd", seekIcd);
+	@GetMapping(value = "/r/meddoc/icpc2Code/{seekStr}")
+	public @ResponseBody Map<String, Object> seekIcpc2(@PathVariable String seekStr) {
+		seekStr = "%"+seekStr+"%";
+		Map<String, Object> map = seekMap(seekStr);
+		logger.info("\n"
+				+ "/r/meddoc/icpc2Code/{seekIcd}"
+				+ "\n" + map
+				+ "\n" + sqlMeddocIcpc2CodeLimit.replace(":seekStr", "'"+seekStr+"'")
+				+ "\n" + sqlMeddocIcpc2CodeCount.replace(":seekStr", "'"+seekStr+"'")
+				);
+		Integer countAll = db1ParamJdbcTemplate.queryForObject(sqlMeddocIcdCodeCount, map, Integer.class);
+		map.put("countAll", countAll);
+		List<Map<String, Object>> meddocIcpc2CodeLimit = db1ParamJdbcTemplate.queryForList(sqlMeddocIcpc2CodeLimit, map);
+		map.put("meddocIcpc2CodeLimit", meddocIcpc2CodeLimit);
+		int size = meddocIcpc2CodeLimit.size();
+		map.put("count", size);
+		return map;
+	}
+
+	int limit = 20;
+	@GetMapping(value = "/r/meddoc/icdCode/{seekStr}")
+	public @ResponseBody Map<String, Object> seekIcd10(@PathVariable String seekStr) {
+		seekStr = "%"+seekStr+"%";
+		Map<String, Object> map = seekMap(seekStr);
 		logger.info("\n"
 				+ "/r/meddoc/icdCode/{seekIcd}"
 				+ "\n" + map
-				+ "\n" + sqlMeddocIcdCodeLimit.replace(":seekIcd", "'"+seekIcd+"'")
-				+ "\n" + sqlMeddocIcdCodeCount.replace(":seekIcd", "'"+seekIcd+"'")
-				+ "\n" + sqlMeddocIcdCodeP1.replace(":seekIcd", "'"+seekIcd+"'")
+				+ "\n" + sqlMeddocIcdCodeLimit.replace(":seekIcd", "'"+seekStr+"'")
+				+ "\n" + sqlMeddocIcdCodeCount.replace(":seekIcd", "'"+seekStr+"'")
+				+ "\n" + sqlMeddocIcdCodeP1.replace(":seekIcd", "'"+seekStr+"'")
 				);
 		Integer countAll = db1ParamJdbcTemplate.queryForObject(sqlMeddocIcdCodeCount, map, Integer.class);
 		map.put("countAll", countAll);
@@ -247,6 +269,12 @@ public class MedDocRest extends DbAlgoritmed{
 				}
 			}
 		}
+		return map;
+	}
+	private Map<String, Object> seekMap(String seekStr) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("limit", limit );
+		map.put("seekStr", seekStr);
 		return map;
 	}
 
@@ -313,6 +341,7 @@ public class MedDocRest extends DbAlgoritmed{
 		else
 			listPath.set(icd_level, mapIcdItem);
 	}
+	
 	@GetMapping(value = "/r/meddoc/dbProtocolListe")
 	public @ResponseBody Map<String, Object> dbProtocolListe() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -362,4 +391,70 @@ public class MedDocRest extends DbAlgoritmed{
 		}
 		return list;
 	}
+
+	@GetMapping(value = "/r/meddoc/icpc2util")
+	public @ResponseBody ResponseEntity<String> icpc2util() throws URISyntaxException {
+//		public @ResponseBody Map<String, Object> icpc2util() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("util", "icpc2");
+		StringBuffer stringBuffer = icpc2consider(map);
+		return ResponseEntity.created(new URI("/r/meddoc/icpc2util")).body(stringBuffer.toString());
+//		return map;
+	}
+
+	private StringBuffer icpc2consider(Map<String, Object> map) {
+		StringBuffer stringBuffer = new StringBuffer();
+		String sql = "SELECT * FROM demo_icpc2_ua WHERE length(consider)";
+		List<Map<String, Object>> icpc2List = db1JdbcTemplate.queryForList(sql);
+		for (Map<String, Object> map2 : icpc2List) {
+//			System.err.println(map2);
+			String code = (String) map2.get("code");
+			String consider = (String) map2.get("consider");
+			System.err.println("-- "+consider);
+			String[] split = consider.split(";");
+			for (String string : split) {
+				String trim = string.trim();
+				String[] split2 = trim.split(" ");
+				String toCode = split2[split2.length-1];
+				String consider2 = trim.replace(toCode, "").trim();
+				String sql2 = "insert into icpc2consider (icpc2_code, icpc2_code_consider, consider) values ('"
+						+ code
+						+ "','"
+						+ toCode
+						+ "','"
+						+ consider2
+						+ "');";
+				stringBuffer.append(sql2).append(System.getProperty("line.separator"));
+				System.err.println(sql2);
+			}
+			
+		}
+		return stringBuffer;
+	}
+	private StringBuffer icpc2inclusion(Map<String, Object> map) {
+		StringBuffer stringBuffer = new StringBuffer();
+		String sql = "select * from demo_icpc2_ua";
+		List<Map<String, Object>> icpc2List = db1JdbcTemplate.queryForList(sql);
+		map.put("icpc2List_size", icpc2List.size());
+//		stringBuffer.append("-- hello").append(System.getProperty("line.separator"));
+		for (Map<String, Object> map2 : icpc2List) {
+			String code = (String) map2.get("code");
+			String inclusion = (String) map2.get("inclusion");
+			String[] split = inclusion.split(";");
+			for (String string : split) {
+				String trim = string.trim();
+				if(trim.length()>0){
+					String string2 = "insert into icpc2inclusion (icpc2_code, inclusion) values ('"
+							+ code
+							+ "','"
+							+ trim
+							+ "');";
+					stringBuffer.append(string2).append(System.getProperty("line.separator"));
+//					System.err.println(string2);
+				}
+			}
+		}
+		return stringBuffer;
+	}
+
 }

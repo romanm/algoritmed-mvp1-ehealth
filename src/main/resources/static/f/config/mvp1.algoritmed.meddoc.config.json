@@ -48,13 +48,6 @@
 	,"fa2":"fa-barcode"
 	,"parent":"code"
 }
-,"patient":{
-	"th_template":"mvp1-meddoc"
-	,"ng_template":"'/f/mvp1/medic/patient.html'"
-	,"shortName":"Пацієнт"
-	,"fa":"fa-user"
-	,"parent":"cabinet"
-}
 ,"p2rotocol2":{
 	"th_template":"mvp1-meddoc"
 	,"ng_template":"'/f/mvp1/medic/protocol.html'"

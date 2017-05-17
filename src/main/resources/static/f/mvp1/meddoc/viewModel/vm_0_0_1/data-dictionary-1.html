@@ -7,15 +7,16 @@
 	<div class="w3-col m8 ">
 		<div class="w3-dropdown-hover">
 			<div class="w3-bar w3-light-grey w3-border ">
-				<div class="w3-bar-item" title="Data Dictionary">
-				<i class="fa fa-qrcode"></i>
-				Словник даних</div>
-				<input type="text" class="w3-bar-item w3-input w3-white w3-mobile"
-				ng-model="icdConf.search"
-					placeholder="Пошук д/з, симптом ...">
 				<button class="w3-bar-item w3-button w3-green w3-mobile">
 					<i class=" fa fa-search"></i>
 				</button>
+				<input type="text" class="w3-bar-item w3-input w3-white w3-mobile"
+				ng-change="seekIcdPopup()"
+				ng-model="icdConf.search"
+					placeholder="Пошук д/з, симптом ...">
+				<div class="w3-bar-item" title="Data Dictionary">
+				<i class="fa fa-qrcode"></i>
+				Словник даних</div>
 			</div>
 			<div class="w3-dropdown-content w3-card-2">
 				<div>&nbsp;
@@ -61,7 +62,7 @@
 <div class="w3-row">
 	<div class="w3-half w3-container ">
 		<div class="w3-card-2">
-			<header class="w3-tiny w3-gray">МКХ-10 
+			<header class="w3-tiny w3-gray">застосовувати для -> МКХ-10 
 			<sup>
 			{{protocol.datadictionary.icd10.length}}
 			</sup>
@@ -73,9 +74,6 @@
 						class="w3-dropdown-hover w3-white w3-border">
 							{{icd10.icd_code}}
 							<div class="w3-dropdown-content w3-card-2">
-							<!-- 
-									ng-click="list.splice(list.indexOf(item),1);list.dbRemove(item)" href="#"><i
-							 -->
 								<a class="w3-hover-grey"
 									ng-click="protocol.fn.dbRemove(item)" href="#"><i
 									class="fa fa-times" aria-hidden="true"></i>видалити</a>
@@ -88,12 +86,11 @@
 	</div>
 	<div class="w3-half w3-container ">
 		<div class="w3-card-2">
-			<header class="w3-tiny w3-gray">симптоми</header>
+			<header class="w3-tiny w3-gray">словник симптомів</header>
 		</div>
 	</div>
 </div>
 <!-- 
-	<div ng-include="'/f/mvp1/meddoc/viewModel/vm_0_0_1/dd/icd10-ul4.html'"></div>
+<div ng-include="'/f/mvp1/meddoc/icd10/seek-icd10.html'"></div>
  -->
 
-<div ng-include="'/f/mvp1/meddoc/icd10/seek-icd10.html'"></div>

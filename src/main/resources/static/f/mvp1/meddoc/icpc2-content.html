@@ -1,4 +1,27 @@
-<div class="w3-row-padding w3-margin-top">
+<div class="w3-row-padding w3-margin-top" ng-if="icpc.view=='seek'">
+	<div class="w3-threequarter">
+		<div class="w3-card-2">
+			<header> пошук: модель використання в протоколах і
+				мед.документах </header>
+			<label>Пошук в БД: 
+				<span ng-if="icpc2Db.count"
+					class="w3-tiny" ng-init="icdDb=icpc2Db"
+					ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"></span> 
+				<input
+				class="w3-input w3-border" ng-change="seekIcpc2Db()"
+				ng-model="icdConf.search">
+			</label>
+			<div style="max-height: 300px; overflow: auto;">
+				<ul>
+					<li ng-repeat="icpc2 in icpc2Db.meddocIcpc2CodeLimit">
+						{{icpc2.code}}: {{icpc2.name}}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="w3-quarter">--</div>
+</div>
+<div ng-if="icpc.view=='view'" class="w3-row-padding w3-margin-top">
 	<span class="no-print">
 		<a href="#" ng-click="icpc2Laguage('ua')">ук</a> | <a href="#"
 			ng-click="icpc2Laguage('en')">en</a>

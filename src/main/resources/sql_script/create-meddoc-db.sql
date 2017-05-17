@@ -93,5 +93,21 @@ CREATE TABLE protocoldd2icd10 (
 );
 
 --------protocol----------------------------END
+--------icpc2----------------------------
+DROP TABLE IF EXISTS icpc2consider;
+CREATE TABLE icpc2consider(
+	icpc2_code VARCHAR(3),
+	icpc2_code_consider VARCHAR(3),
+	consider VARCHAR(200),
+	FOREIGN KEY (icpc2_code) REFERENCES demo_icpc2_ua(code),
+	FOREIGN KEY (icpc2_code_consider) REFERENCES demo_icpc2_ua(code)
+);
+DROP TABLE IF EXISTS icpc2inclusion;
+CREATE TABLE icpc2inclusion (
+	icpc2_code VARCHAR(3),
+	inclusion VARCHAR(400),
+	FOREIGN KEY (icpc2_code) REFERENCES demo_icpc2_ua(code),
+);
+--------icpc2----------------------------END
 
 

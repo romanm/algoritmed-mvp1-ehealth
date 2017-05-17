@@ -8,13 +8,13 @@
 		class="w3-border w3-hover-gray"
 		ng-class="{'w3-green':protocol.config.dd.openDatadictionaryDialog}"
 		title="DataDictionary"><i class="fa fa-qrcode"></i> словник даних
-	</a> 
-	| <span class="w3-border w3-hover-gray"> 
+	</a>
+	| <span class="w3-border w3-hover-gray">
 		<i class="fa fa-file-code-o" aria-hidden="true"></i>
 		<a
 		ng-if="param.hid" href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">
 			 модель даних
-		</a> 
+		</a>
 		<a ng-if="param.dbId" href="/r/meddoc/dbProtocol/{{param.dbId}}">модель даних</a>
 	</span>
 </div>

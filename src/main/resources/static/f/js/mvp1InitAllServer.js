@@ -27,8 +27,12 @@ function initSeekAll($http, $scope, $filter){
 		}
 		return isOpenedChilds;
 	};
+	$scope.$watch("icdConf.icdSeekContent", function handleChange( newValue, oldValue ) {
+		if('code'==newValue){
+			$scope.seekIcdDb();
+		}
+	});
 	$scope.$watch("icdConf.selectedItem", function handleChange( newValue, oldValue ) {
-		console.log(newValue);
 		if($scope.protocol && $scope.protocol.config.dd.openDatadictionaryDialog){
 			console.log("------------------------------");	
 			console.log($scope.protocol.dbUuid.uuid_dbid);
@@ -74,19 +78,25 @@ function initSeekAll($http, $scope, $filter){
 			});
 		}
 	};
+	$scope.seekIcpc2Db = function(){
+		console.log($scope.icdConf);
+		if($scope.icdConf.search.length>1){
+			var url = '/r/meddoc/icpc2Code/'+$scope.icdConf.search;
+			console.log(url);
+			$http.get(url).then( function(response) {
+				$scope.icpc2Db = response.data;
+				console.log($scope.icpc2Db);
+			});
+		}
+	};
 	$scope.seekIcdDb = function(){
-		console.log($scope.icdConf.search);
 		if($scope.icdConf.search.length>1){
 			var url = '/r/meddoc/icdCode/'+$scope.icdConf.search;
 			console.log(url);
-			$http.get(url).then(
-				function(response) {
-					$scope.icdDb = response.data;
-					console.log($scope.icdDb);
-				} , function(response) {
-					console.log(response);
-				}
-			);
+			$http.get(url).then( function(response) {
+				$scope.icdDb = response.data;
+				console.log($scope.icdDb);
+			});
 		}
 	};
 }

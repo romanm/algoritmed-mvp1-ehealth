@@ -42,12 +42,10 @@
 			</header>
 			<div ng-if="seekDb">
 				<label>Пошук в БД:
-				<span ng-if="icdDb.count" class="w3-tiny"
-				ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"
-				></span>
-				 <input class="w3-input w3-border"
-				ng-change="seekIcdDb()"
-					ng-model="icdConf.search"></label>
+					<span ng-if="icdDb.count" class="w3-tiny"
+					ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'" ></span>
+					<input class="w3-input w3-border" ng-change="seekIcdDb()" ng-model="icdConf.search">
+				</label>
 				<div style="max-height: 300px; overflow: auto;"
 					ng-include="'/f/mvp1/meddoc/icd10db-code.html'"></div>
 			</div>
