@@ -1,4 +1,4 @@
-function initSeekAll($http, $scope, $filter){
+function initSeekAll($http, $scope, $filter, $timeout){
 	$scope.icdConf = {search:'','icdSeekContent':'code'};
 //		$scope.icdConf = {search:'','icdSeekContent':'tree'};
 	$scope.seekIcdPopup = function(){
@@ -27,6 +27,15 @@ function initSeekAll($http, $scope, $filter){
 		}
 		return isOpenedChilds;
 	};
+	var timeoutPromise;
+	var delayInMs = 1000;
+	$scope.$watch("icpc.codeMouseOver", function handleChange( newValue, oldValue ) {
+		console.log(newValue);
+		$timeout.cancel(timeoutPromise); //does nothing, if timeout alrdy done
+		timeoutPromise = $timeout(function(){ //Set timeout
+			console.log('load extencion to - '+newValue);
+		},delayInMs);
+	});
 	$scope.$watch("icdConf.icdSeekContent", function handleChange( newValue, oldValue ) {
 		if('code'==newValue){
 			$scope.seekIcdDb();
@@ -101,9 +110,9 @@ function initSeekAll($http, $scope, $filter){
 	};
 }
 
-function initAllServer($http, $scope, $filter){
+function initAllServer($http, $scope, $filter, $timeout){
 	console.log('----initAllServer---------------');
-	initSeekAll($http, $scope, $filter);
+	initSeekAll($http, $scope, $filter, $timeout);
 
 	// for menu colored
 	console.log('for menu colored');

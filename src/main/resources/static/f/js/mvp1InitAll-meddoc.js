@@ -4,10 +4,10 @@ function expandAll (o, expandO){
 	});
 }
 
-function initAll ($http, $scope, $filter){
+function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope, $filter);
-	initAllServer($http, $scope, $filter);
+	initAllServer($http, $scope, $filter, $timeout);
 	$scope.saveProtocolDialog = function(){
 //		console.log($scope.newProtocol);
 		console.log($scope.protocol);
@@ -200,6 +200,7 @@ function initAll ($http, $scope, $filter){
 	var initIcpc2 = function(){
 		$scope.icpc.seekParam = '';
 		$scope.icpc.expandAll = true;
+		$scope.icpc.expandAll = false;
 		expandAll($scope.icpc, $scope.icpc.group);
 		$scope.icpc.groupKeys = [];
 		angular.forEach($scope.icpc.group, function(value, key) {
@@ -208,6 +209,7 @@ function initAll ($http, $scope, $filter){
 		$scope.icpc.groupKeys1 = $scope.icpc.groupKeys.splice(0,9)
 		$scope.icpc.view = 'view';
 		$scope.icpc.view = 'seek';
+		$scope.icpc.codeMouseOver = '';// для відкладеного пошуку
 		console.log($scope.icpc);
 	}
 	// initIcpc2 END

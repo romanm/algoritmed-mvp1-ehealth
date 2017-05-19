@@ -12,9 +12,26 @@
 				ng-model="icdConf.search">
 			</label>
 			<div style="max-height: 300px; overflow: auto;">
-				<ul>
+				<ul class="w3-ul">
 					<li ng-repeat="icpc2 in icpc2Db.meddocIcpc2CodeLimit">
-						{{icpc2.code}}: {{icpc2.name}}</li>
+						<div class="w3-hover-gray"
+						ng-mouseover="icpc.codeMouseOver=icpc2.code"
+						 ng-click="icpc2.open=!icpc2.open">{{icpc2.code}}:
+							{{icpc2.name}}</div>
+						<div ng-if="icpc2.open">
+							<div>icd10: {{icpc2.icd10}}</div>
+							<div ng-if="icpc2.exclusion">
+								<b> {{codeItemsTitle.exclusion}} : </b>
+								<div ng-repeat="ex in icpc2.exclusion.split(';')">{{ex}}</div>
+							</div>
+							<div>
+								<b> {{codeItemsTitle.inclusion}} : </b>
+								<div ng-repeat="inc in icpc2.inclusion.split(';')">{{inc}}</div>
+							</div>
+						</div> <!-- 
+						 -->
+						<div ng-if="icpc2.open">{{icpc2}}</div>
+					</li>
 				</ul>
 			</div>
 		</div>

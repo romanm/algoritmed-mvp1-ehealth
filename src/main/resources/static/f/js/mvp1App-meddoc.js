@@ -3,9 +3,9 @@
 
 	var app = angular.module('mvp1App', ['ngSanitize']);
 
-	app.controller('Mvp1Ctrl', function($scope, $http, $filter) {
+	app.controller('Mvp1Ctrl', function($scope, $http, $filter, $timeout) {
 		console.log('---mvp1App-----Mvp1Ctrl--------');
-		initAll($http, $scope, $filter);
+		initAll($http, $scope, $filter, $timeout);
 	});
 
 	app.controller('AccordionCtrl', function ($scope) {
