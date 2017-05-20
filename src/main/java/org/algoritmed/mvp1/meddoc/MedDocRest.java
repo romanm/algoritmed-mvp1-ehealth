@@ -66,7 +66,7 @@ public class MedDocRest extends DbAlgoritmed{
 		map.put("uuid", uuid);
 		return uuid;
 	}
-	
+
 	@PostMapping("/r/removeDataDictionary")
 	public @ResponseBody Map<String, Object> removeDataDictionary(
 			@RequestBody Map<String, Object> dbSaveObj
@@ -201,8 +201,6 @@ public class MedDocRest extends DbAlgoritmed{
 	private @Value("${sql.meddoc.icpc2icd10.code}") String sqlMeddocIcpc2icd10Code;
 	private @Value("${sql.meddoc.protocol.select}") String sqlMeddocProtocolSelect;
 	private @Value("${sql.meddoc.icd}") String sqlMeddocIcd;
-	private @Value("${sql.meddoc.icpc2Code.limit}") String sqlMeddocIcpc2CodeLimit;
-	private @Value("${sql.meddoc.icpc2Code.count}") String sqlMeddocIcpc2CodeCount;
 	private @Value("${sql.meddoc.icdCode.limit}") String sqlMeddocIcdCodeLimit;
 	private @Value("${sql.meddoc.icdCode.count}") String sqlMeddocIcdCodeCount;
 	private @Value("${sql.meddoc.icdCodeP1}") String sqlMeddocIcdCodeP1;
@@ -220,6 +218,24 @@ public class MedDocRest extends DbAlgoritmed{
 		map.put("icdChildren", icdChildren);
 		return map;
 	}
+
+	@GetMapping(value = "/r/meddoc/icpc2CodeExtention/{icpc2Code}")
+	public @ResponseBody Map<String, Object> icpc2CodeExtention(@PathVariable String icpc2Code) {
+		Map<String, Object> map = seekMap(icpc2Code);
+		map.put("url", "/r/meddoc/icpc2CodeExtention/"+icpc2Code);
+		map.put("code", icpc2Code);
+		logger.info("\n"
+				+ "/r/meddoc/icpc2CodeExtention/{icpc2Code}"
+				+ "\n" + map
+				);
+		List<Map<String, Object>> icpc2Consider = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeConsider, map);
+		map.put("consider", icpc2Consider);
+		return map;
+	}
+
+	private @Value("${sql.icpc2Code.consider}") String sqlIcpc2CodeConsider;
+	private @Value("${sql.meddoc.icpc2Code.limit}") String sqlMeddocIcpc2CodeLimit;
+	private @Value("${sql.meddoc.icpc2Code.count}") String sqlMeddocIcpc2CodeCount;
 
 	@GetMapping(value = "/r/meddoc/icpc2Code/{seekStr}")
 	public @ResponseBody Map<String, Object> seekIcpc2(@PathVariable String seekStr) {

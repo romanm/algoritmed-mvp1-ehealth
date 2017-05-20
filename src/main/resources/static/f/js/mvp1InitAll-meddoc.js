@@ -88,12 +88,12 @@ function initAll ($http, $scope, $filter, $timeout){
 		console.log('----initAll------code---------');
 //		"preferred":'переважно' ,
 		$scope.codeItemsTitle = {
-		"inclusion":'включно',
-		"exclusion":'виключно' ,
-		"icd10":'мкх10' ,
-		"criteria":'критерії' ,
-		"note":'примітки', 
-		"consider":'розглядати' 
+			"inclusion":'включно' ,
+			"exclusion":'виключно' ,
+			"icd10":'мкх10' ,
+			"criteria":'критерії' ,
+			"note":'примітки' ,
+			"consider":'розглядати'
 		};
 		$scope.codeItems = {};
 		$scope.codeItemsEn = {};

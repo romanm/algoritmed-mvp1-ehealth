@@ -27,13 +27,25 @@ function initSeekAll($http, $scope, $filter, $timeout){
 		}
 		return isOpenedChilds;
 	};
-	var timeoutPromise;
+	var fnTimeoutIcpcCodeMouseOver;
 	var delayInMs = 1000;
-	$scope.$watch("icpc.codeMouseOver", function handleChange( newValue, oldValue ) {
-		console.log(newValue);
-		$timeout.cancel(timeoutPromise); //does nothing, if timeout alrdy done
-		timeoutPromise = $timeout(function(){ //Set timeout
-			console.log('load extencion to - '+newValue);
+	$scope.$watch("icpc.codeMouseOver", function(newIcpc2CodeValue){
+		console.log(newIcpc2CodeValue);
+		$timeout.cancel(fnTimeoutIcpcCodeMouseOver); //does nothing, if timeout alredy done
+		fnTimeoutIcpcCodeMouseOver = $timeout(function(){ //Set timeout
+			console.log('load extencion to - '+newIcpc2CodeValue);
+			if(newIcpc2CodeValue.length>0){
+				$scope.icpc.codeMouseOverDropdown = newIcpc2CodeValue;
+				if(!$scope.icpc.extension)
+					$scope.icpc.extension = {};
+				var url = '/r/meddoc/icpc2CodeExtention/' + newIcpc2CodeValue;
+				console.log(url);
+				$http.get(url).then(function(response) {
+					$scope.icpc.extension[newIcpc2CodeValue] = response.data;
+					console.log($scope.icpc.extension);
+					console.log($scope.icpc.extension[newIcpc2CodeValue]);
+				});
+			}
 		},delayInMs);
 	});
 	$scope.$watch("icdConf.icdSeekContent", function handleChange( newValue, oldValue ) {
@@ -94,7 +106,12 @@ function initSeekAll($http, $scope, $filter, $timeout){
 			console.log(url);
 			$http.get(url).then( function(response) {
 				$scope.icpc2Db = response.data;
+				$scope.icpc2Db.codeIndex = [];
+				angular.forEach($scope.icpc2Db.meddocIcpc2CodeLimit, function(icpc2, key) {
+					$scope.icpc2Db.codeIndex.push(icpc2.code)
+				});
 				console.log($scope.icpc2Db);
+				console.log($scope.icpc2Db.codeIndex.indexOf('r03'.toUpperCase()));
 			});
 		}
 	};
