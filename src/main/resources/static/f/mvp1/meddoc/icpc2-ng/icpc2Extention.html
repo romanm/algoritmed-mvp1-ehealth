@@ -1,0 +1,56 @@
+<div ng-if="icpc.codeMouseOverDropdown.id == icpc2.code"
+		class="w3-dropdown-content w3-card-2"
+		style="width: 700px"
+	>
+	<header class="w3-tiny w3-light-gray">head</header>
+	<div class="w3-row w3-small">
+		<div class="w3-half">
+			<div>
+				<b> {{codeItemsTitle.consider}} </b>
+				<ul class="w3-ul">
+					<li ng-repeat="c in icpc.extension[icpc2.code].consider">
+						{{c.icpc2_code_consider}}: {{c.consider_name}}</li>
+				</ul>
+			</div>
+			<div>
+				<b> {{codeItemsTitle.icd10}} </b>
+				<ul class="w3-ul">
+					<li ng-repeat="c in icpc.extension[icpc2.code].icd10"><span
+						ng-mouseover="icpc.codeMouseOverDropdown.child = {'id':c.icd_code}"
+						class="w3-hover-gray w3-white w3-border-left w3-dropdown-hover">
+							<span
+							ng-bind-html="highlight(c.icd_code +': '
+							+c.icd_name, icdConf.search)"></span>
+							<div ng-if="icpc.codeMouseOverDropdown.child.id == c.icd_code"
+								class="w3-dropdown-content w3-card-2">
+								<ul class="w3-ul">
+									<li
+										ng-repeat="c2 in icpc.icd10extension[c.icd_code.split('.')[0]].icd10InIcpc2"
+										ng-if="icpc2.code!=c2.icpc2">
+										<span ng-bind-html="highlight(c2.icpc2 +': ' +c2.name 
+								+'->' +c2.icd_code +': ' +c2.icd_name, icdConf.search)"></span>
+									</li>
+								</ul>
+							</div>
+					</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="w3-half">
+			<div>
+				<b> {{codeItemsTitle.inclusion}} </b>
+				<ul class="w3-ul">
+					<li ng-repeat="c in icpc.extension[icpc2.code].inclusion"><span
+						ng-bind-html="highlight(c.inclusion, icdConf.search)"></span></li>
+				</ul>
+			</div>
+			<div>
+				<b> {{codeItemsTitle.exclusion}} </b>
+				<ul class="w3-ul">
+					<li ng-repeat="c in icpc.extension[icpc2.code].exclusion"><span
+						ng-bind-html="highlight(c.exclusion, icdConf.search)"></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

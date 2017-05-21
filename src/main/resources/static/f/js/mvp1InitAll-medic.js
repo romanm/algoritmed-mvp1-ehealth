@@ -1,7 +1,7 @@
-function initAll ($http, $scope, $filter){
+function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
-	initAllServer($http, $scope, $filter);
+	initAllServer($http, $scope, $filter, $timeout);
 	console.log('----initAll---------------' + $scope.pagePath.last());
 	$scope.readCentralProtocols = function(){
 		console.log("readCentralProtocols");
@@ -92,6 +92,15 @@ function initAll ($http, $scope, $filter){
 	else
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
+		$scope.autoSaveHistory = function (ph){
+			console.log(ph.toSave);
+		}
+		$scope.addHistoryRecordType = function (doctype, ph){
+			if(!ph.toSave)
+				ph.toSave = {'doctype':doctype, 'docbody':''}
+			console.log(ph);
+			console.log(doctype);
+		}
 		$scope.testDialog = function (ph){
 			$scope.editPatientHistory = ph;
 			if(!ph.docbody)

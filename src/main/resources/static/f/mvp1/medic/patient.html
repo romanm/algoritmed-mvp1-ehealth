@@ -19,7 +19,15 @@
 				<div ng-repeat="ph in patientById.children">
 					<div ng-include="'/f/mvp1/medic/patient/menu-history-record.html'">
 					</div>
-					<span ng-repeat="(k,v) in ph.docbody"> 
+					<div ng-if="ph.toSave.doctype=='doctor'">
+						<div class="w3-small">
+							<b>Запис доктора:</b> огляд, щоденник, анамнез
+						</div>
+						{{ph.toSave.docbody}}
+						<textarea ng-change="autoSaveHistory(ph)" rows="2" cols="66"
+							ng-model="ph.toSave.docbody"></textarea>
+					</div>
+					<span ng-repeat="(k,v) in ph.docbody">
 					<a class="w3-tiny"
 						href="#" ng-click="editPatientHistoryField(ph,k)"> {{translateUa[k]}}
 						</a>

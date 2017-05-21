@@ -17,24 +17,13 @@
 						<!-- 
 						<div class="w3-hover-gray w3-white w3-leftbar w3-dropdown-hover"
 					 -->
-							<div class="w3-hover-gray w3-white w3-border-left w3-dropdown-hover"
-							ng-mouseover="icpc.codeMouseOver=icpc2.code"
-							ng-click="icpc2.open=!icpc2.open">
+						<div
+						class="w3-hover-gray w3-white w3-border-left w3-dropdown-hover"
+						ng-mouseover="icpc.codeMouseOver=icpc2.code"
+						ng-click="icpc2.open=!icpc2.open">
 							<span
-							ng-bind-html="highlight(icpc2.code+': '+icpc2.name, icdConf.search)"
-							></span>
-							<div ng-if="icpc.codeMouseOverDropdown == icpc2.code"
-								ng-init="icpc2Extention=icpc.extension[icpc2.code]"
-								class="w3-dropdown-content w3-card-2">
-								<header class="w3-tiny w3-light-gray">head</header>
-								--
-								<div ng-if="icpc.extension[icpc2.code].consider.length > 0">
-									<b> {{codeItemsTitle.consider}} </b>
-									<ul class="w3-ul">
-										<li ng-repeat="c in icpc.extension[icpc2.code].consider">
-											{{c.icpc2_code_consider}}: {{c.consider_name}}</li>
-									</ul>
-								</div>
+								ng-bind-html="highlight(icpc2.code+': '+icpc2.name, icdConf.search)"></span>
+							<div ng-include="'/f/mvp1/meddoc/icpc2-ng/icpc2Extention.html'">
 							</div>
 						</div>
 						<div ng-if="icpc2.open">
@@ -56,7 +45,7 @@
 						<div ng-if="icpc2.open">{{icpc2}}</div>
 					</li>
 				</ul>
-				<br/>
+				<br ng-repeat="x in [1,2,3,4,5,6]"/>
 			</div>
 		</div>
 	</div>

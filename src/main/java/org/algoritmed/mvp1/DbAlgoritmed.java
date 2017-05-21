@@ -32,6 +32,7 @@ public class DbAlgoritmed {
 			Timestamp created = now();
 			dbSaveObj.put("created", created);
 		}
+		System.err.println(dbSaveObj);
 		int update = db1ParamJdbcTemplate.update(sqlDocInsert, dbSaveObj);
 		int update2 = db1ParamJdbcTemplate.update(sqlDoctimestampInsert, dbSaveObj);
 	}

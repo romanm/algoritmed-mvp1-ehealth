@@ -29,13 +29,32 @@ function initSeekAll($http, $scope, $filter, $timeout){
 	};
 	var fnTimeoutIcpcCodeMouseOver;
 	var delayInMs = 1000;
+	var delayInMs = 780;
+	$scope.$watch("icpc.codeMouseOverDropdown.child.id", function(newIcd10Long){
+		if(newIcd10Long && newIcd10Long.length>0){
+		console.log(newIcd10Long);
+			var newIcd10 = newIcd10Long.split('.')[0];
+			console.log(newIcd10);
+			if(!$scope.icpc.icd10extension)
+				$scope.icpc.icd10extension = {};
+			if(!$scope.icpc.icd10extension[newIcd10]){
+				var url = '/r/meddoc/icd10InIcpc2/' + newIcd10;
+				console.log(url);
+				$http.get(url).then(function(response) {
+					$scope.icpc.icd10extension[newIcd10] = response.data;
+					console.log($scope.icpc.icd10extension);
+					console.log($scope.icpc.icd10extension[newIcd10]);
+				});
+			}
+		}
+	});
 	$scope.$watch("icpc.codeMouseOver", function(newIcpc2CodeValue){
 		console.log(newIcpc2CodeValue);
 		$timeout.cancel(fnTimeoutIcpcCodeMouseOver); //does nothing, if timeout alredy done
 		fnTimeoutIcpcCodeMouseOver = $timeout(function(){ //Set timeout
 			console.log('load extencion to - '+newIcpc2CodeValue);
-			if(newIcpc2CodeValue.length>0){
-				$scope.icpc.codeMouseOverDropdown = newIcpc2CodeValue;
+			if(newIcpc2CodeValue && newIcpc2CodeValue.length>0){
+				$scope.icpc.codeMouseOverDropdown = {'id':newIcpc2CodeValue};
 				if(!$scope.icpc.extension)
 					$scope.icpc.extension = {};
 				var url = '/r/meddoc/icpc2CodeExtention/' + newIcpc2CodeValue;

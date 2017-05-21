@@ -45,6 +45,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	}
 	
 	private @Value("${sql.medical.selectPatientById}") String sqlMedicalSelectPatientById;
+	private @Value("${sql.doc.children}")			String sqlDocChildren;
 	@GetMapping(value = "/r/medical/patient/{patient_id}")
 	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer patient_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -52,7 +53,10 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		map.put("parent_id", patient_id);
 		logger.info("---------------\n"
 				+ "/r/medical/patient/{patient_id}"
-				+ "\n" + map);
+				+ "\n" + sqlMedicalSelectPatientById.replace(":patient_id", ""+patient_id)
+				+ "\n" + sqlDocChildren.replace(":parent_id", ""+patient_id)
+				+ "\n" + map
+				);
 		Map<String, Object> patientById = db1ParamJdbcTemplate.queryForMap(sqlMedicalSelectPatientById, map);
 		List<Map<String, Object>> children = db1ParamJdbcTemplate.queryForList(sqlDocChildren, map);
 		for (Map<String, Object> map2 : children) {
@@ -72,9 +76,12 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
 		dbSaveObj.put("hello", "/r/savePatientHistoryRecord");
-		logger.info("---------------\n"
+		logger.info("\n---------------\n"
 				+ "/r/savePatientHistoryRecord"
-				+ "\n" + dbSaveObj);
+				+ "\n" + sqlDocbodyUpdate
+				+ "\n" + sqlDoctimestampUpdate
+				+ "\n" + dbSaveObj
+				);
 		Object docbodyObj = dbSaveObj.get("docbody");
 		String docbody = objectToString(docbodyObj);
 		System.err.println(docbody);
@@ -103,7 +110,6 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	private @Value("${sql.docbody.insertEmpty}")	String sqlDocbodyInsertEmpty;
 	
 	private @Value("${sql.doctimestamp.update}")	String sqlDoctimestampUpdate;
-	private @Value("${sql.doc.children}")			String sqlDocChildren;
 	private @Value("${sql.doc.byId}")				String sqlDocById;
 	
 	@PostMapping("/r/newPatientHistoryRecord")
@@ -111,7 +117,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
 		dbSaveObj.put("hello", "/r/newPatientHistoryRecord");
-		logger.info("---------------\n"
+		logger.info("\n---------------\n"
 				+ "/r/newPatientHistoryRecord"
 				+ "\n" + dbSaveObj);
 		//insert doc parent patientId doctype:thing
@@ -120,7 +126,8 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		Integer nextDbId = nextDbId();
 		dbSaveObj.put("doc_id", nextDbId);
 		dbSaveObj.put("doctype", 5);//patient.thing
-		Integer parentId = (Integer) dbSaveObj.get("patientId");
+		
+		Integer parentId = Integer.parseInt((String) dbSaveObj.get("patientId")) ;
 		insertDocElement(dbSaveObj, parentId);
 		int update3 = db1ParamJdbcTemplate.update(sqlDocbodyInsertEmpty, dbSaveObj);
 		//return result

@@ -223,17 +223,46 @@ public class MedDocRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object> icpc2CodeExtention(@PathVariable String icpc2Code) {
 		Map<String, Object> map = seekMap(icpc2Code);
 		map.put("url", "/r/meddoc/icpc2CodeExtention/"+icpc2Code);
-		map.put("code", icpc2Code);
+		map.put("icpc2", icpc2Code);
 		logger.info("\n"
 				+ "/r/meddoc/icpc2CodeExtention/{icpc2Code}"
 				+ "\n" + map
 				);
-		List<Map<String, Object>> icpc2Consider = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeConsider, map);
-		map.put("consider", icpc2Consider);
+		List<Map<String, Object>> icd10 = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeIcd10, map);
+		map.put("icd10", icd10);
+		List<Map<String, Object>> consider = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeConsider, map);
+		map.put("consider", consider);
+		List<Map<String, Object>> inclusion = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeInclusion, map);
+		map.put("inclusion", inclusion);
+		List<Map<String, Object>> exclusion = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeExclusion, map);
+		map.put("exclusion", exclusion);
+		System.err.println(map);
 		return map;
 	}
 
+	@GetMapping(value = "/r/meddoc/icd10InIcpc2/{icd10Code}")
+	public @ResponseBody Map<String, Object> icpc2CodeIcd10Code(@PathVariable String icd10Code) {
+		Map<String, Object> map = seekMap(icd10Code);
+		map.put("url", "/r/meddoc/icpc2CodeIcd10Code/"+icd10Code);
+		map.put("icd10Code", icd10Code);
+//		String icd_code = icd10Code.split(".")[0];
+		String icd_code = icd10Code;
+		map.put("icd_code", icd_code+"%");
+		logger.info("\n"
+				+ "/r/meddoc/icpc2CodeIcd10Code/{icd10Code}"
+				+ "\n" + map
+				);
+		List<Map<String, Object>> icd10InIcpc2 = db1ParamJdbcTemplate.queryForList(sqlIcd10InIcpc2, map);
+		map.put("icd10InIcpc2", icd10InIcpc2);
+		System.err.println(map);
+		return map;
+	}
+
+	private @Value("${sql.icpc2Code.icd10}") String sqlIcpc2CodeIcd10;
+	private @Value("${sql.icd10InIcpc2}") String sqlIcd10InIcpc2;
 	private @Value("${sql.icpc2Code.consider}") String sqlIcpc2CodeConsider;
+	private @Value("${sql.icpc2Code.inclusion}") String sqlIcpc2CodeInclusion;
+	private @Value("${sql.icpc2Code.exclusion}") String sqlIcpc2CodeExclusion;
 	private @Value("${sql.meddoc.icpc2Code.limit}") String sqlMeddocIcpc2CodeLimit;
 	private @Value("${sql.meddoc.icpc2Code.count}") String sqlMeddocIcpc2CodeCount;
 
