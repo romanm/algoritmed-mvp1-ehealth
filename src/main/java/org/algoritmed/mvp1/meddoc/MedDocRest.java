@@ -121,36 +121,36 @@ public class MedDocRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object> saveProtocol(
 			@RequestBody Map<String, Object> dbSaveObj1
 			, Principal userPrincipal) {
-		HashMap2 dbSaveObj = new HashMap2(dbSaveObj1);
+		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj1);
 		logger.info("\n --1--111-- " + "/r/saveProtocol"
-				+ "\n" + dbSaveObj 
-				+ "\n" + dbSaveObj.contains("dbUuid.uuid_dbid") 
+				+ "\n" + dbSaveObj2 
+				+ "\n" + dbSaveObj2.contains("dbUuid.uuid_dbid") 
 				);
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer dbId ;
-		if(dbSaveObj.contains("dbUuid.uuid_dbid")){//update
-			dbId = dbSaveObj.getInteger("dbUuid.uuid_dbid");
+		if(dbSaveObj2.contains("dbUuid.uuid_dbid")){//update
+			dbId = dbSaveObj2.getInteger("dbUuid.uuid_dbid");
 			System.err.println("--1----------------- " +dbId);
 			map.put("dbId", dbId);
-			setShortName(dbSaveObj, dbId, map);
-			protocolToString(dbSaveObj, map);
+			setShortName(dbSaveObj2, dbId, map);
+			protocolToString(dbSaveObj2, map);
 			logger.info("\n ----3-- " + "/r/saveProtocol"
 					+ "\n" + map 
-					+ "\n" + dbSaveObj 
+					+ "\n" + dbSaveObj2 
 					);
 			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocolNameUpdate, map);
 			int update2 = db1ParamJdbcTemplate.update(sqlMeddocDocbodyUpdate, map);
 		}else{//insert
 			dbId = nextDbId();
 			Map<String, Object> dbUuid = generateNewUuid(map, dbId);
-			setShortName(dbSaveObj, dbId, map);
-			if(dbSaveObj.notContainsOrStringIsEmpty("name"))
-				dbSaveObj.put("name", "Long name: " + dbSaveObj.getString("title.shortName"));
-			dbSaveObj.put("dbUuid", dbUuid);
-			protocolToString(dbSaveObj, map);
+			setShortName(dbSaveObj2, dbId, map);
+			if(dbSaveObj2.notContainsOrStringIsEmpty("name"))
+				dbSaveObj2.put("name", "Long name: " + dbSaveObj2.getString("title.shortName"));
+			dbSaveObj2.put("dbUuid", dbUuid);
+			protocolToString(dbSaveObj2, map);
 			logger.info("\n ----2-- " + "/r/saveProtocol"
 					+ "\n" + map 
-					+ "\n" + dbSaveObj 
+					+ "\n" + dbSaveObj2 
 					);
 			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocolInsert, map);
 		}
@@ -166,8 +166,7 @@ public class MedDocRest extends DbAlgoritmed{
 //		return dbSaveObj;
 	}
 	private void protocolToString(HashMap2 dbSaveObj, Map<String, Object> map) {
-		String protocolAsString = "{}";
-		protocolAsString = objectToString(dbSaveObj);
+		String protocolAsString = objectToString(dbSaveObj);
 		map.put("doc", protocolAsString);
 	}
 	

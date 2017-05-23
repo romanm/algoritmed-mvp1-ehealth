@@ -48,10 +48,7 @@ function initAll ($http, $scope){
 				}
 			});
 			console.log($scope.menuHomeIndex);
-		}, function(response) {
-			console.error(response);
-		}
-	);
+		});
 
 	// for menu colored
 	$scope.menuHomeClicked = function(k){

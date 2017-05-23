@@ -4,7 +4,7 @@
 	<!--
 		<i class="fa fa-align-justify" aria-hidden="true"></i>
 	-->
-	<div class="w3-dropdown-content w3-card-2">
+	<div class="w3-dropdown-content w3-card-2" style="width: 300px">
 		<header class="w3-light-grey w3-small">
 			<a class="w3-hover-grey" href="#"
 				ng-click="savePatientHistoryRecord(ph)"> <i
@@ -14,13 +14,13 @@
 				class="fa fa-times" aria-hidden="true"></i>видалити
 			</a>
 		</header>
-		<div>
-		Тип запису:
-		|<a href="#" ng-click="addHistoryRecordType('doctor',ph)">анаменез</a>
-		|<a href="#" ng-click="addHistoryRecordType('ultrasound',ph)">УЗД</a>
-		|<a href="#" ng-click="addHistoryRecordType('rentgen',ph)">рентген</a>
-		|<a href="#" ng-click="addHistoryRecordType('ECG',ph)">ЕКГ</a>
+		<div><b> Додати запис: </b> 
+			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecordType('doctor',ph)">лікарський запис (анаменез)</a>
+			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecordType('ultrasound',ph)">УЗД</a>
+			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecordType('rentgen',ph)">рентген</a>
+			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecordType('ECG',ph)">ЕКГ</a>
 		</div>
-		<a href="#" ng-click="testDialog(ph)">якась дія</a>
+		<br/>
+		<a href="#" ng-click="testDialog(ph)">test: якась дія</a>
 	</div>
 </div>

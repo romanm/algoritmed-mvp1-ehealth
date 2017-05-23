@@ -28,16 +28,11 @@ function initAll ($http, $scope, $filter, $timeout){
 		console.log($scope.ehealthapi1);
 		$scope.urlPatient1 = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/persons/1';
 		console.log($scope.urlPatient1);
-		$http.get($scope.urlPatient1).then(
-			function(response) {
-				console.log(response.data);
-				$scope.ehealthapi1.patient = response.data.data;
-				console.log($scope.ehealthapi1.patient);
-			}
-			, function(response) {
-				console.log(response);
-			}
-		);
+		$http.get($scope.urlPatient1).then( function(response) {
+			console.log(response.data);
+			$scope.ehealthapi1.patient = response.data.data;
+			console.log($scope.ehealthapi1.patient);
+		});
 //		$scope.urlPatient1seek = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/api/persons?first_name=%D0%86%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2';
 		$scope.urlPatient1seek = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/api/persons?first_name=Петро';
 		console.log($scope.urlPatient1seek);
@@ -93,13 +88,23 @@ function initAll ($http, $scope, $filter, $timeout){
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
 		$scope.autoSaveHistory = function (ph){
+			console.log(ph);
 			console.log(ph.toSave);
 		}
 		$scope.addHistoryRecordType = function (doctype, ph){
 			if(!ph.toSave)
-				ph.toSave = {'doctype':doctype, 'docbody':''}
+				ph.toSave = {'doctype':8, 'docbody':{'html':''}, 'parent_id':ph.doc_id}
 			console.log(ph);
+			console.log(ph.toSave);
 			console.log(doctype);
+			if('doctor' == doctype){
+				var url = '/r/addHistoryRecord';
+				console.log(url);
+				$http.post(url, ph.toSave).then(function(response) {
+					console.log(response.data);
+					$scope.protocol.fn.initDataDictionary(response.data);
+				});
+			}
 		}
 		$scope.testDialog = function (ph){
 			$scope.editPatientHistory = ph;
@@ -204,8 +209,6 @@ function initAll ($http, $scope, $filter, $timeout){
 				}
 			});
 			console.log($scope.menuHomeIndex);
-		}, function(response) {
-			console.error(response);
 		}
 	);
 

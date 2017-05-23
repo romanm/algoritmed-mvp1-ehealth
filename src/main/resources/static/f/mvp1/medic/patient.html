@@ -19,13 +19,26 @@
 				<div ng-repeat="ph in patientById.children">
 					<div ng-include="'/f/mvp1/medic/patient/menu-history-record.html'">
 					</div>
+					<div ng-repeat="r in ph.children">
+					{{r}}
+					<div ng-if="r.path=='patient.doctor'">
+						<div class="w3-small">
+							<b>Запис доктора:</b> огляд, щоденник, анамнез
+						</div>
+						<div ng-bind-html="r.docbody.html">
+						</div>
+						<textarea ng-change="autoSaveHistory(r)" rows="2" cols="66"
+							ng-model="r.docbody.html"></textarea>
+					</div>
+					</div>
 					<div ng-if="ph.toSave.doctype=='doctor'">
 						<div class="w3-small">
 							<b>Запис доктора:</b> огляд, щоденник, анамнез
 						</div>
-						{{ph.toSave.docbody}}
+						<div ng-bind-html="ph.toSave.docbody.html">
+						</div>
 						<textarea ng-change="autoSaveHistory(ph)" rows="2" cols="66"
-							ng-model="ph.toSave.docbody"></textarea>
+							ng-model="ph.toSave.docbody.html"></textarea>
 					</div>
 					<span ng-repeat="(k,v) in ph.docbody">
 					<a class="w3-tiny"
