@@ -93,6 +93,20 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		return map;
 	}
 
+	@PostMapping("/r/autoSaveHistory")
+	public @ResponseBody Map<String, Object> autoSaveHistory(
+			@RequestBody Map<String, Object> dbSaveObj
+			, Principal userPrincipal) {
+		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj).put("url", "/r/addHistoryRecord");
+		logger.info("\n---------------\n"
+				+ "/r/autoSaveHistory"
+				+ "\n" + dbSaveObj2
+				);
+		//update docbody
+		Map docbodyMap = dbSaveObj2.getMap("docbody");
+		updateDocbody(dbSaveObj2 , docbodyMap);
+		return dbSaveObj2;
+	}
 	@PostMapping("/r/addHistoryRecord")
 	public @ResponseBody Map<String, Object> addHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
@@ -118,6 +132,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		Map<String, Object> patientHistoryElement = readDocElement(dbSaveObj2);
 		return dbSaveObj2;
 	}
+
 	@PostMapping("/r/savePatientHistoryRecord")
 	public @ResponseBody Map<String, Object> savePatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj1
@@ -127,16 +142,17 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		logger.info("\n---------------\n"
 				+ "/r/savePatientHistoryRecord"
 				+ "\n" + sql_docbody_update
-				+ "\n" + sql_doctimestamp_update
 				+ "\n" + dbSaveObj2
 				);
-		Object docbodyObj = dbSaveObj2.get("docbody");
-		String docbody = objectToString(docbodyObj);
-		System.err.println(docbody);
+//		Object docbodyObj = dbSaveObj2.get("docbody");
+		Map docbodyObj = dbSaveObj2.getMap("docbody");
+//		String docbody = objectToString(docbodyObj);
+//		System.err.println(docbody);
 		updateDocbody(
 			dbSaveObj2
 				.put("docbody_id", dbSaveObj2.get("doc_id"))
-				.put("docbody", docbody)
+//				.put("docbody", docbody)
+				, docbodyObj
 		);
 		return dbSaveObj2;
 	}
@@ -150,9 +166,12 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 				+ "/r/removePatientHistoryRecord"
 				+ "\n" + dbSaveObj);
 		//delete doc - first level child by patient
+		int numberOfDeletedChildrenRows = db1ParamJdbcTemplate.update(sql_doc_delete_children, dbSaveObj);
+		dbSaveObj.put("numberOfDeletedChildrenRows", numberOfDeletedChildrenRows);
 		removeDocElement(dbSaveObj);
 		return dbSaveObj;
 	}
+	@Value("${sql.doc.delete.children}") protected				String sql_doc_delete_children;
 
 	@PostMapping("/r/newPatientHistoryRecord")
 	public @ResponseBody Map<String, Object> newPatientHistoryRecord(

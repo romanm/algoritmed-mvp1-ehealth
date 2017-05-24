@@ -87,11 +87,25 @@ function initAll ($http, $scope, $filter, $timeout){
 	else
 	if('patient' == $scope.pagePath.last()){
 		console.log($scope.param);
+		$scope.maxChangeForAutoSave=10;
 		$scope.autoSaveHistory = function (ph){
-			console.log(ph);
-			console.log(ph.toSave);
+			if(!ph.docbody.autoSaveChangeCount)
+				ph.docbody.autoSaveChangeCount=0;
+			ph.docbody.autoSaveChangeCount++;
+			console.log(ph.docbody);
+			console.log(ph.docbody.html);
+			if(ph.docbody.autoSaveChangeCount>$scope.maxChangeForAutoSave){
+				ph.docbody.autoSaveChangeCount=0;
+				console.log("save-------------");
+				var url = '/r/autoSaveHistory';
+				console.log(url);
+				console.log(ph);
+				$http.post(url, ph).then(function(response) {
+					console.log(response.data);
+				});
+			}
 		}
-		$scope.addHistoryRecordType = function (doctype, ph){
+		$scope.addHistoryRecord = function (doctype, ph){
 			if(!ph.toSave)
 				ph.toSave = {'doctype':8, 'docbody':{'html':''}, 'parent_id':ph.doc_id}
 			console.log(ph);

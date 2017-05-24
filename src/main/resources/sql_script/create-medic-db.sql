@@ -16,7 +16,7 @@ doc_id int DEFAULT NEXTVAL('dbid') primary key
 ,doctype  int 
 ,docbody  int 
 , FOREIGN KEY (doctype) REFERENCES doctype (doctype_id)
-, FOREIGN KEY (docbody) REFERENCES docbody (docbody_id)
+, FOREIGN KEY (docbody) REFERENCES docbody (docbody_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- ALTER TABLE doc ADD FOREIGN KEY (docbody) REFERENCES docbody (docbody_id);
 

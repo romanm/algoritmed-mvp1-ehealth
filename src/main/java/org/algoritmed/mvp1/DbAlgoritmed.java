@@ -31,11 +31,42 @@ public class DbAlgoritmed {
 	protected Map<String, Object> getMap(String sql, Map<String, Object> map) {
 		return db1ParamJdbcTemplate.queryForMap(sql, map);
 	}
+
 	@Value("${sql.doc.delete}") protected				String sql_doc_delete;
 	protected void removeDocElement(Map<String, Object> dbSaveObj) {
+		System.err.println(sql_doc_delete.replace(":"+"doc_id", ""+dbSaveObj.get("doc_id")));
 		int numberOfDeletedRows = db1ParamJdbcTemplate.update(sql_doc_delete, dbSaveObj);
 		dbSaveObj.put("numberOfDeletedRows", numberOfDeletedRows);
 	}
+
+	protected @Value("${sql.docbody.update}")		String sql_docbody_update;
+	protected @Value("${sql_doctimestamp_update}")	String sql_doctimestamp_update;
+	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap) {
+		updateDocbody(dbSaveObj, docbodyMap, now());
+	}
+	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap, Timestamp updated) {
+		dbSaveObj.put("updated", updated);
+		String docbody = objectToString(docbodyMap);
+		dbSaveObj.put("docbody", docbody);
+		int update = db1ParamJdbcTemplate.update(sql_docbody_update, dbSaveObj);
+		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_update, dbSaveObj);
+	}
+	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId
+			, Map<String, Object> docbodyMap) {
+		insertDocElementWithDocbody(dbSaveObj, parentId);
+		Timestamp created = (Timestamp) dbSaveObj.get("created");
+		updateDocbody(dbSaveObj, docbodyMap, created);
+	}
+	private @Value("${sql.docbody.insertEmpty}")	String sql_docbody_insertEmpty;
+	private @Value("${sql_doc_update_docbody}")	String sql_doc_update_docbody;
+	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId) {
+		insertDocElement(dbSaveObj, parentId);
+		dbSaveObj.put("docbody_id", dbSaveObj.get("doc_id"));
+		int update2 = db1ParamJdbcTemplate.update(sql_doc_update_docbody, dbSaveObj);
+		int update3 = db1ParamJdbcTemplate.update(sql_docbody_insertEmpty, dbSaveObj);
+	}
+	private @Value("${sql.doc.insert}")				String sql_doc_insert;
+	private @Value("${sql.doctimestamp.insert}")	String sql_doctimestamp_insert;
 	/**
 	 * Запис в абстрактного вузла в "системі документ" БД.
 	 * Базісний елемент системи. 
@@ -57,30 +88,6 @@ public class DbAlgoritmed {
 				);
 		int update = db1ParamJdbcTemplate.update(sql_doc_insert, dbSaveObj);
 		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_insert, dbSaveObj);
-	}
-	private @Value("${sql.doctimestamp.insert}")	String sql_doctimestamp_insert;
-	private @Value("${sql.doc.insert}")				String sql_doc_insert;
-	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId
-			, Map<String, Object> docbodyMap) {
-		insertDocElementWithDocbody(dbSaveObj, parentId);
-		dbSaveObj.put("docbody_id", dbSaveObj.get("doc_id"));
-		String docbody = objectToString(docbodyMap);
-		dbSaveObj.put("docbody", docbody);
-		Timestamp created = (Timestamp) dbSaveObj.get("created");
-		dbSaveObj.put("updated", created);
-		System.err.println(dbSaveObj);
-		updateDocbody(dbSaveObj);
-	}
-	private @Value("${sql.docbody.insertEmpty}")	String sql_docbody_insertEmpty;
-	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId) {
-		insertDocElement(dbSaveObj, parentId);
-		int update3 = db1ParamJdbcTemplate.update(sql_docbody_insertEmpty, dbSaveObj);
-	}
-	protected @Value("${sql.docbody.update}")		String sql_docbody_update;
-	protected @Value("${sql.doctimestamp.update}")	String sql_doctimestamp_update;
-	protected void updateDocbody(Map<String, Object> dbSaveObj) {
-		int update = db1ParamJdbcTemplate.update(sql_docbody_update, dbSaveObj);
-		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_update, dbSaveObj);
 	}
 	
 	private @Value("${sql.doc.byId}")				String sql_doc_byId;
