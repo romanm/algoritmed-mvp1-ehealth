@@ -7,7 +7,18 @@ function expandAll (o, expandO){
 function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope, $filter);
-	initAllServer($http, $scope, $filter, $timeout);
+	$http.get('/f/config/mvp1.algoritmed.meddoc.config.json').then( function(response) {
+		initConfig($scope, response);
+		$scope.menuHomeIndex = [];
+		angular.forEach($scope.config, function(v, i){
+			if(v.parent == 'home'){
+				$scope.menuHomeIndex.push(i);
+			}
+		});
+		console.log($scope.menuHomeIndex);
+		console.log($scope.config);
+		initAllServer($http, $scope, $filter, $timeout);
+	});
 	$scope.saveProtocolDialog = function(){
 //		console.log($scope.newProtocol);
 		console.log($scope.protocol);
@@ -180,21 +191,6 @@ function initAll ($http, $scope, $filter, $timeout){
 		$scope.icpc2Laguage('ua');
 	}
 
-	$http.get('/f/config/mvp1.algoritmed.meddoc.config.json').then(
-		function(response) {
-			$scope.config = response.data;
-			console.log($scope.config);
-			$scope.menuHomeIndex = [];
-			angular.forEach($scope.config, function(v, i){
-				if(v.parent == 'home'){
-					$scope.menuHomeIndex.push(i);
-				}
-			});
-			console.log($scope.menuHomeIndex);
-		}, function(response) {
-			console.error(response);
-		}
-	);
 
 	// initIcpc2
 	var initIcpc2 = function(){
@@ -346,3 +342,4 @@ function initAll ($http, $scope, $filter, $timeout){
 	// initProtocol END
 
 }
+

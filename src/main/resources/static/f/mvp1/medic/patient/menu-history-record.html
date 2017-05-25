@@ -1,26 +1,35 @@
- {{ph.created | date:'short'}}
-<div class="w3-dropdown-hover w3-white w3-border">
-	<i class="fa fa-bars" aria-hidden="true"></i>
-	<!--
-		<i class="fa fa-align-justify" aria-hidden="true"></i>
-	-->
+<span class="w3-dropdown-hover w3-white w3-border">
+		<span class="w3-hover-grey" ng-click="ph.menuOpened=!ph.menuOpened"> 
+			{{ph.created | date:'short'}} 
+			<i class="fa fa-bars" aria-hidden="true"></i>
+		</span> 
 	<div class="w3-dropdown-content w3-card-2" style="width: 300px">
 		<header class="w3-light-grey w3-small">
-			<a class="w3-hover-grey" href="#"
-				ng-click="savePatientHistoryRecord(ph)"> <i
-				class="fa fa-floppy-o" aria-hidden="true"></i>запис
-			</a> <a class="w3-hover-grey" href="#"
-				ng-click="removePatientHistoryRecord(ph)"> <i
-				class="fa fa-times" aria-hidden="true"></i>видалити
-			</a>
+			<div ng-include="'/f/mvp1/medic/patient/menu-history-record-header.html'">
+			</div>
 		</header>
 		<div><b> Додати запис: </b> 
-			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecord('doctor',ph)">лікарський запис (анаменез)</a>
-			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecord('ultrasound',ph)">УЗД</a>
-			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecord('rentgen',ph)">рентген</a>
-			|<a href="#" class="w3-border w3-hover-grey" ng-click="addHistoryRecord('ECG',ph)">ЕКГ</a>
+			<span
+				ng-include="'/f/mvp1/medic/patient/menu-history-record-add.html'"
+			></span>
 		</div>
+		<!-- 
 		<br/>
 		<a href="#" ng-click="testDialog(ph)">test: якась дія</a>
+		 -->
 	</div>
-</div>
+</span>
+
+<span ng-if="ph.menuOpened"> 
+	меню: 
+	<span class="w3-dropdown-hover w3-white w3-border"> <b
+			class="w3-hover-grey"> Додати запис: </b>
+		<div class="w3-dropdown-content w3-card-2">
+			<span ng-include="'/f/mvp1/medic/patient/menu-history-record-add.html'"
+				></span>
+		</div>
+	</span>
+	<span
+		ng-include="'/f/mvp1/medic/patient/menu-history-record-header.html'">
+	</span>
+</span>

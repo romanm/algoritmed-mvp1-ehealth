@@ -1,7 +1,19 @@
 function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
-	initAllServer($http, $scope, $filter, $timeout);
+	var url = '/f/config/mvp1.algoritmed.medic.config.json';
+	console.log(url);
+	$http.get(url).then( function(response) {
+		initConfig($scope, response);
+		$scope.menuHomeIndex = [];
+		angular.forEach($scope.config, function(v, i){
+			if(v.parent == 'home'){
+				$scope.menuHomeIndex.push(i);
+			}
+		});
+		console.log($scope.config);
+		initAllServer($http, $scope, $filter, $timeout);
+	});
 	console.log('----initAll---------------' + $scope.pagePath.last());
 	$scope.readCentralProtocols = function(){
 		console.log("readCentralProtocols");
@@ -86,44 +98,76 @@ function initAll ($http, $scope, $filter, $timeout){
 	}
 	else
 	if('patient' == $scope.pagePath.last()){
-		console.log($scope.param);
 		$scope.maxChangeForAutoSave=10;
+		var fnTimeoutAutoSaveHistory;
+		autoSaveHistory = function (ph, rightSave){
+			ph.docbody.autoSaveChangeCount=0;
+			var url = '/r/autoSaveHistory';
+			console.log(url +"/" + rightSave);
+			$http.post(url, ph).then(function(response) {
+				console.log(response.data);
+				ph.docbody.autoSaveCount++;
+				if(rightSave)
+					ph.docbody.autoSaveCount=0;
+				console.log(ph);
+				console.log(ph.docbody);
+				console.log(ph.docbody.autoSaveCount);
+			});
+		}
+		$scope.saveHistory = function (ph){
+			autoSaveHistory(ph, true);
+		}
 		$scope.autoSaveHistory = function (ph){
+			if(!ph.docbody.autoSaveCount)
+				ph.docbody.autoSaveCount=0;
 			if(!ph.docbody.autoSaveChangeCount)
 				ph.docbody.autoSaveChangeCount=0;
 			ph.docbody.autoSaveChangeCount++;
 			console.log(ph.docbody);
 			console.log(ph.docbody.html);
 			if(ph.docbody.autoSaveChangeCount>$scope.maxChangeForAutoSave){
-				ph.docbody.autoSaveChangeCount=0;
-				console.log("save-------------");
-				var url = '/r/autoSaveHistory';
-				console.log(url);
-				console.log(ph);
-				$http.post(url, ph).then(function(response) {
-					console.log(response.data);
-				});
+				autoSaveHistory(ph);
 			}
+			$timeout.cancel(fnTimeoutAutoSaveHistory);
+			fnTimeoutAutoSaveHistory = $timeout(function(){
+				console.log('fnTimeoutAutoSaveHistory start');
+				if(ph.docbody.autoSaveChangeCount!=0){
+					console.log('fnTimeoutAutoSaveHistory is to save');
+					autoSaveHistory(ph);
+				}
+			}, $scope.config.timeout.delay.autoSaveTextTypingPause);
 		}
 		$scope.addHistoryRecord = function (doctype, ph){
-			if(!ph.toSave)
-				ph.toSave = {'doctype':8, 'docbody':{'html':''}, 'parent_id':ph.doc_id}
+			var doctypeList = {'doctor':8,'ultrasound':9,'rentgen':10,'ECG':11}
 			console.log(ph);
-			console.log(ph.toSave);
+			console.log(ph.children);
 			console.log(doctype);
-			if('doctor' == doctype){
+			console.log(doctypeList);
+			console.log(doctypeList[doctype]);
+			console.log(!doctypeList[doctype]);
+			if(doctypeList[doctype]){
+				if(!ph.toSave)
+					ph.toSave = {'doctype':doctypeList[doctype], 'docbody':{'html':''}, 'parent_id':ph.doc_id}
+				console.log(ph.toSave);
 				var url = '/r/addHistoryRecord';
 				console.log(url);
 				$http.post(url, ph.toSave).then(function(response) {
-					console.log(response.data);
-					$scope.protocol.fn.initDataDictionary(response.data);
+					if(!ph.children)
+						ph.children = [];
+					delete ph.toSave;
+					ph.children.splice(0,0,response.data);
+					console.log(ph);
+					console.log(ph.children);
 				});
 			}
 		}
+		
 		$scope.testDialog = function (ph){
+			/*
 			$scope.editPatientHistory = ph;
 			if(!ph.docbody)
 				ph.docbody = {'suspectedDiagnosis':[],'symptoms':[]};
+			 * */
 			console.log(ph)
 		};
 		$scope.savePatientHistoryRecord = function (ph){
@@ -176,7 +220,6 @@ function initAll ($http, $scope, $filter, $timeout){
 			var url = '/r/medical/patient/'+$scope.param.id;
 			console.log(url);
 			$http.get(url).then( function(response) {
-				console.log(response.data);
 				$scope.patientById = response.data.patientById;
 				console.log($scope.patientById);
 			});
@@ -212,18 +255,5 @@ function initAll ($http, $scope, $filter, $timeout){
 		
 	}
 
-	$http.get('/f/config/mvp1.algoritmed.medic.config.json').then(
-		function(response) {
-			$scope.config = response.data;
-			console.log($scope.config);
-			$scope.menuHomeIndex = [];
-			angular.forEach($scope.config, function(v, i){
-				if(v.parent == 'home'){
-					$scope.menuHomeIndex.push(i);
-				}
-			});
-			console.log($scope.menuHomeIndex);
-		}
-	);
-
 }
+

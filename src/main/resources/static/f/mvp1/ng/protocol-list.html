@@ -15,15 +15,19 @@
 			ng-click="showProtocols='central'; readCentralProtocols()" href="#">центральні</a>
 	</header>
 	<div ng-if="openProtocolCard">
-	<div ng-if="showProtocols=='central'">
-		central
-		<ul class="w3-ul w3-hoverable">
-			<li ng-repeat="p in dbCentralProtocolListe"><a target="_blank"
-				href="/v/protocol?cdbId={{p.protocol_id}}"> {{p.protocol_name}}
-			</a></li>
-		</ul>
-	</div>
-	<div ng-if="showProtocols!='central'">
+		<div ng-if="showProtocols=='central'">
+			<div class="w3-tiny w3-panel w3-pale-blue w3-leftbar w3-border-blue" style="margin-top: 0px;">
+				сервер підготовки еПротоколів для загрузки і використання 
+				<a href="http://meddoc.algoritmed.com/v/protocols" target="_blank">
+					http://meddoc.algoritmed.com </a>
+			</div>
+			<ul class="w3-ul w3-hoverable">
+				<li ng-repeat="p in dbCentralProtocolListe"><a target="_blank"
+					href="/v/protocol?cdbId={{p.protocol_id}}"> {{p.protocol_name}}
+				</a></li>
+			</ul>
+		</div>
+		<div ng-if="showProtocols!='central'">
 		<ul class="w3-ul w3-hoverable">
 			<li ng-repeat="p in dbProtocolListe"><a
 				href="/v/protocol?dbId={{p.protocol_id}}"> {{p.protocol_name}} </a></li>

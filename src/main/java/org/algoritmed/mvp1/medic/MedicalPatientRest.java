@@ -1,7 +1,6 @@
 package org.algoritmed.mvp1.medic;
 
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,7 +96,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object> autoSaveHistory(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj).put("url", "/r/addHistoryRecord");
+		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj).put("url", "/r/autoSaveHistory");
 		logger.info("\n---------------\n"
 				+ "/r/autoSaveHistory"
 				+ "\n" + dbSaveObj2
@@ -130,7 +129,8 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		//insert new record in this history record
 		insertDocElementWithDocbody(dbSaveObj2, parentId , docbodyMap);
 		Map<String, Object> patientHistoryElement = readDocElement(dbSaveObj2);
-		return dbSaveObj2;
+		return patientHistoryElement;
+//		return dbSaveObj2;
 	}
 
 	@PostMapping("/r/savePatientHistoryRecord")

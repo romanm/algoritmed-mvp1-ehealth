@@ -1,3 +1,18 @@
+function initConfig($scope, response){
+	console.log('----initConfig---------------');
+	$scope.config = response.data;
+	$scope.config.timeout = {'delay':{'seekMouseOver':780,'autoSaveTextTypingPause':2000}};
+	$scope.config.doctype = {'patientMenu':[9,10,11,8]
+		,'keys':{
+			'8':{'pathLast':'doctor','ukr':'Запис лікуючого лікаря'}
+			,'9':{'pathLast':'ultrasound','ukr':'УЗД'}
+			,'10':{'pathLast':'rentgen','ukr':'Рентген'}
+			,'11':{'pathLast':'ECG','ukr':'ЕКГ'}
+		}
+	};
+	console.log($scope.config);
+}
+
 function initSeekAll($http, $scope, $filter, $timeout){
 	$scope.icdConf = {search:'','icdSeekContent':'code'};
 //		$scope.icdConf = {search:'','icdSeekContent':'tree'};
@@ -27,12 +42,8 @@ function initSeekAll($http, $scope, $filter, $timeout){
 		}
 		return isOpenedChilds;
 	};
-	var fnTimeoutIcpcCodeMouseOver;
-	var delayInMs = 1000;
-	var delayInMs = 780;
 	$scope.$watch("icpc.codeMouseOverDropdown.child.id", function(newIcd10Long){
 		if(newIcd10Long && newIcd10Long.length>0){
-		console.log(newIcd10Long);
 			var newIcd10 = newIcd10Long.split('.')[0];
 			console.log(newIcd10);
 			if(!$scope.icpc.icd10extension)
@@ -48,11 +59,10 @@ function initSeekAll($http, $scope, $filter, $timeout){
 			}
 		}
 	});
+	var fnTimeoutIcpcCodeMouseOver;
 	$scope.$watch("icpc.codeMouseOver", function(newIcpc2CodeValue){
-		console.log(newIcpc2CodeValue);
 		$timeout.cancel(fnTimeoutIcpcCodeMouseOver); //does nothing, if timeout alredy done
 		fnTimeoutIcpcCodeMouseOver = $timeout(function(){ //Set timeout
-			console.log('load extencion to - '+newIcpc2CodeValue);
 			if(newIcpc2CodeValue && newIcpc2CodeValue.length>0){
 				$scope.icpc.codeMouseOverDropdown = {'id':newIcpc2CodeValue};
 				if(!$scope.icpc.extension)
@@ -65,7 +75,8 @@ function initSeekAll($http, $scope, $filter, $timeout){
 					console.log($scope.icpc.extension[newIcpc2CodeValue]);
 				});
 			}
-		},delayInMs);
+		},$scope.config.timeout.delay.seekMouseOver);
+		//},delayInMs);
 	});
 	$scope.$watch("icdConf.icdSeekContent", function handleChange( newValue, oldValue ) {
 		if('code'==newValue){
@@ -148,10 +159,13 @@ function initSeekAll($http, $scope, $filter, $timeout){
 
 function initAllServer($http, $scope, $filter, $timeout){
 	console.log('----initAllServer---------------');
+	var delayInMs = 1000;
+	var delayInMs = 780;
+	console.log($scope.config);
+	console.log($scope.config);
 	initSeekAll($http, $scope, $filter, $timeout);
 
 	// for menu colored
-	console.log('for menu colored');
 	$scope.menuHomeClicked = function(k){
 		var menuHomeClicked = k == $scope.pagePath.last();
 		if(!menuHomeClicked){

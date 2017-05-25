@@ -17,11 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DbAlgoritmed {
 
-	protected void docbodyToMap(Map<String, Object> map2) {
-		String docbody = (String) map2.get("docbody");
+	protected void docbodyToMap(Map<String, Object> map) {
+		String docbody = (String) map.get("docbody");
 		if(docbody!=null){
 			Map<String, Object> docbodyMap = stringToMap(docbody);
-			map2.put("docbody", docbodyMap);
+			map.put("docbody", docbodyMap);
 		}
 	}
 
@@ -90,12 +90,14 @@ public class DbAlgoritmed {
 		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_insert, dbSaveObj);
 	}
 	
-	private @Value("${sql.doc.byId}")				String sql_doc_byId;
+	private @Value("${sql.doc.byId}")	String sql_doc_byId;
 	protected Map<String, Object> readDocElement(Map<String, Object> dbSaveObj) {
 		Map<String, Object> docElement = db1ParamJdbcTemplate.queryForMap(sql_doc_byId, dbSaveObj);
+		System.err.println(docElement);
+		docbodyToMap(docElement);
+		System.err.println(docElement);
 		return docElement;
 	}
-	
 	protected Timestamp now() {
 		return new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
