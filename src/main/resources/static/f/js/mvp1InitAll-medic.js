@@ -1,6 +1,9 @@
 function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope);
+	
+	initMSPtest ($http, $scope, $filter, $timeout)
+	
 	var url = '/f/config/mvp1.algoritmed.medic.config.json';
 	console.log(url);
 	$http.get(url).then( function(response) {
@@ -256,4 +259,3 @@ function initAll ($http, $scope, $filter, $timeout){
 	}
 
 }
-

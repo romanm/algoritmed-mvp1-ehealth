@@ -59,5 +59,8 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/com.healthmarketscience.jackcess/jackcess
 	compile group: 'com.healthmarketscience.jackcess', name: 'jackcess', version: '2.1.6'
+	// https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client
+	compile 'org.glassfish.jersey.core:jersey-client:2.25.1'
+	
 
 }

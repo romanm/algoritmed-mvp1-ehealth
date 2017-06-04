@@ -17,6 +17,9 @@ if(window.location.search){
 }
 
 if (!Array.prototype.last){
+	Array.prototype.isArray = function(){
+		return Array.isArray(this);
+	}
 	Array.prototype.last = function(){
 		return this[this.length - 1];
 	}
@@ -31,6 +34,10 @@ if (!Array.prototype.last){
 	}
 	Object.prototype.keys = function(){
 		return Object.keys(this);
+	}
+	Object.prototype.isObject = function(){
+		var keys = Object.keys(this);
+		return keys.length>0 && keys[0]!=0; 
 	}
 }
 

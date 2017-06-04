@@ -1,5 +1,16 @@
+function eduTocken($scope){
+	console.log(localStorage);
+	var TOKEN_KEY = "jwtToken";
+	
+    function setJwtToken(token) {
+        localStorage.setItem(TOKEN_KEY, token);
+    }
+
+}
+
 function initConfig($scope, response){
 	console.log('----initConfig---------------');
+	eduTocken($scope)
 	$scope.config = response.data;
 	$scope.config.timeout = {'delay':{'seekMouseOver':780,'autoSaveTextTypingPause':2000}};
 	$scope.config.doctype = {'patientMenu':[9,10,11,8]

@@ -24,11 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable() /* enable POST */
 		.authorizeRequests()
 		.antMatchers("/" /* index.html from static */
-				, "/v/**" /* view HTML sites*/
-				, "/f/**" /* files for sites*/
-				, "/r/**" /* read JSON from server*/
-				, "/webjars/**" /* CSS&JS from gradle */
-				).permitAll()
+			, "/v/**" /* view HTML sites*/
+			, "/f/**" /* files for sites*/
+			, "/r/**" /* read JSON from server*/
+			, "/webjars/**" /* CSS&JS from gradle */
+		).permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()

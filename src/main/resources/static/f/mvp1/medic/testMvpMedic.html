@@ -1,1 +1,51 @@
-testMvpMedic.html
+<div class="w3-container">
+	<h2>
+		<span class="w3-tiny w3-orange">тестування</span> Реєстр: <span
+			class="w3-text-light-gray"> eHealth_in_UA </span>
+	</h2>
+	<div class="w3-row-padding">
+		<div class="w3-half">
+			<div class="w3-card-2">
+				<header class="w3-light-gray">
+					<span class="w3-circle w3-border w3-green">&nbsp;1&nbsp;</span>
+					Реєстрація державного провайдера медичних послуг
+				</header>
+				<div ng-include="'/f/mvp1/medic/msp/menu_registry.html'"></div>
+				<div ng-if="config_msp.menu_registry.name=='data'"
+					ng-include="'/f/mvp1/medic/msp/data_input.html'"></div>
+				<div ng-if="config_msp.menu_registry.name=='view'">
+					<b> Назва: </b> {{api__legal_entities.name}}
+					<div class="w3-padding w3-panel">
+						<button class="w3-btn w3-blue  w3-right"
+							ng-click="legal_entities()">Реєстрація</button>
+					</div>
+				</div>
+				<div ng-if="response__legal_entities">
+					<b> {{response__legal_entities.meta.code}} </b>:
+					{{response__legal_entities.error.message}}
+					<hr />
+					<div ng-repeat="invalid in response__legal_entities.error.invalid">
+						{{invalid.entry}}: {{invalid.entry_type}}
+						<div ng-repeat="rule in invalid.rules">{{rule.rule}}:
+							{{rule.description}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="w3-quarter">
+			<div class="w3-card-2">
+				<header class="w3-light-gray">
+				<span class="w3-circle w3-border w3-yellow">&nbsp;2&nbsp;</span>
+				 ...лікаря</header>
+				--
+			</div>
+		</div>
+		<div class="w3-quarter">
+			<div class="w3-card-2">
+				<header class="w3-light-gray">
+					<span class="w3-circle w3-border w3-yellow">&nbsp;3&nbsp;</span> ...пацієнта</header>
+				--
+			</div>
+		</div>
+	</div>
+</div>

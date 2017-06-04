@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MedicalPatientRest  extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
-	
+
 	/**
 	 * SQL select для зчитування всіх пацієнтів медіка
 	 */
@@ -44,7 +44,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		map.put("medicPatients", medicPatients);
 		return map;
 	}
-	
+
 	private @Value("${sql.medical.selectPatientById}")	String sql_medical_selectPatientById;
 	private @Value("${sql.doc.children}")				String sql_doc_children;
 	private @Value("${sql.doc.children.children}")		String sql_doc_children_children;
