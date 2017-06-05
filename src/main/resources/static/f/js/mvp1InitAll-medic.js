@@ -1,8 +1,6 @@
 function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
-	initAllAlgoritmed($http, $scope);
-	
-	initMSPtest ($http, $scope, $filter, $timeout)
+	initAllAlgoritmed($http, $scope, $filter, $timeout);
 	
 	var url = '/f/config/mvp1.algoritmed.medic.config.json';
 	console.log(url);
@@ -64,8 +62,7 @@ function initAll ($http, $scope, $filter, $timeout){
 		
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()){
-		console.log('----initAll---------------' + $scope.pagePath.last());
-		
+		initMSPtest ($http, $scope, $filter, $timeout)
 	}else
 	if('protocol' == $scope.pagePath.last()){
 	console.log('----initAll-----------' + $scope.pagePath.last());
@@ -101,7 +98,6 @@ function initAll ($http, $scope, $filter, $timeout){
 	}
 	else
 	if('patient' == $scope.pagePath.last()){
-		$scope.maxChangeForAutoSave=10;
 		var fnTimeoutAutoSaveHistory;
 		autoSaveHistory = function (ph, rightSave){
 			ph.docbody.autoSaveChangeCount=0;
@@ -117,9 +113,7 @@ function initAll ($http, $scope, $filter, $timeout){
 				console.log(ph.docbody.autoSaveCount);
 			});
 		}
-		$scope.saveHistory = function (ph){
-			autoSaveHistory(ph, true);
-		}
+		$scope.saveHistory = function (ph){ autoSaveHistory(ph, true); }
 		$scope.autoSaveHistory = function (ph){
 			if(!ph.docbody.autoSaveCount)
 				ph.docbody.autoSaveCount=0;
@@ -128,7 +122,7 @@ function initAll ($http, $scope, $filter, $timeout){
 			ph.docbody.autoSaveChangeCount++;
 			console.log(ph.docbody);
 			console.log(ph.docbody.html);
-			if(ph.docbody.autoSaveChangeCount>$scope.maxChangeForAutoSave){
+			if(ph.docbody.autoSaveChangeCount>$scope.config_all.maxChangeForAutoSave){
 				autoSaveHistory(ph);
 			}
 			$timeout.cancel(fnTimeoutAutoSaveHistory);
@@ -138,7 +132,7 @@ function initAll ($http, $scope, $filter, $timeout){
 					console.log('fnTimeoutAutoSaveHistory is to save');
 					autoSaveHistory(ph);
 				}
-			}, $scope.config.timeout.delay.autoSaveTextTypingPause);
+			}, $scope.config_all.timeout.delay.autoSaveTextTypingPause);
 		}
 		$scope.addHistoryRecord = function (doctype, ph){
 			var doctypeList = {'doctor':8,'ultrasound':9,'rentgen':10,'ECG':11}

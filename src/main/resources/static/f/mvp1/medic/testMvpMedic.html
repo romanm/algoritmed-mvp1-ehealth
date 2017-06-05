@@ -14,13 +14,14 @@
 				<div ng-if="config_msp.menu_registry.name=='data'"
 					ng-include="'/f/mvp1/medic/msp/data_input.html'"></div>
 				<div ng-if="config_msp.menu_registry.name=='view'">
+					<div class="w3-panel w3-border">
 					<b> Назва: </b> {{api__legal_entities.name}}
-					<div class="w3-padding w3-panel">
 						<button class="w3-btn w3-blue  w3-right"
 							ng-click="legal_entities()">Реєстрація</button>
 					</div>
 				</div>
-				<div ng-if="response__legal_entities">
+				<div class="w3-panel w3-leftbar w3-sand w3-border-red"
+					ng-if="response__legal_entities">
 					<b> {{response__legal_entities.meta.code}} </b>:
 					{{response__legal_entities.error.message}}
 					<hr />

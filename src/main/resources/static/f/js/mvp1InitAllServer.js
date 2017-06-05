@@ -12,7 +12,7 @@ function initConfig($scope, response){
 	console.log('----initConfig---------------');
 	eduTocken($scope)
 	$scope.config = response.data;
-	$scope.config.timeout = {'delay':{'seekMouseOver':780,'autoSaveTextTypingPause':2000}};
+	
 	$scope.config.doctype = {'patientMenu':[9,10,11,8]
 		,'keys':{
 			'8':{'pathLast':'doctor','ukr':'Запис лікуючого лікаря'}
@@ -86,7 +86,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 					console.log($scope.icpc.extension[newIcpc2CodeValue]);
 				});
 			}
-		},$scope.config.timeout.delay.seekMouseOver);
+		},$scope.config_all.timeout.delay.seekMouseOver);
 		//},delayInMs);
 	});
 	$scope.$watch("icdConf.icdSeekContent", function handleChange( newValue, oldValue ) {

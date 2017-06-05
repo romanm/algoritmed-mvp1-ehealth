@@ -3,32 +3,46 @@ function initMSPtest ($http, $scope, $filter, $timeout){
 	if('testMvpMedic' == $scope.pagePath.last()){
 		console.log('----initTestVariables---------------');
 		initTestVariables($scope);
-		console.log($scope.config_msp.menu_registry);
+		console.log($scope.api__legal_entities);
+
+		$scope.legal_entities = function () {
+			console.log('----legal_entities-----Реєстрація----------');
+			$http.post('/r/legal_entities', $scope.api__legal_entities).then(
+				function(response) {
+					console.log("legal_entities-----Реєстрація OK")
+					$scope.response__legal_entities = response.data;
+					console.log($scope.response__legal_entities);
+				}, function(response){
+					console.log("legal_entities-----Реєстрація failed")
+					console.log(response);
+				}
+			);
+		}
+
 	}
-	
-	console.log($scope.api__legal_entities);
-	$scope.legal_entities = function (){
-		console.log('----legal_entities-----Реєстрація----------');
-		$http.post('/r/legal_entities', $scope.api__legal_entities).then(
-			function(response) {
-				console.log("legal_entities-----Реєстрація OK")
-				$scope.response__legal_entities = response.data;
-				console.log($scope.response__legal_entities);
-			}, function(response){
-				console.log("legal_entities-----Реєстрація failed")
-				console.log(response);
-			}
-		);
-	}
+
 }
 
 initTestVariables = function($scope){
 	if(!$scope.config_msp)
 		$scope.config_msp = {};
 	//"edrpou": "38782323",
-	$scope.config_msp.menu_registry = {
-		'name':'data'
+	
+	$scope.config_msp = {
+		'menu_registry':{'name':'data'}
+		,'autoSave':{
+			'obj_path':['api__legal_entities']
+			,'config_object_name':'config_msp'
+			,'fn_httpSave':function(){
+				console.log('--config_msp.autoSave.fn_httpSave--------------');
+				console.log($scope.config_all.timeout.delay.autoSaveTextTypingPause);
+				console.log(this);
+			}
+		}
 	}
+	$scope.config_all.init($scope.config_msp);
+	console.log($scope.config_msp);
+
 	$scope.config_msp.registry_field_name_ua = {
 		'api__legal_entities':{
 			'name':'назва ГПМД'

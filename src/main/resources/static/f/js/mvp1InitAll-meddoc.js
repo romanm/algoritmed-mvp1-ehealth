@@ -6,7 +6,7 @@ function expandAll (o, expandO){
 
 function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
-	initAllAlgoritmed($http, $scope, $filter);
+	initAllAlgoritmed($http, $scope, $filter, $timeout);
 	$http.get('/f/config/mvp1.algoritmed.meddoc.config.json').then( function(response) {
 		initConfig($scope, response);
 		$scope.menuHomeIndex = [];
