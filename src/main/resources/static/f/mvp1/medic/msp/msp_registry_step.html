@@ -1,0 +1,12 @@
+<h3>
+	Кроки реєстрації: <span class="w3-small" ng-init="k='short'"
+		ng-include="'/f/mvp1/medic/msp/step_text.html'"> </span>
+</h3>
+
+<ol class="w3-ol">
+	<li ng-repeat="(k,v) in config_msp.menu_registry.steps"
+		class=" w3-hover-border-green w3-border w3-border-white"
+		ng-click="config_msp.menu_registry.step=k"
+		ng-class="{'w3-green':config_msp.menu_registry.step==k}"><a
+		href="#"> {{v.text}} </a></li>
+</ol>

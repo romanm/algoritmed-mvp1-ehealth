@@ -1,5 +1,5 @@
 function eduTocken($scope){
-	console.log(localStorage);
+//	console.log(localStorage);
 	var TOKEN_KEY = "jwtToken";
 	
     function setJwtToken(token) {
@@ -9,7 +9,7 @@ function eduTocken($scope){
 }
 
 function initConfig($scope, response){
-	console.log('----initConfig---------------');
+//	console.log('----initConfig---------------');
 	eduTocken($scope)
 	$scope.config = response.data;
 	
@@ -21,7 +21,7 @@ function initConfig($scope, response){
 			,'11':{'pathLast':'ECG','ukr':'ЕКГ'}
 		}
 	};
-	console.log($scope.config);
+	//console.log($scope.config);
 }
 
 function initSeekAll($http, $scope, $filter, $timeout){
@@ -87,7 +87,6 @@ function initSeekAll($http, $scope, $filter, $timeout){
 				});
 			}
 		},$scope.config_all.timeout.delay.seekMouseOver);
-		//},delayInMs);
 	});
 	$scope.$watch("icdConf.icdSeekContent", function handleChange( newValue, oldValue ) {
 		if('code'==newValue){
@@ -169,11 +168,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 }
 
 function initAllServer($http, $scope, $filter, $timeout){
-	console.log('----initAllServer---------------');
-	var delayInMs = 1000;
-	var delayInMs = 780;
-	console.log($scope.config);
-	console.log($scope.config);
+//	console.log('----initAllServer---------------');
 	initSeekAll($http, $scope, $filter, $timeout);
 
 	// for menu colored

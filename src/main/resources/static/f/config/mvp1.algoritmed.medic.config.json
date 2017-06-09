@@ -38,6 +38,12 @@
 	,"fa":"fa-info"
 	,"parent":"info"
 }
+,"protocol2":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/protocol.html'"
+	,"shortName":"Протокол"
+	,"parent":"cabinet"
+}
 ,"testMvpPatient":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/testMvpPatient.html'"
@@ -57,12 +63,6 @@
 	,"ng_template":"'/f/mvp1/medic/patient.html'"
 	,"shortName":"Пацієнт"
 	,"fa":"fa-user"
-	,"parent":"cabinet"
-}
-,"protocol":{
-	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/protocol.html'"
-	,"shortName":"Протокол"
 	,"parent":"cabinet"
 }
 ,"menuCabinet":{

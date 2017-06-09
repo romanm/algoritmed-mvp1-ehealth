@@ -1,8 +1,8 @@
 function initMSPtest ($http, $scope, $filter, $timeout){
-	console.log('----initMSP-test---------------');
+//	console.log('----initMSP-test---------------');
 	if('testMvpMedic' == $scope.pagePath.last()){
-		console.log('----initTestVariables---------------');
-		initTestVariables($scope);
+//		console.log('----initTestVariables---------------');
+		initTestVariables($scope, $http);
 		console.log($scope.api__legal_entities);
 
 		$scope.legal_entities = function () {
@@ -23,20 +23,39 @@ function initMSPtest ($http, $scope, $filter, $timeout){
 
 }
 
-initTestVariables = function($scope){
+initTestVariables = function($scope, $http){
 	if(!$scope.config_msp)
 		$scope.config_msp = {};
 	//"edrpou": "38782323",
 	
 	$scope.config_msp = {
-		'menu_registry':{'name':'data'}
+		'menu_registry':{'name':'data','step':'data'
+			,'steps':{
+				'data':{'text':'Ввести дані','short':'Введеня даних'}
+				,'digitalsign':{'text':'Накласти електроний підпис (ЕЦП)','short':'ЕЦП'}
+				,'registry':{'text':'Відправити в центральний реєстр','short':'Реєстр'}
+			}
+		}
 		,'autoSave':{
 			'obj_path':['api__legal_entities']
 			,'config_object_name':'config_msp'
 			,'fn_httpSave':function(){
 				console.log('--config_msp.autoSave.fn_httpSave--------------');
-				console.log($scope.config_all.timeout.delay.autoSaveTextTypingPause);
 				console.log(this);
+				$http.post('/r/saveMsp', $scope.api__legal_entities).then(
+					function(response) {
+						console.log("saveMsp-----OK")
+						console.log(response.data);
+						if(!$scope.api__legal_entities.doc_id){
+							$scope.api__legal_entities.doc_id = response.data.doc_id
+							console.log($scope.api__legal_entities.doc_id);
+							console.log($scope.api__legal_entities);
+						}
+					}, function(response){
+						console.log("saveMsp-----failed")
+						console.log(response);
+					}
+				);
 			}
 		}
 	}

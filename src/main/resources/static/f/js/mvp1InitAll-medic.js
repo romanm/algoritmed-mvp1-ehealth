@@ -1,9 +1,10 @@
 function initAll ($http, $scope, $filter, $timeout){
 	console.log('----initAll---------------');
 	initAllAlgoritmed($http, $scope, $filter, $timeout);
+//	console.log('----initAll---------------' + $scope.pagePath.last());
 	
 	var url = '/f/config/mvp1.algoritmed.medic.config.json';
-	console.log(url);
+//	console.log(url);
 	$http.get(url).then( function(response) {
 		initConfig($scope, response);
 		$scope.menuHomeIndex = [];
@@ -12,10 +13,9 @@ function initAll ($http, $scope, $filter, $timeout){
 				$scope.menuHomeIndex.push(i);
 			}
 		});
-		console.log($scope.config);
+		//console.log($scope.config);
 		initAllServer($http, $scope, $filter, $timeout);
 	});
-	console.log('----initAll---------------' + $scope.pagePath.last());
 	$scope.readCentralProtocols = function(){
 		console.log("readCentralProtocols");
 		var url = '/r/seekProtocolFromMeddoc/0';

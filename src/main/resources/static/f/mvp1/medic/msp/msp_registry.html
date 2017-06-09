@@ -1,0 +1,24 @@
+<header class="w3-light-gray">
+	<span class="w3-circle w3-border w3-green">&nbsp;1&nbsp;</span>
+	Реєстрація державного провайдера медичних послуг
+</header>
+<div ng-include="'/f/mvp1/medic/msp/menu_registry.html'"></div>
+<div ng-include="'/f/mvp1/medic/msp/msp_registry_'+config_msp.menu_registry.name+'.html'"></div>
+
+<div ng-if="config_msp.menu_registry.name=='view'">
+	<div class="w3-panel w3-border">
+		<b> Назва: </b> {{api__legal_entities.name}}
+		<button class="w3-btn w3-blue  w3-right" ng-click="legal_entities()">Реєстрація</button>
+	</div>
+</div>
+<div class="w3-panel w3-leftbar w3-sand w3-border-red"
+	ng-if="response__legal_entities">
+	<b> {{response__legal_entities.meta.code}} </b>:
+	{{response__legal_entities.error.message}}
+	<hr />
+	<div ng-repeat="invalid in response__legal_entities.error.invalid">
+		{{invalid.entry}}: {{invalid.entry_type}}
+		<div ng-repeat="rule in invalid.rules">{{rule.rule}}:
+			{{rule.description}}</div>
+	</div>
+</div>

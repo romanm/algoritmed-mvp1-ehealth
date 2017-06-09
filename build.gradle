@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.3.RELEASE'
+		springBootVersion = '1.5.4.RELEASE'
 //		springBootVersion = '1.5.2.RELEASE'
 		//springBootVersion = '1.5.1.RELEASE'
 	}
@@ -61,6 +61,12 @@ dependencies {
 	compile group: 'com.healthmarketscience.jackcess', name: 'jackcess', version: '2.1.6'
 	// https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client
 	compile 'org.glassfish.jersey.core:jersey-client:2.25.1'
+	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16
+	//compile 'org.bouncycastle:bcprov-jdk16:1.46'
+	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+	compile 'org.bouncycastle:bcprov-jdk15on:1.57'
+	
+	
 	
 
 }

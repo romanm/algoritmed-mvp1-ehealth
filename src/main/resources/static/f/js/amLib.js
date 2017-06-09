@@ -2,6 +2,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	$scope.param = parameters;
 	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
+
 	$scope.highlight = function(text, search){
 		if (!search) return text;
 		return text.replace(new RegExp(search, 'gi'), '<span class="w3-yellow">$&</span>');

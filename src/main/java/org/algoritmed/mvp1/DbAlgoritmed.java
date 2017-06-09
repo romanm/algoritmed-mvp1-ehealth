@@ -80,7 +80,7 @@ public class DbAlgoritmed {
 			dbSaveObj.put("created", created);
 		}
 		System.err.println(dbSaveObj);
-		System.err.println(52);
+		System.err.println(83);
 		System.err.println(sql_doc_insert
 				.replace(":"+"doc_id", ""+dbSaveObj.get("doc_id"))
 				.replace(":"+"doctype", ""+dbSaveObj.get("doctype"))

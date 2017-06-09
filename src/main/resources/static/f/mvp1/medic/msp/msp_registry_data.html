@@ -1,0 +1,21 @@
+<div class="w3-panel w3-border">
+	<b> Назва: </b> {{api__legal_entities.name}} 
+	<!-- 
+		ng-if="config_msp.autoSave.save_count>0||config_msp.autoSave.change_count>0"
+	 -->
+	<span class="w3-tiny"
+		>
+		автозбереження:
+		{{config_msp.autoSave.save_count}}/{{config_msp.autoSave.change_count}}</span>
+	<button class="w3-btn w3-blue w3-right" ng-click="legal_entities()">Запис</button>
+</div>
+<div style="max-height: 300px; overflow: auto;">
+	<ul class="w3-ul">
+		<li ng-repeat="(k,v) in api__legal_entities">{{k}} : 
+		<input
+		ng-change="config_msp.autoSave.fn_change_count()"
+			class="w3-input w3-border" ng-model="api__legal_entities[k]"
+			ng-if="!v.isObject() && !v.isArray()">
+		</li>
+	</ul>
+</div>
