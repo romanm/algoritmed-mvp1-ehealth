@@ -5,6 +5,18 @@ function initMSPtest ($http, $scope, $filter, $timeout){
 		initTestVariables($scope, $http);
 		console.log($scope.api__legal_entities);
 
+		$scope.modalMspList = function () {
+			document.getElementById('id01_msp_list').style.display='block';
+			$http.get('/r/msp_list').then(
+				function(response) {
+					$scope.msp_list = response.data.msp_list;
+					console.log($scope.msp_list);
+				}
+				, function(response) {
+					console.log(response);
+				}
+			);
+		}
 		$scope.legal_entities = function () {
 			console.log('----legal_entities-----Реєстрація----------');
 			$http.post('/r/legal_entities', $scope.api__legal_entities).then(
@@ -18,9 +30,7 @@ function initMSPtest ($http, $scope, $filter, $timeout){
 				}
 			);
 		}
-
 	}
-
 }
 
 initTestVariables = function($scope, $http){

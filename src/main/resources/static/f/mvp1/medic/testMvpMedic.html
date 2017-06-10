@@ -1,7 +1,10 @@
 <div class="w3-container">
 	<h2>
 		<span class="w3-tiny w3-orange">тестування</span> Реєстр: <span
-			class="w3-text-light-gray"> eHealth_in_UA </span>
+			class="w3-text-light-gray"> eHealth_in_UA <i
+			ng-click="modalMspList()" class="fa fa-list-alt w3-hover-text-yellow"
+			aria-hidden="true"></i>
+		</span>
 	</h2>
 	<div class="w3-row-padding">
 		<div class="w3-half">
@@ -22,6 +25,18 @@
 				<header class="w3-light-gray">
 					<span class="w3-circle w3-border w3-yellow">&nbsp;3&nbsp;</span> ...пацієнта</header>
 				--
+			</div>
+		</div>
+	</div>
+	<div id="id01_msp_list" class="w3-modal">
+		<div class="w3-modal-content">
+			<div class="w3-container">
+				<span
+					onclick="document.getElementById('id01_msp_list').style.display='none'"
+					class="w3-button w3-display-topright">&times;</span>
+				<p ng-repeat="msp in msp_list">{{msp.msp_id}} :
+					{{msp.msp_public_name}} : {{msp.msp_name}}</p>
+				<p>----------------------------</p>
 			</div>
 		</div>
 	</div>

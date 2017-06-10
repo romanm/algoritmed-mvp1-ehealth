@@ -4,12 +4,19 @@ CREATE TABLE doctype (
 	doctype VARCHAR(20),
 	parent_id INTEGER,
 	FOREIGN KEY (parent_id) REFERENCES doctype(doctype_id)
-) ;
+);
 DROP TABLE IF EXISTS docbody;
 CREATE TABLE docbody (
 	docbody_id INTEGER PRIMARY KEY
 	,docbody VARCHAR(100000)
 	,FOREIGN KEY (docbody_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+DROP TABLE IF EXISTS msp;
+CREATE TABLE msp (
+	msp_id INT PRIMARY KEY
+	,msp_name VARCHAR(128)
+	,msp_public_name VARCHAR(128)
+	,FOREIGN KEY (msp_id) REFERENCES docbody(docbody_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE doc (
 doc_id int DEFAULT NEXTVAL('dbid') primary key
