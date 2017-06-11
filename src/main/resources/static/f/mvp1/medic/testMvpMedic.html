@@ -31,12 +31,18 @@
 	<div id="id01_msp_list" class="w3-modal">
 		<div class="w3-modal-content">
 			<div class="w3-container">
-				<span
-					onclick="document.getElementById('id01_msp_list').style.display='none'"
-					class="w3-button w3-display-topright">&times;</span>
-				<p ng-repeat="msp in msp_list">{{msp.msp_id}} :
-					{{msp.msp_public_name}} : {{msp.msp_name}}</p>
-				<p>----------------------------</p>
+				<span ng-click="closeMsp()" class="w3-button w3-display-topright">&times;</span>
+				<p ng-repeat="msp in msp_list"
+					class=" w3-hover-border-green w3-border w3-border-white">
+					<a href="?doc_id={{msp.msp_id}}"> {{msp.msp_id}} :
+						{{msp.msp_public_name}} : {{msp.msp_name}} </a>
+				</p>
+				<p>
+					<a href="?" class="w3-btn w3-blue" ng-click="newMsp()">Новий
+						ПМП </a> 
+					<a class="w3-btn w3-blue w3-right" ng-click="closeMsp()">Закрити
+					</a>
+				</p>
 			</div>
 		</div>
 	</div>

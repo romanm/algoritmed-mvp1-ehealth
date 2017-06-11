@@ -8,15 +8,23 @@
 	rel="stylesheet" />
 <link href="/f/w3/w3.css" rel="stylesheet" />
 <link href="/f/css/amMvp1.css" rel="stylesheet" />
+<!-- 
+<script src="/webjars/github-com-targeter-Blob-js-/0.0.1/Blob.js"></script>
+<script src="/f/js/FileSaver.js"></script>
+ -->
+<script src="/webjars/FileSaver.js/0.0.2/FileSaver.js"></script>
+
 <script src="/webjars/angularjs/1.6.0/angular.min.js"></script>
 <script src="/webjars/angularjs/1.6.0/angular-sanitize.min.js"></script>
-<script src="/webjars/angularjs/1.6.0/i18n/angular-locale_uk-ua.js"></script>
+<script src="/webjars/angularjs/1.6.0/angular-sanitize.min.js"></script>
+<script src="/webjars/angular-file-saver/1.1.3/dist/angular-file-saver.js"></script>
 <script src="/f/js/amLib.js"></script>
 <script src="/f/js/mvp1InitAllServer.js"></script>
 <script src="/f/js/mvp1InitAll-medic.js"></script>
 <script src="/f/js/mvp-MSP-test.js"></script>
 <script src="/f/js/mvp1App-medic.js"></script>
 <body>
-<div ng-include="'/f/mvp1/medic/menuBar.html'"></div>
-<div th:attr="ng-include=${ng_template}"></div></body>
+	<div ng-include="'/f/mvp1/medic/menuBar.html'"></div>
+	<div th:attr="ng-include=${ng_template}"></div>
+</body>
 </html>

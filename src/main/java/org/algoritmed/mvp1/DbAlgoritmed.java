@@ -19,6 +19,10 @@ public class DbAlgoritmed {
 
 	protected void docbodyToMap(Map<String, Object> map) {
 		String docbody = (String) map.get("docbody");
+		docbodyStrToMap(map, docbody);
+	}
+
+	protected void docbodyStrToMap(Map<String, Object> map, String docbody) {
 		if(docbody!=null){
 			Map<String, Object> docbodyMap = stringToMap(docbody);
 			map.put("docbody", docbodyMap);

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,18 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
 	
+	private @Value("${sql.docbody.byId}")				String sql_docbody_byId;
+	@GetMapping(value = "/r/read_msp/{msp_id}")
+	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer msp_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msp_id", msp_id);
+		map.put("doc_Id", msp_id);
+		String docbody = db1ParamJdbcTemplate.queryForObject(sql_docbody_byId, map, String.class);
+		docbodyStrToMap(map, docbody);
+		return map;
+	}
+
+	private @Value("${sql.msp.list}")				String sql_msp_list;
 	@GetMapping(value = "/r/msp_list")
 	public @ResponseBody Map<String, Object>  msp_list() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -30,7 +43,6 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		map.put("msp_list", msp_list);
 		return map;
 	}
-	private @Value("${sql.msp.list}")				String sql_msp_list;
 	
 	@PostMapping("/r/saveMsp")
 	public @ResponseBody Map<String, Object> saveMsp(

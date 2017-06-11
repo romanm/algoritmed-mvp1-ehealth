@@ -1,39 +1,29 @@
-function initMSPtest ($http, $scope, $filter, $timeout){
-//	console.log('----initMSP-test---------------');
+function initMSPtest ($http, $scope, $filter, $timeout, FileSaver, Blob){
+	console.log('----initMSP-test---------------');
 	if('testMvpMedic' == $scope.pagePath.last()){
 //		console.log('----initTestVariables---------------');
-		initTestVariables($scope, $http);
-		console.log($scope.api__legal_entities);
-
-		$scope.modalMspList = function () {
-			document.getElementById('id01_msp_list').style.display='block';
-			$http.get('/r/msp_list').then(
-				function(response) {
-					$scope.msp_list = response.data.msp_list;
-					console.log($scope.msp_list);
-				}
-				, function(response) {
-					console.log(response);
-				}
-			);
+		initTestVariables($scope, $http, FileSaver, Blob);
+		if($scope.param.doc_id){
+			$scope.readMsp($scope.param.doc_id);
+		}else{
+			$scope.newMsp();
 		}
+
 		$scope.legal_entities = function () {
 			console.log('----legal_entities-----Реєстрація----------');
-			$http.post('/r/legal_entities', $scope.api__legal_entities).then(
-				function(response) {
-					console.log("legal_entities-----Реєстрація OK")
-					$scope.response__legal_entities = response.data;
-					console.log($scope.response__legal_entities);
-				}, function(response){
-					console.log("legal_entities-----Реєстрація failed")
-					console.log(response);
-				}
-			);
+			$http.post('/r/legal_entities', $scope.api__legal_entities).then(function(response) {
+				console.log("legal_entities-----Реєстрація OK")
+				$scope.response__legal_entities = response.data;
+				console.log($scope.response__legal_entities);
+			});
 		}
 	}
 }
 
-initTestVariables = function($scope, $http){
+initTestVariables = function($scope, $http, FileSaver, Blob){
+	console.log(FileSaver);
+	console.log(Blob);
+
 	if(!$scope.config_msp)
 		$scope.config_msp = {};
 	//"edrpou": "38782323",
@@ -46,26 +36,24 @@ initTestVariables = function($scope, $http){
 				,'registry':{'text':'Відправити в центральний реєстр','short':'Реєстр'}
 			}
 		}
+	, mspToSave:function(){
+		var data = JSON.stringify($scope.api__legal_entities, null, '\t');
+		var blob = new Blob([data], {type: 'text/json;charset=utf-8'});
+		console.log(blob);
+		FileSaver.saveAs(blob, 'fileName.txt');
+	}
 		,'autoSave':{
 			'obj_path':['api__legal_entities']
 			,'config_object_name':'config_msp'
 			,'fn_httpSave':function(){
 				console.log('--config_msp.autoSave.fn_httpSave--------------');
 				console.log(this);
-				$http.post('/r/saveMsp', $scope.api__legal_entities).then(
-					function(response) {
-						console.log("saveMsp-----OK")
-						console.log(response.data);
-						if(!$scope.api__legal_entities.doc_id){
-							$scope.api__legal_entities.doc_id = response.data.doc_id
-							console.log($scope.api__legal_entities.doc_id);
-							console.log($scope.api__legal_entities);
-						}
-					}, function(response){
-						console.log("saveMsp-----failed")
-						console.log(response);
+				$http.post('/r/saveMsp', $scope.api__legal_entities).then(function(response) {
+					console.log(response.data);
+					if(!$scope.api__legal_entities.doc_id){
+						$scope.api__legal_entities.doc_id = response.data.doc_id
 					}
-				);
+				});
 			}
 		}
 	}
@@ -84,7 +72,31 @@ initTestVariables = function($scope, $http){
 			"edrpou": "ЄДРПОУ",
 		}
 	}
-	$scope.api__legal_entities = {
+	$scope.modalMspList = function () {
+		document.getElementById('id01_msp_list').style.display='block';
+		$http.get('/r/msp_list').then( function(response) {
+			$scope.msp_list = response.data.msp_list;
+			console.log($scope.msp_list);
+		});
+	}
+	$scope.closeMsp = function (msp_id) {
+		document.getElementById('id01_msp_list').style.display='none';
+	}
+	$scope.readMsp = function (msp_id) {
+		console.log(msp_id)
+		$http.get('/r/read_msp/'+msp_id).then( function(response) {
+			$scope.api__legal_entities = response.data.docbody;
+			console.log($scope.api__legal_entities);
+			$scope.closeMsp();
+		});
+	}
+	$scope.newMsp = function(){
+		//$scope.api__legal_entities = angular.copy($scope.tmp_api__legal_entities);
+		$scope.api__legal_entities = $scope.tmp_api__legal_entities;
+		if(document.getElementById('id01_msp_list'))
+			$scope.closeMsp();
+	}
+	$scope.tmp_api__legal_entities = {
 		"name": "Hello World! - Клініка Адоніс",
 		"short_name": "Адоніс",
 		"public_name": "Адоніс",
