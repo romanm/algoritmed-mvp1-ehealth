@@ -23,6 +23,9 @@ public class EhealthUaRegistryFileUploadRest {
 		Map<String, Object> map = new HashMap<>();
 		try {
 			String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
+			System.err.println(26);
+			System.err.println(encodeToString);
+			System.err.println(28);
 			map.put("signed_legal_entity_request", encodeToString);
 			map.put("signed_content_encoding", "base64");
 			Map legal_entitiesPut = registryWebClient.legal_entitiesPut(map);
