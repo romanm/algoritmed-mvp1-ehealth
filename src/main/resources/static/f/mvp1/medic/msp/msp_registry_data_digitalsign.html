@@ -1,4 +1,3 @@
-
 <div class="w3-bar w3-border">
 	<div class="w3-bar-item w3-hover-gray w3-light-gray"
 			ng-click="config_msp.menu_registry.step='data';config_msp.menu_registry.name='data'">
@@ -9,22 +8,47 @@
 			class="w3-text-light-gray"> (ЕЦП) </span>
 		</b>
 	</div>
-	<div class="w3-bar-item w3-right">Tokyo</div>
+	<div class="w3-bar-item w3-right w3-light-gray  w3-hover-gray"
+		ng-click="config_msp.menu_registry.step='registry';config_msp.menu_registry.name='data'">
+		<i class="fa fa-angle-right w3-large" aria-hidden="true"></i>
+	</div>
 </div>
 
-<div class="w3-panel w3-border">
-</div>
-
-<ul class="w3-ul">
-	<li>Зберегти підготовлені для відправки дані в вигляді файла для
-		накладання ЕЦП</li>
-	<li>Накладання ЕЦП
+<ol class="w3-u-l">
+	<li class="w3-hover-light-gray">Зберегти підготовлені для реєстрації дані в вигляді файла для
+		накладання ЕЦП <code class="w3-codespan">{{config_msp.registryMspFileName()}}</code>
+		<button class="w3-btn w3-blue" ng-click="config_msp.mspToSave()">файл
+			реестрації</button>
+	</li>
+	<li class="w3-hover-light-gray"><b>Накладання ЕЦП</b>: перейти на ЦЗО сайт і накласти ЕЦП на
+		файл реєстрації
 		<p>
 			<a href="http://czo.gov.ua/sign" target="_blank">ОНЛАЙН СЕРВІС
 				НАКЛАДАННЯ ЕЦП НА ЕЛЕКТРОННІ ДОКУМЕНТИ</a>
 		</p> <img src="http://czo.gov.ua/images/head.jpg" alt="Lights"
-		class="w3-image">
-
+		class="w3-image"></li>
+	<li class="w3-hover-light-gray">
+		<form method="POST" enctype="multipart/form-data"
+				action="/r/msp_uploadP7sFile">
+			<label>Завантажити
+				ЕЦП підписаний файл з даними реєстрації. <code class="w3-codespan">{{config_msp.registryMspFileName()}}.p7s</code>
+				: <br /> <input type="file"
+				class="w3-btn w3-blue w3-border" name="file" accept="*" />
+			</label>
+			<button type="submit">OK</button>
+		</form>
 	</li>
-	<li></li>
-</ul>
+	<!-- Загрузка і обробка в бровзері -->
+	<!-- 
+	<li class="w3-hover-light-gray">
+		<label for="upload-file-input">Завантажити
+			ЕЦП підписаний файл з даними реєстрації. <code class="w3-codespan">{{config_msp.registryMspFileName()}}.p7s</code>
+			: <br /> <input type="file"
+			onchange="angular.element(this).scope().config_msp.uploadFileChange(this)"
+			class="w3-btn w3-blue w3-border" name="file" accept="*" />
+		</label>
+		<button class="w3-btn w3-blue w3-large">OK</button></li>
+	 -->
+		
+		
+</ol>

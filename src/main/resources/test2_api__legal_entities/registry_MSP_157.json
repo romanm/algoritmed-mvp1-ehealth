@@ -1,0 +1,90 @@
+﻿{
+	"name": "Hello World! - Клініка Адоніс 123",
+	"short_name": "Адоніс",
+	"public_name": "Адоніс",
+	"type": "MSP",
+	"owner_property_type": "STATE",
+	"legal_form": "140",
+	"edrpou": "1560503515",
+	"kveds": [
+		"86.10"
+	],
+	"addresses": [
+		{
+			"type": "RESIDENCE",
+			"country": "UA",
+			"area": "Житомирська",
+			"region": "Бердичівський",
+			"settlement": "Київ",
+			"settlement_type": "CITY",
+			"settlement_id": "43432432",
+			"street_type": "STREET",
+			"street": "вул. Ніжинська",
+			"building": "15",
+			"apartment": "23",
+			"zip": "02090"
+		}
+	],
+	"phones": [
+		{
+			"type": "MOBILE",
+			"number": "+380503410870"
+		}
+	],
+	"email": "m.miliaieva@gmail.com",
+	"owner": {
+		"first_name": "Петро",
+		"last_name": "Іванов",
+		"second_name": "Миколайович",
+		"tax_id": "3015492565",
+		"birth_date": "1991-08-19",
+		"birth_place": "Вінниця, Україна",
+		"gender": "MALE",
+		"email": "m.miliaieva@gmail.com",
+		"documents": [
+			{
+				"type": "PASSPORT",
+				"number": "120518"
+			}
+		],
+		"phones": [
+			{
+				"type": "MOBILE",
+				"number": "+380503410870"
+			}
+		],
+		"position": "Голова правління"
+	},
+	"medical_service_provider": {
+		"licenses": [
+			{
+				"license_number": "fd123443",
+				"issued_by": "Кваліфікацйна комісія",
+				"issued_date": "1991-08-19",
+				"expiry_date": "1991-08-19",
+				"kved": "86.10",
+				"what_licensed": "реалізація наркотичних засобів"
+			}
+		],
+		"accreditation": {
+			"category": "FIRST",
+			"issued_date": "1991-08-19",
+			"expiry_date": "1991-08-19",
+			"order_no": "fd123443",
+			"order_date": "1991-08-19"
+		}
+	},
+	"security": {
+		"redirect_uri": "redirect_uri"
+	},
+	"public_offer": {
+		"consent": true,
+		"consent_text": "Consent text"
+	},
+	"doctype": 12,
+	"doc_id": 157,
+	"parent_id": 157,
+	"created": 1497077049611,
+	"docbody_id": 157,
+	"updated": 1497077049611
+}

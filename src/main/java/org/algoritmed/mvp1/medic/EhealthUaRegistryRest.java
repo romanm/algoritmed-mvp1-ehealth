@@ -1,7 +1,6 @@
 package org.algoritmed.mvp1.medic;
 
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EhealthUaRegistryRest extends DbAlgoritmed{
-	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
+	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
 	
 	private @Value("${sql.docbody.byId}")				String sql_docbody_byId;
@@ -29,7 +28,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer msp_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msp_id", msp_id);
-		map.put("doc_Id", msp_id);
+		map.put("doc_id", msp_id);
 		String docbody = db1ParamJdbcTemplate.queryForObject(sql_docbody_byId, map, String.class);
 		docbodyStrToMap(map, docbody);
 		return map;

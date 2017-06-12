@@ -11,11 +11,7 @@ function initMSPtest ($http, $scope, $filter, $timeout, FileSaver, Blob){
 
 		$scope.legal_entities = function () {
 			console.log('----legal_entities-----Реєстрація----------');
-			$http.post('/r/legal_entities', $scope.api__legal_entities).then(function(response) {
-				console.log("legal_entities-----Реєстрація OK")
-				$scope.response__legal_entities = response.data;
-				console.log($scope.response__legal_entities);
-			});
+			$scope.config_msp.legal_entities($scope.api__legal_entities);
 		}
 	}
 }
@@ -23,25 +19,50 @@ function initMSPtest ($http, $scope, $filter, $timeout, FileSaver, Blob){
 initTestVariables = function($scope, $http, FileSaver, Blob){
 	console.log(FileSaver);
 	console.log(Blob);
-
+	var reader = new FileReader();
+	console.log(reader);
+	
 	if(!$scope.config_msp)
 		$scope.config_msp = {};
 	//"edrpou": "38782323",
-	
 	$scope.config_msp = {
-		'menu_registry':{'name':'data','step':'data'
+		'menu_registry':{'name':'data','step':'digitalsign'
 			,'steps':{
 				'data':{'text':'Ввести дані','short':'Введеня даних'}
 				,'digitalsign':{'text':'Накласти електроний підпис (ЕЦП)','short':'ЕЦП'}
 				,'registry':{'text':'Відправити в центральний реєстр','short':'Реєстр'}
 			}
 		}
-	, mspToSave:function(){
-		var data = JSON.stringify($scope.api__legal_entities, null, '\t');
-		var blob = new Blob([data], {type: 'text/json;charset=utf-8'});
-		console.log(blob);
-		FileSaver.saveAs(blob, 'fileName.txt');
-	}
+		, legal_entities:function(data){
+			$http.post('/r/legal_entities', data).then(function(response) {
+				console.log("legal_entities-----Реєстрація OK");
+				$scope.response__legal_entities = response.data;
+				console.log($scope.response__legal_entities);
+			});
+		}
+		, uploadFileChange:function(ele){
+			console.log(ele.files[0]);
+			var reader=new FileReader();
+			reader.onload = function(e) {
+				var p7sFile=e.target.result;
+				var p7sObj = JSON.parse(p7sFile);
+				console.log(p7sObj);
+				$scope.config_msp.legal_entities(p7sObj);
+			}
+			reader.readAsText(ele.files[0]);
+		}
+		, uploadFileSrc:{'q':'1'}
+		, registryMspFileName:function(){
+			return 'registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
+		}
+		, mspToSave:function(){
+			var fileName = this.registryMspFileName();
+			console.log(fileName);
+			var data = JSON.stringify($scope.api__legal_entities, null, '\t');
+			var blob = new Blob([data], {type: 'text/json;charset=utf-8'});
+			console.log(blob);
+			FileSaver.saveAs(blob, fileName);
+		}
 		,'autoSave':{
 			'obj_path':['api__legal_entities']
 			,'config_object_name':'config_msp'
@@ -58,7 +79,6 @@ initTestVariables = function($scope, $http, FileSaver, Blob){
 		}
 	}
 	$scope.config_all.init($scope.config_msp);
-	console.log($scope.config_msp);
 
 	$scope.config_msp.registry_field_name_ua = {
 		'api__legal_entities':{
@@ -72,6 +92,9 @@ initTestVariables = function($scope, $http, FileSaver, Blob){
 			"edrpou": "ЄДРПОУ",
 		}
 	}
+
+	console.log($scope.config_msp);
+
 	$scope.modalMspList = function () {
 		document.getElementById('id01_msp_list').style.display='block';
 		$http.get('/r/msp_list').then( function(response) {
