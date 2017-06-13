@@ -53,25 +53,20 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				);
 		if(data.containsKey("doc_id")){//update
 			System.err.println("--30----------update--------");
+			updateDocbody(data, data, now());
+			int update = db1ParamJdbcTemplate.update(sql_msp_update, data);
 		}else{//insert
 			data.put("doctype", 12);//MSP
 			Integer doc_id = nextDbId();
 			data.put("doc_id", doc_id);
 			insertDocElementWithDocbody(data, doc_id, data);
-			insertMsp(data);
+			int update = db1ParamJdbcTemplate.update(sql_msp_insert, data);
 		}
 		return data;
 	}
+	private @Value("${sql.msp.update}")				String sql_msp_update;
 	private @Value("${sql.msp.insert}")				String sql_msp_insert;
-	private void insertMsp(Map<String, Object> dbSaveObj) {
-		System.err.println("--insertMsp---");
-		System.err.println(sql_msp_insert
-				.replace(":"+"doc_id", ""+dbSaveObj.get("doc_id"))
-				.replace(":"+"doctype", ""+dbSaveObj.get("name"))
-				.replace(":"+"parent_id", ""+dbSaveObj.get("public_name"))
-				);
-		int update = db1ParamJdbcTemplate.update(sql_msp_insert, dbSaveObj);
-	}
+	
 	@PostMapping("/r/legal_entities")
 	public @ResponseBody Map<String, Object> legal_entities(
 			@RequestBody Map<String, Object> data

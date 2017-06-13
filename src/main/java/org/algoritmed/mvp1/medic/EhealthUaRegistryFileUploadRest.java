@@ -19,7 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class EhealthUaRegistryFileUploadRest {
 	@PostMapping("/r/msp_uploadP7sFile")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
+			@RequestParam("doc_id") String doc_id,
 			RedirectAttributes redirectAttributes) {
+		System.err.println(23);
+		System.err.println(doc_id);
+		redirectAttributes.addAttribute("doc_id", doc_id);
 		Map<String, Object> map = new HashMap<>();
 		try {
 			String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
@@ -34,7 +38,7 @@ public class EhealthUaRegistryFileUploadRest {
 		}
 		String originalFilename = file.getOriginalFilename();
 		logger.info("--------------------\n" + "/r/msp_uploadP7sFile" + "\n" + file);
-		return "redirect:/v/testMvpMedic?doc_id=157";
+		return "redirect:/v/testMvpMedic?doc_id={doc_id}";
 	}
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryFileUploadRest.class);

@@ -28,12 +28,13 @@
 		</p> <img src="http://czo.gov.ua/images/head.jpg" alt="Lights"
 		class="w3-image"></li>
 	<li class="w3-hover-light-gray">
-		<form method="POST" enctype="multipart/form-data"
-				action="/r/msp_uploadP7sFile">
-			<label>Завантажити
-				ЕЦП підписаний файл з даними реєстрації. <code class="w3-codespan">{{config_msp.registryMspFileName()}}.p7s</code>
+	{{api__legal_entities.doc_id}}
+		<form method="POST" enctype="multipart/form-data" action="/r/msp_uploadP7sFile">
+			<label>Завантажити ЕЦП підписаний файл з даними реєстрації. 
+				<code class="w3-codespan">{{config_msp.registryMspFileName()}}.p7s</code>
 				: <br /> <input type="file"
 				class="w3-btn w3-blue w3-border" name="file" accept="*" />
+				<input type="hidden" name="doc_id" value="{{api__legal_entities.doc_id}}">
 			</label>
 			<button type="submit">OK</button>
 		</form>

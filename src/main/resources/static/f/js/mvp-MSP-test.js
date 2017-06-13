@@ -1,8 +1,8 @@
-function initMSPtest ($http, $scope, $filter, $timeout, FileSaver, Blob){
+function initMSPtest ($http, $scope, $filter, $timeout, Blob){
 	console.log('----initMSP-test---------------');
 	if('testMvpMedic' == $scope.pagePath.last()){
 //		console.log('----initTestVariables---------------');
-		initTestVariables($scope, $http, FileSaver, Blob);
+		initTestVariables($scope, $http, Blob);
 		if($scope.param.doc_id){
 			$scope.readMsp($scope.param.doc_id);
 		}else{
@@ -16,11 +16,8 @@ function initMSPtest ($http, $scope, $filter, $timeout, FileSaver, Blob){
 	}
 }
 
-initTestVariables = function($scope, $http, FileSaver, Blob){
-	console.log(FileSaver);
+initTestVariables = function($scope, $http, Blob){
 	console.log(Blob);
-	var reader = new FileReader();
-	console.log(reader);
 	
 	if(!$scope.config_msp)
 		$scope.config_msp = {};
@@ -56,12 +53,21 @@ initTestVariables = function($scope, $http, FileSaver, Blob){
 			return 'registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
 		}
 		, mspToSave:function(){
-			var fileName = this.registryMspFileName();
-			console.log(fileName);
-			var data = JSON.stringify($scope.api__legal_entities, null, '\t');
-			var blob = new Blob([data], {type: 'text/json;charset=utf-8'});
-			console.log(blob);
-			FileSaver.saveAs(blob, fileName);
+			var a = document.createElement("a");
+			document.body.appendChild(a);
+			a.style = "display: none";
+			a.download = this.registryMspFileName();
+			var dataJson = $scope.api__legal_entities;
+			['doc_id','doctype','parent_id','created','docbody_id','updated'].forEach(function(k){
+				delete dataJson[k]
+			});
+			var json = JSON.stringify(dataJson),
+				blob = new Blob([json], {type: "octet/stream"}),
+			url = window.URL.createObjectURL(blob);
+			a.href = url;
+			a.click();
+			window.URL.revokeObjectURL(url);
+			delete a;
 		}
 		,'autoSave':{
 			'obj_path':['api__legal_entities']
@@ -119,7 +125,16 @@ initTestVariables = function($scope, $http, FileSaver, Blob){
 		if(document.getElementById('id01_msp_list'))
 			$scope.closeMsp();
 	}
-	$scope.tmp_api__legal_entities = {
+	$scope.tmp_api__legal_entities = 
+	{ "name":"КНП „Перший Черкаський міський центр первинної медико-санітарної допомоги”"
+		, "short_name":"КНП „Перший Черкаський міський ЦПМСД”"
+		, "public_name":"КНП „Перший Черкаський міський центр первинної медико-санітарної допомоги”"
+		, "type":"MSP", "owner_property_type":"PRIVATE", "legal_form":"150"
+		, "edrpou":"1560503515"
+		, "email":"dmytropieskov@gmail.com", "kveds":[ "86.10" ]
+		, "addresses":[ { "type":"REGISTRATION", "country":"UA", "area":"Черкаська область", "region":"Черкаська область", "settlement":"Черкаси", "settlement_type":"CITY", "settlement_id":"43432432", "street_type":"STREET", "street":"Дахнівська", "building":"34" }, { "type":"RESIDENCE", "country":"UA", "area":"Черкаська область", "region":"Черкаська область", "settlement":"Черкаси", "settlement_type":"CITY", "settlement_id":"43432432", "street_type":"STREET", "street":"Дахнівська", "building":"34" } ], "phones":[ { "type":"LAND_LINE", "number":"+380674023650" } ], "owner":{ "first_name":"First", "last_name":"Last", "second_name":"Second", "tax_id":"1111111111", "birth_date":"1982-12-12", "birth_place":"birth_place", "gender":"MALE", "email":"dmytropieskov@gmail.com", "position":"P3", "documents":[ { "type":"PASSPORT", "number":"111" } ], "phones":[ { "type":"LAND_LINE", "number":"+380674023650" } ] }, "medical_service_provider":{ "licenses":[ { "license_number":"Lic", "issued_by":"issued_by", "issued_date":"2014-01-01", "expiry_date":"2020-01-01", "active_from_date":"2020-01-01", "what_licensed":"what_licensed" }, { "license_number":"Lic2", "issued_by":"issued_by2", "issued_date":"2014-01-02", "expiry_date":"2020-01-02", "active_from_date":"2020-01-02", "what_licensed":"what_licensed2" } ], "accreditation":{ "category":"FIRST", "issued_date":"2014-01-03", "expiry_date":"2020-01-03", "order_no":"1235we", "order_date":"2020-01-03" } }, "security":{ "redirect_uri":"https:\/\/google.com.ua" }, "public_offer":{ "consent":true, "consent_text":"consent_text" } 
+	}
+	$scope.tmp2_api__legal_entities = {
 		"name": "Hello World! - Клініка Адоніс",
 		"short_name": "Адоніс",
 		"public_name": "Адоніс",

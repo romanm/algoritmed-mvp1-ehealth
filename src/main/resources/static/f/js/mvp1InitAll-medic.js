@@ -1,4 +1,4 @@
-function initAll ($http, $scope, $filter, $timeout, FileSaver, Blob){
+function initAll ($http, $scope, $filter, $timeout, Blob){
 	console.log('----initAll---------------');
 
 	initAllAlgoritmed($http, $scope, $filter, $timeout);
@@ -63,7 +63,7 @@ function initAll ($http, $scope, $filter, $timeout, FileSaver, Blob){
 		
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()){
-		initMSPtest ($http, $scope, $filter, $timeout, FileSaver, Blob);
+		initMSPtest($http, $scope, $filter, $timeout, Blob);
 	}else
 	if('protocol' == $scope.pagePath.last()){
 	console.log('----initAll-----------' + $scope.pagePath.last());
