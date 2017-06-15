@@ -65,6 +65,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('testMvpMedic' == $scope.pagePath.last()){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 	}else
+	if('testMvpAddress' == $scope.pagePath.last()){
+		initTestAddress($scope, $http);
+	}else
 	if('protocol' == $scope.pagePath.last()){
 	console.log('----initAll-----------' + $scope.pagePath.last());
 		if($scope.param.cdbId){

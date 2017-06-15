@@ -1,6 +1,6 @@
 <div class="w3-bar w3-border">
 	<div class="w3-bar-item">
-		<b> Назва: </b> {{api__legal_entities.name}} <span class="w3-tiny">
+		<b> Назва: </b> {{api__legal_entities.short_name}} <span class="w3-tiny">
 			автозбереження:
 			{{config_msp.autoSave.save_count}}/{{config_msp.autoSave.change_count}}</span>
 	</div>
@@ -13,19 +13,29 @@
 	>Запис</div>
 </div>
 
-<!-- 
-	href="data:text/json;charset=UTF-8,{{config_msp.mspToSave()}}"
-	<div>
-		<a class="w3-tiny" href="?doc_id={{api__legal_entities.doc_id}}">reload</a>
-		{{param.doc_id}}
-	</div>
- -->
 <div style="max-height: 300px; overflow: auto;">
 	<ul class="w3-ul">
-		<li ng-repeat="(k,v) in api__legal_entities">{{k}} : <input
-			ng-change="config_msp.autoSave.fn_change_count()"
-			class="w3-input w3-border" ng-model="api__legal_entities[k]"
-			ng-if="!v.isObject() && !v.isArray()">
-		</li>
+		<li ng-repeat="(k,v) in api__legal_entities"><a
+			ng-if="v.isArray()" href="#" ng-click="config_msp.openGroup(k)">
+				{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
+				{{config_msp.getFieldName(k)}} </span> : 
+			<input
+				ng-change="config_msp.autoSave.fn_change_count()"
+				class="w3-input w3-border" ng-model="api__legal_entities[k]"
+				ng-if="!v.isObject() && !v.isArray()">
+			<ul class="w3-ul" ng-if="config_msp.openedGroup.contains(k)">
+				<li ng-repeat="(k1,v1) in v">
+				{{1 + k1}}.
+					<ul class="w3-ul">
+						<li ng-repeat="(k2,v2) in v1">
+							{{config_msp.getFieldName(k2, k)}}:
+							<input
+								ng-change="config_msp.autoSave.fn_change_count()"
+								class="w3-input w3-border" ng-model="v1[k2]"
+								ng-if="!v2.isObject() && !v2.isArray()">
+						</li>
+					</ul> 
+				</li>
+			</ul></li>
 	</ul>
 </div>

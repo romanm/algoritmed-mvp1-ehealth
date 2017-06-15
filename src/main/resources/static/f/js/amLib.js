@@ -62,6 +62,9 @@ if (!Array.prototype.last){
 	Array.prototype.isArray = function(){
 		return Array.isArray(this);
 	}
+	Array.prototype.contains = function(k){
+		return this.indexOf(k) > - 1;
+	}
 	Array.prototype.last = function(){
 		return this[this.length - 1];
 	}

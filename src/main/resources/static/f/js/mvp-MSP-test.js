@@ -1,4 +1,4 @@
-function initMSPtest ($http, $scope, $filter, $timeout, Blob){
+function initMSPtest($http, $scope, $filter, $timeout, Blob){
 	console.log('----initMSP-test---------------');
 	if('testMvpMedic' == $scope.pagePath.last()){
 //		console.log('----initTestVariables---------------');
@@ -16,14 +16,49 @@ function initMSPtest ($http, $scope, $filter, $timeout, Blob){
 	}
 }
 
+initTestAddress = function($scope, $http){
+	console.log('-----initTestAddress------------');
+	$scope.mvpAddress = {};
+	$scope.mvpAddress.data = {choose:{}};
+	$scope.mvpAddress.fn = {
+		list:{
+			districts:function(region){
+				console.log(region);
+				$scope.mvpAddress.data.choose.region_index
+					= $scope.mvpAddress.data.regions.indexOf(region)
+				console.log($scope.mvpAddress.data.choose.region_index);
+				var url = '/r/gcc/uaddresses/details/region/'+region.id+'/districts';
+				if(!region.districts){
+					$http.get(url).then( function(response) {
+						region.districts = response.data.response.data;
+						console.log(region);
+					});
+				}
+			}
+			, regions:function(){
+				console.log('list regions')
+				$scope.mvpAddress.config.listOpen.regions
+					= !$scope.mvpAddress.config.listOpen.regions;
+				if(!$scope.mvpAddress.data.regions){
+					$http.get('/r/gcc/uaddresses/search/regions').then( function(response) {
+						$scope.mvpAddress.data.regions = response.data.response.data;
+						console.log($scope.mvpAddress.data.regions);
+					});
+				}
+			}
+		}
+	};
+	$scope.mvpAddress.config = {listOpen:{}};
+}
 initTestVariables = function($scope, $http, Blob){
 	console.log(Blob);
 	
 	if(!$scope.config_msp)
 		$scope.config_msp = {};
+
 	//"edrpou": "38782323",
 	$scope.config_msp = {
-		'menu_registry':{'name':'data','step':'digitalsign'
+		'menu_registry':{'name':'data','step':'data'
 			,'steps':{
 				'data':{'text':'Ввести дані','short':'Введеня даних'}
 				,'digitalsign':{'text':'Накласти електроний підпис (ЕЦП)','short':'ЕЦП'}
@@ -49,6 +84,29 @@ initTestVariables = function($scope, $http, Blob){
 			reader.readAsText(ele.files[0]);
 		}
 		, uploadFileSrc:{'q':'1'}
+		, openGroup:function(k){
+			console.log(k)
+			console.log(this)
+			if(!this.openedGroup)
+				this.openedGroup = []
+			console.log(this.openedGroup.indexOf(k))
+			if(this.openedGroup.indexOf(k)>-1){
+				this.openedGroup.splice(this.openedGroup.indexOf(k), 1);
+			}else{
+				this.openedGroup.push(k);
+			}
+			console.log(this.openedGroup)
+		}
+		, getFieldName:function(k, kp1){
+			var translateObject = $scope.config_msp.registry_field_name_ua.api__legal_entities;
+			if(kp1)
+				translateObject = translateObject.children[kp1];
+			var fn = translateObject[k];
+			if(!fn)
+				return k;
+			fn = fn.substr(0,1).toUpperCase() + fn.substr(1);
+			return fn;
+		}
 		, registryMspFileName:function(){
 			return 'registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
 		}
@@ -85,17 +143,39 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init($scope.config_msp);
-
 	$scope.config_msp.registry_field_name_ua = {
 		'api__legal_entities':{
 			'name':'назва ГПМД'
 			,'short_name':'коротка назва'
-			,'public_name':'публічна назва'
-			,'public_name':'публічна назва'
+			,'public_name':'публічне ім´я'
 			,"type": "тип",
 			"owner_property_type": "тип власності",
 			"legal_form": "легальна форма",
 			"edrpou": "ЄДРПОУ",
+			"email": "еМайл",
+			"kveds": "КВЕДи",
+			"addresses": "Адреси",
+			"phones": "телефони",
+			"owner": "власник",
+			"medical_service_provider": "провайдер медичних послуг",
+			"security": "security?",
+			"public_offer": "публічна пропозиція",
+			children:{
+				"addresses": {
+					"type": "тип",
+					"country": "країна",
+					"area": "обл.",
+					"region": "р-н.",
+					"settlement_type": "тип селеща",
+					"settlement": "назва",
+					"settlement_id": "код",
+					"street_type": "тип вулиці",
+					"street": "вулиця",
+					"building": "дім",
+					"apartment": "кв.",
+					"zip": "поштовий індекс"
+				},
+			}
 		}
 	}
 
@@ -158,7 +238,7 @@ initTestVariables = function($scope, $http, Blob){
 				"apartment": "23",
 				"zip": "02090"
 			}
-			],
+		],
 		"phones": [
 			{
 				"type": "MOBILE",
