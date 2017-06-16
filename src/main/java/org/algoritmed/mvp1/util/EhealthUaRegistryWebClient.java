@@ -26,7 +26,9 @@ public class EhealthUaRegistryWebClient {
 		String path_uri = prefix_uri+data.get("add_uri");
 		if(data.containsKey("queryString"))
 			path_uri += "?"+data.get("queryString");
+		System.err.println(29);
 		System.err.println(path_uri);
+		data.put("test_api_URL", uri_registry + path_uri);
 		Builder wsClientInvocation = getInvocationBuilder(path_uri);
 		Response response = wsClientInvocation.get();
 		String readEntity_body = response.readEntity(String.class);
@@ -79,8 +81,8 @@ config.path_registry_msp: /api/legal_entities
 	private Builder getInvocationBuilder(String path_uri) {
 		Client client = ClientBuilder.newClient();
 		Builder header = client.target(uri_registry + path_uri)
-				.request(MediaType.APPLICATION_JSON_TYPE)
-				.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
+			.request(MediaType.APPLICATION_JSON_TYPE)
+			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 		return header;
 	}
 

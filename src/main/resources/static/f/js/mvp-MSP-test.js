@@ -19,36 +19,82 @@ function initMSPtest($http, $scope, $filter, $timeout, Blob){
 initTestAddress = function($scope, $http){
 	console.log('-----initTestAddress------------');
 	$scope.mvpAddress = {};
-	$scope.mvpAddress.data = {choose:{}};
+	$scope.mvpAddress.config = {listOpen:{}
+		,type:{
+			VILLAGE:'с.'
+			,TOWNSHIP:'місте́чко'
+			,CITY:'м.'
+		}
+	};
+	$scope.mvpAddress.data = {choose:{},uri_prefix:'/r/gcc'};
+	$scope.$watch('mvpAddress.fn.seekInRegions', function(newValue){
+		if(!newValue) return;
+		console.log(newValue);
+		var url = $scope.mvpAddress.data.uri_prefix 
+			+'/uaddresses/search/settlements?settlement_name='+newValue+'&region=хмельницька';
+		console.log(url);
+		$http.get(url).then( function(response) {
+			console.log(response.data.response.data);
+			var r = $scope.mvpAddress.fn.element.region();
+			console.log(r);
+			r.seek_addresses = response.data.response.data;
+		});
+	});
+	
 	$scope.mvpAddress.fn = {
+		seekInRegions:null,
+		element:{
+			district:function(){
+				var r = this.region();
+				if(r)
+					if($scope.mvpAddress.data.choose.region.district)
+						return r.districts[$scope.mvpAddress.data.choose.region.district.index];
+			} ,
+			region:function(){
+				if($scope.mvpAddress.data.choose)
+					if($scope.mvpAddress.data.choose.region)
+						if($scope.mvpAddress.data.choose.region.index)
+							return $scope.mvpAddress.data.regions[$scope.mvpAddress.data.choose.region.index];
+			}
+		} ,
 		list:{
+			district:function(d){
+				var r = $scope.mvpAddress.fn.element.region();
+				if(!$scope.mvpAddress.data.choose.region.district)
+					$scope.mvpAddress.data.choose.region.district = {};
+				$scope.mvpAddress.data.choose.region.district.index
+					= r.districts.indexOf(d)
+			} ,
 			districts:function(region){
-				console.log(region);
-				$scope.mvpAddress.data.choose.region_index
-					= $scope.mvpAddress.data.regions.indexOf(region)
-				console.log($scope.mvpAddress.data.choose.region_index);
+				$scope.mvpAddress.data.region = region;
+				var region_index = $scope.mvpAddress.data.regions.indexOf(region)
+				if(!$scope.mvpAddress.data.choose.region)
+					$scope.mvpAddress.data.choose.region = {};
+				if($scope.mvpAddress.data.choose.region.index != region_index){
+					$scope.mvpAddress.data.choose.region.index = region_index;
+					delete $scope.mvpAddress.data.choose.region.district;
+				}
 				var url = '/r/gcc/uaddresses/details/region/'+region.id+'/districts';
+				console.log(url+'  - '+!region.districts);
 				if(!region.districts){
 					$http.get(url).then( function(response) {
 						region.districts = response.data.response.data;
-						console.log(region);
 					});
 				}
-			}
-			, regions:function(){
-				console.log('list regions')
+			} ,
+			regions:function(){
 				$scope.mvpAddress.config.listOpen.regions
 					= !$scope.mvpAddress.config.listOpen.regions;
 				if(!$scope.mvpAddress.data.regions){
-					$http.get('/r/gcc/uaddresses/search/regions').then( function(response) {
+					var url = '/r/gcc/uaddresses/search/regions';
+					console.log(url)
+					$http.get(url).then( function(response) {
 						$scope.mvpAddress.data.regions = response.data.response.data;
-						console.log($scope.mvpAddress.data.regions);
 					});
 				}
 			}
 		}
 	};
-	$scope.mvpAddress.config = {listOpen:{}};
 }
 initTestVariables = function($scope, $http, Blob){
 	console.log(Blob);

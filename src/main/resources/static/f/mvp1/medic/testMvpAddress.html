@@ -1,0 +1,53 @@
+testMvpAddress
+{{mvpAddress.data.choose}}
+<div>
+	<span> {{mvpAddress.fn.element.region().name}} обл.</span> 
+	<!-- 
+	<span> {{mvpAddress.fn.element.district().district}} р-н. </span>
+	 -->
+</div>
+<div>
+	<div class="w3-row w3-section">
+		<div class="w3-col w3-light-gray" style="width: 150px">
+			Пошук в <a href="#" ng-click="mvpAddress.fn.list.regions()">обл.</a>
+			<i class="w3-xxlarge fa fa-search"></i>
+		</div>
+		<div class="w3-rest">
+			<input class="w3-input w3-border" name="first" type="text"
+				ng-model="mvpAddress.fn.seekInRegions"
+				placeholder="пошук в обл.">
+		</div>
+	</div>
+	<div ng-repeat="sd in mvpAddress.data.region.seek_addresses"
+		ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
+		{{sd.settlement_name}}</div>
+	<div ng-repeat="sd in mvpAddress.data.region.seek_addresses"
+		ng-if="sd.district">{{sd.district}} р-н.
+		{{mvpAddress.config.type[sd.type]}} {{sd.settlement_name}}</div>
+</div>
+<table class="w3-table w3-bordered">
+	<tr>
+		<th>обл.</th>
+		<th>р-н. майбутнього</th>
+	</tr>
+	<tr>
+		<td><a href="#" ng-click="mvpAddress.fn.list.regions()">обл.</a>
+			{{mvpAddress.data.choose.region_index}}
+			<div ng-if="mvpAddress.config.listOpen.regions"
+			 style="max-height: 300px; overflow: auto;"
+			>
+				<div ng-repeat="r in mvpAddress.data.regions" title="{{r.koatuu}}"
+				ng-class="{'w3-green':$index==mvpAddress.data.choose.region.index}"
+					class="w3-hover-gray" ng-click="mvpAddress.fn.list.districts(r)">
+					{{r.name}}</div>
+			</div></td>
+		<td>
+			<div>
+				<div ng-repeat="d in mvpAddress.data.regions[mvpAddress.data.choose.region.index].districts" 
+					class="w3-hover-gray" ng-click="mvpAddress.fn.list.district(d)"
+				title="{{d.koatuu}}">
+					{{d.district}}</div>
+			</div>
+		</td>
+	</tr>
+</table>

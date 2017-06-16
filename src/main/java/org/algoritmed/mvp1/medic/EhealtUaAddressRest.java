@@ -19,8 +19,9 @@ public class EhealtUaAddressRest {
 	private Map<String, Object> goCC(HttpServletRequest request, String add_uri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("add_uri", add_uri);
-		map.put("queryString", request.getQueryString());
 		map.put("requestURI", request.getRequestURI());
+		if(null!=request.getQueryString())
+			map.put("queryString", request.getQueryString());
 		System.err.println(map);
 		registryWebClient.apiGet(map);
 		return map;
