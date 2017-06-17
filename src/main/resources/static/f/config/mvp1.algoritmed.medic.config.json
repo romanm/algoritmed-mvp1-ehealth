@@ -44,10 +44,17 @@
 	,"shortName":"Протокол"
 	,"parent":"cabinet"
 }
+,"testMvpCalendar":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/testMvpCalendar.html'"
+	,"shortName":"Шаблон виду плану роботи як календар"
+	,"fa":"fa-info"
+	,"parent":"info"
+}
 ,"testMvpAddress":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/testMvpAddress.html'"
-	,"shortName":"Центральний реєстр пацієнтів"
+	,"shortName":"Центральний реєстр адреси"
 	,"fa":"fa-info"
 	,"parent":"info"
 }

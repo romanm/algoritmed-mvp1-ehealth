@@ -1,0 +1,106 @@
+testMvpCalendar.html
+{{basicCalendar}}
+
+<div class="w3-panel w3-border-bottom" style="margin-bottom: 0;">
+	<div class="w3-left ">
+		<div class="w3-bar">
+			<div class="w3-bar-item">Календар</div>
+		</div>
+	</div>
+	<div class="w3-left  w3-small">
+		<div class="w3-bar">
+			<button
+				class="w3-bar-item  w3-tiny w3-btn w3-border w3-light-grey w3-round">
+				<b> Сьогодні</b>
+			</button>
+			<div class="w3-bar-item w3-tiny"></div>
+			<button
+				class="w3-bar-item w3-tiny w3-btn w3-border w3-light-grey w3-round"><</button>
+			<button
+				class="w3-bar-item w3-tiny w3-btn w3-border w3-light-grey w3-round">></button>
+			<div class="w3-bar-item">інтервал</div>
+		</div>
+	</div>
+	<div class="w3-right">
+		<div class="w3-bar">
+			<button ng-repeat="b in basicCalendar.dayPart.list"
+				ng-class="{'w3-border-blue':b==basicCalendar.dayPart.item}"
+				ng-click="basicCalendar.dayPart.item=b"
+				class="w3-bar-item w3-tiny w3-btn w3-border w3-light-grey ">
+				{{basicCalendar.dayPart.itemNames_ua[$index]}}</button>
+		</div>
+	</div>
+</div>
+
+<div ng-switch="basicCalendar.dayPart.item">
+	<div ng-switch-when="day">
+		<table class="w3-table">
+			<col width="10%">
+			<col width="90%">
+			<tr class="w3-tiny">
+				<td class="w3-tiny w3-right">чч:хх</td>
+				<td class="w3-center">
+				{{basicCalendar.todayTime | date : 'EEEE d.M'}}</td>
+			</tr>
+			<tr ng-repeat="h in basicCalendar.hoursOfWork">
+				<td class="w3-tiny w3-right">
+					{{basicCalendar.getDateWithHour(h)|date:'HH:mm'}}</td>
+				<td class="w3-border"></td>
+			</tr>
+		</table>
+	</div>
+	<div ng-switch-when="week">
+		<table class="w3-table">
+			<tr class="w3-tiny">
+				<td class="w3-tiny w3-right">чч:хх</td>
+				<td ng-repeat="wd in basicCalendar.daysOfWeek">
+					{{basicCalendar.dayOfMonthOfWeekMonth(0,wd)|date:'EEE d.M'}}</td>
+			</tr>
+			<tr ng-repeat="h in basicCalendar.hoursOfWork">
+				<td class="w3-tiny w3-right">{{h}}</td>
+				<td ng-repeat="wd in basicCalendar.daysOfWeek" class="w3-border"></td>
+			</tr>
+		</table>
+	</div>
+	<div ng-switch-when="month">
+
+		<table class="w3-table">
+			<tr class="w3-tiny">
+				<td ng-repeat="wd in basicCalendar.daysOfWeek">
+					{{basicCalendar.dayOfMonthOfWeekMonth(0,wd)|date:'EEE'}}</td>
+			</tr>
+			<tr ng-repeat="w in basicCalendar.monthWeek">
+				<td ng-repeat="d in basicCalendar.daysOfWeek" class="w3-border"
+					ng-class="{'w3-border-black w3-gray':basicCalendar.isToday(basicCalendar.dayOfMonthOfWeekMonth(w,d))}">
+					<div class="w3-bar w3-light-grey w3-tiny">
+						<div class="w3-left">
+							{{basicCalendar.dayOfMonthOfWeekMonth(w,d)|date:'dd'}}</div>
+					</div> --
+					{{basicCalendar.isToday(basicCalendar.dayOfMonthOfWeekMonth(w,d))}}
+				</td>
+			</tr>
+		</table>
+
+	</div>
+	<div ng-switch-when="4day">..3.</div>
+	<div ng-switch-when="termin">.t.3.</div>
+	<div ng-switch-default>.x..</div>
+</div>
+
+<div>Formats - 
+, day {{basicCalendar.todayTime | date : 'EEEE d.M'}}
+, dd {{basicCalendar.firstDateOfMonthFirstWeek()|date:'dd'}}
+, firstDateOfMonthFirstWeek {{basicCalendar.firstDateOfMonthFirstWeek()|date}}
+, firstDateOfMonth {{basicCalendar.firstDateOfMonth()|date}}
+, EEE {{basicCalendar.todayTime | date : 'EEE'}}
+, week(00-53) {{basicCalendar.todayTime | date : 'ww'}}
+, {{basicCalendar.todayTime | date}}
+, short {{basicCalendar.todayTime | date : 'short'}}
+, medium {{basicCalendar.todayTime | date : 'medium'}}
+, shortDate {{basicCalendar.todayTime | date : 'shortDate'}}
+, mediumDate {{basicCalendar.todayTime | date : 'mediumDate'}}
+, longDate {{basicCalendar.todayTime | date : 'longDate'}}
+, fullDate {{basicCalendar.todayTime | date : 'fullDate'}}
+, shortTime {{basicCalendar.todayTime | date : 'shortTime'}}
+, mediumTime {{basicCalendar.todayTime | date : 'mediumTime'}}
+</div>

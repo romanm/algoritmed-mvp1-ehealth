@@ -60,7 +60,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log(response);
 			}
 		);
-		
+	}else
+	if('testMvpCalendar' == $scope.pagePath.last()){
+		initTestMvpCalendar($scope, $http, $filter, $timeout);
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
