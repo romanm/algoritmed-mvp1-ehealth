@@ -45,7 +45,24 @@ testMvpCalendar.html
 			<tr ng-repeat="h in basicCalendar.hoursOfWork">
 				<td class="w3-tiny w3-right">
 					{{basicCalendar.getDateWithHour(h)|date:'HH:mm'}}</td>
-				<td class="w3-border"></td>
+				<td class="w3-border">
+					<div ng-if="h==9" style="position: relative;">
+						<div class="w3-border" style="position: absolute; width: 50%">
+							<span class="w3-tiny w3-gray"> 9:00-9:30 </span> Петренко
+						</div>
+						<div style="position: absolute; top: 8px; left: 45%"
+							class="w3-border w3-white">
+							<span class="w3-tiny w3-gray"> 9:15-9:45 </span> Сидоренко
+							<div>a3</div>
+						</div>
+					</div>
+					<div ng-if="h==10">
+						<div class="w3-border">
+						<span class="w3-tiny w3-gray"> 10:00-10:45 </span>
+						Бондаренко
+						</div>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</div>
