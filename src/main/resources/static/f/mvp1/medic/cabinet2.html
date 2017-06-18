@@ -1,30 +1,21 @@
 <div class="w3-container">
-	<div class="w3-panel" style="margin-bottom: 0;">
-		<div class="w3-left">
-			<div class="w3-large">
-				<span class="w3-text-light-gray"> Робочий кабінет лікаря </span>
-				{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}
-			</div>
-		</div>
-		<div class="w3-right w3-small">
-			<a href="/v/testMvpCalendar"> Календар </a>
-		</div>
-	</div>
-	<!-- 
+	<h2>
+	<span class="w3-text-light-gray">
+	Робочий кабінет лікаря
+	</span>
+	{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}
+	</h2>
 	<div ng-include="'/f/mvp1/medic/menu-cabinet.html'"></div>
-	 -->
 	<div class="w3-row-padding w3-margin-top">
 		<div class="w3-third">
 			<div class="w3-card-2">
-				<header class="w3-container w3-light-grey w3-tiny">Прийом
-					що триває</header>
-				Список пацієнтів, відправлених на обстеження з незавершеним
-				прийомом. Час початку прийому.
+				<header class="w3-container w3-light-grey w3-tiny">Попередньо записані на прийом</header>
 			</div>
 		</div>
 		<div class="w3-third">
 			<div class="w3-card-2">
-				<header class="w3-container w3-light-grey w3-tiny">Пошук пацієнтів</header>
+				<header class="w3-container w3-light-grey w3-tiny">Локальна
+					БД</header>
 				<table class="w3-table w3-striped w3-border w3-hoverable">
 					<thead>
 						<tr class="w3-green">
@@ -49,9 +40,22 @@
 		</div>
 		<div class="w3-third">
 			<div class="w3-card-2">
-				<header class="w3-container w3-light-grey w3-tiny">Оновленя протоколів лікування</header>
+				<header class="w3-container w3-light-grey w3-tiny">БД страховки</header>
 				
-				
+				<table class="w3-table w3-striped w3-border w3-hoverable">
+					<thead>
+						<tr class="w3-green">
+							<th>ПІБ</th>
+							<th>Д.н.</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="p in dataInsurancePatients.insurancePatients">
+							<td>{{p.patient_pib}}</td>
+							<td>{{p.patient_dob}}</td>
+						</tr>
+					</tbody>
+				</table>
 				
 			</div>
 		</div>

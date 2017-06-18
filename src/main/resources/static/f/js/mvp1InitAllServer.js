@@ -1,10 +1,10 @@
 function eduTocken($scope){
 //	console.log(localStorage);
 	var TOKEN_KEY = "jwtToken";
-	
-    function setJwtToken(token) {
-        localStorage.setItem(TOKEN_KEY, token);
-    }
+
+	function setJwtToken(token) {
+		localStorage.setItem(TOKEN_KEY, token);
+	}
 
 }
 

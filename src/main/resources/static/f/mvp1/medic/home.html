@@ -1,3 +1,75 @@
 <div class="w3-container">
+	<!-- 
 	<h2>Модель робочого місця лікаря первинної ланки</h2>
+	<h2>ПМД "Поділля - Проспект миру"</h2>
+ -->
+	<h2>
+		{{config_msp_all.msp_list[config_msp_all.msp_index].msp_public_name}}
+		<span class="w3-text-light-gray"> <i
+			ng-click="modalMspList('id02_msp_list')"
+			class="fa fa-list-alt w3-hover-text-yellow" aria-hidden="true"></i>
+		</span>
+	</h2>
+	<div class="w3-card-2">
+		<header class="w3-container w3-light-grey">Регістратура</header>
+		Робоче місце м/с регістратути
+		<div class="w3-bar w3-light-gray">
+			<div class="w3-bar-item w3-hover-green">Запис пацієнта на прийом</div>
+			<div class="w3-bar-item w3-hover-gray">Календар</div>
+			<div class="w3-bar-item w3-hover-gray">Пошук пацієнта</div>
+		</div>
+	</div>
+	<div>
+	&nbsp;
+	</div>
+	<div class="w3-row">
+		<div class="w3-half w3-container">
+			<div class="w3-card-2">
+				<header class="w3-container w3-light-grey">Кабінет
+					лікуючого лікаря</header>
+				<ul class="w3-ul">
+					<li ng-repeat="d in config_msp_all.doctor_list"
+						class="w3-hover-gray"><a
+						href="/v/cabinet?doctor_index={{$index}}&x=y"> {{d.name}} </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="w3-half w3-container">
+			<div class="w3-card-2">
+				<header class="w3-container w3-light-grey">Діагностичні кабінети</header>
+				<ul class="w3-ul">
+					<li ng-repeat="d in config_msp_all.diagnostic_cabinet_list"
+						class="w3-hover-gray"><a
+						href="/v/cabinet?doctor_index={{$index}}&x=y"> {{d.name}} </a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div>
+	&nbsp;
+	</div>
+	<div class="w3-card-2 ">
+		<header class="w3-container w3-light-grey">Адміністрація</header>
+		Робоче місце <b>eHealth Поліклініка</b>
+		<div class="w3-bar w3-light-gray">
+			<div class="w3-bar-item w3-hover-gray">Адміністратор eHealth</div>
+			<div class="w3-bar-item w3-hover-gray">Орг.метод відділ</div>
+			<div class="w3-bar-item w3-hover-red">Зав.поліклінікою</div>
+		</div>
+	</div>
+</div>
+<div id="id02_msp_list" class="w3-modal">
+	<div class="w3-modal-content">
+		<span ng-click="closeModalDialog('id02_msp_list')"
+			class="w3-button w3-display-topright">&times;</span> <a
+			class="w3-btn w3-blue  w3-display-bottomright"
+			ng-click="closeModalDialog('id02_msp_list')">Закрити </a>
+		<p ng-repeat="msp in config_msp_all.msp_list"
+			class=" w3-hover-border-green w3-border w3-border-white">
+			<a href="#"
+				ng-click="config_msp_all.msp_index=$index;closeModalDialog('id02_msp_list');">
+				{{msp.msp_id}} : {{msp.msp_public_name}} : {{msp.msp_name}} </a>
+		</p>
+		<p>&nbsp;</p>
+	</div>
 </div>

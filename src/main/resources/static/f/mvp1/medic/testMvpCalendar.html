@@ -1,5 +1,9 @@
-testMvpCalendar.html
+
+<div ng-include="'/f/mvp1/medic/cabinet-menu-line.html'"></div>
+<!-- 
 {{basicCalendar}}
+ -->
+
 
 <div class="w3-panel w3-border-bottom" style="margin-bottom: 0;">
 	<div class="w3-left ">
@@ -39,32 +43,62 @@ testMvpCalendar.html
 			<col width="90%">
 			<tr class="w3-tiny">
 				<td class="w3-tiny w3-right">чч:хх</td>
-				<td class="w3-center">
-				{{basicCalendar.todayTime | date : 'EEEE d.M'}}</td>
-			</tr>
-			<tr ng-repeat="h in basicCalendar.hoursOfWork">
-				<td class="w3-tiny w3-right">
-					{{basicCalendar.getDateWithHour(h)|date:'HH:mm'}}</td>
-				<td class="w3-border">
-					<div ng-if="h==9" style="position: relative;">
-						<div class="w3-border" style="position: absolute; width: 50%">
-							<span class="w3-tiny w3-gray"> 9:00-9:30 </span> Петренко
-						</div>
-						<div style="position: absolute; top: 8px; left: 45%"
-							class="w3-border w3-white">
-							<span class="w3-tiny w3-gray"> 9:15-9:45 </span> Сидоренко
-							<div>a3</div>
-						</div>
-					</div>
-					<div ng-if="h==10">
-						<div class="w3-border">
-						<span class="w3-tiny w3-gray"> 10:00-10:45 </span>
-						Бондаренко
-						</div>
-					</div>
-				</td>
+				<td class="w3-center">{{basicCalendar.todayTime | date : 'EEEE d.M'}}</td>
 			</tr>
 		</table>
+		<div style="max-height: 400px; overflow: auto;">
+			<table class="w3-table">
+				<col width="10%">
+				<col width="90%">
+				<tr ng-repeat="h in basicCalendar.hoursOfWork">
+					<td class="w3-tiny w3-right">
+						{{basicCalendar.getDateWithHour(h)|date:'HH:mm'}}</td>
+					<td class="w3-border">
+						<div ng-if="h==9" style="position: relative;">
+							<div class="w3-border" style="position: absolute; width: 50%">
+								<span class="w3-tiny w3-gray"> 9:00-9:30</span>&nbsp;
+								<a href="/v/patient?id=3">
+								Петренко
+								</a>
+								<div>
+									&nbsp; 
+									<span class="w3-border-top w3-border-left w3-border-red">
+									<span class="w3-tiny">ICPC2:</span>
+										 Код </span> 
+									<span
+										class="w3-border-bottom w3-border-left w3-border-green">
+										<span class="w3-tiny">МКХ10:</span>
+										 Код </span>
+								</div>
+							</div>
+							<br /> <br />
+							<div style="position: absolute; top: 8px; left: 45%"
+								class="w3-border w3-white">
+								<span class="w3-tiny w3-gray"> 9:15-9:45</span> &nbsp; <a
+									href="/v/patient?id=4"> Сидоренко </a>
+									&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+								<div>
+									&nbsp;<span class="w3-border-top w3-border-left w3-border-red">
+									<span class="w3-tiny">ICPC2:</span>
+										 Код </span> <span
+										class="w3-border-bottom w3-leftbar w3-border-red">
+										<span class="w3-tiny">МКХ10:</span>
+										 ? </span>
+								</div>
+								<br/>
+							</div>
+						</div>
+						<div ng-if="h==10">
+							<div class="w3-border">
+								<span class="w3-tiny w3-gray"> 10:00-10:45</span> 
+								&nbsp; <a
+									href="/v/patient?id=5">Бондаренко</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div ng-switch-when="week">
 		<table class="w3-table">
@@ -80,8 +114,10 @@ testMvpCalendar.html
 		</table>
 	</div>
 	<div ng-switch-when="month">
-
 		<table class="w3-table">
+		<col width="10%"
+		ng-repeat="d in basicCalendar.daysOfWeek"
+		/>
 			<tr class="w3-tiny">
 				<td ng-repeat="wd in basicCalendar.daysOfWeek">
 					{{basicCalendar.dayOfMonthOfWeekMonth(0,wd)|date:'EEE'}}</td>
@@ -92,18 +128,36 @@ testMvpCalendar.html
 					<div class="w3-bar w3-light-grey w3-tiny">
 						<div class="w3-left">
 							{{basicCalendar.dayOfMonthOfWeekMonth(w,d)|date:'dd'}}</div>
-					</div> --
+					</div> 
+					...
+					<span 
+					class="w3-tiny"
+					ng-if="w==2&&d==1">
+					Принято 8 хв.
+					</span>
+					<span 
+					class="w3-tiny"
+					ng-if="w==3&&d==3">
+					Записано 8 хв.
+					</span>
+					<span 
+					class="w3-tiny"
+					ng-if="w==3&&d==5">
+					Записано 3 хв.
+					</span>
+					<!-- 
 					{{basicCalendar.isToday(basicCalendar.dayOfMonthOfWeekMonth(w,d))}}
+					 -->
 				</td>
 			</tr>
 		</table>
-
 	</div>
 	<div ng-switch-when="4day">..3.</div>
 	<div ng-switch-when="termin">.t.3.</div>
 	<div ng-switch-default>.x..</div>
 </div>
 
+<!-- 
 <div>Formats - 
 , day {{basicCalendar.todayTime | date : 'EEEE d.M'}}
 , dd {{basicCalendar.firstDateOfMonthFirstWeek()|date:'dd'}}
@@ -121,3 +175,4 @@ testMvpCalendar.html
 , shortTime {{basicCalendar.todayTime | date : 'shortTime'}}
 , mediumTime {{basicCalendar.todayTime | date : 'mediumTime'}}
 </div>
+ -->

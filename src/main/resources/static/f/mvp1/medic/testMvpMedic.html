@@ -2,7 +2,7 @@
 	<h2>
 		<span class="w3-tiny w3-orange">тестування</span> Реєстр: <span
 			class="w3-text-light-gray"> eHealth_in_UA <i
-			ng-click="modalMspList()" class="fa fa-list-alt w3-hover-text-yellow"
+			ng-click="modalMspList('id01_msp_list')" class="fa fa-list-alt w3-hover-text-yellow"
 			aria-hidden="true"></i>
 		</span>
 	</h2>
@@ -31,7 +31,7 @@
 	<div id="id01_msp_list" class="w3-modal">
 		<div class="w3-modal-content">
 			<div class="w3-container">
-				<span ng-click="closeMsp()" class="w3-button w3-display-topright">&times;</span>
+				<span ng-click="closeModalDialog('id01_msp_list')" class="w3-button w3-display-topright">&times;</span>
 				<p ng-repeat="msp in msp_list"
 					class=" w3-hover-border-green w3-border w3-border-white">
 					<a href="?doc_id={{msp.msp_id}}"> {{msp.msp_id}} :
@@ -40,7 +40,7 @@
 				<p>
 					<a href="?" class="w3-btn w3-blue" ng-click="newMsp()">Новий
 						ПМП </a> 
-					<a class="w3-btn w3-blue w3-right" ng-click="closeMsp()">Закрити
+					<a class="w3-btn w3-blue w3-right" ng-click="closeModalDialog('id01_msp_list')">Закрити
 					</a>
 				</p>
 			</div>

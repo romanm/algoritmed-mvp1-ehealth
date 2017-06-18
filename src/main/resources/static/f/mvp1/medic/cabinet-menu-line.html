@@ -1,0 +1,9 @@
+<div class="w3-panel" style="margin-bottom: 0;">
+	<div class="w3-left">Кабінет лікаря:
+		{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}</div>
+	<div class="w3-right w3-small" >
+		<span ng-repeat="cp in config_msp_all.cabinet_part_list"> <a
+			href="{{cp.url}}">{{cp.name}}</a> {{$last?'':'|'}}
+		</span> 
+	</div>
+</div>

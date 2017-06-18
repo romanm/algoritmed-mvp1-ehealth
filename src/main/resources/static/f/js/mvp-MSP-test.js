@@ -21,7 +21,7 @@ initTestMvpCalendar = function($scope, $http, $filter, $timeout){
 	$scope.basicCalendar = {
 		dayPart:{
 			list:['day','week','month','4day','termin']
-			,itemNames_ua:['День','Неліля','Місяць','4 дні','Терміни']
+			,itemNames_ua:['День','Неділя','Місяць','4 дні','Терміни']
 			,item:'day'
 		}
 		,hoursOfWork:[]
@@ -277,16 +277,6 @@ initTestVariables = function($scope, $http, Blob){
 
 	console.log($scope.config_msp);
 
-	$scope.modalMspList = function () {
-		document.getElementById('id01_msp_list').style.display='block';
-		$http.get('/r/msp_list').then( function(response) {
-			$scope.msp_list = response.data.msp_list;
-			console.log($scope.msp_list);
-		});
-	}
-	$scope.closeMsp = function (msp_id) {
-		document.getElementById('id01_msp_list').style.display='none';
-	}
 	$scope.readMsp = function (msp_id) {
 		console.log(msp_id)
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {

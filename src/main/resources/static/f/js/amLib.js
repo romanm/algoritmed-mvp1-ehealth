@@ -48,6 +48,23 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		}
 	}
 	//autoSave block END
+	
+	//modal dialog open/close
+	$scope.modalMspList = function (id_of_element) {
+		document.getElementById(id_of_element).style.display='block';
+		if('id01_msp_list'==id_of_element){
+			$http.get('/r/msp_list').then( function(response) {
+				$scope.msp_list = response.data.msp_list;
+				console.log($scope.msp_list);
+			});
+		}
+	}
+
+	$scope.closeModalDialog = function (id_of_element) {
+		document.getElementById(id_of_element).style.display='none';
+	}
+
+	//modal dialog open/close END
 }
 var parameters = {};
 if(window.location.search){
@@ -57,6 +74,22 @@ if(window.location.search){
 		parameters[par[0]] = par[1];
 	});
 }
+var pageanchors = {};
+console.log(window.location)
+var pageanchorStr = (''+window.location).split('!')[1];
+if(!pageanchorStr){
+	pageanchorStr = (''+window.location).split('#')[1];
+}
+console.log(pageanchorStr)
+if(pageanchorStr){
+	pageanchorStr = pageanchorStr.substr(1)
+	angular.forEach(pageanchorStr.split("&"), function(value, index){
+		var par = value.split("=");
+		pageanchors[par[0]] = par[1];
+	});
+}
+console.log(pageanchors)
+//console.log((''+window.location).split('!')[1].substr(1))
 
 if (!Array.prototype.last){
 	Array.prototype.isArray = function(){

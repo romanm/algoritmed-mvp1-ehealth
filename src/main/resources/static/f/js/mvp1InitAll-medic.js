@@ -206,6 +206,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.removeSuspectedDiagnosis = function (v,sds){
 			v.splice(v.indexOf(sds),1);
 		}
+		$scope.newPatientHistoryRecord2 = function (){
+			console.log("------newPatientHistoryRecord2-------------");
+		}
 		$scope.newPatientHistoryRecord = function (){
 			console.log($scope.param);
 			var url = '/r/newPatientHistoryRecord';
@@ -227,7 +230,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log($scope.patientById);
 			});
 		}
-	}
+	}else
 	if('cabinet' == $scope.pagePath.last()){
 		$scope.patient = {'patient_pib':'','patient_address':''};
 		$scope.seekPatient = function (){
@@ -256,6 +259,38 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 		);
 		
+	}else{
 	}
+	$scope.config_msp_all={
+		msp_index:0
+		,msp_list:[
+			{msp_public_name:'ПМД "Поділля - Дубово"'}
+			,{msp_public_name:'ПМД "Поділля - Проспект миру"'}
+		]
+		,cabinet_part_index:0
+		,cabinet_part_list:[
+			{name:'Календар',url:'/v/testMvpCalendar'}
+			,{name:'Амбулаторна картка',url:'/v/patient?id=3'}
+			,{name:'Веденя хворого',url:'/v/patient?id=3&cabinet_part=protocol'}
+		]
+		,diagnostic_cabinet_list:[
+			{name:'УЗД',cabinet_nr:12}
+			,{name:'Рентген кабінет',cabinet_nr:15}
+			,{name:'ЕКГ',cabinet_nr:17}
+			,{name:'Лабораторія',cabinet_nr:25}
+		]
+		,doctor_index:0
+		,doctor_list:[
+			{name:'Раппопорт В.П. ',cabinet_nr:3}
+			,{name:'Семашко М.О. ',cabinet_nr:8}
+			,{name:'Боткін С.П. ',cabinet_nr:9}
+		]
+	};
+	console.log(pageanchors.doctor_index);
+	if($scope.param.doctor_index){
+		$scope.config_msp_all.doctor_index = $scope.param.doctor_index;
+		console.log($scope.config_msp_all);
+	}
+	
 
 }

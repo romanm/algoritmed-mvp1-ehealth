@@ -1,0 +1,78 @@
+<div ng-repeat="ph in patientById.children">
+	<div ng-include="'/f/mvp1/medic/patient/menu-history-record.html'">
+	</div>
+	<div ng-repeat="ph2 in ph.children" class="w3-container">
+		<div ng-if="config.doctype.patientMenu.indexOf(ph2.doctype)>=0">
+			<div class="w3-row w3-small">
+				<div ng-mouseover="config.mouseOverElementId=ph2.doc_id"
+					class="w3-half w3-hover-grey" ng-click="ph2.edit=!ph2.edit">
+					<b> {{config.doctype.keys[ph2.doctype].ukr}} </b>
+				</div>
+				<div class="w3-half" ng-if="ph2.edit">
+					<div class="w3-left">
+						<b> <i class="fa fa-bars" aria-hidden="true"></i> меню:
+						</b> <a href="#"
+							class="w3-white w3-border w3-border-blue w3-hover-grey"
+							ng-click="removePatientHistoryRecord(ph2)"> <i
+							class="fa fa-times" aria-hidden="true"></i>видалити
+						</a>
+					</div>
+					<div class="w3-right">
+						<span ng-click="saveHistory(ph2)"
+							class="w3-white w3-border w3-border-blue w3-hover-grey">
+							<i class="fa fa-floppy-o" aria-hidden="true"></i> 
+							зберегти 
+							<sub>
+								<span title="раз збережено">{{ph2.docbody.autoSaveCount}}</span>
+								/ <span title="кількість змін не збережених">
+									{{ph2.docbody.autoSaveChangeCount}} </span>
+							</sub>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div ng-bind-html="ph2.docbody.html" ng-if="!ph2.edit"
+				ng-class="{'w3-border':config.mouseOverElementId==ph2.doc_id}"
+				ng-mouseover="config.mouseOverElementId=ph2.doc_id"
+				ng-click="ph2.edit=true"></div>
+			<textarea ng-change="autoSaveHistory(ph2)" rows="2" ng-if="ph2.edit"
+				ng-model="ph2.docbody.html"></textarea>
+		</div>
+	</div>
+	<!-- 
+<div ng-if="ph.toSave.doctype=='doctor'">
+	<div class="w3-small">
+		<b>Запис доктора:</b> огляд, щоденник, анамнез
+	</div>
+	<div ng-bind-html="ph.toSave.docbody.html">4
+	</div>
+	<textarea ng-change="autoSaveHistory(ph)" rows="2" cols="66"
+		ng-model="ph.toSave.docbody.html"></textarea>
+</div>
+ -->
+	<div ng-if="ph.docbody"  class="w3-container">
+		<span ng-repeat="(k,v) in ph.docbody">
+			<a class="w3-tiny"
+				href="#" ng-click="editPatientHistoryField(ph,k)"> {{translateUa[k]}}
+			</a>
+			<span ng-if="'suspectedDiagnosis'==k">
+				<span ng-repeat="sds in v">
+				<span class="w3-dropdown-hover w3-white w3-border">
+				{{sds.icd_code}}:
+					<div class="w3-dropdown-content w3-card-2">
+						<a class="w3-hover-grey"
+							ng-click="removeSuspectedDiagnosis(v,sds)" href="#"><i
+							class="fa fa-times" aria-hidden="true"></i> відмінити </a>
+					</div>
+				</span>
+				{{sds.icd_name}}
+				</span>
+			</span>
+			{{$last?'.':', '}}
+			<div ng-if="'suspectedDiagnosis'==ph.editField && ph.editField==k">
+				<div ng-include="'/f/mvp1/meddoc/icd10/seek-icd10.html'"></div>
+			</div>
+		</span>
+	</div>
+	
+</div>
