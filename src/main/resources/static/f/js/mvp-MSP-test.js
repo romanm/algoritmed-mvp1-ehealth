@@ -291,14 +291,113 @@ initTestVariables = function($scope, $http, Blob){
 		if(document.getElementById('id01_msp_list'))
 			$scope.closeMsp();
 	}
+	$scope.tmp4_api__legal_entities = 
+	{
+			  "name": "Хмельницький міський центр первинної медико-санітарної допомоги Nr.3",
+			  "short_name": "КНП Хмельницький міський ЦПМСД Nr.3",
+			  "public_name": "Хмельницький міський центр первинної медико-санітарної допомоги Nr.3",
+			  "type": "MSP",
+			  "owner_property_type": "STATE",
+			  "legal_form": "140",
+			  "edrpou": "1560503515",
+			  "kveds": [
+			    "86.10"
+			  ],
+			  "addresses": [
+			    {
+			      "type": "RESIDENCE",
+			      "country": "UA",
+			      "area": "ХМЕЛЬНИЦЬКА",
+			      "region": "ХМЕЛЬНИЦЬКА",
+			      "settlement": "ХМЕЛЬНИЦЬКИЙ",
+			      "settlement_type": "CITY",
+			      "settlement_id": "6810100000",
+			      "street_type": "STREET",
+			      "street": "вул. Гагаріна",
+			      "building": "13",
+			      "apartment": "44",
+			      "zip": "29000"
+			    }
+			  ],
+			  "phones": [
+			    {
+			      "type": "MOBILE",
+			      "number": "+380976428677"
+			    }
+			  ],
+			  "email": "algoritmed.info@gmail.com",
+			  "owner": {
+			    "first_name": "Федір",
+			    "last_name": "Міщенко",
+			    "second_name": "Пилипович",
+			    "tax_id": "3015492565",
+			    "birth_date": "1942-09-21",
+			    "birth_place": "Хмельницький, Україна",
+			    "gender": "MALE",
+			    "email": "algoritmed.info@gmail.com",
+			    "documents": [
+			      {
+			        "type": "PASSPORT",
+			        "number": "120518"
+			      }
+			    ],
+			    "phones": [
+			      {
+			        "type": "MOBILE",
+			        "number": "+380976428677"
+			      }
+			    ],
+			    "position": "Голова правління"
+			  },
+			  "medical_service_provider": {
+			    "licenses": [
+			      {
+			        "license_number": "Lic",
+			        "issued_by": "Кваліфікацйна комісія",
+			        "issued_date": "2014-08-19",
+			        "expiry_date": "2020-08-19",
+			        "kved": "86.10",
+			        "what_licensed": "реалізація наркотичних засобів"
+			      }
+			    ],
+			    "accreditation": {
+			      "category": "FIRST",
+			      "issued_date": "2014-08-19",
+			      "expiry_date": "2020-08-19",
+			      "order_no": "fd123443",
+			      "order_date": "2020-08-19"
+			    }
+			  },
+			  "security": {
+			    "redirect_uri": "https://google.com.ua"
+			  },
+			  "public_offer": {
+			    "consent": true,
+			    "consent_text": "Consent text"
+			  }
+			}
 	$scope.tmp_api__legal_entities = 
-	{ "name":"КНП „Перший Черкаський міський центр первинної медико-санітарної допомоги”"
-		, "short_name":"КНП „Перший Черкаський міський ЦПМСД”"
-		, "public_name":"КНП „Перший Черкаський міський центр первинної медико-санітарної допомоги”"
+	{ "name":"КНП „Хмельницький міський центр первинної медико-санітарної допомоги Nr.3”"
+		, "short_name":"КНП „Хмельницький міський ЦПМСД Nr.3”"
+		, "public_name":"КНП „Хмельницький міський центр первинної медико-санітарної допомоги Nr.3”"
 		, "type":"MSP", "owner_property_type":"PRIVATE", "legal_form":"150"
 		, "edrpou":"1560503515"
-		, "email":"dmytropieskov@gmail.com", "kveds":[ "86.10" ]
-		, "addresses":[ { "type":"REGISTRATION", "country":"UA", "area":"Черкаська область", "region":"Черкаська область", "settlement":"Черкаси", "settlement_type":"CITY", "settlement_id":"43432432", "street_type":"STREET", "street":"Дахнівська", "building":"34" }, { "type":"RESIDENCE", "country":"UA", "area":"Черкаська область", "region":"Черкаська область", "settlement":"Черкаси", "settlement_type":"CITY", "settlement_id":"43432432", "street_type":"STREET", "street":"Дахнівська", "building":"34" } ], "phones":[ { "type":"LAND_LINE", "number":"+380674023650" } ], "owner":{ "first_name":"First", "last_name":"Last", "second_name":"Second", "tax_id":"1111111111", "birth_date":"1982-12-12", "birth_place":"birth_place", "gender":"MALE", "email":"dmytropieskov@gmail.com", "position":"P3", "documents":[ { "type":"PASSPORT", "number":"111" } ], "phones":[ { "type":"LAND_LINE", "number":"+380674023650" } ] }, "medical_service_provider":{ "licenses":[ { "license_number":"Lic", "issued_by":"issued_by", "issued_date":"2014-01-01", "expiry_date":"2020-01-01", "active_from_date":"2020-01-01", "what_licensed":"what_licensed" }, { "license_number":"Lic2", "issued_by":"issued_by2", "issued_date":"2014-01-02", "expiry_date":"2020-01-02", "active_from_date":"2020-01-02", "what_licensed":"what_licensed2" } ], "accreditation":{ "category":"FIRST", "issued_date":"2014-01-03", "expiry_date":"2020-01-03", "order_no":"1235we", "order_date":"2020-01-03" } }, "security":{ "redirect_uri":"https:\/\/google.com.ua" }, "public_offer":{ "consent":true, "consent_text":"consent_text" } 
+		, "email":"algoritmed.info@gmail.com", "kveds":[ "86.10" ]
+		, "addresses":[ { "type":"REGISTRATION", "country":"UA", "area":"ХМЕЛЬНИЦЬКА", "region":"ХМЕЛЬНИЦЬКА"
+		, "settlement":"Хмельницький", "settlement_type":"CITY", "settlement_id":"cf312385-7788-4dde-ba22-f549462c17a0"
+		, "street_type":"STREET", "street":"Гагаріна", "building":"13" }, { "type":"RESIDENCE", "country":"UA"
+		, "area":"ХМЕЛЬНИЦЬКА", "region":"ХМЕЛЬНИЦЬКА", "settlement":"Хмельницький", "settlement_type":"CITY"
+		, "settlement_id":"cf312385-7788-4dde-ba22-f549462c17a0", "street_type":"STREET", "street":"Гагаріна", "building":"34" } ]
+		, "phones":[ { "type":"LAND_LINE", "number":"+380976428677" } ]
+		, "owner":{ "first_name":"Федір", "last_name":"Міщенко", "second_name":"Пилипович", "tax_id":"1111111111"
+		, "birth_date":"1942-09-21", "birth_place":"birth_place", "gender":"MALE", "email":"algoritmed.info@gmail.com", "position":"P3"
+		, "documents":[ { "type":"PASSPORT", "number":"111" } ], "phones":[ { "type":"LAND_LINE", "number":"+380976428677" } ] }
+		, "medical_service_provider":{ "licenses":[ { "license_number":"Lic", "issued_by":"issued_by", "issued_date":"2014-01-01"
+		, "expiry_date":"2020-01-01", "active_from_date":"2020-01-01", "what_licensed":"what_licensed" }
+		, { "license_number":"Lic2", "issued_by":"issued_by2", "issued_date":"2014-01-02", "expiry_date":"2020-01-02"
+		, "active_from_date":"2020-01-02", "what_licensed":"what_licensed2" } ]
+		, "accreditation":{ "category":"FIRST", "issued_date":"2014-01-03", "expiry_date":"2020-01-03", "order_no":"1235we", "order_date":"2020-01-03" } }
+		, "security":{ "redirect_uri":"https://google.com.ua" }, "public_offer":{ "consent":true, "consent_text":"consent_text" } 
 	}
 	$scope.tmp2_api__legal_entities = {
 		"name": "Hello World! - Клініка Адоніс",

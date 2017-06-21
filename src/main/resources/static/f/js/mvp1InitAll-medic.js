@@ -264,8 +264,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	$scope.config_msp_all={
 		msp_index:0
 		,msp_list:[
-			{msp_public_name:'ПМД "Поділля - Дубово"'}
-			,{msp_public_name:'ПМД "Поділля - Проспект миру"'}
+			{msp_public_name:'цПМСД Nr1 "Поділля - Дубово"'}
+			,{msp_public_name:'цПМСД  Nr2 "Поділля - Зарічанська"'}
+			,{msp_public_name:'цПМСД "Поділля - Стара Синява"'}
 		]
 		,cabinet_part_index:0
 		,cabinet_part_list:[
@@ -287,6 +288,10 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		]
 	};
 	console.log(pageanchors.doctor_index);
+	$scope.openUrl = function(url){
+		console.log(url)
+		window.location.href = url;
+	}
 	if($scope.param.doctor_index){
 		$scope.config_msp_all.doctor_index = $scope.param.doctor_index;
 		console.log($scope.config_msp_all);

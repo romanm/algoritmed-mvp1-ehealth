@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class EhealthUaRegistryWebClient {
 
 	String prefix_uri = "/api";
+//	String prefix_uri = "";
 
 	public Map apiGet(Map<String, Object> data) {
 		String path_uri = prefix_uri+data.get("add_uri");
@@ -49,6 +50,10 @@ public class EhealthUaRegistryWebClient {
 			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
 			Response response = wsClientInvocation.put(dataJson);
 			readEntity_body = response.readEntity(String.class);
+			System.err.println(53);
+			System.err.println(readEntity_body);
+			System.err.println(readEntity_body.length());
+			System.err.println(55);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -61,8 +66,8 @@ public class EhealthUaRegistryWebClient {
 		if(readEntity_body!=null){
 			try {
 				readValue_mapBody = mapper.readValue(readEntity_body, Map.class);
-//				String writeValueAsString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(readValue_mapBody);
-//				System.err.println(writeValueAsString);
+				String writeValueAsString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(readValue_mapBody);
+				System.err.println(writeValueAsString);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -83,6 +88,8 @@ config.path_registry_msp: /api/legal_entities
 		Builder header = client.target(uri_registry + path_uri)
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
+		//test token
+//		.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 		return header;
 	}
 
