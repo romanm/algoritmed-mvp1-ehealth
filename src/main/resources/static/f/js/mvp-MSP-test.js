@@ -1,6 +1,8 @@
 function initMSPtest($http, $scope, $filter, $timeout, Blob){
-	console.log('----initMSP-test---------------');
-	if('testMvpMedic' == $scope.pagePath.last()){
+	console.log('----initMSP-test---------------'+$scope.pagePath.last());
+	if('registry' == $scope.pagePath.last()
+	||'testMvpMedic' == $scope.pagePath.last()
+	){
 //		console.log('----initTestVariables---------------');
 		initTestVariables($scope, $http, Blob);
 		if($scope.param.doc_id){
@@ -195,6 +197,9 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		, getFieldName:function(k, kp1){
 			var translateObject = $scope.config_msp.registry_field_name_ua.api__legal_entities;
+			console.log(translateObject);
+			console.log(kp1);
+			console.log(k);
 			if(kp1)
 				translateObject = translateObject.children[kp1];
 			var fn = translateObject[k];

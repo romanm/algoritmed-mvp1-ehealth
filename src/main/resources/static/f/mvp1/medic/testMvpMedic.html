@@ -6,6 +6,18 @@
 			aria-hidden="true"></i>
 		</span>
 	</h2>
+
+	<div class="w3-card-2">
+		<header class="w3-light-gray w3-container">
+			<span class="w3-circle w3-border w3-green">&nbsp;1&nbsp;</span>
+			Реєстрація державного провайдера медичних послуг <span
+				class="w3-right w3-hover-gray"
+				ng-click="config_msp_all.registry_dialog_open=!config_msp_all.registry_dialog_open">_</span>
+		</header>
+		<div ng-if="config_msp_all.registry_dialog_open">--123--
+			{{config_msp_all.registry_dialog_open}}</div>
+	</div>
+
 	<div class="w3-row-padding">
 		<div class="w3-half">
 			<div class="w3-card-2">

@@ -1,0 +1,65 @@
+<div class="w3-container">
+<div ng-include="'/f/mvp1/medic/reg/registry-head.html'"></div>
+	
+
+	<div class="w3-card-2">
+		<header class="w3-light-gray w3-container">
+			<span class="w3-circle w3-border w3-green">&nbsp;1&nbsp;</span>
+			Реєстрація державного провайдера медичних послуг <span
+				class="w3-right w3-hover-gray"
+				ng-click="config_msp_all.registry_dialog_open=!config_msp_all.registry_dialog_open">_</span>
+		</header>
+		<div ng-if="config_msp_all.registry_dialog_open">
+			<table class="w3-table">
+				<col width="20%">
+				<col width="80%">
+				<tr ng-repeat="(k,v) in api__legal_entities">
+					<th class="w3-right"><a ng-if="v.isArray()" href="#"
+						ng-click="config_msp.openGroup(k)">
+							{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
+							{{config_msp.getFieldName(k)}} </span></th>
+					<td><input ng-change="config_msp.autoSave.fn_change_count()"
+						class="w3-input w3-border" ng-model="api__legal_entities[k]"
+						ng-if="!v.isObject() && !v.isArray()">
+						<div ng-if="k=='owner'">
+						<div>
+						{{v.last_name}}
+						{{v.first_name}}
+						{{v.second_name}}
+						д.н.{{v.birth_date}}
+						</div>
+						{{v}}
+						</div>
+						<div ng-if="k=='phones'">
+							<span ng-repeat="phone in v">
+							{{phone}}
+							</span>
+						</div>
+						<div ng-if="k=='addresses'">
+							<div ng-repeat="address in v">
+								{{1+$index}}.
+								<span>
+									{{address.region}} обл.,
+									{{address.area}} р-н.
+									{{address.settlement_type=='CITY'?'м.':''}}{{address.settlement}}
+									{{address.street_type=='STREET'?'вул.':''}}{{address.street}}
+									дім {{address.building}}
+								</span>
+								<!-- 
+								{{address}}
+								 -->
+							</div>
+						</div>
+						<div ng-if="k=='kveds'">
+							<span ng-repeat="kved in v">
+							[{{kved}}]{{!$last?',':''}}
+							</span>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	
+</div>

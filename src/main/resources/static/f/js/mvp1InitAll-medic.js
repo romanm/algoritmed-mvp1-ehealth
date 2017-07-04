@@ -64,6 +64,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('testMvpCalendar' == $scope.pagePath.last()){
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
 	}else
+	if('registry' == $scope.pagePath.last()){
+		initMSPtest($http, $scope, $filter, $timeout, Blob);
+	}else
 	if('testMvpMedic' == $scope.pagePath.last()){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 	}else
@@ -262,7 +265,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else{
 	}
 	$scope.config_msp_all={
-		msp_index:0
+		registry_dialog_open:true
+		,msp_index:0
 		,msp_list:[
 			{msp_public_name:'цПМСД Nr1 "Поділля - Дубово"'}
 			,{msp_public_name:'цПМСД  Nr2 "Поділля - Зарічанська"'}
