@@ -66,6 +66,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('registry' == $scope.pagePath.last()){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
+		initTestAddress($scope, $http);
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
@@ -266,6 +267,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}
 	$scope.config_msp_all={
 		registry_dialog_open:true
+		,registry_msp_dialog_open:true
+		,registry_doctor_dialog_open:false
+		,registry_patient_dialog_open:false
 		,msp_index:0
 		,msp_list:[
 			{msp_public_name:'цПМСД Nr1 "Поділля - Дубово"'}

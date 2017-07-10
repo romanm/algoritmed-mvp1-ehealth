@@ -1,0 +1,94 @@
+<div class="w3-row-padding" ng-repeat="(k,v) in api__legal_entities">
+	<div class="w3-quarter ">
+		<div class="w3-right">
+		<b>
+			<a ng-if="v.isArray()" href="#" ng-click="config_msp.openGroup(k)">
+				{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
+				{{config_msp.getFieldName(k)}} </span>
+		</b>
+		</div>
+	</div>
+	<div class="w3-threequarter">
+			<input ng-change="config_msp.autoSave.fn_change_count()"
+				class="w3-input w3-border" ng-model="api__legal_entities[k]"
+				ng-if="!v.isObject() && !v.isArray()">
+			<div ng-if="k=='owner'">
+				<div>{{v.last_name}} {{v.first_name}} {{v.second_name}}
+					д.н.{{v.birth_date}}</div>
+			{{v}}
+			</div>
+			<div ng-if="k=='phones'">
+				<span ng-repeat="phone in v">
+				{{phone}}
+				</span>
+			</div>
+		<div ng-if="k=='kveds'">
+			<span ng-repeat="kved in v"> [<a href="#"
+				class="w3-hover-gray"
+				ng-class="{'w3-green':$index==mvpAddress.fn.kveds.index}"
+				ng-click="mvpAddress.fn.kveds.openToEdit(v, $index)">{{kved}}{{kved.length==0?'__.__':''}}</a>]{{!$last?',':''}}
+			</span> <a href="#" ng-click="mvpAddress.fn.kveds.addKved()"
+				class="w3-btn w3-hover-gray"> +додати квед </a>
+			<div ng-if="mvpAddress.fn.kveds.index>=0">
+				<div class="w3-row">
+					<div class="w3-col l2 m2">
+						<input class="w3-input w3-border"
+							ng-model="mvpAddress.fn.kveds.kvedToEdit">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_'+k+'.html'"></div>
+	</div>
+</div>
+
+<!-- 
+<table class="w3-table">
+	<col width="30%">
+	<col width="70%">
+	<tr ng-repeat="(k,v) in api__legal_entities">
+		<th class="w3-right"><a ng-if="v.isArray()" href="#"
+			ng-click="config_msp.openGroup(k)">
+				{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
+				{{config_msp.getFieldName(k)}} </span></th>
+		<td><input ng-change="config_msp.autoSave.fn_change_count()"
+			class="w3-input w3-border" ng-model="api__legal_entities[k]"
+			ng-if="!v.isObject() && !v.isArray()">
+			<div ng-if="k=='owner'">
+				<div>
+				{{v.last_name}}
+				{{v.first_name}}
+				{{v.second_name}}
+				д.н.{{v.birth_date}}
+				</div>
+			{{v}}
+			</div>
+			<div ng-if="k=='phones'">
+				<span ng-repeat="phone in v">
+				{{phone}}
+				</span>
+			</div>
+			<div ng-if="k=='addresses'">
+				<div ng-repeat="address in v">
+					{{1+$index}}.
+					<span>
+						{{address.region}} обл.,
+						{{address.area}} р-н.
+						{{address.settlement_type=='CITY'?'м.':''}}{{address.settlement}}
+						{{address.street_type=='STREET'?'вул.':''}}{{address.street}}
+						дім {{address.building}}
+					</span>
+					<!-
+					{{address}}
+					 ->
+				</div>
+			</div>
+			<div ng-if="k=='kveds'">
+				<span ng-repeat="kved in v">
+				[{{kved}}]{{!$last?',':''}}
+				</span>
+			</div>
+		</td>
+	</tr>
+</table>
+ -->

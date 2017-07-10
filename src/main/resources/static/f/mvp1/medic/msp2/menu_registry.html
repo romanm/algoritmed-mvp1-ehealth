@@ -1,0 +1,47 @@
+<div class="w3-bar w3-border"
+ng-if="config_msp.menu_registry.step=='data'"
+>
+	<div class="w3-bar-item">
+		<b> Введення даних: </b> {{api__legal_entities.short_name}} <span class="w3-tiny">
+			автозбереження:
+			{{config_msp.autoSave.save_count}}/{{config_msp.autoSave.change_count}}</span>
+	</div>
+	<div class="w3-bar-item w3-right w3-light-gray  w3-hover-gray"
+		ng-click="config_msp.menu_registry.step='digitalsign';config_msp.menu_registry.name='data'">
+		<i class="fa fa-angle-right w3-large" aria-hidden="true"></i>
+	</div>
+	<div class="w3-bar-item w3-btn w3-blue w3-right"
+	 ng-click="legal_entities()"
+	>Запис</div>
+</div>
+
+<div class="w3-bar w3-border"
+ng-if="config_msp.menu_registry.step=='digitalsign'"
+>
+	<div class="w3-bar-item w3-hover-gray w3-light-gray"
+			ng-click="config_msp.menu_registry.step='data';config_msp.menu_registry.name='data'">
+			<i class="fa fa-angle-left w3-large" aria-hidden="true"></i>
+	</div>
+	<div class="w3-bar-item">
+		<b class=""> Накладання електронного цифрового підпису <span
+			class="w3-text-light-gray"> (ЕЦП) </span>
+		</b>
+	</div>
+	<div class="w3-bar-item w3-right w3-light-gray  w3-hover-gray"
+		ng-click="config_msp.menu_registry.step='registry';config_msp.menu_registry.name='data'">
+		<i class="fa fa-angle-right w3-large" aria-hidden="true"></i>
+	</div>
+</div>
+
+<div class="w3-bar w3-border"
+ng-if="config_msp.menu_registry.step=='registry'"
+>
+	<div class="w3-bar-item w3-hover-gray w3-light-gray"
+			ng-click="config_msp.menu_registry.step='digitalsign';config_msp.menu_registry.name='data'">
+			<i class="fa fa-angle-left w3-large" aria-hidden="true"></i>
+	</div>
+	<div class="w3-bar-item">
+		<b class="">Реєстрація в центральному реєстрі
+		</b>
+	</div>
+</div>

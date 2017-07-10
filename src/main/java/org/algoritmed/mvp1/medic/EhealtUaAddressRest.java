@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EhealtUaAddressRest {
+
 	private Map<String, Object> goCC(HttpServletRequest request, String add_uri) {
+		logger.info(""+21);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("add_uri", add_uri);
 		map.put("requestURI", request.getRequestURI());

@@ -1,2 +1,5 @@
 /sql2.properties
 /.sql.properties.swp
+/config.properties
+/keystore.p12
+/application.properties

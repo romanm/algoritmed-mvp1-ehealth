@@ -10,6 +10,9 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.algoritmed.mvp1.medic.MedicalPatientRest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class EhealthUaRegistryWebClient {
+	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryWebClient.class);
 
 	String prefix_uri = "/api";
 //	String prefix_uri = "";
@@ -27,7 +31,7 @@ public class EhealthUaRegistryWebClient {
 		String path_uri = prefix_uri+data.get("add_uri");
 		if(data.containsKey("queryString"))
 			path_uri += "?"+data.get("queryString");
-		System.err.println(29);
+		logger.info("\n"+34);
 		System.err.println(path_uri);
 		data.put("test_api_URL", uri_registry + path_uri);
 		Builder wsClientInvocation = getInvocationBuilder(path_uri);

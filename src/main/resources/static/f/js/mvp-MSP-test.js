@@ -71,44 +71,89 @@ initTestMvpCalendar = function($scope, $http, $filter, $timeout){
 initTestAddress = function($scope, $http){
 	console.log('-----initTestAddress------------');
 	$scope.mvpAddress = {};
-	$scope.mvpAddress.config = {listOpen:{}
+	$scope.mvpAddress.config = {
+		listOpen:{}
+		,edit:{
+			address:0
+			,openAddress:function(index){
+				console.log(index);
+				console.log(this);
+				if(this.address==index)
+					this.address=-1;
+				else
+					this.address=index;
+			}
+		}
+		,street_types:['STREET']
+		,address_types:['REGISTRATION','RESIDENCE']
 		,type:{
 			VILLAGE:'с.'
 			,TOWNSHIP:'місте́чко'
 			,CITY:'м.'
+			,STREET:'вул.'
+			,REGISTRATION:'регістрація'
+			,RESIDENCE:'резіденція'
 		}
 	};
-	$scope.mvpAddress.data = {choose:{},uri_prefix:'/r/gcc'};
+	$scope.mvpAddress.data = {choose:{}, uri_prefix:'/r/gcc'};
+	/*
+	 * */
+	$scope.$watch('mvpAddress.fn.kveds.kvedToEdit', function(newValue){
+		if(!newValue) return;
+		console.log(newValue);
+		$scope.api__legal_entities.kveds[$scope.mvpAddress.fn.kveds.index]
+			= newValue;
+	});
 	$scope.$watch('mvpAddress.fn.seekInRegions', function(newValue){
 		if(!newValue) return;
 		console.log(newValue);
-		var url = $scope.mvpAddress.data.uri_prefix 
+		var url = $scope.mvpAddress.data.uri_prefix
 			+'/uaddresses/search/settlements?settlement_name='+newValue+'&region=хмельницька';
 		console.log(url);
 		$http.get(url).then( function(response) {
 			console.log(response.data.response.data);
+			$scope.mvpAddress.config.seek_addresses = response.data.response.data;
+			console.log($scope.mvpAddress.config.seek_addresses);
 			var r = $scope.mvpAddress.fn.element.region();
 			console.log(r);
 			r.seek_addresses = response.data.response.data;
+			console.log(r.seek_addresses);
 		});
 	});
 	
 	$scope.mvpAddress.fn = {
 		seekInRegions:null,
+		kveds:{
+			index:-1
+			,kvedToEdit:null
+			,addKved:function(){
+				$scope.api__legal_entities.kveds.push('');
+				this.editLast();
+			}
+			,editLast:function(){
+				$scope.mvpAddress.fn.kveds.index = $scope.api__legal_entities.kveds.length - 1;
+				$scope.mvpAddress.fn.kveds.kvedToEdit 
+					= $scope.api__legal_entities.kveds[$scope.mvpAddress.fn.kveds.index];
+			}
+			,openToEdit:function(kveds, index){
+				this.index=index;
+				this.kvedToEdit=kveds[index];
+			}
+		},
 		element:{
 			district:function(){
 				var r = this.region();
 				if(r)
 					if($scope.mvpAddress.data.choose.region.district)
 						return r.districts[$scope.mvpAddress.data.choose.region.district.index];
-			} ,
+			},
 			region:function(){
 				if($scope.mvpAddress.data.choose)
 					if($scope.mvpAddress.data.choose.region)
 						if($scope.mvpAddress.data.choose.region.index)
 							return $scope.mvpAddress.data.regions[$scope.mvpAddress.data.choose.region.index];
 			}
-		} ,
+		},
 		list:{
 			district:function(d){
 				var r = $scope.mvpAddress.fn.element.region();
@@ -116,7 +161,7 @@ initTestAddress = function($scope, $http){
 					$scope.mvpAddress.data.choose.region.district = {};
 				$scope.mvpAddress.data.choose.region.district.index
 					= r.districts.indexOf(d)
-			} ,
+			},
 			districts:function(region){
 				$scope.mvpAddress.data.region = region;
 				var region_index = $scope.mvpAddress.data.regions.indexOf(region)
@@ -133,7 +178,7 @@ initTestAddress = function($scope, $http){
 						region.districts = response.data.response.data;
 					});
 				}
-			} ,
+			},
 			regions:function(){
 				$scope.mvpAddress.config.listOpen.regions
 					= !$scope.mvpAddress.config.listOpen.regions;
@@ -183,23 +228,21 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		, uploadFileSrc:{'q':'1'}
 		, openGroup:function(k){
-			console.log(k)
-			console.log(this)
 			if(!this.openedGroup)
 				this.openedGroup = []
-			console.log(this.openedGroup.indexOf(k))
 			if(this.openedGroup.indexOf(k)>-1){
 				this.openedGroup.splice(this.openedGroup.indexOf(k), 1);
 			}else{
 				this.openedGroup.push(k);
 			}
-			console.log(this.openedGroup)
+			if('kveds'==k){
+				if($scope.mvpAddress.fn.kveds.index<0){
+					$scope.mvpAddress.fn.kveds.editLast();
+				}
+			}
 		}
 		, getFieldName:function(k, kp1){
 			var translateObject = $scope.config_msp.registry_field_name_ua.api__legal_entities;
-			console.log(translateObject);
-			console.log(kp1);
-			console.log(k);
 			if(kp1)
 				translateObject = translateObject.children[kp1];
 			var fn = translateObject[k];

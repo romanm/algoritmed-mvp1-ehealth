@@ -1,0 +1,92 @@
+<div ng-repeat="address in v">
+	<a href="#"
+	ng-class="{'w3-border-top w3-border-left w3-border-right w3-border-green':mvpAddress.config.edit.address==$index}"
+		ng-click="mvpAddress.config.edit.openAddress($index)" class="w3-hover-gray">
+	{{1+$index}}. 
+		<b> {{mvpAddress.config.type[address.type]}} </b> <span>
+			{{address.region}} обл., {{address.area}} р-н.
+			{{address.settlement_type=='CITY'?'м.':''}}{{address.settlement}}
+			{{address.street_type=='STREET'?'вул.':''}}{{address.street}} дім
+			{{address.building}} </span>
+	</a>
+	<div ng-if="mvpAddress.config.edit.address==$index"
+	class="w3-border w3-border-green w3-card-4"
+	>
+		<div class="w3-row-padding">
+			<div class="w3-quarter ">
+				<div class="w3-right">
+					<b> Тип адреси </b>
+				</div>
+			</div>
+			<div class="w3-threequarter">
+				<select ng-model="address.type">
+					<option ng-repeat="at in mvpAddress.config.address_types"
+						value="{{at}}">{{mvpAddress.config.type[at]}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="w3-dropdown-hover" style="width: 90%">
+			<div class="w3-row">
+				<div class="w3-col w3-light-gray" style="width: 50px">
+					<i class="w3-xxlarge fa fa-search"></i>
+				</div>
+				<div class="w3-rest">
+					<input class="w3-input w3-border" name="first" type="text"
+						ng-model="mvpAddress.fn.seekInRegions"
+						placeholder="пошук населеного пункту">
+				</div>
+			</div>
+			<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue "
+				style="width: 100%">
+				<p
+				ng-if="!(mvpAddress.config.seek_addresses.length>0)"
+				>Знайдені населені пункти</p>
+				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+					ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
+					{{sd.settlement_name}}</div>
+				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+					ng-if="sd.district">{{sd.district}} р-н.
+					{{mvpAddress.config.type[sd.type]}} {{sd.settlement_name}}</div>
+
+			</div>
+		</div>
+		<!-- 
+		 -->
+		<div class="w3-row">
+			<div class="w3-col l2 m2">
+				<div class="w3-right">
+					<select ng-model="address.street_type">
+						<option ng-repeat="t in mvpAddress.config.street_types"
+							value="{{t}}">{{mvpAddress.config.type[t]}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="w3-col l5 m5">
+				<input class="w3-input w3-border" type="text"
+					ng-model="address.street" placeholder="вулиця">
+			</div>
+			<div class="w3-col l1 m1">
+				<div class="w3-right">дім.</div>
+			</div>
+			<div class="w3-col l1 m1">
+				<input class="w3-input w3-border" type="text"
+					ng-model="address.building" placeholder="Nr">
+			</div>
+		</div>
+		<!-- 
+		<div class="w3-row-padding" ng-repeat="(k2,v2) in address">
+			<div class="w3-quarter ">
+				<div class="w3-right">
+				<b>
+				{{k2}}
+				</b>
+				</div>
+			</div>
+			<div class="w3-threequarter">
+				{{v2}}
+			</div>
+		</div>
+		{{address}}
+		 -->
+	</div>
+</div>
