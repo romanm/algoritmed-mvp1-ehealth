@@ -74,22 +74,34 @@ initTestAddress = function($scope, $http){
 	$scope.mvpAddress.config = {
 		listOpen:{}
 		,edit:{
-			address:0
+			address:-1
 			,openAddress:function(index){
-				console.log(index);
-				console.log(this);
 				if(this.address==index)
 					this.address=-1;
 				else
 					this.address=index;
 			}
 		}
+		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated']
+		,isNotEditField:function(k){ return !(this.fields_not_edit.indexOf(k)>=0); }
+		,minusPhone:function(v, index){
+			v.splice(index,1);
+			$scope.config_msp.autoSave.fn_change_count();
+		}
+		,plusPhone:function(v){
+			var np = JSON.parse(JSON.stringify(v[0]));
+			v.push(np)
+			$scope.config_msp.autoSave.fn_change_count();
+		}
+		,phone_types:['LAND_LINE', 'MOBILE']
 		,street_types:['STREET']
 		,address_types:['REGISTRATION','RESIDENCE']
 		,type:{
 			VILLAGE:'с.'
 			,TOWNSHIP:'місте́чко'
 			,CITY:'м.'
+			,LAND_LINE:'тел.'
+			,MOBILE:'моб.'
 			,STREET:'вул.'
 			,REGISTRATION:'регістрація'
 			,RESIDENCE:'резіденція'
