@@ -1,54 +1,53 @@
-
 <input ng-change="config_msp.autoSave.fn_change_count()"
 	placeholder="Призвище" class="w3-border" ng-model="v.last_name">
 <input ng-change="config_msp.autoSave.fn_change_count()"
 	placeholder="Ім'я" class="w3-border" ng-model="v.first_name">
 <input ng-change="config_msp.autoSave.fn_change_count()"
 	placeholder="По батькові" class="w3-border" ng-model="v.second_name">
-<div> 
-д.н.
-день- 
-<span class="w3-dropdown-hover"> місяць <span
-		class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
-		<table>
-				<tr>
-					<td></td>
-					<td class="w3-hover-gray">чер</td>
-					<td class="w3-hover-gray">лип</td>
-					<td class="w3-hover-gray">сер</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="w3-hover-gray">тра</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td class="w3-hover-gray">вер</td>
-				</tr>
-				<tr>
-					<td class="w3-hover-gray">кві</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td class="w3-hover-gray">жов</td>
-				</tr>
-				<tr>
-					<td class="w3-hover-gray">бер</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td class="w3-hover-gray">лис</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td class="w3-hover-gray">лют</td>
-					<td class="w3-hover-gray">січ</td>
-					<td class="w3-hover-gray">грд</td>
-					<td></td>
-				</tr>
-			</table> </span>
-</span> -рік
+<br/>
+<span ng-init="d2e_param='birth_date';d2e_obj=v;prefix='д.н.'" ng-include="'/f/mvp1/lib/d2e_dialog.html'"></span>
+
+Місце народження
+<input ng-change="config_msp.autoSave.fn_change_count()"
+	placeholder="Місце народження" class="w3-border" ng-model="v.birth_place">
+<br/>
+<div class="w3-row-padding">
+	<div class="w3-quarter ">
+		<div class="w3-right">
+			<b>Документи</b>
+		</div>
+	</div>
+	<div class="w3-threequarter">
+		<div ng-repeat="document in v.documents">
+		{{document}}
+		</div>
+	</div>
 </div>
+<div class="w3-row-padding">
+	<div class="w3-quarter ">
+		<div class="w3-right">
+			<b> ід.нр. </b>
+		</div>
+	</div>
+	<div class="w3-threequarter">
+		<input ng-change="config_msp.autoSave.fn_change_count()" type="text"
+			class="w3-border" ng-model="v.tax_id">
+	</div>
+</div>
+<div class="w3-row-padding">
+	<div class="w3-quarter ">
+		<div class="w3-right">
+			<b> Телефони </b>
+		</div>
+	</div>
+	<div class="w3-threequarter">
+		<div ng-repeat="phone in v.phones">
+		{{phone}}
+		</div>
+	</div>
+</div>
+<!-- 
 <div>{{v.last_name}} {{v.first_name}} {{v.second_name}}
 	д.н.{{v.birth_date}}</div>
 {{v}}
+ -->

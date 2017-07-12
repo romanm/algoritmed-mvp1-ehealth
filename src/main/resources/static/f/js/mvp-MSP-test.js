@@ -73,6 +73,99 @@ initTestAddress = function($scope, $http){
 	$scope.mvpAddress = {};
 	$scope.mvpAddress.config = {
 		listOpen:{}
+		,date:{
+			month_days:[
+				[1,2,3,4,5,6,7]
+				,[8,9,10,11,12,13,14]
+				,[15,16,17,18,19,20,21]
+				,[22,23,24,25,26,27,28]
+				,[29,30,31]
+			]
+			,month_names:{
+				nominative:'січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень'.split('_'),
+				accusative:'січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня'.split('_')
+			}
+			,getMonth:function(o,p){
+				var d = new Date(o['d2e_'+p]);
+				return 1 + d.getMonth();
+			}
+			,getFullYear:function(o,p){
+				var d = new Date(o['d2e_'+p]);
+				return d.getFullYear();
+			}
+			,getDay:function(o,p){
+				var d = new Date(o['d2e_'+p]);
+				return d.getDate();
+			}
+			,initDates:function(){
+				$scope.api__legal_entities;
+				console.log($scope.api__legal_entities.owner);
+				this.initDate($scope.api__legal_entities.owner, 'birth_date');
+			}
+			,yearList:[]
+			,initYearsLists:function(){
+				this.yearList=[];
+				var d = new Date(),
+					y = d.getFullYear(),
+					cy = y,
+					maxOldYear = 100;
+				console.log(y);
+				for (var i = 0; i < 5; i++)
+					if((y-i)%5==0){
+						cy = y-i;
+						break;
+					}
+				console.log(cy);
+				var j=0, y5=[];
+				for (var i = 0; i < maxOldYear; i++){
+					if(j++==0) y5=[];
+					y5.push(cy-i);
+					if(j==5){
+						j=0;
+						console.log(y5);
+						this.yearList.push(y5);
+					}
+				}
+				console.log(this.yearList);
+			}
+			,changeYear:function(y,o,p){
+				var dt = new Date(o['d2e_'+p]);
+				dt.setFullYear(y);
+				this.setDateParamAll(dt,o,p);
+			}
+			,changeMonth:function(m,o,p){
+//				console.log(m);
+				var dt = new Date(o['d2e_'+p]);
+				dt.setMonth(m-1);
+				this.setDateParamAll(dt,o,p);
+			}
+			,changeDay:function(d,o,p){
+				var dt = new Date(o['d2e_'+p]);
+				dt.setDate(d);
+				this.setDateParamAll(dt,o,p);
+			}
+			,setDateParamAll:function(d,o,p){
+				var dtt = d.toLocaleFormat('%Y-%m-%d');
+//				console.log(dtt);
+				o[p] = dtt;
+				this.setDateParam(d,o,p);
+				$scope.config_msp.autoSave.fn_change_count();
+			}
+			,setDateParam:function(d,o,p){
+//				d.setDate(d.getDate() + 1);
+//				console.log(d.getTime());
+				o['d2e_'+p] = d.getTime();
+				o['d2e_year_'+p] = d.getFullYear();
+//				console.log(o);
+			}
+			,initDate:function(o,p){
+				var dateObj = o[p];
+				var ymd = dateObj.split('-');
+//				console.log(ymd);
+				var d = new Date(ymd[0],ymd[1]-1,ymd[2])
+				this.setDateParam(d,o,p);
+			}
+		}
 		,edit:{
 			address:-1
 			,openAddress:function(index){
@@ -107,6 +200,9 @@ initTestAddress = function($scope, $http){
 			,RESIDENCE:'резіденція'
 		}
 	};
+
+	$scope.mvpAddress.config.date.initYearsLists();
+
 	$scope.mvpAddress.data = {choose:{}, uri_prefix:'/r/gcc'};
 	/*
 	 * */
@@ -342,6 +438,7 @@ initTestVariables = function($scope, $http, Blob){
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
 			console.log($scope.api__legal_entities);
+			$scope.mvpAddress.config.date.initDates();
 			$scope.closeMsp();
 		});
 	}

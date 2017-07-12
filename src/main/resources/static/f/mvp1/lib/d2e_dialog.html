@@ -1,0 +1,102 @@
+{{prefix}}
+<span class="w3-dropdown-hover">
+{{d2e_obj['d2e_'+d2e_param] | date: 'dd'}}
+<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
+	<table class="w3-table">
+		<tr ng-repeat="w in mvpAddress.config.date.month_days">
+			<td ng-click="mvpAddress.config.date.changeDay(d, d2e_obj, d2e_param)"
+			ng-class="{'w3-green':mvpAddress.config.date.getDay(d2e_obj, d2e_param)==d}"
+				class="w3-border w3-hover-gray" ng-repeat="d in w">
+				{{d<10?'0':''}}{{d}}</td>
+		</tr>
+	</table>
+</span>
+</span> - 
+<span class="w3-dropdown-hover w3-hover-gray">
+{{d2e_obj['d2e_'+d2e_param] | date: 'MMM'}} 
+<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
+	<table class="w3-table">
+		<tr>
+			<td class="w3-tiny">{{mvpAddress.config.date.getMonth(d2e_obj, d2e_param)}}</td>
+			<td
+				ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==6}"
+				ng-click="mvpAddress.config.date.changeMonth(6, d2e_obj, d2e_param)"
+				class="w3-border w3-hover-gray">чер</td>
+			<td 
+				ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==7}"
+				ng-click="mvpAddress.config.date.changeMonth(7, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">лип</td>
+			<td 
+				ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==8}"
+				ng-click="mvpAddress.config.date.changeMonth(8, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">сер</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==5}"
+			ng-click="mvpAddress.config.date.changeMonth(5, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">тра</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==9}"
+			ng-click="mvpAddress.config.date.changeMonth(9, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">вер</td>
+		</tr>
+		<tr>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==4}"
+			ng-click="mvpAddress.config.date.changeMonth(4, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">кві</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==10}"
+			ng-click="mvpAddress.config.date.changeMonth(10, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">жов</td>
+		</tr>
+		<tr>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==3}"
+			ng-click="mvpAddress.config.date.changeMonth(3, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">бер</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==11}"
+			ng-click="mvpAddress.config.date.changeMonth(11, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">лис</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==2}"
+			ng-click="mvpAddress.config.date.changeMonth(2, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">лют</td>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==1}"
+			ng-click="mvpAddress.config.date.changeMonth(1, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">січ</td>
+			<td 
+			ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==12}"
+			ng-click="mvpAddress.config.date.changeMonth(12, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">грд</td>
+			<td></td>
+		</tr>
+	</table> 
+</span>
+</span>
+<span class="w3-dropdown-hover w3-hover-gray">
+<input ng-change="mvpAddress.config.date.changeYear(d2e_obj['d2e_year_'+d2e_param], d2e_obj, d2e_param)" type="number"
+ style="width: 75px;" 
+	class="w3-border" ng-model="d2e_obj['d2e_year_'+d2e_param]">
+	<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
+		<div style="max-height: 200px; overflow: auto;">
+				<table class="w3-table">
+					<tr ng-repeat="y5 in mvpAddress.config.date.yearList">
+						<td ng-repeat="y in y5"
+						ng-class="{'w3-green':mvpAddress.config.date.getFullYear(d2e_obj, d2e_param)==y}"
+							ng-click="mvpAddress.config.date.changeYear(y, d2e_obj, d2e_param)"
+							class="w3-border w3-hover-gray">{{y}}</td>
+						<td></td>
+						<!-- 
+						<td>&nbsp;</td>
+						 -->
+					</tr>
+				</table>
+			</div>
+	</span>
+</span>
