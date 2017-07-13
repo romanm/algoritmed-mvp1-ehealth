@@ -19,7 +19,15 @@
 	</div>
 	<div class="w3-threequarter">
 		<div ng-repeat="document in v.documents">
+			<select ng-model="document.type">
+				<option ng-repeat="t in mvpAddress.config.document_types"
+					value="{{t}}">{{mvpAddress.config.type[t]}}</option>
+			</select>
+			<input ng-change="config_msp.autoSave.fn_change_count()"
+	placeholder="Номер документа" class="w3-border" ng-model="document.number">
+	<!-- 
 		{{document}}
+	 -->
 		</div>
 	</div>
 </div>
@@ -41,9 +49,13 @@
 		</div>
 	</div>
 	<div class="w3-threequarter">
+		<div ng-repeat="phone in v.phones track by $index" ng-init="phoneList=v.phones"
+				ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
+		<!-- 
 		<div ng-repeat="phone in v.phones">
 		{{phone}}
 		</div>
+		 -->
 	</div>
 </div>
 <!-- 

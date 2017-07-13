@@ -11,29 +11,12 @@
 		</div>
 	</div>
 	<div class="w3-threequarter">
-			<input ng-change="config_msp.autoSave.fn_change_count()"
-				class="w3-input w3-border" ng-model="api__legal_entities[k]"
-				ng-if="!v.isObject() && !v.isArray()">
+		<input ng-change="config_msp.autoSave.fn_change_count()"
+			class="w3-input w3-border" ng-model="api__legal_entities[k]"
+			ng-if="!v.isObject() && !v.isArray()">
 		<div ng-if="k=='phones'">
-			<div ng-repeat="phone in v track by $index">
-				<select ng-model="phone.type"
-					ng-change="config_msp.autoSave.fn_change_count()">
-					<option ng-repeat="t in mvpAddress.config.phone_types"
-						value="{{t}}">{{mvpAddress.config.type[t]}}</option>
-				</select> 
-				<input ng-change="config_msp.autoSave.fn_change_count()"
-				class="w3-border"
-					ng-model="phone.number">
-					<a
-					title="Видалити телефон"
-					class="w3-btn w3-hover-gray"
-					 ng-if="!$first" href="#" ng-click="mvpAddress.config.minusPhone(v, $index)">-</a>
-					<a 
-					class="w3-btn w3-hover-gray"
-					title="Додати ще один телефон"
-					ng-if="$last" href="#" ng-click="mvpAddress.config.plusPhone(v)">+</a>
-					<!-- {{phone}} -->
-			</div>
+			<div ng-repeat="phone in v track by $index" ng-init="phoneList=v"
+				ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
 		</div>
 		<div ng-if="k=='kveds'">
 			<span ng-repeat="kved in v"> [<a href="#"
@@ -55,53 +38,3 @@
 	</div>
 </div>
 
-<!-- 
-<table class="w3-table">
-	<col width="30%">
-	<col width="70%">
-	<tr ng-repeat="(k,v) in api__legal_entities">
-		<th class="w3-right"><a ng-if="v.isArray()" href="#"
-			ng-click="config_msp.openGroup(k)">
-				{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
-				{{config_msp.getFieldName(k)}} </span></th>
-		<td><input ng-change="config_msp.autoSave.fn_change_count()"
-			class="w3-input w3-border" ng-model="api__legal_entities[k]"
-			ng-if="!v.isObject() && !v.isArray()">
-			<div ng-if="k=='owner'">
-				<div>
-				{{v.last_name}}
-				{{v.first_name}}
-				{{v.second_name}}
-				д.н.{{v.birth_date}}
-				</div>
-			{{v}}
-			</div>
-			<div ng-if="k=='phones'">
-				<span ng-repeat="phone in v">
-				{{phone}}
-				</span>
-			</div>
-			<div ng-if="k=='addresses'">
-				<div ng-repeat="address in v">
-					{{1+$index}}.
-					<span>
-						{{address.region}} обл.,
-						{{address.area}} р-н.
-						{{address.settlement_type=='CITY'?'м.':''}}{{address.settlement}}
-						{{address.street_type=='STREET'?'вул.':''}}{{address.street}}
-						дім {{address.building}}
-					</span>
-					<!-
-					{{address}}
-					 ->
-				</div>
-			</div>
-			<div ng-if="k=='kveds'">
-				<span ng-repeat="kved in v">
-				[{{kved}}]{{!$last?',':''}}
-				</span>
-			</div>
-		</td>
-	</tr>
-</table>
- -->

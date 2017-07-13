@@ -187,12 +187,14 @@ initTestAddress = function($scope, $http){
 			$scope.config_msp.autoSave.fn_change_count();
 		}
 		,phone_types:['LAND_LINE', 'MOBILE']
+		,document_types:['PASSPORT']
 		,street_types:['STREET']
 		,address_types:['REGISTRATION','RESIDENCE']
 		,type:{
 			VILLAGE:'с.'
 			,TOWNSHIP:'місте́чко'
 			,CITY:'м.'
+			,PASSPORT:'паспорт'
 			,LAND_LINE:'тел.'
 			,MOBILE:'моб.'
 			,STREET:'вул.'

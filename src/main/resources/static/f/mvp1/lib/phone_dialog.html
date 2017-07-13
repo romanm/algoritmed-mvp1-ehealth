@@ -1,0 +1,17 @@
+<select ng-model="phone.type"
+	ng-change="config_msp.autoSave.fn_change_count()">
+	<option ng-repeat="t in mvpAddress.config.phone_types"
+		value="{{t}}">{{mvpAddress.config.type[t]}}</option>
+</select> 
+<input ng-change="config_msp.autoSave.fn_change_count()"
+class="w3-border"
+	ng-model="phone.number">
+	<a
+	title="Видалити телефон"
+	class="w3-btn w3-hover-gray"
+	 ng-if="!$first" href="#" ng-click="mvpAddress.config.minusPhone(phoneList, $index)">-</a>
+	<a 
+	class="w3-btn w3-hover-gray"
+	title="Додати ще один телефон"
+	ng-if="$last" href="#" ng-click="mvpAddress.config.plusPhone(phoneList)">+</a>
+	<!-- {{phone}} -->
