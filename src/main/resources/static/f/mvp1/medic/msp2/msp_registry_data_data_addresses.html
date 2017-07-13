@@ -5,8 +5,9 @@
 		ng-click="mvpAddress.config.edit.openAddress($index)" class="w3-hover-gray">
 	{{1+$index}}. 
 		<b> {{mvpAddress.config.type[address.type]}} </b> <span>
-			{{address.region}} обл., {{address.area}} р-н.
-			{{address.settlement_type=='CITY'?'м.':''}}{{address.settlement}}
+			{{address.region}} обл., <span ng-if="address.district">{{address.district}} р-н.</span>
+			{{address.settlement_type=='CITY'?'м.'
+			:(address.settlement_type=='VILLAGE'?'с.':'')}}{{address.settlement}}
 			{{address.street_type=='STREET'?'вул.':''}}{{address.street}} дім
 			{{address.building}} </span>
 	</a>
@@ -39,13 +40,14 @@
 			</div>
 			<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue "
 				style="width: 100%">
-				<p
-				ng-if="!(mvpAddress.config.seek_addresses.length>0)"
-				>Знайдені населені пункти</p>
-				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+				<p ng-if="!(mvpAddress.config.seek_addresses.length>0)">Знайдені
+					населені пункти</p>
+				<div ng-repeat="sd in mvpAddress.config.seek_addresses" class="w3-hover-gray" 
+					ng-click="mvpAddress.config.edit.clickAddress(sd, address)"
 					ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
 					{{sd.settlement_name}}</div>
-				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+				<div ng-repeat="sd in mvpAddress.config.seek_addresses" class="w3-hover-gray" 
+					ng-click="mvpAddress.config.edit.clickAddress(sd, address)"
 					ng-if="sd.district">{{sd.district}} р-н.
 					{{mvpAddress.config.type[sd.type]}} {{sd.settlement_name}}</div>
 			</div>

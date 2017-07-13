@@ -26,10 +26,15 @@
 			</span> <a href="#" ng-click="mvpAddress.fn.kveds.addKved()"
 				class="w3-btn w3-hover-gray"> +додати квед </a>
 			<div ng-if="mvpAddress.fn.kveds.index>=0">
-				<div class="w3-row">
+				<div class="w3-row-padding">
 					<div class="w3-col l2 m2">
 						<input class="w3-input w3-border"
-							ng-model="mvpAddress.fn.kveds.kvedToEdit">
+							ng-model="mvpAddress.fn.kveds.kvedToEdit"> 
+					</div>
+					<div class="w3-col l2 m2">
+						<a
+							title="Видалити квед" class="w3-btn w3-hover-gray" href="#"
+							ng-click="mvpAddress.fn.kveds.minusKved()">-</a>
 					</div>
 				</div>
 			</div>

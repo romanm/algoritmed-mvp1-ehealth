@@ -168,6 +168,34 @@ initTestAddress = function($scope, $http){
 		}
 		,edit:{
 			address:-1
+			,clickAddress:function(vNew, a){
+				console.log(vNew);
+				console.log(a);
+				var keysToChange = ['region', 'settlement', 'settlement_type', 'settlement_id'];
+				var keyToKey = {
+					'region':'region'
+					,'district':'district'
+					,'settlement':'settlement_name'
+					,'settlement_type':'type'
+					,'settlement_id':'id'
+				}
+				angular.forEach(keyToKey, function(v, k){
+					console.log(k+'='+v+'/'+a[k]+'/'+vNew[v]);
+					a[k] = vNew[v];
+				});
+				console.log('------------------');
+				angular.forEach(a, function(v, k){
+					if(keysToChange.indexOf(k)>=0){
+						console.log(k+'='+v+'/'+vNew[k]);
+					}else{
+						console.log(k+'='+v);
+					}
+				});
+				console.log('------------------');
+				angular.forEach(vNew, function(v, k){
+					console.log(k+'='+v);
+				});
+			}
 			,openAddress:function(index){
 				if(this.address==index)
 					this.address=-1;
@@ -236,18 +264,24 @@ initTestAddress = function($scope, $http){
 		kveds:{
 			index:-1
 			,kvedToEdit:null
+			,minusKved:function(){
+				console.log(this.index);
+				console.log($scope.api__legal_entities.kveds);
+				$scope.api__legal_entities.kveds.splice(this.index, 1);
+			}
 			,addKved:function(){
 				$scope.api__legal_entities.kveds.push('');
 				this.editLast();
 			}
 			,editLast:function(){
-				$scope.mvpAddress.fn.kveds.index = $scope.api__legal_entities.kveds.length - 1;
-				$scope.mvpAddress.fn.kveds.kvedToEdit 
-					= $scope.api__legal_entities.kveds[$scope.mvpAddress.fn.kveds.index];
+				this.openToEdit(
+					$scope.api__legal_entities.kveds[this.index]
+					,$scope.api__legal_entities.kveds.length - 1
+				);
 			}
 			,openToEdit:function(kveds, index){
-				this.index=index;
 				this.kvedToEdit=kveds[index];
+				this.index=index;
 			}
 		},
 		element:{
