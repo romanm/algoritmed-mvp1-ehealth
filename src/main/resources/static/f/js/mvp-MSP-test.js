@@ -167,22 +167,36 @@ initTestAddress = function($scope, $http){
 			}
 		}
 		,edit:{
-			address:-1
-			,clickAddress:function(vNew, a){
+			address:0
+			,clickAddressArea:function(vNew, a){
 				console.log(vNew);
 				console.log(a);
-				var keysToChange = ['region', 'settlement', 'settlement_type', 'settlement_id'];
 				var keyToKey = {
-					'region':'region'
-					,'district':'district'
-					,'settlement':'settlement_name'
-					,'settlement_type':'type'
-					,'settlement_id':'id'
+					'area':'name'
 				}
+				this.setAddressParamaters(vNew, a, keyToKey);
+				$scope.mvpAddress.fn.seekInRegions = null;
+			},setAddressParamaters:function(vNew, a, keyToKey){
 				angular.forEach(keyToKey, function(v, k){
 					console.log(k+'='+v+'/'+a[k]+'/'+vNew[v]);
 					a[k] = vNew[v];
 				});
+			},clickAddress:function(vNew, a){
+				/*
+				'region':'region'
+					,'district':'district'
+				 * */
+				var keyToKey = {
+					'region':'district'
+					,'settlement':'settlement_name'
+					,'settlement_type':'type'
+					,'settlement_id':'id'
+				}
+				this.setAddressParamaters(vNew, a, keyToKey);
+				console.log('------------------');
+				console.log(a);
+				/*
+				var keysToChange = ['region', 'settlement', 'settlement_type', 'settlement_id'];
 				console.log('------------------');
 				angular.forEach(a, function(v, k){
 					if(keysToChange.indexOf(k)>=0){
@@ -195,6 +209,7 @@ initTestAddress = function($scope, $http){
 				angular.forEach(vNew, function(v, k){
 					console.log(k+'='+v);
 				});
+				 * */
 			}
 			,openAddress:function(index){
 				if(this.address==index)
@@ -243,10 +258,15 @@ initTestAddress = function($scope, $http){
 			= newValue;
 	});
 	$scope.$watch('mvpAddress.fn.seekInRegions', function(newValue){
+		console.log($scope.mvpAddress.data.regions);
 		if(!newValue) return;
 		console.log(newValue);
+		console.log($scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address]);
+		var area = $scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].area;
+		console.log(area);
 		var url = $scope.mvpAddress.data.uri_prefix
-			+'/uaddresses/search/settlements?settlement_name='+newValue+'&region=хмельницька';
+			+'/uaddresses/search/settlements?settlement_name='+newValue+'&region='+area;
+//		+'/uaddresses/search/settlements?settlement_name='+newValue+'&region=хмельницька';
 		console.log(url);
 		$http.get(url).then( function(response) {
 			console.log(response.data.response.data);
@@ -257,6 +277,7 @@ initTestAddress = function($scope, $http){
 			r.seek_addresses = response.data.response.data;
 			console.log(r.seek_addresses);
 		});
+		$scope.mvpAddress.fn.list.regions();
 	});
 	
 	$scope.mvpAddress.fn = {
