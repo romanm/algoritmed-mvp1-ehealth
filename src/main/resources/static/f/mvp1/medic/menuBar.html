@@ -14,9 +14,16 @@
 			</a>
 		</div>
 		<div class="w3-dropdown-click w3-right">
+		<!-- 
 		{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}
+		 -->
 			<button class="w3-button w3-hover-red" ng-click="logLog=!logLog">
+		<span class="w3-tiny">
+				{{principal.user.PIP}} 
+				<!-- 
 				{{principal.principal.name}} 
+				 -->
+		</span>
 				<i ng-if="principal.principal.name" class="fa fa-sign-out"></i> 
 				<i ng-if="!principal.principal.name" class="fa fa-sign-in"></i> 
 				<i class="fa fa-caret-down"></i>

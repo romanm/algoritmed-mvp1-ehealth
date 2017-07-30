@@ -8,18 +8,23 @@
 				class="w3-right w3-hover-gray"
 				ng-click="config_msp_all.registry_msp_dialog_open=!config_msp_all.registry_msp_dialog_open">_</span>
 		</header>
-		<div ng-if="!config_msp_all.registry_msp_dialog_open">
-			<h3 class="w3-hover-gray"
-			ng-click="config_msp_all.registry_msp_dialog_open=!config_msp_all.registry_msp_dialog_open"
-			>{{api__legal_entities.short_name}}</h3>
+		<div class="w3-red" ng-if="!fnPrincipal.hasRole('ROLE_ADMIN')">
+		Регістрація лікувального закладу дозволена тільки з правами адміністратора
 		</div>
-		<div ng-if="config_msp_all.registry_msp_dialog_open">
-			<div ng-include="'/f/mvp1/medic/msp2/menu_registry.html'"></div>
-<!-- 
-{{config_msp.menu_registry}}
- -->
-			<div ng-include="'/f/mvp1/medic/msp2/msp_registry_data_'+config_msp.menu_registry.step+'.html'"></div>
-		
+		<div ng-if="fnPrincipal.hasRole('ROLE_ADMIN')">
+			<div ng-if="!config_msp_all.registry_msp_dialog_open">
+				<h3 class="w3-hover-gray"
+				ng-click="config_msp_all.registry_msp_dialog_open=!config_msp_all.registry_msp_dialog_open"
+				>{{api__legal_entities.short_name}}</h3>
+			</div>
+			<div ng-if="config_msp_all.registry_msp_dialog_open">
+				<div ng-include="'/f/mvp1/medic/msp2/menu_registry.html'"></div>
+	<!-- 
+	{{config_msp.menu_registry}}
+	 -->
+				<div ng-include="'/f/mvp1/medic/msp2/msp_registry_data_'+config_msp.menu_registry.step+'.html'"></div>
+			
+			</div>
 		</div>
 	</div>
 

@@ -9,6 +9,9 @@ import org.algoritmed.mvp1.util.ReadJsonFromFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +62,27 @@ public class CommonRest {
 		return ngController;
 	}
 
+	@GetMapping("/r/principal")
+	public @ResponseBody Map<String, Object> principal(Principal principal) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("principal", principal);
+		logger.info(" --------- \n"
+				+ "/v/principal \n" + map);
+		if(null!=principal)
+		{
+			String name = principal.getName();
+			map.put("username", name);
+			Map<String, Object> queryForMap = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
+			map.put("user", queryForMap);
+		}
+		return map;
+	}
+
+	private @Value("${sql.db1.users.fromUsername}") String sqlDb1UsersFromUsername;
+	@Autowired JdbcTemplate db1JdbcTemplate;
+	@Autowired NamedParameterJdbcTemplate db1ParamJdbcTemplate;
+
+	
 	@GetMapping("/r/testUUID")
 	public @ResponseBody Map<String, Object> testUUI(Principal principal) {
 		Map<String, Object> map = new HashMap<String, Object>();

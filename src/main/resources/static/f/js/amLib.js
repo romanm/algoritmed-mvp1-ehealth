@@ -49,6 +49,12 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	}
 	//autoSave block END
 	
+	console.log('/r/principal');
+	$http.get('/r/principal').then(function(response) {
+		$scope.principal = response.data;
+		console.log($scope.principal);
+	});
+	
 	//modal dialog open/close
 	$scope.modalMspList = function (id_of_element) {
 		document.getElementById(id_of_element).style.display='block';

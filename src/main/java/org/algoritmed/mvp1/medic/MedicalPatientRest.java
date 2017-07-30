@@ -33,6 +33,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	 * SQL select для зчитування всіх пацієнтів медіка
 	 */
 	private @Value("${sql.medical.selectPatients}") String sqlMedicalSelectPatients;
+	
 	/**
 	 * Зчитування всіх пацієнтів медичної установи
 	 * @return Map об'єкт що містить всіх пацієнтів медіка
