@@ -54,6 +54,21 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		$scope.principal = response.data;
 		console.log($scope.principal);
 	});
+	$scope.fnPrincipal={
+		hasRole:function(r){
+//			console.log(r);
+			var hasRole = false;
+			if($scope.principal.principal){
+				angular.forEach($scope.principal.principal.authorities, function(value, index){
+//				console.log(value);
+					if(value.authority==r){
+						hasRole = true;
+					}
+				});
+			}
+			return hasRole;
+		}
+	}
 	
 	//modal dialog open/close
 	$scope.modalMspList = function (id_of_element) {

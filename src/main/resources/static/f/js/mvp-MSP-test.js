@@ -100,7 +100,24 @@ initTestAddress = function($scope, $http){
 			,initDates:function(){
 				$scope.api__legal_entities;
 				console.log($scope.api__legal_entities.owner);
-				this.initDate($scope.api__legal_entities.owner, 'birth_date');
+				var thisObj = this;
+				this.initDate($scope.api__legal_entities.owner, 'birth_date',thisObj);
+				var msp = $scope.api__legal_entities.medical_service_provider;
+				thisObj.initDate(msp.accreditation, 'issued_date',thisObj);
+				thisObj.initDate(msp.accreditation, 'expiry_date',thisObj);
+				thisObj.initDate(msp.accreditation, 'order_date',thisObj);
+				angular.forEach(msp.licenses , function(v, k){
+					thisObj.initDate(v, 'issued_date',thisObj);
+					thisObj.initDate(v, 'expiry_date',thisObj);
+					thisObj.initDate(v, 'active_from_date',thisObj);
+				});
+			}
+			,initDate:function(o,p,thisObj){
+				var dateObj = o[p];
+				var ymd = dateObj.split('-');
+				console.log(ymd);
+				var d = new Date(ymd[0],ymd[1]-1,ymd[2])
+				thisObj.setDateParam(d,o,p);
 			}
 			,yearList:[]
 			,initYearsLists:function(){
@@ -109,24 +126,24 @@ initTestAddress = function($scope, $http){
 					y = d.getFullYear(),
 					cy = y,
 					maxOldYear = 100;
-				console.log(y);
+//				console.log(y);
 				for (var i = 0; i < 5; i++)
 					if((y-i)%5==0){
 						cy = y-i;
 						break;
 					}
-				console.log(cy);
+//				console.log(cy);
 				var j=0, y5=[];
 				for (var i = 0; i < maxOldYear; i++){
 					if(j++==0) y5=[];
 					y5.push(cy-i);
 					if(j==5){
 						j=0;
-						console.log(y5);
+//						console.log(y5);
 						this.yearList.push(y5);
 					}
 				}
-				console.log(this.yearList);
+//				console.log(this.yearList);
 			}
 			,changeYear:function(y,o,p){
 				var dt = new Date(o['d2e_'+p]);
@@ -158,16 +175,18 @@ initTestAddress = function($scope, $http){
 				o['d2e_year_'+p] = d.getFullYear();
 //				console.log(o);
 			}
-			,initDate:function(o,p){
-				var dateObj = o[p];
-				var ymd = dateObj.split('-');
-//				console.log(ymd);
-				var d = new Date(ymd[0],ymd[1]-1,ymd[2])
-				this.setDateParam(d,o,p);
-			}
 		}
 		,edit:{
-			address:0
+			license:-1
+			,openLicense:function(index){
+				if(this.license==index) this.license=-1;
+				else this.license=index;
+			}
+			,address:-1
+			,openAddress:function(index){
+				if(this.address==index) this.address=-1;
+				else this.address=index;
+			}
 			,clickAddressArea:function(vNew, a){
 				console.log(vNew);
 				console.log(a);
@@ -211,12 +230,6 @@ initTestAddress = function($scope, $http){
 				});
 				 * */
 			}
-			,openAddress:function(index){
-				if(this.address==index)
-					this.address=-1;
-				else
-					this.address=index;
-			}
 		}
 		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated']
 		,isNotEditField:function(k){ return !(this.fields_not_edit.indexOf(k)>=0); }
@@ -233,6 +246,7 @@ initTestAddress = function($scope, $http){
 		,document_types:['PASSPORT']
 		,street_types:['STREET']
 		,address_types:['REGISTRATION','RESIDENCE']
+		,accreditation_types:['FIRST','SECOND','THIRD']
 		,type:{
 			VILLAGE:'с.'
 			,TOWNSHIP:'місте́чко'
@@ -243,6 +257,9 @@ initTestAddress = function($scope, $http){
 			,STREET:'вул.'
 			,REGISTRATION:'регістрація'
 			,RESIDENCE:'резіденція'
+			,FIRST:'первинка'
+			,SECOND:'вторинна'
+			,THIRD:'тритинна'
 		}
 	};
 
