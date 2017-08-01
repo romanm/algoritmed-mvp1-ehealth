@@ -11,8 +11,10 @@
 			{{address.building}} </span>
 	</a>
 	<div ng-if="mvpAddress.config.edit.address==$index"
-	class="w3-border w3-border-green w3-card-4"
+	class="w3-border w3-border-green w3-card-4 w3-display-container"
 	>
+	<span ng-click="mvpAddress.config.edit.openAddress($index)"
+					class="w3-button w3-display-topright">×</span>
 		<div class="w3-row-padding">
 			<div class="w3-quarter ">
 				<div class="w3-right">
@@ -108,5 +110,11 @@
 		</div>
 		{{address}}
 		 -->
+		 <p>
+					<div class="w3-display-bottomright">
+					<a class="w3-btn w3-blue"
+						ng-click="mvpAddress.config.edit.openAddress($index)">Закрити </a>
+					</div>
+				</p>
 	</div>
 </div>

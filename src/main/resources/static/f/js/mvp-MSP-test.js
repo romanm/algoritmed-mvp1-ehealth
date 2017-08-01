@@ -177,7 +177,15 @@ initTestAddress = function($scope, $http){
 			}
 		}
 		,edit:{
-			license:-1
+			dates_accreditation:['issued_date','expiry_date','order_date']
+			,dates_license:['issued_date','expiry_date','active_from_date']
+			,date_types:{
+				issued_date:{p:'д.видачі.'}
+				,expiry_date:{p:'д.закінчення.'}
+				,order_date:{p:'д.замовлення.'}
+				,active_from_date:{p:'активний з д.'}
+			}
+			,license:-1
 			,openLicense:function(index){
 				if(this.license==index) this.license=-1;
 				else this.license=index;
