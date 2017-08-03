@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "url": "http://example.com/resource",
+    "type": "object",
+    "code": 200,
+    "idempotency_key": "idemp-ssjssdjoa8308u0us0",
+    "request_id": "req-adasdoijasdojsda"
+  },
+  "data": {
+    "division_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+    "employee_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+    "position": "P8",
+    "start_date": "2017-03-02T10:45:16.000Z",
+    "end_date": "2018-03-02T10:45:16.000Z",
+    "status": "NEW",
+    "employee_type": "DOCTOR",
+    "party": {
+      "first_name": "Петро",
+      "last_name": "Іванов",
+      "second_name": "Миколайович",
+      "birth_date": "1991-08-19T00:00:00.000Z",
+      "gender": "MALE",
+      "tax_id": "3126509816",
+      "email": "email@example.com",
+      "documents": [
+        {
+          "type": "PASSPORT",
+          "number": "120518"
+        }
+      ],
+      "phones": [
+        {
+          "type": "MOBILE",
+          "number": "+380503410870"
+        }
+      ]
+    },
+    "doctor": {
+      "educations": [
+        {
+          "country": "UA",
+          "city": "Київ",
+          "institution_name": "Академія Богомольця",
+          "issued_date": "2017",
+          "diploma_number": "DD123543",
+          "degree": "MASTER",
+          "speciality": "Педіатр"
+        }
+      ],
+      "qualifications": [
+        {
+          "type": "SPECIALIZATION",
+          "institution_name": "Академія Богомольця",
+          "speciality": "Педіатр",
+          "issued_date": "2017",
+          "certificate_number": "2017",
+          "valid_to": "2017"
+        }
+      ],
+      "specialities": [
+        {
+          "speciality": "THERAPIST",
+          "speciality_officio": true,
+          "level": "FIRST",
+          "qualification_type": "AWARDING",
+          "attestation_name": "Академія Богомольця",
+          "attestation_date": "2017",
+          "valid_to_date": "2020",
+          "certificate_number": "AB/21331"
+        }
+      ],
+      "science_degree": {
+        "country": "UA",
+        "city": "Київ",
+        "degree": "",
+        "institution_name": "Академія Богомольця",
+        "diploma_number": "DD123543",
+        "speciality": "Педіатр",
+        "issued_date": "2017"
+      }
+    },
+    "division": {
+      "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+      "name": "Бориспільське відділення Клініки Борис",
+      "legal_entity_id": "d290f1ee",
+      "type": "clinic",
+      "status": "ACTIVE",
+      "mountain_group": "group1"
+    },
+    "legal_entity": {
+      "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+      "name": "Клініка Борис",
+      "short_name": "Борис",
+      "public_name": "Клініка Борис",
+      "type": "MSP",
+      "edrpou": "5432345432",
+      "status": "ACTIVE",
+      "mis_verified": "VERIFIED",
+      "nhs_verified": false,
+      "owner_property_type": "STATE",
+      "legal_form": "140"
+    },
+    "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+    "inserted_at": "2017-05-05T14:09:59.232112",
+    "updated_at": "2017-05-05T14:09:59.232112"
+  },
+  "urgent": {
+    "user_id": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+  }
+}

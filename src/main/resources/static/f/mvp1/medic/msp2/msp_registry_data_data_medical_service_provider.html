@@ -1,0 +1,123 @@
+
+<div class="w3-row-padding">
+	<div class="w3-quarter">
+	<b>Рівень</b>
+		<select ng-model="v.accreditation.category"
+			ng-change="config_msp.autoSave.fn_change_count()">
+			<option ng-repeat="t in mvpAddress.config.accreditation_types"
+				value="{{t}}">{{mvpAddress.config.type[t]}}</option>
+		</select>
+	</div>
+	<div class="w3-threequarter">
+		<b> Регістраційний № </b> <input ng-change="config_msp.autoSave.fn_change_count()"
+			type="text" class="w3-border" ng-model="v.accreditation.order_no">
+		<div>
+		<span ng-repeat="kda in mvpAddress.config.edit.dates_accreditation"
+				ng-init="d=mvpAddress.config.edit.date_types[kda]">
+			<span ng-init="d2e_param=kda;d2e_obj=v.accreditation;prefix=d.p" ng-include="'/f/mvp1/lib/d2e_dialog.html'">
+			</span>{{$last?'':','}}
+		</span>
+		<!-- 
+		<span ng-repeat="d in [{n:'issued_date',p:'д.видачі.'},{n:'expiry_date',p:'д.закінчення.'},{n:'order_date',p:'д.замовлення.'}]">
+					<span ng-init="d2e_param=d.n;d2e_obj=v.accreditation;prefix=d.p" ng-include="'/f/mvp1/lib/d2e_dialog.html'">
+					</span>{{$last?'':','}}
+				</span>
+		 -->
+		</div>
+	</div>
+</div>
+<!-- 
+<div ng-repeat="(k2,v2) in v.accreditation">
+	{{k2}} --{{v2}}
+</div>
+{{v.accreditation}}
+ -->
+<div ng-repeat="license in v.licenses" >
+	<div class="w3-row-padding">
+		<div class="w3-quarter">
+			<b ng-if="$first"> Ліцензії: </b>
+			<div class="w3-right w3-hover-gray">
+			<a href="#" ng-click="mvpAddress.config.edit.openLicense($index)">
+				{{1 + $index}}. 
+				<b> № </b>
+			</a>
+				<!-- 
+				<b> № ліцензії </b>
+				 -->
+			</div>
+		</div>
+		<div class="w3-threequarter">
+			<div class="w3-hover-gray"
+				ng-click="mvpAddress.config.edit.openLicense($index)">
+				{{license.license_number}}, <b class="w3-small">Орган що видав:</b> {{license.issued_by}},
+				<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
+						ng-init="d=mvpAddress.config.edit.date_types[kda]">
+						{{d.p}}
+						{{license[kda]}}
+						<!-- 
+						<span ng-init="d2e_param=kda;d2e_obj=v.accreditation;prefix=d.p" ng-include="'/f/mvp1/lib/d2e_dialog.html'">
+						</span>{{$last?'':','}}
+						 -->
+					</span>
+			</div>
+			<div class="w3-border w3-border-green w3-card-4 w3-display-container"
+				ng-if="mvpAddress.config.edit.license==$index">
+				<span ng-click="mvpAddress.config.edit.openLicense($index)"
+					class="w3-button w3-display-topright">×</span> <input
+					ng-change="config_msp.autoSave.fn_change_count()" type="text"
+					class="w3-border" ng-model="license.license_number">,
+				<!-- 
+			<b> Ким видана </b>
+				 -->
+				<br /> <b class="w3-small">Орган що видав:</b> <input
+					ng-change="config_msp.autoSave.fn_change_count()" type="text"
+					class="w3-border" ng-model="license.issued_by">
+				<div>
+					<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
+						ng-init="d=mvpAddress.config.edit.date_types[kda]">
+						<!-- 
+						{{d.p}}
+						{{license[kda]}}
+						 -->
+						<span ng-init="d2e_param=kda;d2e_obj=license;prefix=d.p" ng-include="'/f/mvp1/lib/d2e_dialog.html'">
+						</span>{{$last?'':','}}
+					</span>
+					<!-- 
+					<span
+						ng-repeat="d in [{n:'issued_date',p:'д.видачі.'},{n:'expiry_date',p:'д.закінчення.'},{n:'active_from_date',p:'активний з д.'}]">
+						<span ng-init="d2e_param=d.n;d2e_obj=license;prefix=d.p"
+						ng-include="'/f/mvp1/lib/d2e_dialog.html'"> </span>{{$last?'':','}}
+					</span>
+					 -->
+				</div>
+				<p>
+					<div class="w3-display-bottomright">
+					<a class="w3-btn w3-blue"
+						ng-click="mvpAddress.config.edit.openLicense($index)">Закрити </a>
+					</div>
+				</p>
+			</div>
+		</div>
+	</div>
+	<!-- 
+	<div class="w3-row-padding">
+		<div class="w3-quarter"> <div class="w3-right"> <b> Ким видана </b> </div> </div>
+		<div class="w3-threequarter">
+			<input ng-change="config_msp.autoSave.fn_change_count()" type="text"
+				class="w3-border" ng-model="license.issued_by">
+		</div>
+	</div>
+	 -->
+<!--
+	<div ng-repeat="(k2,v2) in license">
+		{{k2}} --{{v2}}
+	</div>
+	{{license}}
+-->
+</div>
+<!-- 
+<div>
+----------
+</div>
+{{v}}
+ -->

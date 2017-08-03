@@ -99,7 +99,7 @@ initTestAddress = function($scope, $http){
 			}
 			,initDates:function(){
 				$scope.api__legal_entities;
-				console.log($scope.api__legal_entities.owner);
+				//console.log($scope.api__legal_entities.owner);
 				var thisObj = this;
 				this.initDate($scope.api__legal_entities.owner, 'birth_date',thisObj);
 				var msp = $scope.api__legal_entities.medical_service_provider;
@@ -114,8 +114,9 @@ initTestAddress = function($scope, $http){
 			}
 			,initDate:function(o,p,thisObj){
 				var dateObj = o[p];
+				dateObj = dateObj.split('T')[0];
 				var ymd = dateObj.split('-');
-				console.log(ymd);
+				//console.log(ymd);
 				var d = new Date(ymd[0],ymd[1]-1,ymd[2])
 				thisObj.setDateParam(d,o,p);
 			}
@@ -492,7 +493,8 @@ initTestVariables = function($scope, $http, Blob){
 			"phones": "телефони",
 			"owner": "власник",
 			"medical_service_provider": "провайдер медичних послуг",
-			"security": "security?",
+			"security": "Інтернет",
+			"security1": "security?",
 			"public_offer": "публічна пропозиція",
 			children:{
 				"addresses": {
@@ -514,7 +516,38 @@ initTestVariables = function($scope, $http, Blob){
 	}
 
 	console.log($scope.config_msp);
-
+	$scope.config_employee = {
+		keys_dates:['start_date','end_date','inserted_at','updated_at']
+		,dates_col:2
+		,dates_name:{
+			start_date:{title:'дата початку'}
+			,end_date:{title:'дата закінчення'}
+			,inserted_at:{title:'час першого запису'}
+			,updated_at:{title:'час оновлення'}
+		}
+		,fn:{
+			clickable_edit_date:{
+				key_opened:'key of data to edit'
+				,open:function(k, v){
+					if(['start_date','end_date'].indexOf(k)>=0){
+						if(this.key_opened==k)
+							this.key_opened=null;
+						else
+							this.key_opened=k;
+						if(this.key_opened==k){
+							//init to edit
+							var dateObj = $scope.mvpAddress.config.date;
+							console.log(k);
+							console.log(v);
+							console.log(v[k]);
+							console.log(dateObj);
+							dateObj.initDate(v, k, dateObj);
+						}
+					}
+				}
+			} 
+		}
+	}
 	$scope.readMsp = function (msp_id) {
 		console.log(msp_id)
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
@@ -522,6 +555,12 @@ initTestVariables = function($scope, $http, Blob){
 			console.log($scope.api__legal_entities);
 			$scope.mvpAddress.config.date.initDates();
 			$scope.closeMsp();
+		});
+		var url_employee = '/f/config/msp/employee.json';
+		console.log(url_employee);
+		$http.get(url_employee).then( function(response) {
+			$scope.doc_employee = response.data;
+			console.log($scope.doc_employee);
 		});
 	}
 	$scope.newMsp = function(){

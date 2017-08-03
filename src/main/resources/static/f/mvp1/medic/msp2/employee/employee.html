@@ -1,0 +1,24 @@
+<div class="w3-row">
+	<div class="w3-col m{{12-config_employee.dates_col}}">
+		<div ng-include="'/f/mvp1/medic/msp2/employee/employee_party.html'">
+		</div>
+	</div>
+	<div class="w3-col m{{config_employee.dates_col}} w3-card-2">
+		<header class="w3-right-align w3-light-grey w3-tiny">
+			<b> дати </b>
+		</header>
+		<div ng-repeat="k_d in config_employee.keys_dates"
+			ng-init="v_d=config_employee.dates_name[k_d];v_obj=doc_employee.data;v_e=v_obj[k_d]"
+			ng-include="'/f/mvp1/medic/msp2/employee/employee_date.html'">
+		</div>
+	</div>
+</div>
+<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data">
+	<div class="w3-quarter">
+		<div class="w3-right-align">{{k}}</div>
+	</div>
+	<div class="w3-threequarter">--</div>
+</div>
+
+
+{{doc_employee.data}}

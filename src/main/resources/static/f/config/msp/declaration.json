@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "url": "http://example.com/resource",
+    "type": "object",
+    "code": 200,
+    "idempotency_key": "idemp-ssjssdjoa8308u0us0",
+    "request_id": "req-adasdoijasdojsda"
+  },
+  "data": [
+    {
+      "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+      "start_date": "2017-03-02",
+      "end_date": "2017-03-02",
+      "signed_at": "2017-03-02T00:00:00.000Z",
+      "person": {
+        "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+        "first_name": "Петро",
+        "last_name": "Іванов",
+        "second_name": "Миколайович",
+        "birth_date": "1991-08-19",
+        "tax_id": "3126509816",
+        "phones": [
+          {
+            "type": "MOBILE",
+            "number": "+380503410870"
+          }
+        ],
+        "birth_country": "UA",
+        "birth_settlement": "Вінниця",
+        "merged_ids": []
+      },
+      "employee": {
+        "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "position": "P1",
+        "employee_type": "DOCTOR",
+        "status": "NEW",
+        "start_date": "2017-03-02T10:45:16.000Z",
+        "end_date": "2018-03-02T10:45:16.000Z",
+        "party": {
+          "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+          "first_name": "Петро",
+          "last_name": "Іванов",
+          "second_name": "Миколайович"
+        },
+        "division_id": "4cffa825-8b5b-4cba-9a38-fb57733e14b2",
+        "legal_entity": "be3a154c-3e07-496d-9680-f22c443f5d0c",
+        "doctor": {
+          "id": "d290f1ee",
+          "specialities": [
+            {
+              "speciality": "THERAPIST",
+              "speciality_officio": true,
+              "level": "FIRST",
+              "qualification_type": "AWARDING",
+              "attestation_name": "Академія Богомольця",
+              "attestation_date": "2017",
+              "valid_to_date": "2020",
+              "certificate_number": "AB/21331"
+            }
+          ]
+        }
+      },
+      "division": {
+        "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "name": "Бориспільське відділення Клініки Борис",
+        "legal_entity_id": "d290f1ee",
+        "type": "clinic",
+        "status": "ACTIVE",
+        "mountain_group": "group1"
+      },
+      "legal_entity": {
+        "id": "d290f1ee",
+        "name": "Клініка ЦПМСД №1",
+        "short_Name": "ЦПМСД №1",
+        "legal_form": "140",
+        "public_name": "ЦПМСД №1",
+        "edrpou": "5432345432",
+        "status": "ACTIVE",
+        "email": "email@example.com",
+        "phones": [
+          {
+            "type": "MOBILE",
+            "number": "+380503410870"
+          }
+        ],
+        "addresses": [
+          {
+            "type": "RESIDENCE",
+            "country": "UA",
+            "area": "Житомирська",
+            "region": "Бердичівський",
+            "settlement": "Київ",
+            "settlement_type": "CITY",
+            "settlement_id": "43432432",
+            "street_type": "STREET",
+            "street": "вул. Ніжинська",
+            "building": "15",
+            "apartment": "23",
+            "zip": "02090"
+          }
+        ]
+      },
+      "status": "active",
+      "scope": "family doctor",
+      "declaration_request_id": "74a6fae6-4207-4e03-a136-f2e70c6b0c02",
+      "inserted_at": "2017-03-02T10:45:16.000Z",
+      "updated_at": "2017-03-02T10:45:16.000Z"
+    }
+  ],
+  "paging": {
+    "limit": 20,
+    "cursors": {
+      "starting_after": "56c31536a60ad644060041af",
+      "ending_before": "56c31536a60ad644060041aa"
+    },
+    "size": 1000,
+    "has_more": false
+  }
+}

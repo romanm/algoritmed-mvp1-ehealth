@@ -36,10 +36,10 @@
 				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">_</span>
 		 </header>
 		<div ng-if="!config_msp_all.registry_doctor_dialog_open">
-		--
+			Після вибору лікарні відкриється вибір лікарів цієї лікарні.
 		</div>
 		<div ng-if="config_msp_all.registry_doctor_dialog_open">
-		-1-
+			<div ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
 		</div>
 
 	</div>

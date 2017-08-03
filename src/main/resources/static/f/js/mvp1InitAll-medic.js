@@ -267,8 +267,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}
 	$scope.config_msp_all={
 		registry_dialog_open:true
-		,registry_msp_dialog_open:true
-		,registry_doctor_dialog_open:false
+		,registry_msp_dialog_open:false
+		,registry_doctor_dialog_open:true
 		,registry_patient_dialog_open:false
 		,msp_index:0
 		,msp_list:[
