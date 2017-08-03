@@ -1,7 +1,9 @@
 {{prefix}}
 <span class="w3-dropdown-hover">
 {{d2e_obj['d2e_'+d2e_param] | date: 'dd'}}
-<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
+<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue"
+ style="right:-90px"
+>
 	<table class="w3-table">
 		<tr ng-repeat="w in mvpAddress.config.date.month_days">
 			<td ng-click="mvpAddress.config.date.changeDay(d, d2e_obj, d2e_param)"
@@ -14,10 +16,10 @@
 </span> - 
 <span class="w3-dropdown-hover w3-hover-gray">
 {{d2e_obj['d2e_'+d2e_param] | date: 'MMM'}} 
-<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
+<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue " style="right:-20px">
 	<table class="w3-table">
 		<tr>
-			<td class="w3-tiny">{{mvpAddress.config.date.getMonth(d2e_obj, d2e_param)}}</td>
+			<td></td>
 			<td
 				ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==6}"
 				ng-click="mvpAddress.config.date.changeMonth(6, d2e_obj, d2e_param)"
@@ -28,7 +30,7 @@
 			<td 
 				ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==8}"
 				ng-click="mvpAddress.config.date.changeMonth(8, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">сер</td>
-			<td></td>
+			<td class="w3-tiny">{{mvpAddress.config.date.getMonth(d2e_obj, d2e_param)}}</td>
 		</tr>
 		<tr>
 			<td 
@@ -83,7 +85,9 @@
 <input ng-change="mvpAddress.config.date.changeYear(d2e_obj['d2e_year_'+d2e_param], d2e_obj, d2e_param)" type="number"
  style="width: 75px;" 
 	class="w3-border" ng-model="d2e_obj['d2e_year_'+d2e_param]">
-	<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue ">
+	<span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue"
+	 style="right:-20px"
+	>
 		<div style="max-height: 200px; overflow: auto;">
 				<table class="w3-table">
 					<tr ng-repeat="y5 in mvpAddress.config.date.yearList">
