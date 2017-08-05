@@ -1,8 +1,9 @@
-<select ng-model="phone.type"
-	ng-change="config_msp.autoSave.fn_change_count()">
-	<option ng-repeat="t in mvpAddress.config.phone_types"
-		value="{{t}}">{{mvpAddress.config.type[t]}}</option>
-</select> 
+
+<select ng-model="phone.type">
+	<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('PHONE_TYPE').values"
+		value="{{k}}">{{v}}</option>
+</select>
+
 <input ng-change="config_msp.autoSave.fn_change_count()"
 class="w3-border"
 	ng-model="phone.number">

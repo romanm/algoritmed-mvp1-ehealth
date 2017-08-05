@@ -270,6 +270,20 @@ initTestAddress = function($scope, $http){
 			,SECOND:'вторинна'
 			,THIRD:'тритинна'
 		}
+		,initCCDictionaries:function(){
+//			console.log($scope.doc_dictionaries.response.data);
+			$scope.doc_dictionaries.response.keys = {};
+			angular.forEach($scope.doc_dictionaries.response.data, function(v, k){
+				$scope.doc_dictionaries.response.keys[v.name] = k;
+			});
+//			console.log($scope.doc_dictionaries.response.keys);
+			console.log(this.selectDictionary('GENDER').values);
+		}
+		,selectDictionary:function(k){
+			var i = $scope.doc_dictionaries.response.keys[k];
+			var v = $scope.doc_dictionaries.response.data[i];
+			return v;
+		}
 	};
 
 	$scope.mvpAddress.config.date.initYearsLists();
@@ -561,6 +575,12 @@ initTestVariables = function($scope, $http, Blob){
 		$http.get(url_employee).then( function(response) {
 			$scope.doc_employee = response.data;
 			console.log($scope.doc_employee);
+		});
+		var url_dictionaries = '/f/config/msp/dictionaries.json';
+		console.log(url_dictionaries);
+		$http.get(url_dictionaries).then( function(response) {
+			$scope.doc_dictionaries = response.data;
+			$scope.mvpAddress.config.initCCDictionaries();
 		});
 	}
 	$scope.newMsp = function(){

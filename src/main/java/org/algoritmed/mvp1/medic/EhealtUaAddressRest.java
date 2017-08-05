@@ -28,8 +28,9 @@ public class EhealtUaAddressRest {
 		registryWebClient.apiGet(map);
 		return map;
 	}
+
 	@GetMapping(value = "/r/gcc/{u1}/{u2}/{u3}/{u4}/{u5}")
-	public @ResponseBody Map<String, Object>  u4(@PathVariable String u1 ,@PathVariable String u2 ,@PathVariable String u3 
+	public @ResponseBody Map<String, Object>  u5(@PathVariable String u1 ,@PathVariable String u2 ,@PathVariable String u3 
 			,@PathVariable String u4 ,@PathVariable String u5
 			,HttpServletRequest request
 			) {
@@ -51,6 +52,11 @@ public class EhealtUaAddressRest {
 	public @ResponseBody Map<String, Object>  u2(@PathVariable String u1,@PathVariable String u2
 			,HttpServletRequest request) {
 		return goCC(request, "/"+u1+"/"+u2);
+	}
+	@GetMapping(value = "/r/gcc/{u1}")
+	public @ResponseBody Map<String, Object>  u1(@PathVariable String u1,HttpServletRequest request) {
+		System.err.println("/r/gcc/{u1}");
+		return goCC(request, "/"+u1);
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(EhealtUaAddressRest.class);
