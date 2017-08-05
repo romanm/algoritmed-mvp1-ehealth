@@ -242,6 +242,13 @@ initTestAddress = function($scope, $http){
 		}
 		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated']
 		,isNotEditField:function(k){ return !(this.fields_not_edit.indexOf(k)>=0); }
+		,minusListElement:function(v, index){
+			v.splice(index,1);
+		}
+		,plusListElement:function(v){
+			var np = JSON.parse(JSON.stringify(v[0]));
+			v.push(np)
+		}
 		,minusPhone:function(v, index){
 			v.splice(index,1);
 			$scope.config_msp.autoSave.fn_change_count();

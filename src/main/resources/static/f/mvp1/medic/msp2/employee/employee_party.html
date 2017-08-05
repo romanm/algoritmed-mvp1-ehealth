@@ -17,19 +17,24 @@
 			ng-model="doc_employee.data.party.second_name">
 		Стать
 		<select ng-model="doc_employee.data.party.gender">
-		<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('GENDER').values"
-					value="{{k}}">{{v}}</option>
+			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('GENDER').values"
+				value="{{k}}">{{v}}</option>
 		</select>
-		Ідентифікаційний номер 
-		<input ng-change="config_msp.autoSave.fn_change_count()"
-			placeholder="Ідентифікаційний номер" class="w3-border"
-			ng-model="doc_employee.data.party.tax_id">
+		<div>
+			Ідентифікаційний номер 
+			<input ng-change="config_msp.autoSave.fn_change_count()"
+				placeholder="Ідентифікаційний номер" class="w3-border"
+				ng-model="doc_employee.data.party.tax_id">
+		</div>
 		<div>
 			Емайл 
 			<input ng-change="config_msp.autoSave.fn_change_count()"
 				placeholder="Емайл" class="w3-border"
 				ng-model="doc_employee.data.party.email">
 		</div>
+
+		<div ng-include="'/f/mvp1/lib/documents_dialog.html'"
+			ng-init="obj=doc_employee.data.party"></div>
 
 		<div class="w3-row-padding">
 			<div class="w3-quarter ">
@@ -48,13 +53,15 @@
 		 -->
 			</div>
 		</div>
+		<!-- 
 		--
-<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data.party">
-	<div class="w3-quarter">
-		<div class="w3-right-align">{{k}}</div>
-	</div>
-	<div class="w3-threequarter">-{{v}}-</div>
-</div>
+		<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data.party">
+			<div class="w3-quarter">
+				<div class="w3-right-align">{{k}}</div>
+			</div>
+			<div class="w3-threequarter">-{{v}}-</div>
+		</div>
+		 -->
 	</div>
 </div>
 <!-- 
