@@ -1,0 +1,34 @@
+<b> {{1+$index}}. </b>
+№ сертифіката
+<input ng-change="config_msp.autoSave.fn_change_count()"
+	placeholder="№ сертифіката" class="w3-border"
+	ng-model="doc.certificate_number">
+<div>
+тип документа
+ <select ng-model="doc.type">
+		<option
+			ng-repeat="(k,v) in mvpAddress.config.selectDictionary('QUALIFICATION_TYPE').values"
+			value="{{k}}">{{v}}</option>
+	</select>
+	Спеціальність <select ng-model="doc.speciality">
+		<option
+			ng-repeat="(k,v) in mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values"
+			value="{{k}}">{{v}}</option>
+	</select>
+</div>
+<div>
+	Установа що видала
+	<textarea ng-change="config_msp.autoSave.fn_change_count()" row="2"
+		placeholder="Установа що видала" class="w3-border"
+		ng-model="doc.institution_name"></textarea>
+</div>
+<div>
+	Рік видачі <input ng-change="config_msp.autoSave.fn_change_count()"
+		class="w3-border" ng-model="doc.issued_date">
+	Дійсний до  <input ng-change="config_msp.autoSave.fn_change_count()"
+		class="w3-border" ng-model="doc.valid_to">
+		року
+</div>
+<!-- 
+{{doc}}
+ -->

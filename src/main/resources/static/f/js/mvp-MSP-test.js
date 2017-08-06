@@ -276,6 +276,10 @@ initTestAddress = function($scope, $http){
 			,FIRST:'первинка'
 			,SECOND:'вторинна'
 			,THIRD:'тритинна'
+			,educations:'освіта'
+			,qualifications:'кваліфікація'
+			,specialities:'спеціалізація'
+			,science_degree:'наукова ступінь'
 		}
 		,initCCDictionaries:function(){
 //			console.log($scope.doc_dictionaries.response.data);

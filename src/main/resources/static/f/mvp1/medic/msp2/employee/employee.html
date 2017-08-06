@@ -6,6 +6,11 @@
 			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('POSITION').values"
 				value="{{k}}">{{v}}</option>
 		</select>
+		Тип працівника
+			<select ng-model="doc_employee.data.employee_type">
+			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('EMPLOYEE_TYPE').values"
+				value="{{k}}">{{v}}</option>
+		</select>
 		</div>
 		<div ng-include="'/f/mvp1/medic/msp2/employee/employee_party.html'">
 		</div>
@@ -20,12 +25,24 @@
 		</div>
 	</div>
 </div>
-<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data">
-	<div class="w3-quarter">
-		<div class="w3-right-align">{{k}}</div>
+<!-- 
+		ng-if="!(['position','employee_type'].indexOf(k)>=0) || v.isObject()" 
+ -->
+ <!-- 
+<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data"
+		ng-if="v.isObject()" 
+		>
+	<div class="w3-col m1">
+		<div class="w3-right-align">{{k}}
+		{{!(['position','employee_type'].indexOf(k)>=0)}}
+		</div>
 	</div>
-	<div class="w3-threequarter">--</div>
+	<div class="w3-col m11">--
+	{{v.isObject()}}
+	{{v}}
+	</div>
 </div>
-
-
+  -->
+<!-- 
 {{doc_employee.data}}
+ -->

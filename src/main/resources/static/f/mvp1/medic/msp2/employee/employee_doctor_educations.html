@@ -1,0 +1,33 @@
+<div class="">
+<b> {{1+$index}}. </b>
+№ диплома
+<input ng-change="config_msp.autoSave.fn_change_count()"
+	placeholder="Спеціальність" class="w3-border"
+	ng-model="doc.diploma_number">
+<div>
+	<span title="Рівень освіти"> Діплом </span> <select
+		ng-model="doc.degree">
+		<option
+			ng-repeat="(k,v) in mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values"
+			value="{{k}}">{{v}}</option>
+	</select> Спеціальність <select ng-model="doc.speciality">
+		<option
+			ng-repeat="(k,v) in mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values"
+			value="{{k}}">{{v}}</option>
+	</select>
+</div>
+<div>
+	Установа що видала
+	<textarea ng-change="config_msp.autoSave.fn_change_count()" row="2"
+		placeholder="Установа що видала" class="w3-border"
+		ng-model="doc.institution_name"></textarea>
+</div>
+	Місто <input ng-change="config_msp.autoSave.fn_change_count()"
+		placeholder="Місто" class="w3-border" ng-model="doc.city">
+	Рік видачі <input ng-change="config_msp.autoSave.fn_change_count()"
+		class="w3-border" ng-model="doc.issued_date">
+
+</div>
+<!-- 
+{{doc}}
+ -->

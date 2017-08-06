@@ -1,0 +1,25 @@
+№ диплома
+<input ng-change="config_msp.autoSave.fn_change_count()"
+	placeholder="Спеціальність" class="w3-border"
+	ng-model="doc.diploma_number">
+ Ступінь
+<input ng-change="config_msp.autoSave.fn_change_count()"
+	placeholder="Ступінь" class="w3-border" ng-model="doc.degree">
+<div>
+	Установа що видала
+	<textarea ng-change="config_msp.autoSave.fn_change_count()" row="2"
+		placeholder="Установа що видала" class="w3-border"
+		ng-model="doc.institution_name"></textarea>
+</div>
+<div>
+	Місто <input ng-change="config_msp.autoSave.fn_change_count()"
+		placeholder="Місто" class="w3-border" ng-model="doc.city">
+	<!-- 
+type="number"
+ -->
+	Рік видачі <input ng-change="config_msp.autoSave.fn_change_count()"
+		class="w3-border" ng-model="doc.issued_date">
+</div>
+<!-- 
+{{doc}}
+ -->
