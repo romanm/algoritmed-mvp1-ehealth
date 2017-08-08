@@ -46,15 +46,13 @@
 
 	<div class="w3-card-2">
 		<header class="w3-light-gray w3-container">
-			<span class="w3-circle w3-border w3-yellow">&nbsp;3&nbsp;</span> ...пацієнта
-		 <span class="w3-right w3-hover-gray"
+			<span class="w3-circle w3-border w3-yellow">&nbsp;3&nbsp;</span>
+			...пацієнта <span class="w3-right w3-hover-gray"
 				ng-click="config_msp_all.registry_patient_dialog_open=!config_msp_all.registry_patient_dialog_open">_</span>
-			</header>
-		<div ng-if="!config_msp_all.registry_patient_dialog_open">
-		--
-		</div>
-		<div ng-if="config_msp_all.registry_patient_dialog_open">
-		-1-
+		</header>
+		<div ng-if="!config_msp_all.registry_patient_dialog_open">--</div>
+		<div ng-if="config_msp_all.registry_patient_dialog_open"
+			ng-include="'/f/mvp1/medic/msp2/declaration/declaration.html'">
 		</div>
 	</div>
 

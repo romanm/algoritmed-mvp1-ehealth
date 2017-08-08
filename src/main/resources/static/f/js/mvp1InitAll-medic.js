@@ -268,8 +268,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	$scope.config_msp_all={
 		registry_dialog_open:true
 		,registry_msp_dialog_open:false
-		,registry_doctor_dialog_open:true
-		,registry_patient_dialog_open:false
+		,registry_doctor_dialog_open:false
+		,registry_patient_dialog_open:true
 		,msp_index:0
 		,msp_list:[
 			{msp_public_name:'цПМСД Nr1 "Поділля - Дубово"'}

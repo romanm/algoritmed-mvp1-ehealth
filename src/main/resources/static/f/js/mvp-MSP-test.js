@@ -543,10 +543,12 @@ initTestVariables = function($scope, $http, Blob){
 	console.log($scope.config_msp);
 	$scope.config_employee = {
 		keys_dates:['start_date','end_date','inserted_at','updated_at']
+		,keys_dates_declaration:['start_date','end_date','signed_at']
 		,dates_col:2
 		,dates_name:{
 			start_date:{title:'дата початку'}
 			,end_date:{title:'дата закінчення'}
+			,signed_at:{title:'дата підпису'}
 			,inserted_at:{title:'час першого запису'}
 			,updated_at:{title:'час оновлення'}
 		}
@@ -586,6 +588,13 @@ initTestVariables = function($scope, $http, Blob){
 		$http.get(url_employee).then( function(response) {
 			$scope.doc_employee = response.data;
 			console.log($scope.doc_employee);
+		});
+		var url_declaration = '/f/config/msp/declaration.json';
+		console.log(url_declaration);
+		$http.get(url_declaration).then( function(response) {
+			$scope.doc_declaration = response.data.data[0];
+			console.log($scope.doc_declaration);
+			console.log($scope.doc_declaration.employee);
 		});
 		var url_dictionaries = '/f/config/msp/dictionaries.json';
 		console.log(url_dictionaries);
