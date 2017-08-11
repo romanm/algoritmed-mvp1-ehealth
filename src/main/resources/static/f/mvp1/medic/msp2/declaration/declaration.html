@@ -17,99 +17,13 @@
 
 <h2>Декларація пацієнта</h2>
 
-<!-- 
-Від лиця
- -->
-<b class="w3-large">
-Пацієнт:
-</b>
-<input ng-change="config_msp.autoSave.fn_change_count()"
-	placeholder="Призвище" class="w3-border"
-	ng-model="doc_declaration.person.last_name"> 
-<input
-	ng-change="config_msp.autoSave.fn_change_count()" placeholder="Ім'я"
-	class="w3-border" ng-model="doc_declaration.person.first_name">
-<input ng-change="config_msp.autoSave.fn_change_count()"
-	placeholder="По батькові" class="w3-border"
-	ng-model="doc_declaration.person.second_name">
-<div>
-<b>
-Дата народження:
-</b>
-<span title="{{doc_declaration.person.birth_date}}"> {{doc_declaration.person.birth_date | date : 'dd-MMM-yyyy'}}</span>,
-<b>
-Місце народження:
-</b>
-<input ng-change="config_msp.autoSave.fn_change_count()"
-	placeholder="Місце народження" class="w3-border"
-	ng-model="doc_declaration.person.birth_settlement">
-</div>
-<div>
-Ідентифікаційний номер <input
-	ng-change="config_msp.autoSave.fn_change_count()"
-	placeholder="Ідентифікаційний номер" class="w3-border"
-	ng-model="doc_employee.data.party.tax_id">
-</div>
-<div class="w3-row-padding">
-	<div class="w3-quarter ">
-		<div class="w3-right">
-			<b> Телефони </b>
-		</div>
-	</div>
-	<div class="w3-threequarter">
-		<div
-			ng-repeat="phone in doc_declaration.person.phones track by $index"
-			ng-init="phoneList=doc_declaration.person.phones"
-			ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
-	</div>
-</div>
-	<div class="w3-right-align w3-small">
-		<b> У випадку наявності дубляжа даних пацієнта, поєднати з </b>
-		<span title="merged_ids">
-		{{doc_declaration.person.merged_ids}}
-		</span>
-	</div>
-	
-<b class="w3-large">
-Лікар:
-</b> <span> <span title="{{doc_declaration.employee.party.id}}">
-			{{doc_declaration.employee.party.last_name}}
-			{{doc_declaration.employee.party.first_name}}
-			{{doc_declaration.employee.party.second_name}} </span>
-	</span>
-	<div>
-	<div ng-repeat="s in doc_declaration.employee.doctor.specialities">
-	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[s.speciality]}},
-	<span>
-		Тип пройденої кваліфікації:
-		<!-- 
-		Курси післядипломної освіти 
-		 -->
-		{{mvpAddress.config.selectDictionary('QUALIFICATION_TYPE').values[s.qualification_type]}}.
-	</span>
-	<span>
-		<!-- 
-		Категорія 
-		 -->
-		{{mvpAddress.config.selectDictionary('SPECIALITY_LEVEL').values[s.level]}}
-	</span>
-	<div>
-	Установа: {{s.attestation_name}}
-	</div>
-	Рік атестації
-	{{s.attestation_date}}
-	дійсна до
-	{{s.valid_to_date}}
-	Комісію {{s.speciality_officio?'':' не '}} пройдено.
-	Сертифікат № 
-	{{s.certificate_number}}
-	</div>
-	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc_declaration.employee.doctor.speciality]}}
-	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE')}}
-	{{doc_declaration.employee.doctor}}</div>
-	<div>{{doc_declaration.employee.keys()}}</div>
-</div>
+<div ng-include="'/f/mvp1/medic/msp2/declaration/declaration_person.html'"></div>
+<div ng-include="'/f/mvp1/medic/msp2/declaration/declaration_employee.html'"></div>
+<div ng-include="'/f/mvp1/medic/msp2/declaration/declaration_division.html'"></div>
+<div ng-include="'/f/mvp1/medic/msp2/declaration/declaration_legal_entity.html'"></div>
 
+<!-- 
+<hr>
 <div class="w3-row-padding"
 	ng-repeat="(k,v) in doc_declaration">
 	<div class="w3-col m2">
@@ -119,3 +33,4 @@
 </div>
 doc_declaration
 {{doc_declaration}}
+ -->

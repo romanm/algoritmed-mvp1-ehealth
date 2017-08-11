@@ -1,0 +1,32 @@
+<b class="w3-large"1> Лікар: </b>
+<span> <span title="{{doc_declaration.employee.party.id}}">
+		{{doc_declaration.employee.party.last_name}}
+		{{doc_declaration.employee.party.first_name}}
+		{{doc_declaration.employee.party.second_name}} </span>
+</span>
+<div>
+	<div ng-repeat="s in doc_declaration.employee.doctor.specialities">
+		{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[s.speciality]}},
+		<span> Тип пройденої кваліфікації: <!-- 
+		Курси післядипломної освіти 
+		 -->
+			{{mvpAddress.config.selectDictionary('QUALIFICATION_TYPE').values[s.qualification_type]}}.
+		</span> <span> <!-- 
+		Категорія 
+		 -->
+			{{mvpAddress.config.selectDictionary('SPECIALITY_LEVEL').values[s.level]}}
+		</span>
+		<div>Установа: {{s.attestation_name}}</div>
+		Рік атестації {{s.attestation_date}} дійсна до {{s.valid_to_date}}
+		Комісію {{s.speciality_officio?'':' не '}} пройдено. Сертифікат №
+		{{s.certificate_number}}
+	</div>
+	<!-- 
+	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc_declaration.employee.doctor.speciality]}}
+	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE')}}
+	 -->
+</div>
+<!-- 
+{{doc_declaration.employee.doctor}}
+<div>{{doc_declaration.employee.keys()}}</div>
+ -->

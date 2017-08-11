@@ -1,0 +1,36 @@
+<div class="w3-row-padding">
+	<div class="w3-col m1 w3-right-align">
+		<b>ЛПЗ</b>
+	</div>
+	<div class="w3-col m11">
+		<div>
+			{{mvpAddress.config.selectDictionary('LEGAL_FORM').values[doc_declaration.legal_entity.legal_form]}}
+		</div>
+		<div>{{doc_declaration.legal_entity.public_name}}</div>
+	</div>
+</div>
+<div class="w3-row-padding">
+	<div class="w3-col m1 w3-right-align">Контактні дані</div>
+	<div class="w3-col m11">
+		<div ng-repeat="phone in doc_declaration.legal_entity.phones">
+			{{mvpAddress.config.selectDictionary('PHONE_TYPE').values[phone.type]}}
+			{{phone.number}}</div>
+		<div>{{doc_declaration.legal_entity.email}}</div>
+		<div ng-repeat="a in doc_declaration.legal_entity.addresses">
+			{{mvpAddress.config.selectDictionary('ADDRESS_TYPE').values[a.type]}}
+			{{a.zip}} обл. {{a.area}} р-н. {{a.region}}
+			{{mvpAddress.config.selectDictionary('SETTLEMENT_TYPE').values[a.settlement_type]}}
+			{{a.settlement}}
+			{{mvpAddress.config.selectDictionary('STREET_TYPE').values[a.street_type]}}
+			{{a.street}} буд. {{a.building}} <span ng-if="a.appartment!=null">
+				кв. {{a.appartment}} </span> 
+				<!-- 
+				{{a.keys()}} {{a}}
+				 -->
+		</div>
+
+	</div>
+</div>
+<!-- 
+<div>{{doc_declaration.legal_entity}}</div>
+ -->
