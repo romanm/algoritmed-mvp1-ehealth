@@ -1,7 +1,7 @@
 <div class="">
 <b> {{1+$index}}. </b>
 № диплома
-<input ng-change="config_msp.autoSave.fn_change_count()"
+<input ng-change="config_employee.autoSave.fn_change_count()"
 	placeholder="Спеціальність" class="w3-border"
 	ng-model="doc.diploma_number">
 <div>
@@ -18,13 +18,13 @@
 </div>
 <div>
 	Установа що видала
-	<textarea ng-change="config_msp.autoSave.fn_change_count()" row="2"
+	<textarea ng-change="config_employee.autoSave.fn_change_count()" row="2"
 		placeholder="Установа що видала" class="w3-border"
 		ng-model="doc.institution_name"></textarea>
 </div>
-	Місто <input ng-change="config_msp.autoSave.fn_change_count()"
+	Місто <input ng-change="config_employee.autoSave.fn_change_count()"
 		placeholder="Місто" class="w3-border" ng-model="doc.city">
-	Рік видачі <input ng-change="config_msp.autoSave.fn_change_count()"
+	Рік видачі <input ng-change="config_employee.autoSave.fn_change_count()"
 		class="w3-border" ng-model="doc.issued_date">
 
 </div>

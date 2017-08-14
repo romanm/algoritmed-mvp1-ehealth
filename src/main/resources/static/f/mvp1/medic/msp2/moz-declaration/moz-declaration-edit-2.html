@@ -1,0 +1,44 @@
+<div class="w3-yellow w3-container">
+	<b class="w3-text-blue">2</b> Контактні данні
+</div>
+<div class="w3-row">
+	<div class="w3-twothird w3-small">
+		<span class="w3-text-gray w3-tiny">2.1</span> Контактний телефон
+	</div>
+	<div class="w3-third w3-tiny w3-text-gray">рекомендовано
+		мобільний</div>
+</div>
+<div class="w3-row">
+	<div class="w3-col m2 l2 s3 w3-tiny w3-text-gray">+38</div>
+	<div class="w3-col m10 l10 s9 w3-small">
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="doc_declaration.person.phones[0].number"
+			class="w3-border am-width-100pr w3-right-align">
+	</div>
+</div>
+<label class="w3-tiny"> <input type="checkbox"> <span
+	class="w3-text-gray w3-tiny" title="Мобільний телефон відсутній">Моб.
+		телефон відсутній</span>
+</label>
+<div>
+	<div class="w3-small">
+		<span class="w3-text-gray w3-tiny">2.2</span> Слово-пароль для
+		ідентифікації по телефону
+	</div>
+	<input ng-change="config_declaration.autoSave.fn_change_count()"
+		ng-model="doc_declaration.person.sms"
+		class="w3-border am-width-100pr">
+	<div class="w3-text-gray w3-tiny">літери української абетки та
+		цифри всього не менше шести знаків</div>
+</div>
+
+
+<div>
+	<div class="w3-small">
+		<span class="w3-text-gray w3-tiny">2.3</span> Адреса електронної пошти
+	</div>
+	<input ng-change="config_declaration.autoSave.fn_change_count()"
+		ng-model="doc_declaration.person.email"
+		class="w3-border am-width-100pr">
+	<div class="w3-text-gray w3-tiny w3-right-align">за наявності</div>
+</div>

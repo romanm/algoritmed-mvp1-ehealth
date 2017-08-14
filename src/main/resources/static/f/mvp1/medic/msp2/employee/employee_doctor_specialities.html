@@ -2,7 +2,7 @@
 	<b> {{1+$index}}. </b> 
 	№ сертифіката 
 	<input
-		ng-change="config_msp.autoSave.fn_change_count()"
+		ng-change="config_employee.autoSave.fn_change_count()"
 		placeholder="№ сертифіката" class="w3-border"
 		ng-model="doc.certificate_number">
 	<div>
@@ -27,18 +27,18 @@
 
 	<div>
 		Установа що видала
-		<textarea ng-change="config_msp.autoSave.fn_change_count()" row="2"
+		<textarea ng-change="config_employee.autoSave.fn_change_count()" row="2"
 			placeholder="Установа що видала" class="w3-border"
 			ng-model="doc.attestation_name"></textarea>
 	</div>
 	<div>
-		Рік видачі <input ng-change="config_msp.autoSave.fn_change_count()"
+		Рік видачі <input ng-change="config_employee.autoSave.fn_change_count()"
 			class="w3-border" ng-model="doc.attestation_date"> Дійсний до
-		<input ng-change="config_msp.autoSave.fn_change_count()"
+		<input ng-change="config_employee.autoSave.fn_change_count()"
 			class="w3-border" ng-model="doc.valid_to_date"> року
 	</div>
 	<label> Комісія <input
-		ng-change="config_msp.autoSave.fn_change_count()" type="checkbox"
+		ng-change="config_employee.autoSave.fn_change_count()" type="checkbox"
 		ng-model="doc.speciality_officio">
 	</label>
 

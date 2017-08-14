@@ -17,12 +17,33 @@
 	,"fa":"fa-sign-in"
 	,"parent":"home"
 }
+,"moz-declaration":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/msp2/moz-declaration/moz-declaration.html'"
+	,"shortName":"Декларація"
+	,"fa":"fa-user"
+	,"parent":"home"
+}
+,"moz-declaration-edit":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit.html'"
+	,"shortName":"Декларація"
+	,"fa":"fa-user"
+	,"parent":"home1"
+}
+,"human-resources-department":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/human-resources-department.html'"
+	,"shortName":"Відділ кадрів"
+	,"fa":"fa-user"
+	,"parent":"home1"
+}
 ,"newDoctor":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/newDoctor.html'"
 	,"shortName":"Зареєструватись"
 	,"fa":"fa-sign-in"
-	,"parent":"home"
+	,"parent":"home1"
 }
 ,"info":{
 	"th_template":"mvp1-medic"

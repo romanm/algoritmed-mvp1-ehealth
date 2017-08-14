@@ -2,6 +2,9 @@ function initMSPtest($http, $scope, $filter, $timeout, Blob){
 	console.log('----initMSP-test---------------'+$scope.pagePath.last());
 	if('registry' == $scope.pagePath.last()
 	||'testMvpMedic' == $scope.pagePath.last()
+	||'human-resources-department' == $scope.pagePath.last()
+	||'moz-declaration-edit' == $scope.pagePath.last()
+	||'moz-declaration' == $scope.pagePath.last()
 	){
 //		console.log('----initTestVariables---------------');
 		initTestVariables($scope, $http, Blob);
@@ -486,11 +489,10 @@ initTestVariables = function($scope, $http, Blob){
 			a.click();
 			window.URL.revokeObjectURL(url);
 			delete a;
+//			'obj_path':['api__legal_entities'],
 		}
-		,'autoSave':{
-			'obj_path':['api__legal_entities']
-			,'config_object_name':'config_msp'
-			,'fn_httpSave':function(){
+		,autoSave:{
+			fn_httpSave:function(){
 				console.log('--config_msp.autoSave.fn_httpSave--------------');
 				console.log(this);
 				$http.post('/r/saveMsp', $scope.api__legal_entities).then(function(response) {
@@ -502,7 +504,71 @@ initTestVariables = function($scope, $http, Blob){
 			}
 		}
 	}
-	$scope.config_all.init($scope.config_msp);
+	$scope.config_all.init('config_msp');
+	$scope.config_declaration = {
+		autoSave:{
+			fn_httpSave:function(){
+				console.log('--config_declaration.autoSave.fn_httpSave--------------');
+				console.log(this);
+				$http.post('/r/saveDeclaration', $scope.doc_declaration).then(function(response) {
+					console.log(response.data);
+					if(!$scope.doc_declaration.doc_id){
+						$scope.doc_declaration.doc_id = response.data.doc_id
+					}
+				});
+			}
+		}
+	}
+	$scope.config_all.init('config_declaration');
+
+	$scope.config_employee = {
+		keys_dates:['start_date','end_date','inserted_at','updated_at']
+		,keys_dates_declaration:['start_date','end_date','signed_at']
+		,dates_col:2
+		,dates_name:{
+			start_date:{title:'дата початку'}
+			,end_date:{title:'дата закінчення'}
+			,signed_at:{title:'дата підпису'}
+			,inserted_at:{title:'час першого запису'}
+			,updated_at:{title:'час оновлення'}
+		}
+		,fn:{
+			clickable_edit_date:{
+				key_opened:'key of data to edit'
+				,open:function(k, v){
+					if(['start_date','end_date'].indexOf(k)>=0){
+						if(this.key_opened==k)
+							this.key_opened=null;
+						else
+							this.key_opened=k;
+						if(this.key_opened==k){
+							//init to edit
+							var dateObj = $scope.mvpAddress.config.date;
+							console.log(k);
+							console.log(v);
+							console.log(v[k]);
+							console.log(dateObj);
+							dateObj.initDate(v, k, dateObj);
+						}
+					}
+				}
+			} 
+		}
+		,autoSave:{
+			fn_httpSave:function(){
+				console.log('--config_employee.autoSave.fn_httpSave--------------');
+				console.log(this);
+				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response) {
+					console.log(response.data);
+					if(!$scope.doc_employee.doc_id){
+						$scope.doc_employee.doc_id = response.data.doc_id
+					}
+				});
+			}
+		}
+	}
+	$scope.config_all.init('config_employee');
+	
 	$scope.config_msp.registry_field_name_ua = {
 		'api__legal_entities':{
 			'name':'назва ГПМД'
@@ -539,42 +605,7 @@ initTestVariables = function($scope, $http, Blob){
 			}
 		}
 	}
-
-	console.log($scope.config_msp);
-	$scope.config_employee = {
-		keys_dates:['start_date','end_date','inserted_at','updated_at']
-		,keys_dates_declaration:['start_date','end_date','signed_at']
-		,dates_col:2
-		,dates_name:{
-			start_date:{title:'дата початку'}
-			,end_date:{title:'дата закінчення'}
-			,signed_at:{title:'дата підпису'}
-			,inserted_at:{title:'час першого запису'}
-			,updated_at:{title:'час оновлення'}
-		}
-		,fn:{
-			clickable_edit_date:{
-				key_opened:'key of data to edit'
-				,open:function(k, v){
-					if(['start_date','end_date'].indexOf(k)>=0){
-						if(this.key_opened==k)
-							this.key_opened=null;
-						else
-							this.key_opened=k;
-						if(this.key_opened==k){
-							//init to edit
-							var dateObj = $scope.mvpAddress.config.date;
-							console.log(k);
-							console.log(v);
-							console.log(v[k]);
-							console.log(dateObj);
-							dateObj.initDate(v, k, dateObj);
-						}
-					}
-				}
-			} 
-		}
-	}
+	
 	$scope.readMsp = function (msp_id) {
 		console.log(msp_id)
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
@@ -593,8 +624,12 @@ initTestVariables = function($scope, $http, Blob){
 		console.log(url_declaration);
 		$http.get(url_declaration).then( function(response) {
 			$scope.doc_declaration = response.data.data[0];
-			console.log($scope.doc_declaration);
-			console.log($scope.doc_declaration.employee);
+			var ad = $scope.doc_declaration.legal_entity.addresses[0];
+			$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
+			console.log($scope.doc_declaration.person.address);
+			$scope.doc_declaration.person.registry={};
+			$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
+			console.log($scope.doc_declaration.person.registry);
 		});
 		var url_dictionaries = '/f/config/msp/dictionaries.json';
 		console.log(url_dictionaries);

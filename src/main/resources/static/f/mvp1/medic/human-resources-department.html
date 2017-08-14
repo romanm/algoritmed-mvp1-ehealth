@@ -1,0 +1,27 @@
+<div class="w3-container">
+	<h2 class="w3-center">
+		<span class="w3-tiny">електронний</span> Відділ кадрів
+	</h2>
+
+	<div class="w3-bar w3-light-gray">
+		<div class="w3-bar-item w3-hover-gray">Картотек лікарів</div>
+		<div class="w3-bar-item w3-hover-gray">
+			<a href="#"
+				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">
+				Зарееструвати нового лікаря </a>
+		</div>
+	</div>
+	<div>{{config_msp_all.registry_doctor_dialog_open}}</div>
+	<div class="w3-card-2">
+		<header class="w3-light-gray w3-container">
+			<a href="#"
+				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">
+				Зарееструвати нового лікаря </a> 
+				<span class="w3-right w3-hover-gray w3-border"
+				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">_</span>
+		</header>
+		<div ng-if="config_msp_all.registry_doctor_dialog_open">
+			<div ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
+		</div>
+	</div>
+</div>

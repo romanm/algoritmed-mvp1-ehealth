@@ -1,0 +1,70 @@
+<div class="w3-row">
+	<div class="w3-col m6 l6 s6">
+		<div class="w3-yellow w3-container">
+			<b class="w3-text-blue">3</b> <span class=""> Документи що
+				посвідчують особу </span>
+		</div>
+	</div>
+	<div class="w3-col m6 l6 s6 w3-container">
+		<span class="w3-text-gray w3-tiny">3.1</span> <label> <input
+			type="checkbox"> <span class="w3-small"> паперову
+				копію додано </span> <span class="w3-text-gray w3-tiny">необов'язково
+				при електронному заповненні</span>
+		</label>
+	</div>
+</div>
+<div class="w3-row w3-small">
+	<div class="w3-col m3 l3 s3">
+		<span class="w3-text-gray w3-tiny">3.2</span> Тип документа
+	</div>
+	<div class="w3-col m2 l2 s2 w3-tiny w3-text-gray">обведіть
+		потрібне</div>
+	<div class="w3-col m7 l7 s7 w3-tiny">
+		<table style="border-collapse: collapse;">
+			<tr>
+				<td class="w3-border w3-hover-gray">ПАСПОРТ</td>
+				<td class="w3-border w3-hover-gray">ID-КАРТКА</td>
+				<td class="w3-border w3-hover-gray">СВІДОЦТВО</td>
+				<td class="w3-border w3-hover-gray">ПОСВІДКА</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="w3-row">
+	<div class="w3-col m4 l4 s4 w3-small">
+		<span class="w3-text-gray w3-tiny">3.4</span> Серія, номер документа
+	</div>
+	<div class="w3-col m8 l8 s8">
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="doc_declaration.person.dn"
+			class="w3-border am-width-100pr w3-right-align">
+	</div>
+</div>
+<div class="w3-row">
+	<div class="w3-col m3 l3 s3 w3-small">країна</div>
+	<div class="w3-col m9 l9 s9">
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="doc_declaration.person.kr" class="w3-border am-width-100pr">
+	</div>
+</div>
+<div class="w3-row">
+	<div class="w3-col m3 l3 s3 w3-small">населений пункт</div>
+	<div class="w3-col m9 l9 s9">
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="doc_declaration.person.kr" class="w3-border am-width-100pr">
+	</div>
+</div>
+<div class="w3-row">
+	<div class="w3-col m7 l7 s7 w3-small">
+		<span class="w3-text-gray w3-tiny">3.5</span> Номер облікової картки
+		платника податків
+	</div>
+	<div class="w3-col m5 l5 s5">
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="doc_declaration.person.tax_id"
+			class="w3-border am-width-100pr">
+	</div>
+</div>
+<div class="w3-tiny w3-text-gray">не заповнюється в декларації пацієнтів, які відмовилися від
+	прийняття реєстраційного номера облікової картки платника податків, про
+	що є відповідна відмітка в паспорті пацієнта</div>

@@ -43,6 +43,28 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		return map;
 	}
 	
+	@PostMapping("/r/saveEmployee")
+	public @ResponseBody Map<String, Object> saveEmployee(
+			@RequestBody Map<String, Object> data
+			, Principal userPrincipal) {
+		logger.info("\n---------------\n"
+				+ "/r/saveEmployee"
+				+ "\n" + data
+				);
+		return data;
+	}
+	
+	@PostMapping("/r/saveDeclaration")
+	public @ResponseBody Map<String, Object> saveDeclaration(
+			@RequestBody Map<String, Object> data
+			, Principal userPrincipal) {
+		logger.info("\n---------------\n"
+				+ "/r/saveDeclaration"
+				+ "\n" + data
+				);
+		return data;
+	}
+
 	@PostMapping("/r/saveMsp")
 	public @ResponseBody Map<String, Object> saveMsp(
 			@RequestBody Map<String, Object> data

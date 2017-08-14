@@ -64,11 +64,16 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('testMvpCalendar' == $scope.pagePath.last()){
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
 	}else
-	if('registry' == $scope.pagePath.last()){
+	if('registry' == $scope.pagePath.last()
+	||'human-resources-department' == $scope.pagePath.last()
+	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 		initTestAddress($scope, $http);
 	}else
-	if('testMvpMedic' == $scope.pagePath.last()){
+	if('testMvpMedic' == $scope.pagePath.last()
+	||'moz-declaration-edit' == $scope.pagePath.last()
+	||'moz-declaration' == $scope.pagePath.last()
+	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 	}else
 	if('testMvpAddress' == $scope.pagePath.last()){

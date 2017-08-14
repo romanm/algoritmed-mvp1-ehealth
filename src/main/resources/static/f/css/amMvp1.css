@@ -1,11 +1,28 @@
 @media print {
-	a[href]:after {
-		content: none;
-	}
-	.no-print, .no-print * {
-		display: none !important;
-	}
+a[href]:after {
+	content: none;
 }
+.no-print, .no-print * {
+	display: none !important;
+}
+html{
+	margin-left: 0cm
+}
+}
+
+
 textarea{width:100%;}
+.am-width-100pr{
+	width: 100%;
+}
+.am-tooltip-text{
+	position:absolute;left:0;bottom:18px
+}
+.am-uppercase{
+	text-transform: uppercase;
+}
 /*to remove*/
 .am-list.w3-hoverable span:hover{background-color:#ccc}
+/*
+https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
+*/

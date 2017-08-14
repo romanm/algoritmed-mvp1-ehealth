@@ -1,0 +1,55 @@
+<div class="no-print w3-right-align w3-container">
+<span class="w3-tiny w3-orange">тестування</span>
+	<a class="w3-hover-gray" href="moz-declaration"> <i
+		class="fa fa-print"></i> Друкарська версія декларації
+	</a>
+</div>
+<div
+	ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-head.html'"></div>
+<div class="w3-container ">
+	<div class="w3-row">
+		<div class="w3-col m9 l9 s9">
+			<div ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-1.html'"></div>
+			<div ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-3.html'"></div>
+		</div>
+		<div class="w3-col m3 l3 s3 w3-container">
+			<div ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-2.html'"></div>
+		</div>
+	</div>
+	<div ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-4.html'"></div>
+
+	<div class="w3-yellow w3-container">
+		<b class="w3-text-blue">5</b> Контактна особа на випадок екстреної
+		ситуації з пацієнтом
+	</div>
+	<div>
+		<span class="w3-text-gray w3-tiny">5.1</span> Прізвище
+	</div>
+	<div class="w3-gray w3-container">
+		<b class="w3-text-blue">6</b> Адреса реєстрації 
+		<b class="w3-right w3-tiny"> Заповнюється,
+			якщо не збігається із місцем проживання/перебування </b>
+	</div>
+	<div ng-init="address=doc_declaration.person.registry.address;"
+		ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-address.html'"></div>
+	<div class="w3-indigo w3-container">
+		<b class="w3-text-blue">7</b> Лікар
+	</div>
+	<div>a7</div>
+	<div class="w3-gray w3-container">
+		<b class="w3-text-blue">8</b> Постачальник послуг первинної медичної
+		допомоги
+	</div>
+	<div>a8</div>
+
+	<div
+		ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-9.html'"></div>
+	<div
+		ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-10.html'"></div>
+
+	<div
+		ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-agreement.html'"></div>
+
+
+	
+</div>

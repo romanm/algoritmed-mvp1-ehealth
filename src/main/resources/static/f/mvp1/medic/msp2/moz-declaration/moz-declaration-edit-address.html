@@ -1,0 +1,84 @@
+<div class="w3-row">
+	<div class="w3-col m10 l10 s10">
+		<div class="w3-row">
+			<div class="w3-col m4 l4 s4">
+				<div class="w3-row">
+					<div class="w3-col m6 l6 s6">
+						<span class="w3-text-gray w3-tiny">4.1</span> Індекс
+					</div>
+					<div class="w3-col m6 l6 s6">
+						<input ng-change="config_declaration.autoSave.fn_change_count()"
+							ng-model="address.zip"
+							class="w3-border am-width-100pr">
+					</div>
+				</div>
+			</div>
+			<div class="w3-col m4 l4 s4">
+				<div class="w3-row">
+					<div class="w3-col m6 l6 s6">
+						<span class="w3-text-gray w3-tiny">4.3</span> Будинок
+					</div>
+					<div class="w3-col m6 l6 s6">
+						<input ng-change="config_declaration.autoSave.fn_change_count()"
+							ng-model="address.building"
+							class="w3-border am-width-100pr">
+					</div>
+				</div>
+			</div>
+			<div class="w3-col m4 l4 s4">
+				<div class="w3-row">
+					<div class="w3-col m6 l6 s6">
+						<span class="w3-text-gray w3-tiny">4.4</span> Квартира
+					</div>
+					<div class="w3-col m6 l6 s6">
+						<input ng-change="config_declaration.autoSave.fn_change_count()"
+							ng-model="address.apartment"
+							class="w3-border am-width-100pr">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="w3-row">
+			<div class="w3-col m4 l4 s4">
+				<span class="w3-text-gray w3-tiny">4.2</span> тип та назва вулиці
+			</div>
+			<div class="w3-col m8 l8 s8">
+				<input ng-change="config_declaration.autoSave.fn_change_count()"
+					ng-model="address.street"
+					class="w3-border am-width-100pr">
+			</div>
+		</div>
+		<div>
+			<span class="w3-text-gray w3-tiny">4.5</span> тип та назва населеного
+			пункту <span class="w3-text-gray w3-tiny">м. - місто, с. -
+				село, смт - селище міського типу</span>
+		</div>
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="address.settlement"
+			class="w3-border am-width-100pr">
+	</div>
+	<div class="w3-col m2 l2 s2 w3-tiny w3-text-gray">
+		<br /> вулиця, бульвар, проспект, провулок, площа, проїзд, узвіз
+	</div>
+</div>
+
+<div class="w3-row">
+	<div class="w3-col m6 l6 s6">
+		<div>
+			<span class="w3-text-gray w3-tiny">4.6</span> Район області <span
+				class="w3-text-gray w3-tiny">не заповнюється для міст
+				обласного значенн</span>
+		</div>
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="address.region" class="w3-border am-width-100pr">
+	</div>
+	<div class="w3-col m6 l6 s6">
+		<div>
+			<span class="w3-text-gray w3-tiny">4.7</span> Область <span
+				class="w3-text-gray w3-tiny">не заповнюється для м. Київ та
+				м. Севастополь</span>
+		</div>
+		<input ng-change="config_declaration.autoSave.fn_change_count()"
+			ng-model="address.area" class="w3-border am-width-100pr">
+	</div>
+</div>
