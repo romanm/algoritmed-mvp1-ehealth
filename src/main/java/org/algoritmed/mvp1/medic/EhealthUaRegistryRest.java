@@ -33,6 +33,15 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		docbodyStrToMap(map, docbody);
 		return map;
 	}
+	
+	private @Value("${sql.employee.list}")				String sql_employee_list;
+	@GetMapping(value = "/r/employee_list")
+	public @ResponseBody Map<String, Object>  employee_list() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> list = db1JdbcTemplate.queryForList(sql_employee_list);
+		map.put("employee_list", list);
+		return map;
+	}
 
 	private @Value("${sql.msp.list}")				String sql_msp_list;
 	@GetMapping(value = "/r/msp_list")
@@ -51,6 +60,19 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				+ "/r/saveEmployee"
 				+ "\n" + data
 				);
+		persistRootElement(data, doctype_employee, sql_employee_insert, sql_employee_update);
+
+		return data;
+	}
+	
+	@PostMapping("/r/savePersonRegistry")
+	public @ResponseBody Map<String, Object> savePersonRegistry(
+			@RequestBody Map<String, Object> data
+			) {
+		logger.info("\n---------------\n"
+				+ "/r/savePersonRegistry"
+				+ "\n" + data
+				);
 		return data;
 	}
 	
@@ -65,30 +87,43 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		return data;
 	}
 
+	int doctype_MSP = 12;
+	int doctype_employee = 13;
+	int doctype_declaration = 14;
+	
 	@PostMapping("/r/saveMsp")
 	public @ResponseBody Map<String, Object> saveMsp(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
-		logger.info("\n---------------\n"
+		logger.info("\n---76------------\n"
 				+ "/r/saveMsp"
 				+ "\n" + data
 				);
+		persistRootElement(data, doctype_MSP, sql_msp_insert, sql_msp_update);
+		return data;
+	}
+
+	private void persistRootElement(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
 		if(data.containsKey("doc_id")){//update
-			System.err.println("--30----------update--------");
+			System.err.println("--86----------update--------");
 			updateDocbody(data, data, now());
-			int update = db1ParamJdbcTemplate.update(sql_msp_update, data);
+			int update = db1ParamJdbcTemplate.update(sql_update, data);
 		}else{//insert
-			data.put("doctype", 12);//MSP
+			System.err.println("--90----------insert--------");
+			data.put("doctype", doctype);
 			Integer doc_id = nextDbId();
 			data.put("doc_id", doc_id);
 			insertDocElementWithDocbody(data, doc_id, data);
-			int update = db1ParamJdbcTemplate.update(sql_msp_insert, data);
+			System.err.println(sql_insert);
+			int update = db1ParamJdbcTemplate.update(sql_insert, data);
 		}
-		return data;
 	}
+	
+	private @Value("${sql.employee.update}")		String sql_employee_update;
+	private @Value("${sql.employee.insert}")		String sql_employee_insert;
 	private @Value("${sql.msp.update}")				String sql_msp_update;
 	private @Value("${sql.msp.insert}")				String sql_msp_insert;
-	
+
 	@PostMapping("/r/legal_entities")
 	public @ResponseBody Map<String, Object> legal_entities(
 			@RequestBody Map<String, Object> data

@@ -294,6 +294,8 @@ initTestAddress = function($scope, $http){
 			console.log(this.selectDictionary('GENDER').values);
 		}
 		,selectDictionary:function(k){
+			if(!$scope.doc_dictionaries)
+				return ;
 			var i = $scope.doc_dictionaries.response.keys[k];
 			var v = $scope.doc_dictionaries.response.data[i];
 			return v;
@@ -494,7 +496,6 @@ initTestVariables = function($scope, $http, Blob){
 		,autoSave:{
 			fn_httpSave:function(){
 				console.log('--config_msp.autoSave.fn_httpSave--------------');
-				console.log(this);
 				$http.post('/r/saveMsp', $scope.api__legal_entities).then(function(response) {
 					console.log(response.data);
 					if(!$scope.api__legal_entities.doc_id){
@@ -505,11 +506,29 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_msp');
+	$scope.config_personregistry = {
+			data_template:{
+				x:'y'
+			}
+			,autoSave:{
+				fn_httpSave:function(){
+					console.log('--config_personregistry.autoSave.fn_httpSave--------------');
+					var data_template = $scope.config_personregistry.data_template;
+					console.log(data_template);
+					$http.post('/r/savePersonRegistry', data_template).then(function(response) {
+						console.log(response.data);
+						if(!data_template.doc_id){
+							data_template.doc_id = response.data.doc_id
+						}
+					});
+				}
+			}
+	}
+	$scope.config_all.init('config_personregistry');
 	$scope.config_declaration = {
 		autoSave:{
 			fn_httpSave:function(){
 				console.log('--config_declaration.autoSave.fn_httpSave--------------');
-				console.log(this);
 				$http.post('/r/saveDeclaration', $scope.doc_declaration).then(function(response) {
 					console.log(response.data);
 					if(!$scope.doc_declaration.doc_id){
@@ -557,7 +576,13 @@ initTestVariables = function($scope, $http, Blob){
 		,autoSave:{
 			fn_httpSave:function(){
 				console.log('--config_employee.autoSave.fn_httpSave--------------');
-				console.log(this);
+				// employee_info - для "картотеки лікарів"
+				var employee_info = 
+					$scope.doc_employee.data.party.last_name
+					+ ' ' +$scope.doc_employee.data.party.first_name
+					+ ' ' +$scope.doc_employee.data.party.second_name
+					+ ' (' +$scope.doc_employee.data.party.birth_date + ')';
+				$scope.doc_employee.employee_info = employee_info;
 				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response) {
 					console.log(response.data);
 					if(!$scope.doc_employee.doc_id){

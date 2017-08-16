@@ -76,6 +76,10 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 	}else
+	if('info' == $scope.pagePath.last()){
+		console.log('----------info-------------- ');
+		read_msp_list($http, $scope)
+	}else
 	if('testMvpAddress' == $scope.pagePath.last()){
 		initTestAddress($scope, $http);
 	}else
@@ -267,11 +271,44 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log(response);
 			}
 		);
-		
 	}else{
 	}
+
 	$scope.config_msp_all={
-		registry_dialog_open:true
+		opened_dialog:'назва відкритого віконця діалогу'
+		,fn_open_dialog:function(dialog_name){
+			if(this.opened_dialog==dialog_name)
+				this.opened_dialog='закрити';
+			else
+				this.opened_dialog=dialog_name
+			if('doctors_cards'==this.opened_dialog){
+				this.human_resources_department.dialogs[this.opened_dialog].open_dialog();
+			}
+		}
+		,human_resources_department:{
+			dialogs:{
+				doctors_cards:{
+					name:'Картотека лікарів'
+						,thead_names:{
+							employee_id:{name:'Nr'}
+				,employee_info:{name:'картка лікаря'}
+						}
+				,url:'/r/employee_list'
+					,open_dialog:function(){
+						console.log('read employees ' + this.url);
+						$http.get(this.url).then( function(response) {
+							$scope.config_msp_all.doctors_cards = response.data;
+							console.log($scope.config_msp_all.doctors_cards);
+						});
+						
+					}
+				}
+				,new_doctor:{
+					name:'Зареєструвати нового лікаря'
+				}
+			}
+		}
+		,registry_dialog_open:true
 		,registry_msp_dialog_open:false
 		,registry_doctor_dialog_open:false
 		,registry_patient_dialog_open:true
@@ -299,7 +336,40 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			,{name:'Семашко М.О. ',cabinet_nr:8}
 			,{name:'Боткін С.П. ',cabinet_nr:9}
 		]
+		,info:{
+			login:{
+				page_design:{
+					head:{
+						text:'Вхід'
+						,suffix:'в програму'
+						,text1:'Реєстрація'
+						,suffix1:'в програмі'
+					}
+					
+				}
+				,role:{
+					doctor:{name:'Лікар',fns:['A','E','B','H']}
+					,ms_registry:{name:'м/с Реєстратури',fns:['A','H']}
+					,head_doctor:{name:'Гол.Лікар',fns:['C','B','D','I']}
+					,head_human_resources:{name:'Зав.Кадрами',fns:['C','B','D']}
+					,admin_app:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
+					,admin_msp:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
+					,admin_region:{name:'Адмін.Регіону',fns:['F']}
+				}
+				,fns:{
+					A:{name:'Заведеня хворого'}
+					,B:{name:'Підписання декларації - eHealth'}
+					,C:{name:'Реєстрація лікаря - eHealth'}
+					,D:{name:'Реєстрація лікувального закладу - eHealth'}
+					,E:{name:'Вести хворого'}
+					,F:{name:'Підтвердження лікувального закладу'}
+					,H:{name:'Запис пацієнта до лікаря'}
+					,I:{name:'Звільненя лікаря'}
+				}
+			}
+		}
 	};
+	
 	console.log(pageanchors.doctor_index);
 	$scope.openUrl = function(url){
 		console.log(url)

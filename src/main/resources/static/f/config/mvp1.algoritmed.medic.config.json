@@ -9,13 +9,16 @@
 	,"shortName":"Кабінет"
 	,"fa":"fa-user"
 	,"parent":"home"
+	,"menuBar":true
 }
 ,"registry":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/registry.html'"
-	,"shortName":"Зареєструватись"
+	,"shortName":"Персональна сторінка"
+	,"shortName2":"Зареєструватись"
 	,"fa":"fa-sign-in"
 	,"parent":"home"
+	,"menuBar":true
 }
 ,"moz-declaration":{
 	"th_template":"mvp1-medic"
@@ -23,6 +26,7 @@
 	,"shortName":"Декларація"
 	,"fa":"fa-user"
 	,"parent":"home"
+	,"menuBar":true
 }
 ,"moz-declaration-edit":{
 	"th_template":"mvp1-medic"
@@ -36,7 +40,7 @@
 	,"ng_template":"'/f/mvp1/medic/human-resources-department.html'"
 	,"shortName":"Відділ кадрів"
 	,"fa":"fa-user"
-	,"parent":"home1"
+	,"parent":"home"
 }
 ,"newDoctor":{
 	"th_template":"mvp1-medic"
@@ -51,6 +55,7 @@
 	,"shortName":"Інформація"
 	,"fa":"fa-info"
 	,"parent":"home"
+	,"menuBar":true
 }
 ,"info-doc":{
 	"th_template":"mvp1-medic"

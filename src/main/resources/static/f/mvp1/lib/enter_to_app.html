@@ -1,0 +1,50 @@
+<div class="w3-row">
+	<div class="w3-col l6 m6 s6  w3-container">
+		<div class="w3-card-2">
+			<header class="w3-light-gray">
+				Логін <span class="w3-tiny"> для зареєстрованих користувачів
+				</span>
+			</header>
+			<div ng-include="'/f/mvp1/medic/loginForm.html'"></div>
+		</div>
+	</div>
+	<div class="w3-col l6 m6 s6  w3-container">
+		<div class="w3-card-2"
+			ng-init="config_obj=config_personregistry;person_obj=config_personregistry.data_template;
+			person_type='Персональні дані'">
+			<header class="w3-light-gray">
+				Реєстрація в системі <span class="w3-tiny"> для користувачів
+					в яких немає логіну </span>
+			</header>
+			<div>
+				<div class="w3-row">
+					<div class="w3-col m3 l3 s3 w3-small">Ім’я користувача</div>
+					<div class="w3-col m9 l9 s9">
+						<input ng-change="config_obj.autoSave.fn_change_count()"
+							placeholder="Логін ім'я" class="w3-border am-width-100pr"
+							ng-model="person_obj.username">
+					</div>
+				</div>
+				<div class="w3-row">
+					<div class="w3-col m3 l3 s3 ">Пароль:</div>
+					<div class="w3-col m9 l9 s9">
+						<input ng-change="config_obj.autoSave.fn_change_count()"
+							placeholder="Пароль" class="w3-border am-width-100pr"
+							type="password" ng-model="person_obj.password">
+					</div>
+				</div>
+				<div class="w3-row">
+					<div class="w3-col m3 l3 s3 w3-small">Пароль контроль:</div>
+					<div class="w3-col m9 l9 s9">
+						<input ng-change="config_obj.autoSave.fn_change_count()"
+							placeholder="Пароль контроль" class="w3-border am-width-100pr"
+							type="password" ng-model="person_obj.password_control">
+					</div>
+				</div>
+			</div>
+			<div
+				ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-1.html'"></div>
+		</div>
+	</div>
+</div>
+{{config_personregistry.data_template}}

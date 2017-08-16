@@ -1,5 +1,21 @@
 <form action="/login" method="post">
 	<div>
+		<div class="w3-row">
+			<div class="w3-col m3 l3 s3 w3-small">Ім’я користувача</div>
+			<div class="w3-col m9 l9 s9">
+				<input type="text" class="w3-border am-width-100pr" name="username" />
+			</div>
+		</div>
+		<div class="w3-row">
+			<div class="w3-col m3 l3 s3 ">Пароль:</div>
+			<div class="w3-col m9 l9 s9">
+				<input type="password" name="password"
+					class="w3-border am-width-100pr" />
+			</div>
+		</div>
+	</div>
+	<!-- 
+	<div>
 		<label> Ім’я користувача : <input type="text" name="username" />
 		</label>
 	</div>
@@ -7,6 +23,7 @@
 		<label> Пароль: <input type="password" name="password" />
 		</label>
 	</div>
+ -->
 	<div>
 		<input type="submit" value="Увійти" />
 	</div>

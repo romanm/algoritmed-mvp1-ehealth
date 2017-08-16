@@ -3,6 +3,11 @@
 	<h2>Модель робочого місця лікаря первинної ланки</h2>
 	<h2>ПМД "Поділля - Проспект миру"</h2>
  -->
+	<a 
+	ng-if="!principal.principal"
+	href="/v/registry">
+		<div ng-include="'/f/mvp1/lib/enter_to_app_head.html'"></div>
+	</a>
 	<h2>
 		{{config_msp_all.msp_list[config_msp_all.msp_index].msp_public_name}}
 		<span class="w3-text-light-gray"> <i
@@ -16,10 +21,17 @@
 		</header>
 		Робоче місце м/с реєстратути
 		<div class="w3-bar w3-light-gray">
-			<div class="w3-bar-item w3-hover-green">Запис пацієнта на прийом</div>
+			<div class="w3-bar-item w3-hover-green">
+				<i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+				<!-- 
+			<i class="fa fa-address-book" aria-hidden="true"></i>
+			 -->
+				Запис пацієнта на прийом
+			</div>
 			<div class="w3-bar-item w3-hover-gray"
-			ng-click="openUrl('/v/testMvpCalendar')"
-			>Календар</div>
+				ng-click="openUrl('/v/testMvpCalendar')">
+				<i class="fa fa-calendar" aria-hidden="true"></i> Календар
+			</div>
 			<div class="w3-bar-item w3-hover-gray">Пошук пацієнта</div>
 		</div>
 	</div>

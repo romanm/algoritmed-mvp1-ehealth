@@ -1,27 +1,52 @@
 <div class="w3-container">
-	<h2 class="w3-center">
-		<span class="w3-tiny">електронний</span> Відділ кадрів
+	<h2 class="w3-center am-uppercase ">
+		<span class="w3-tiny">електронний</span> <b class="w3-text-indigo"
+			style="letter-spacing: 3px;"> Відділ кадрів </b>
 	</h2>
 
 	<div class="w3-bar w3-light-gray">
-		<div class="w3-bar-item w3-hover-gray">Картотек лікарів</div>
-		<div class="w3-bar-item w3-hover-gray">
-			<a href="#"
-				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">
-				Зарееструвати нового лікаря </a>
-		</div>
+		<div class="w3-bar-item w3-hover-gray"
+			ng-repeat="(k,v) in config_msp_all.human_resources_department.dialogs"
+			ng-click="config_msp_all.fn_open_dialog(k)">{{v.name}}</div>
 	</div>
-	<div>{{config_msp_all.registry_doctor_dialog_open}}</div>
-	<div class="w3-card-2">
+	<div>&nbsp;
+	<!-- 
+	{{config_msp_all.opened_dialog}}
+	 -->
+	</div>
+	<div class="w3-card-2"
+		ng-repeat="(k,v) in config_msp_all.human_resources_department.dialogs">
 		<header class="w3-light-gray w3-container">
-			<a href="#"
-				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">
-				Зарееструвати нового лікаря </a> 
-				<span class="w3-right w3-hover-gray w3-border"
-				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">_</span>
+			<span class="w3-hover-gray"
+				ng-click="config_msp_all.fn_open_dialog(k)"> {{v.name}} </span> <span
+				class="w3-right w3-hover-gray "
+				ng-click="config_msp_all.fn_open_dialog(k)"> <!-- 
+				_
+				 --> <i ng-if="config_msp_all.opened_dialog!=k"
+				class="fa fa-window-minimize w3-border" aria-hidden="true"></i> <i
+				ng-if="config_msp_all.opened_dialog==k"
+				class="fa fa-window-maximize" aria-hidden="true"></i>
+			</span>
 		</header>
-		<div ng-if="config_msp_all.registry_doctor_dialog_open">
+		<div ng-if="'new_doctor'==k && config_msp_all.opened_dialog==k">
 			<div ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
 		</div>
+		<div ng-if="'doctors_cards'==k && config_msp_all.opened_dialog==k">
+			<table class="w3-table w3-table-all">
+				<thead>
+					<tr>
+						<th ng-repeat="(k,v) in config_msp_all.doctors_cards.employee_list[0]"
+			ng-init="thead_names=config_msp_all.human_resources_department.dialogs.doctors_cards.thead_names">
+							{{thead_names[k].name}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="e in config_msp_all.doctors_cards.employee_list">
+						<td ng-repeat="(k,v) in e">{{v}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
+
 </div>

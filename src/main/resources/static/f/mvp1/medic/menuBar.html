@@ -5,13 +5,20 @@
 			<i class="fa fa-home" aria-hidden="true"></i>
 		</a>
 		<div ng-init="vParent='home'">
-			<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent"
+			<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent && v.menuBar"
 				href="/v/{{k}}" class="w3-bar-item w3-button"
 				ng-class="{'w3-green':menuHomeClicked(k)}">
 				<i ng-if="v.fa" class="fa {{v.fa}}"></i>
 				{{v.shortName}}
 				<i ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
-			</a>
+			</a> 
+			<span ng-if="!principal.principal"
+				class="w3-bar-item w3-orange w3-dropdown-hover"> Демо <span
+				class="w3-dropdown-content w3-border w3-orange"> <a
+					class="w3-button" href="/v/registry"> Аутерізуйтесь </a>
+					<div>Для перехода в робочу версію</div>
+			</span>
+			</span>
 		</div>
 		<div class="w3-dropdown-click w3-right">
 		<!-- 
@@ -30,7 +37,9 @@
 			</button>
 			<div class="w3-dropdown-content w3-bar-block w3-card-4"
 				style="right: 0" ng-class="{'w3-show':logLog}">
+				<a href="/v/registry">
 				<b>Логін діалог</b>
+				</a>
 				<div ng-if="principal.principal.name">
 					<a href="/logout">Вийти з логін</a>
 				</div>

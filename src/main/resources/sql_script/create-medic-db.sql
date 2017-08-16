@@ -11,6 +11,22 @@ CREATE TABLE docbody (
 	,docbody VARCHAR(100000)
 	,FOREIGN KEY (docbody_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+DROP TABLE IF EXISTS person;
+CREATE TABLE person(
+	person_id INT PRIMARY KEY
+	,family_name VARCHAR(128)
+	,first_name VARCHAR(128)
+	,second_name VARCHAR(128)
+	,birth_date DATE
+	,tax_id INT 
+	,FOREIGN KEY (person_id) REFERENCES docbody(docbody_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+DROP TABLE IF EXISTS employee;
+CREATE TABLE employee (
+	employee_id INT PRIMARY KEY
+	,employee_info VARCHAR(128)
+	,FOREIGN KEY (employee_id) REFERENCES docbody(docbody_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 DROP TABLE IF EXISTS msp;
 CREATE TABLE msp (
 	msp_id INT PRIMARY KEY
