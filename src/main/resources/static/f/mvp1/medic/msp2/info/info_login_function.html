@@ -1,0 +1,37 @@
+<h2>
+	<i class="fa fa-info"></i> Логін ролі і функції
+</h2>
+<div class="w3-row">
+	<div class="w3-col l8 m8 s8">
+		<table class="w3-table w3-table-all">
+			<thead>
+				<tr>
+					<th>№</th>
+					<th>
+						<div class="w3-right">Функції:</div>
+						<div>Логін ролі</div>
+					</th>
+					<th ng-repeat="(k,v) in config_msp_all.info.login.fns">{{k}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(kr,vr) in config_msp_all.info.login.role">
+					<td>{{1+$index}}</td>
+					<td>{{vr.name}}</td>
+					<td ng-repeat="(k,v) in config_msp_all.info.login.fns">
+						{{vr.fns.indexOf(k)>=0?'*':''}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="w3-col l4 m4 s4">
+		<table class="w3-table w3-table-all">
+			<tbody>
+				<tr ng-repeat="(k,v) in config_msp_all.info.login.fns">
+					<th>{{k}}</th>
+					<td>{{v.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

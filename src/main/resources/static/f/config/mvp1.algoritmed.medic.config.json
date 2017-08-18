@@ -33,7 +33,7 @@
 	,"ng_template":"'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit.html'"
 	,"shortName":"Декларація"
 	,"fa":"fa-user"
-	,"parent":"home1"
+	,"parent":"home"
 }
 ,"human-resources-department":{
 	"th_template":"mvp1-medic"

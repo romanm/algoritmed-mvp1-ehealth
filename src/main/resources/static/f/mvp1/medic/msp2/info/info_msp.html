@@ -1,0 +1,28 @@
+<h2>
+	<i class="fa fa-info"></i> Лікувальні заклади
+</h2>
+<table class="w3-table">
+	<thead>
+		<tr>
+			<th>назва лікувального закладу</th>
+		</tr>
+	</thead>
+	<tbody ng-repeat="msp in msp_list">
+		<tr class="w3-hover-gray w3-border"
+		ng-class="{'w3-yellow':config_info.is_msp_selected(msp)}"
+			ng-click="config_info.click_msp(msp)">
+			<td title="{{msp.msp_id}}"> {{msp.msp_public_name}} </td>
+		</tr>
+		<tr ng-if="config_info.is_msp_selected(msp)">
+			<td>
+				<div 
+					ng-init="msp_employee_obj=config_info.msp_employee;"
+				ng-include="'/f/mvp1/medic/msp2/info/info_msp_employee.html'"
+					></div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!-- 
+{{msp_list}}
+ -->

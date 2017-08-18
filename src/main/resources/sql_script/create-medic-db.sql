@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles (
+	role_id  VARCHAR(45) PRIMARY KEY
+	,role_note VARCHAR(128)
+);
+alter table user_roles add constraint userrole_to_role foreign key (role) references roles(role_id) on update cascade;
 -- DB medic
 CREATE TABLE doctype (
 	doctype_id INTEGER PRIMARY KEY AUTO_INCREMENT,

@@ -1,13 +1,14 @@
 function initMSPtest($http, $scope, $filter, $timeout, Blob){
 	console.log('----initMSP-test---------------'+$scope.pagePath.last());
 	if('registry' == $scope.pagePath.last()
-	||'testMvpMedic' == $scope.pagePath.last()
-	||'human-resources-department' == $scope.pagePath.last()
-	||'moz-declaration-edit' == $scope.pagePath.last()
-	||'moz-declaration' == $scope.pagePath.last()
+	|| 'testMvpMedic' == $scope.pagePath.last()
+	|| 'human-resources-department' == $scope.pagePath.last()
+	|| 'moz-declaration-edit' == $scope.pagePath.last()
+	|| 'moz-declaration' == $scope.pagePath.last()
 	){
 //		console.log('----initTestVariables---------------');
 		initTestVariables($scope, $http, Blob);
+		init_config_info($scope, $http);
 		if($scope.param.doc_id){
 			$scope.readMsp($scope.param.doc_id);
 		}else{
@@ -414,6 +415,45 @@ initTestAddress = function($scope, $http){
 		}
 	};
 }
+
+init_config_info = function($scope, $http){
+	$scope.config_info = {
+		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
+		,read_msp_employee:function(msp_id){ this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee'); }
+		,click_msp:function(msp){
+			this.click_o(
+				'msp_table_selected', msp, '/r/read_msp_employee/'+msp.msp_id, 'msp_employee');
+		}
+		,is_msp_employee_selected:function(me){return this.is_o_selected('msp_employee_selected', me);}
+		,click_msp_employee:function(msp_employee){
+			this.click_o(
+				'msp_employee_selected', msp_employee, '/r/read_docbody/'+msp_employee.person_id, 'msp_employee_doc');
+		}
+		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
+		,click_o:function(this_o_name, o, url, read_o_name){
+			var thisO = this[this_o_name];
+			if(this.is_o_selected(this_o_name, o)){
+				this[this_o_name]=null;
+				return;
+			}
+			this[this_o_name]=o;
+			this.read_o(url, read_o_name);
+		}
+		,read_o:function(url, read_o_name){
+			var thisObj = this;
+			console.log(url);
+			$http.get(url).then(function(response){
+				thisObj[read_o_name] = response.data;
+				console.log(thisObj[read_o_name]);
+			});
+		}
+	}
+}
+init_info = function($scope, $http){
+	read_msp_list($http, $scope);
+	init_config_info($scope, $http);
+}
+
 initTestVariables = function($scope, $http, Blob){
 	console.log(Blob);
 	

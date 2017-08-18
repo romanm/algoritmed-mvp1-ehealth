@@ -78,7 +78,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('info' == $scope.pagePath.last()){
 		console.log('----------info-------------- ');
-		read_msp_list($http, $scope)
+		init_info($scope, $http);
 	}else
 	if('testMvpAddress' == $scope.pagePath.last()){
 		initTestAddress($scope, $http);
@@ -289,17 +289,26 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			dialogs:{
 				doctors_cards:{
 					name:'Картотека лікарів'
-						,thead_names:{
-							employee_id:{name:'Nr'}
-				,employee_info:{name:'картка лікаря'}
-						}
-				,url:'/r/employee_list'
+					,thead_names:{
+						employee_id:{name:'Nr'}
+						,employee_info:{name:'картка лікаря'}
+					}
+					,url:'/r/employee_list'
 					,open_dialog:function(){
-						console.log('read employees ' + this.url);
-						$http.get(this.url).then( function(response) {
+						if(!$scope.principal.user_msp){
+							return;
+						}
+						var msp_id = $scope.principal.user_msp[0].msp_id; 
+						$scope.config_info.read_msp_employee(msp_id);
+						/*
+						return;
+						var url = '/r/read_msp_employee/' + msp_id;
+						console.log('read employees ' + url);
+						$http.get(url).then( function(response) {
 							$scope.config_msp_all.doctors_cards = response.data;
 							console.log($scope.config_msp_all.doctors_cards);
 						});
+						 * */
 						
 					}
 				}
@@ -347,13 +356,16 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					
 				}
+				,db_role:{
+					
+				}
 				,role:{
-					doctor:{name:'Лікар',fns:['A','E','B','H']}
+					ROLE_USER:{name:'Лікар',fns:['A','E','B','H']}
 					,ms_registry:{name:'м/с Реєстратури',fns:['A','H']}
 					,head_doctor:{name:'Гол.Лікар',fns:['C','B','D','I']}
-					,head_human_resources:{name:'Зав.Кадрами',fns:['C','B','D']}
+					,ROLE_HEAD_HUMAN_RESOURCES:{name:'Зав.Кадрами',fns:['C','B','D']}
 					,admin_app:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
-					,admin_msp:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
+					,ROLE_ADMINMSP:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
 					,admin_region:{name:'Адмін.Регіону',fns:['F']}
 				}
 				,fns:{

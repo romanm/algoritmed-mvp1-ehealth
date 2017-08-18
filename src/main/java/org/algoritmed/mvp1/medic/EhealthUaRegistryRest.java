@@ -3,6 +3,7 @@ package org.algoritmed.mvp1.medic;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
@@ -22,16 +23,54 @@ import org.springframework.web.bind.annotation.RestController;
 public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
-	
-	private @Value("${sql.docbody.byId}")				String sql_docbody_byId;
-	@GetMapping(value = "/r/read_msp/{msp_id}")
-	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer msp_id) {
+
+	private @Value("${sql.msp_employee.list}")			String sql_msp_employee_list;
+	private @Value("${sql.msp_employee.role.list}")		String sql_msp_employee_role_list;
+	@GetMapping(value = "/r/read_msp_employee/{msp_id}")
+	public @ResponseBody Map<String, Object>  msp_employee_list(@PathVariable Integer msp_id
+			, Principal userPrincipal
+		) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msp_id", msp_id);
+		System.err.println("/r/read_msp_employee/{msp_id} "+msp_id);
+		System.err.println(sql_msp_employee_list.replace(":msp_id",""+msp_id));
+		Map<Integer, Map<String, Object>> users = new HashMap();
+		List<Map<String, Object>> msp_employee_list = db1ParamJdbcTemplate.queryForList(sql_msp_employee_list, map);
+		for (Map<String, Object> m : msp_employee_list) {
+			Integer person_id = (Integer) m.get("person_id");
+			users.put(person_id, m);
+			m.put("roles", new ArrayList());
+		}
+		List<Map<String, Object>> e_roles = db1ParamJdbcTemplate.queryForList(sql_msp_employee_role_list, map);
+		for (Map<String, Object> m : e_roles) {
+			Integer user_id = (Integer) m.get("user_id");
+			List<Map> u_roles = (List<Map>) users.get(user_id).get("roles");
+			u_roles.add(m);
+		}
+		map.put("msp_employee_list", msp_employee_list);
+		return map;
+	}
+
+	private @Value("${sql.docbody.byId}")				String sql_docbody_byId;
+	@GetMapping(value = "/r/read_docbody/{doc_id}")
+	public @ResponseBody Map<String, Object>  read_docbody(@PathVariable Integer doc_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		readDocbody(doc_id, map);
+		return map;
+	}
+
+	@GetMapping(value = "/r/read_msp/{msp_id}")
+	public @ResponseBody Map<String, Object>  read_msp(@PathVariable Integer msp_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msp_id", msp_id);
+		readDocbody(msp_id, map);
+		return map;
+	}
+
+	private void readDocbody(Integer msp_id, Map<String, Object> map) {
 		map.put("doc_id", msp_id);
 		String docbody = db1ParamJdbcTemplate.queryForObject(sql_docbody_byId, map, String.class);
 		docbodyStrToMap(map, docbody);
-		return map;
 	}
 	
 	private @Value("${sql.employee.list}")				String sql_employee_list;

@@ -3,6 +3,7 @@ package org.algoritmed.mvp1;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 import org.algoritmed.mvp1.util.ReadJsonFromFile;
@@ -68,20 +69,24 @@ public class CommonRest {
 		map.put("principal", principal);
 		logger.info(" --------- \n"
 				+ "/v/principal \n" + map);
-		if(null!=principal)
-		{
+		if(null!=principal) {
 			String name = principal.getName();
+			System.err.println("name = "+name);
 			map.put("username", name);
 			Map<String, Object> queryForMap = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
 			map.put("user", queryForMap);
+			Integer user_id = (Integer) queryForMap.get("user_id");
+			map.put("user_id", user_id);
+			List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
+			map.put("user_msp", l);
 		}
 		return map;
 	}
-
 	private @Value("${sql.db1.users.fromUsername}") String sqlDb1UsersFromUsername;
+	private @Value("${sql.db1.user.msp}") String sql_user_msp;
+
 	@Autowired JdbcTemplate db1JdbcTemplate;
 	@Autowired NamedParameterJdbcTemplate db1ParamJdbcTemplate;
-
 	
 	@GetMapping("/r/testUUID")
 	public @ResponseBody Map<String, Object> testUUI(Principal principal) {

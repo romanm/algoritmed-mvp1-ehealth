@@ -2,8 +2,12 @@
 	<h2 class="w3-center am-uppercase ">
 		<span class="w3-tiny">електронний</span> <b class="w3-text-indigo"
 			style="letter-spacing: 3px;"> Відділ кадрів </b>
-	</h2>
+<div class="w3-tiny">
 
+{{principal.user_msp[0].msp_public_name}}
+
+</div>
+	</h2>
 	<div class="w3-bar w3-light-gray">
 		<div class="w3-bar-item w3-hover-gray"
 			ng-repeat="(k,v) in config_msp_all.human_resources_department.dialogs"
@@ -46,6 +50,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<div ng-include="'/f/mvp1/medic/msp2/info/info_msp_employee.html'"
+					ng-init="msp_employee_obj=config_msp_all.doctors_cards"></div>
+			{{config_msp_all.doctors_cards}}
 		</div>
 	</div>
 
