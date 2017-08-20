@@ -2,12 +2,12 @@
 	<div class="w3-col m{{12-config_employee.dates_col}}">
 		<div class="w3-container">
 			Посада
-			<select ng-model="doc_employee.data.position">
+			<select ng-model="doc_employee_data.position">
 			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('POSITION').values"
 				value="{{k}}">{{v}}</option>
 		</select>
 		Тип працівника
-			<select ng-model="doc_employee.data.employee_type">
+			<select ng-model="doc_employee_data.employee_type">
 			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('EMPLOYEE_TYPE').values"
 				value="{{k}}">{{v}}</option>
 		</select>
@@ -20,7 +20,7 @@
 			<b> дати </b>
 		</header>
 		<div ng-repeat="k_d in config_employee.keys_dates"
-			ng-init="v_d=config_employee.dates_name[k_d];v_obj=doc_employee.data;v_e=v_obj[k_d]"
+			ng-init="v_d=config_employee.dates_name[k_d];v_obj=doc_employee_data;v_e=v_obj[k_d]"
 			ng-include="'/f/mvp1/medic/msp2/employee/employee_date.html'">
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 		ng-if="!(['position','employee_type'].indexOf(k)>=0) || v.isObject()" 
  -->
  <!-- 
-<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data"
+<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee_data"
 		ng-if="v.isObject()" 
 		>
 	<div class="w3-col m1">
@@ -44,5 +44,5 @@
 </div>
   -->
 <!-- 
-{{doc_employee.data}}
+{{doc_employee_data}}
  -->

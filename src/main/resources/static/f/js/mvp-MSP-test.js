@@ -416,10 +416,20 @@ initTestAddress = function($scope, $http){
 	};
 }
 
+read_dictionaries = function($scope, $http) {
+	var url_dictionaries = '/f/config/msp/dictionaries.json';
+	console.log(url_dictionaries);
+	$http.get(url_dictionaries).then( function(response) {
+		$scope.doc_dictionaries = response.data;
+		$scope.mvpAddress.config.initCCDictionaries();
+	});
+}
+
 init_config_info = function($scope, $http){
+	read_dictionaries($scope, $http);
 	$scope.config_info = {
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
-		,read_msp_employee:function(msp_id){ this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee'); }
+		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
 		,click_msp:function(msp){
 			this.click_o(
 				'msp_table_selected', msp, '/r/read_msp_employee/'+msp.msp_id, 'msp_employee');
@@ -428,23 +438,36 @@ init_config_info = function($scope, $http){
 		,click_msp_employee:function(msp_employee){
 			this.click_o(
 				'msp_employee_selected', msp_employee, '/r/read_docbody/'+msp_employee.person_id, 'msp_employee_doc');
+			if(this.msp_employee_doc){
+				if(msp_employee.person_id==this.msp_employee_doc.doc_id){
+					$scope.config_msp_all.opened_dialog='opened_card';
+				}
+			}
+		}
+		,afterRead_msp_employee_doc:function(msp_employee){
+			console.log(this.msp_employee_selected);
+			console.log(this.msp_employee_selected.family_name);
+			var party = this.msp_employee_doc.docbody.party;
+			party.last_name = this.msp_employee_selected.family_name;
+			console.log(party);
 		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
-		,click_o:function(this_o_name, o, url, read_o_name){
-			var thisO = this[this_o_name];
-			if(this.is_o_selected(this_o_name, o)){
-				this[this_o_name]=null;
+		,click_o:function(this_o_selected_name, o, url, read_o_name){
+			//var thisO = this[this_o_name];
+			if(this.is_o_selected(this_o_selected_name, o)){
+				this[this_o_selected_name]=null;
 				return;
 			}
-			this[this_o_name]=o;
+			this[this_o_selected_name]=o;
 			this.read_o(url, read_o_name);
 		}
 		,read_o:function(url, read_o_name){
 			var thisObj = this;
-			console.log(url);
+			console.log(url+' / '+read_o_name);
 			$http.get(url).then(function(response){
 				thisObj[read_o_name] = response.data;
 				console.log(thisObj[read_o_name]);
+				thisObj['afterRead_'+read_o_name]();
 			});
 		}
 	}
@@ -696,12 +719,7 @@ initTestVariables = function($scope, $http, Blob){
 			$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
 			console.log($scope.doc_declaration.person.registry);
 		});
-		var url_dictionaries = '/f/config/msp/dictionaries.json';
-		console.log(url_dictionaries);
-		$http.get(url_dictionaries).then( function(response) {
-			$scope.doc_dictionaries = response.data;
-			$scope.mvpAddress.config.initCCDictionaries();
-		});
+		read_dictionaries($scope, $http);
 	}
 	$scope.newMsp = function(){
 		//$scope.api__legal_entities = angular.copy($scope.tmp_api__legal_entities);

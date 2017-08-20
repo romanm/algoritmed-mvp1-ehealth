@@ -2,28 +2,37 @@
 	<h2 class="w3-center am-uppercase ">
 		<span class="w3-tiny">електронний</span> <b class="w3-text-indigo"
 			style="letter-spacing: 3px;"> Відділ кадрів </b>
-<div class="w3-tiny">
-
-{{principal.user_msp[0].msp_public_name}}
-
-</div>
+		<div class="w3-tiny">{{principal.user_msp[0].msp_public_name}}</div>
 	</h2>
 	<div class="w3-bar w3-light-gray">
 		<div class="w3-bar-item w3-hover-gray"
+			ng-class="{'w3-green':k==config_msp_all.opened_dialog}"
 			ng-repeat="(k,v) in config_msp_all.human_resources_department.dialogs"
-			ng-click="config_msp_all.fn_open_dialog(k)">{{v.name}}</div>
+			ng-click="config_msp_all.fn_open_dialog(k)">
+			{{v.name}} 
+			<span 
+			class="w3-small"
+			ng-if="'opened_card'==k">
+				{{config_msp_all.human_resources_department.fn_opened_card_name()}}
+			</span>
+		</div>
 	</div>
 	<div>&nbsp;
 	<!-- 
-	{{config_msp_all.opened_dialog}}
+		{{config_msp_all.opened_dialog}}
 	 -->
 	</div>
 	<div class="w3-card-2"
 		ng-repeat="(k,v) in config_msp_all.human_resources_department.dialogs">
-		<header class="w3-light-gray w3-container">
+		<!-- 
+			ng-class="{'w3-border-left w3-border-top w3-border-right w3-border-green':k==config_msp_all.opened_dialog}"
+		 -->
+		<header class="w3-light-gray w3-container"
+			ng-class="{'w3-leftbar w3-border-green':k==config_msp_all.opened_dialog}"
+		>
 			<span class="w3-hover-gray"
-				ng-click="config_msp_all.fn_open_dialog(k)"> {{v.name}} </span> <span
-				class="w3-right w3-hover-gray "
+				ng-click="config_msp_all.fn_open_dialog(k)"> 
+			<span class="w3-hover-gray "
 				ng-click="config_msp_all.fn_open_dialog(k)"> <!-- 
 				_
 				 --> <i ng-if="config_msp_all.opened_dialog!=k"
@@ -31,11 +40,29 @@
 				ng-if="config_msp_all.opened_dialog==k"
 				class="fa fa-window-maximize" aria-hidden="true"></i>
 			</span>
+				{{v.name}} </span>
 		</header>
+		<div ng-if="'opened_card'==k && config_msp_all.opened_dialog==k">
+			<div ng-if="!fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
+				Доступ тільки для відділу кадрів.</div>
+			<div ng-if="fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
+				<div ng-if="config_info.msp_employee_doc">
+					<div
+						ng-init="doc_employee_data=config_info.msp_employee_doc.docbody;"
+						ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
+				</div>
+				<div ng-if="!config_info.msp_employee_doc">
+					&nbsp;
+					<button ng-click="config_msp_all.fn_open_dialog('doctors_cards')"
+						class="w3-btn w3-border">Оберіть картку з картотеки</button>
+				</div>
+			</div>
+		</div>
 		<div ng-if="'new_doctor'==k && config_msp_all.opened_dialog==k">
 			<div ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
 		</div>
 		<div ng-if="'doctors_cards'==k && config_msp_all.opened_dialog==k">
+		<!-- 
 			<table class="w3-table w3-table-all">
 				<thead>
 					<tr>
@@ -46,10 +73,13 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="e in config_msp_all.doctors_cards.employee_list">
-						<td ng-repeat="(k,v) in e">{{v}}</td>
+						<td ng-repeat="(k,v) in e">
+						a1
+						{{v}}</td>
 					</tr>
 				</tbody>
 			</table>
+		 -->
 			<div ng-include="'/f/mvp1/medic/msp2/info/info_msp_employee.html'"
 					ng-init="msp_employee_obj=config_msp_all.doctors_cards"></div>
 			{{config_msp_all.doctors_cards}}

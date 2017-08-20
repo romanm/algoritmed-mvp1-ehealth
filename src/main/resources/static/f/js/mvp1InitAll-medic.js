@@ -286,7 +286,13 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 		}
 		,human_resources_department:{
-			dialogs:{
+			fn_opened_card_name:function(){
+				if(!$scope.config_info.msp_employee_doc)
+					return;
+				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
+				return name;
+			}
+			,dialogs:{
 				doctors_cards:{
 					name:'Картотека лікарів'
 					,thead_names:{
@@ -300,20 +306,13 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						}
 						var msp_id = $scope.principal.user_msp[0].msp_id; 
 						$scope.config_info.read_msp_employee(msp_id);
-						/*
-						return;
-						var url = '/r/read_msp_employee/' + msp_id;
-						console.log('read employees ' + url);
-						$http.get(url).then( function(response) {
-							$scope.config_msp_all.doctors_cards = response.data;
-							console.log($scope.config_msp_all.doctors_cards);
-						});
-						 * */
-						
 					}
 				}
 				,new_doctor:{
 					name:'Зареєструвати нового лікаря'
+				}
+				,opened_card:{
+					name:'Відкрита картка:'
 				}
 			}
 		}

@@ -6,15 +6,15 @@
 		<b> Лікар: </b> 
 		<input ng-change="config_employee.autoSave.fn_change_count()"
 			placeholder="Прізвище" class="w3-border"
-			ng-model="doc_employee.data.party.last_name"> 
+			ng-model="doc_employee_data.party.last_name"> 
 		<input
 			ng-change="config_employee.autoSave.fn_change_count()" placeholder="Ім'я"
-			class="w3-border" ng-model="doc_employee.data.party.first_name">
+			class="w3-border" ng-model="doc_employee_data.party.first_name">
 		<input ng-change="config_employee.autoSave.fn_change_count()"
 			placeholder="По батькові" class="w3-border"
-			ng-model="doc_employee.data.party.second_name">
+			ng-model="doc_employee_data.party.second_name">
 		Стать
-		<select ng-model="doc_employee.data.party.gender">
+		<select ng-model="doc_employee_data.party.gender">
 			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('GENDER').values"
 				value="{{k}}">{{v}}</option>
 		</select>
@@ -22,17 +22,17 @@
 			Ідентифікаційний номер 
 			<input ng-change="config_employee.autoSave.fn_change_count()"
 				placeholder="Ідентифікаційний номер" class="w3-border"
-				ng-model="doc_employee.data.party.tax_id">
+				ng-model="doc_employee_data.party.tax_id">
 		</div>
 		<div>
 			Емайл 
 			<input ng-change="config_employee.autoSave.fn_change_count()"
 				placeholder="Емайл" class="w3-border"
-				ng-model="doc_employee.data.party.email">
+				ng-model="doc_employee_data.party.email">
 		</div>
 
 		<div ng-include="'/f/mvp1/lib/documents_dialog.html'"
-			ng-init="obj=doc_employee.data.party"></div>
+			ng-init="obj=doc_employee_data.party"></div>
 
 		<div class="w3-row-padding">
 			<div class="w3-quarter ">
@@ -41,8 +41,8 @@
 				</div>
 			</div>
 			<div class="w3-threequarter">
-				<div ng-repeat="phone in doc_employee.data.party.phones track by $index"
-					ng-init="phoneList=doc_employee.data.party.phones"
+				<div ng-repeat="phone in doc_employee_data.party.phones track by $index"
+					ng-init="phoneList=doc_employee_data.party.phones"
 					ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
 				<!-- 
 		<div ng-repeat="phone in v.phones">
@@ -53,7 +53,7 @@
 		</div>
 		<!-- 
 		--
-		<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee.data.party">
+		<div class="w3-row-padding" ng-repeat="(k,v) in doc_employee_data.party">
 			<div class="w3-quarter">
 				<div class="w3-right-align">{{k}}</div>
 			</div>
@@ -64,5 +64,5 @@
 	</div>
 </div>
 <!-- 
-{{doc_employee.data.party}}
+{{doc_employee_data.party}}
  -->
