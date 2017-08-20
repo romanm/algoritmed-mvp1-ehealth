@@ -26,10 +26,12 @@
 		 -->
 			<button class="w3-button w3-hover-red" ng-click="logLog=!logLog">
 		<span class="w3-tiny">
-				{{principal.user.PIP}} 
 				<!-- 
+				{{principal.user.PIP}} 
 				{{principal.principal.name}} 
 				 -->
+				{{principal.user.family_name}} 
+				{{principal.user.first_name.substr(0,1)}}.{{principal.user.second_name.substr(0,1)}}. 
 		</span>
 				<i ng-if="principal.principal.name" class="fa fa-sign-out"></i> 
 				<i ng-if="!principal.principal.name" class="fa fa-sign-in"></i> 

@@ -98,8 +98,20 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		logger.info("\n---------------\n"
 				+ "/r/saveEmployee"
 				+ "\n" + data
+				+ "\n employee_info = " + data.get("employee_info")
 				);
+		// вперше додано для autoSave $scope.doc_employee
+		Integer doc_id = (Integer) data.get("doc_id");
+		data.put("docbody_id", doc_id);
+		data.put("employee_id", doc_id);
+		Map docbody = (Map) data.get("docbody");
+		Map party = (Map) docbody.get("party");
 		persistRootElement(data, doctype_employee, sql_employee_insert, sql_employee_update);
+		System.err.println(party);
+		party.put("person_id", doc_id);
+		party.put("family_name", party.get("last_name"));
+		System.err.println(party);
+		int update = db1ParamJdbcTemplate.update(sql_person_update, party);
 
 		return data;
 	}
@@ -145,7 +157,9 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private void persistRootElement(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
 		if(data.containsKey("doc_id")){//update
 			System.err.println("--86----------update--------");
-			updateDocbody(data, data, now());
+			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
+			//updateDocbody(data, data, now()); 
+			System.err.println(sql_update);
 			int update = db1ParamJdbcTemplate.update(sql_update, data);
 		}else{//insert
 			System.err.println("--90----------insert--------");
@@ -158,6 +172,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		}
 	}
 	
+	private @Value("${sql.db1.person.update}")		String sql_person_update;
 	private @Value("${sql.employee.update}")		String sql_employee_update;
 	private @Value("${sql.employee.insert}")		String sql_employee_insert;
 	private @Value("${sql.msp.update}")				String sql_msp_update;

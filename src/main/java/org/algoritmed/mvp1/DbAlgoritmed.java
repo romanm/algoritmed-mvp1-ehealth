@@ -48,6 +48,7 @@ public class DbAlgoritmed {
 	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap) {
 		updateDocbody(dbSaveObj, docbodyMap, now());
 	}
+
 	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap, Timestamp updated) {
 		dbSaveObj.put("updated", updated);
 		String docbody = objectToString(docbodyMap);
@@ -55,6 +56,7 @@ public class DbAlgoritmed {
 		int update = db1ParamJdbcTemplate.update(sql_docbody_update, dbSaveObj);
 		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_update, dbSaveObj);
 	}
+
 	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId
 			, Map<String, Object> docbodyMap) {
 		insertDocElementWithDocbody(dbSaveObj, parentId);

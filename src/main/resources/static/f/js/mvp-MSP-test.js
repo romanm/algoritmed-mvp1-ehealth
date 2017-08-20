@@ -445,11 +445,11 @@ init_config_info = function($scope, $http){
 			}
 		}
 		,afterRead_msp_employee_doc:function(msp_employee){
-			console.log(this.msp_employee_selected);
-			console.log(this.msp_employee_selected.family_name);
 			var party = this.msp_employee_doc.docbody.party;
 			party.last_name = this.msp_employee_selected.family_name;
-			console.log(party);
+			$scope.doc_employee = this.msp_employee_doc;
+			$scope.doc_employee.data = this.msp_employee_doc.docbody;
+			console.log($scope.doc_employee);
 		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
 		,click_o:function(this_o_selected_name, o, url, read_o_name){
@@ -640,12 +640,20 @@ initTestVariables = function($scope, $http, Blob){
 			fn_httpSave:function(){
 				console.log('--config_employee.autoSave.fn_httpSave--------------');
 				// employee_info - для "картотеки лікарів"
+//				var docbodyData = $scope.doc_employee.data; 
+				var docbodyData = $scope.doc_employee.docbody; 
 				var employee_info = 
-					$scope.doc_employee.data.party.last_name
-					+ ' ' +$scope.doc_employee.data.party.first_name
-					+ ' ' +$scope.doc_employee.data.party.second_name
-					+ ' (' +$scope.doc_employee.data.party.birth_date + ')';
+					docbodyData.party.last_name
+				+ ' ' +docbodyData.party.first_name
+				+ ' ' +docbodyData.party.second_name
+				+ ' (' +docbodyData.party.birth_date + ')';
+//				$scope.doc_employee.party.last_name
+//				+ ' ' +$scope.doc_employee.party.first_name
+//				+ ' ' +$scope.doc_employee.party.second_name
+//				+ ' (' +$scope.doc_employee.party.birth_date + ')';
+				console.log(employee_info);
 				$scope.doc_employee.employee_info = employee_info;
+				console.log($scope.doc_employee.employee_info);
 				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response) {
 					console.log(response.data);
 					if(!$scope.doc_employee.doc_id){
