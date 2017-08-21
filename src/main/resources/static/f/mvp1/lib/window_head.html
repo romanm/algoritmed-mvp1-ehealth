@@ -1,0 +1,13 @@
+<header class="w3-leftbar w3-light-gray w3-container"
+	ng-class="{'w3-border-green':k==config_msp_all.opened_dialog}">
+	<span class="w3-hover-gray" ng-click="config_msp_all.fn_open_dialog(k)">
+		<span class="w3-hover-gray "
+		ng-click="config_msp_all.fn_open_dialog(k)"> <!-- 
+				_
+				 --> <i ng-if="config_msp_all.opened_dialog!=k"
+			class="fa fa-window-minimize w3-border" aria-hidden="true"></i> <i
+			ng-if="config_msp_all.opened_dialog==k" class="fa fa-window-maximize"
+			aria-hidden="true"></i>
+	</span> {{v.name}}
+	</span>
+</header>

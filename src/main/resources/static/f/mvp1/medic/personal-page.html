@@ -1,0 +1,11 @@
+<div class="w3-container">
+
+<div ng-if="!principal.principal">
+	<div ng-include="'/f/mvp1/lib/enter_to_app_head.html'"></div>
+	<div ng-include="'/f/mvp1/lib/enter_to_app.html'"></div>
+</div>
+<div ng-if="principal.principal"
+	ng-include="'/f/mvp1/medic/msp2/personal_page/personal_page.html'">
+</div>
+
+</div>

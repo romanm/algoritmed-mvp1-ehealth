@@ -445,11 +445,16 @@ init_config_info = function($scope, $http){
 			}
 		}
 		,afterRead_msp_employee_doc:function(msp_employee){
+			console.log(1);
 			var party = this.msp_employee_doc.docbody.party;
-			party.last_name = this.msp_employee_selected.family_name;
+			console.log(1);
 			$scope.doc_employee = this.msp_employee_doc;
+			console.log(1);
 			$scope.doc_employee.data = this.msp_employee_doc.docbody;
+			console.log(1);
 			console.log($scope.doc_employee);
+			party.last_name = this.msp_employee_selected.family_name;
+			console.log(1);
 		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
 		,click_o:function(this_o_selected_name, o, url, read_o_name){
@@ -467,7 +472,9 @@ init_config_info = function($scope, $http){
 			$http.get(url).then(function(response){
 				thisObj[read_o_name] = response.data;
 				console.log(thisObj[read_o_name]);
+				console.log('afterRead_'+read_o_name);
 				thisObj['afterRead_'+read_o_name]();
+				console.log(thisObj['afterRead_'+read_o_name]);
 			});
 		}
 	}

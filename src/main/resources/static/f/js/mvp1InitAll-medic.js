@@ -30,6 +30,130 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 		);
 	}
+
+	$scope.config_msp_all={
+		opened_dialog:'назва відкритого віконця діалогу'
+		,fn_open_dialog:function(dialog_name){
+			if(this.opened_dialog==dialog_name)
+				this.opened_dialog='закрити';
+			else
+				this.opened_dialog=dialog_name
+			if('personal_data'==this.opened_dialog){
+				var person_id = $scope.principal.user.person_id; 
+				$scope.config_info.read_o('/r/read_docbody/'+person_id,'msp_employee_doc');
+			}else
+			if('doctors_cards'==this.opened_dialog){
+				this.human_resources_department.dialogs[this.opened_dialog].open_dialog();
+			}
+		}
+		,personal_page:{
+			x:'y'
+			,dialogs:{
+				personal_area:{
+					name:'Особистий майданчик'
+				}
+				,personal_data:{
+					name:'Персональні данні'
+				}
+			}
+		}
+		,human_resources_department:{
+			fn_opened_card_name:function(){
+				if(!$scope.config_info.msp_employee_doc)
+					return;
+				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
+				return name;
+			}
+			,dialogs:{
+				doctors_cards:{
+					name:'Картотека лікарів'
+					,thead_names:{
+						employee_id:{name:'Nr'}
+						,employee_info:{name:'картка лікаря'}
+					}
+					,url:'/r/employee_list'
+					,open_dialog:function(){
+						if(!$scope.principal.user_msp){
+							return;
+						}
+						var msp_id = $scope.principal.user_msp[0].msp_id; 
+						$scope.config_info.read_msp_employee(msp_id);
+					}
+				}
+				,new_doctor:{
+					name:'Зареєструвати нового лікаря'
+				}
+				,opened_card:{
+					name:'Відкрита картка:'
+				}
+			}
+		}
+		,registry_dialog_open:true
+		,registry_msp_dialog_open:false
+		,registry_doctor_dialog_open:false
+		,registry_patient_dialog_open:true
+		,msp_index:0
+		,msp_list:[
+			{msp_public_name:'цПМСД Nr1 "Поділля - Дубово"'}
+			,{msp_public_name:'цПМСД  Nr2 "Поділля - Зарічанська"'}
+			,{msp_public_name:'цПМСД "Поділля - Стара Синява"'}
+		]
+		,cabinet_part_index:0
+		,cabinet_part_list:[
+			{name:'Календар',url:'/v/testMvpCalendar'}
+			,{name:'Амбулаторна картка',url:'/v/patient?id=3'}
+			,{name:'Веденя хворого',url:'/v/patient?id=3&cabinet_part=protocol'}
+		]
+		,diagnostic_cabinet_list:[
+			{name:'УЗД',cabinet_nr:12}
+			,{name:'Рентген кабінет',cabinet_nr:15}
+			,{name:'ЕКГ',cabinet_nr:17}
+			,{name:'Лабораторія',cabinet_nr:25}
+		]
+		,doctor_index:0
+		,doctor_list:[
+			{name:'Раппопорт В.П. ',cabinet_nr:3}
+			,{name:'Семашко М.О. ',cabinet_nr:8}
+			,{name:'Боткін С.П. ',cabinet_nr:9}
+		]
+		,info:{
+			login:{
+				page_design:{
+					head:{
+						text:'Вхід'
+						,suffix:'в програму'
+						,text1:'Реєстрація'
+						,suffix1:'в програмі'
+					}
+					
+				}
+				,db_role:{ }
+				,role:{
+					ROLE_USER:{name:'Лікар',fns:['A','E','B','H']}
+					,ms_registry:{name:'м/с Реєстратури',fns:['A','H']}
+					,head_doctor:{name:'Гол.Лікар',fns:['C','B','D','I']}
+					,ROLE_HEAD_HUMAN_RESOURCES:{name:'Зав.Кадрами',fns:['C','B','D']}
+					,admin_app:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
+					,ROLE_ADMINMSP:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
+					,admin_region:{name:'Адмін.Регіону',fns:['F']}
+					,ROLE_WAITING_FOR_CONFIRMATION:{name:'Заявка',fns:['J']}
+				}
+				,fns:{
+					A:{name:'Заведеня хворого'}
+					,B:{name:'Підписання декларації - eHealth'}
+					,C:{name:'Реєстрація лікаря - eHealth'}
+					,D:{name:'Реєстрація лікувального закладу - eHealth'}
+					,E:{name:'Вести хворого'}
+					,F:{name:'Підтвердження існування лікувального закладу'}
+					,H:{name:'Запис пацієнта до лікаря'}
+					,I:{name:'Звільненя лікаря'}
+					,J:{name:'Очікування підтвердження доступу'}
+				}
+			}
+		}
+	};
+
+
 	if('testMvpPatient' == $scope.pagePath.last()){
 		console.log('----initAll---------------' + $scope.pagePath.last());
 		$scope.ehealthapi1 = {
@@ -60,6 +184,12 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log(response);
 			}
 		);
+	}else
+	if('personal-page' == $scope.pagePath.last()){
+		initTestVariables($scope, $http, Blob);
+		initTestAddress($scope, $http);
+		init_config_info($scope, $http);
+		$scope.config_msp_all.opened_dialog='personal_area';
 	}else
 	if('testMvpCalendar' == $scope.pagePath.last()){
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
@@ -274,112 +404,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else{
 	}
 
-	$scope.config_msp_all={
-		opened_dialog:'назва відкритого віконця діалогу'
-		,fn_open_dialog:function(dialog_name){
-			if(this.opened_dialog==dialog_name)
-				this.opened_dialog='закрити';
-			else
-				this.opened_dialog=dialog_name
-			if('doctors_cards'==this.opened_dialog){
-				this.human_resources_department.dialogs[this.opened_dialog].open_dialog();
-			}
-		}
-		,human_resources_department:{
-			fn_opened_card_name:function(){
-				if(!$scope.config_info.msp_employee_doc)
-					return;
-				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
-				return name;
-			}
-			,dialogs:{
-				doctors_cards:{
-					name:'Картотека лікарів'
-					,thead_names:{
-						employee_id:{name:'Nr'}
-						,employee_info:{name:'картка лікаря'}
-					}
-					,url:'/r/employee_list'
-					,open_dialog:function(){
-						if(!$scope.principal.user_msp){
-							return;
-						}
-						var msp_id = $scope.principal.user_msp[0].msp_id; 
-						$scope.config_info.read_msp_employee(msp_id);
-					}
-				}
-				,new_doctor:{
-					name:'Зареєструвати нового лікаря'
-				}
-				,opened_card:{
-					name:'Відкрита картка:'
-				}
-			}
-		}
-		,registry_dialog_open:true
-		,registry_msp_dialog_open:false
-		,registry_doctor_dialog_open:false
-		,registry_patient_dialog_open:true
-		,msp_index:0
-		,msp_list:[
-			{msp_public_name:'цПМСД Nr1 "Поділля - Дубово"'}
-			,{msp_public_name:'цПМСД  Nr2 "Поділля - Зарічанська"'}
-			,{msp_public_name:'цПМСД "Поділля - Стара Синява"'}
-		]
-		,cabinet_part_index:0
-		,cabinet_part_list:[
-			{name:'Календар',url:'/v/testMvpCalendar'}
-			,{name:'Амбулаторна картка',url:'/v/patient?id=3'}
-			,{name:'Веденя хворого',url:'/v/patient?id=3&cabinet_part=protocol'}
-		]
-		,diagnostic_cabinet_list:[
-			{name:'УЗД',cabinet_nr:12}
-			,{name:'Рентген кабінет',cabinet_nr:15}
-			,{name:'ЕКГ',cabinet_nr:17}
-			,{name:'Лабораторія',cabinet_nr:25}
-		]
-		,doctor_index:0
-		,doctor_list:[
-			{name:'Раппопорт В.П. ',cabinet_nr:3}
-			,{name:'Семашко М.О. ',cabinet_nr:8}
-			,{name:'Боткін С.П. ',cabinet_nr:9}
-		]
-		,info:{
-			login:{
-				page_design:{
-					head:{
-						text:'Вхід'
-						,suffix:'в програму'
-						,text1:'Реєстрація'
-						,suffix1:'в програмі'
-					}
-					
-				}
-				,db_role:{
-					
-				}
-				,role:{
-					ROLE_USER:{name:'Лікар',fns:['A','E','B','H']}
-					,ms_registry:{name:'м/с Реєстратури',fns:['A','H']}
-					,head_doctor:{name:'Гол.Лікар',fns:['C','B','D','I']}
-					,ROLE_HEAD_HUMAN_RESOURCES:{name:'Зав.Кадрами',fns:['C','B','D']}
-					,admin_app:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
-					,ROLE_ADMINMSP:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
-					,admin_region:{name:'Адмін.Регіону',fns:['F']}
-				}
-				,fns:{
-					A:{name:'Заведеня хворого'}
-					,B:{name:'Підписання декларації - eHealth'}
-					,C:{name:'Реєстрація лікаря - eHealth'}
-					,D:{name:'Реєстрація лікувального закладу - eHealth'}
-					,E:{name:'Вести хворого'}
-					,F:{name:'Підтвердження лікувального закладу'}
-					,H:{name:'Запис пацієнта до лікаря'}
-					,I:{name:'Звільненя лікаря'}
-				}
-			}
-		}
-	};
 	
 	console.log(pageanchors.doctor_index);
 	$scope.openUrl = function(url){

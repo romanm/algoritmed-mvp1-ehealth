@@ -11,12 +11,11 @@
 	,"parent":"home"
 	,"menuBar":true
 }
-,"registry":{
+,"info":{
 	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/registry.html'"
-	,"shortName":"Персональна сторінка"
-	,"shortName2":"Зареєструватись"
-	,"fa":"fa-sign-in"
+	,"ng_template":"'/f/mvp1/medic/info.html'"
+	,"shortName":"Інформація"
+	,"fa":"fa-info"
 	,"parent":"home"
 	,"menuBar":true
 }
@@ -27,6 +26,24 @@
 	,"fa":"fa-user"
 	,"parent":"home"
 	,"menuBar":true
+}
+,"personal-page":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/personal-page.html'"
+	,"shortName":"Персональна сторінка"
+	,"shortName2":"Зареєструватись"
+	,"fa":"fa-sign-in"
+	,"parent":"home"
+	,"menuBar":true
+}
+,"registry":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/registry.html'"
+	,"shortName":"Персональна сторінка"
+	,"shortName2":"Зареєструватись"
+	,"fa":"fa-sign-in"
+	,"parent":"home"
+	,"menuBar":false
 }
 ,"moz-declaration-edit":{
 	"th_template":"mvp1-medic"
@@ -48,14 +65,6 @@
 	,"shortName":"Зареєструватись"
 	,"fa":"fa-sign-in"
 	,"parent":"home1"
-}
-,"info":{
-	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/info.html'"
-	,"shortName":"Інформація"
-	,"fa":"fa-info"
-	,"parent":"home"
-	,"menuBar":true
 }
 ,"info-doc":{
 	"th_template":"mvp1-medic"
@@ -82,7 +91,7 @@
 	,"ng_template":"'/f/mvp1/medic/testMvpCalendar.html'"
 	,"shortName":"Шаблон виду плану роботи як календар"
 	,"fa":"fa-info"
-	,"parent":"info"
+	,"parent":"cabinet"
 }
 ,"testMvpAddress":{
 	"th_template":"mvp1-medic"
