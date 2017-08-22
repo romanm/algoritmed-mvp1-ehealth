@@ -584,13 +584,32 @@ initTestVariables = function($scope, $http, Blob){
 				fn_httpSave:function(){
 					console.log('--config_personregistry.autoSave.fn_httpSave--------------');
 					var data_template = $scope.config_personregistry.data_template;
-					console.log(data_template);
-					$http.post('/r/savePersonRegistry', data_template).then(function(response) {
-						console.log(response.data);
-						if(!data_template.doc_id){
-							data_template.doc_id = response.data.doc_id
+					var validToSave = this.fn_validToSave(data_template);
+					if(validToSave){
+						$http.post('/r/savePersonRegistry', data_template).then(function(response) {
+							console.log(response.data);
+							if(!data_template.doc_id){
+								data_template.doc_id = response.data.doc_id
+							}
+						});
+					}
+				}
+				,requiredField:['username', 'password','first_name','last_name','second_name']
+				,fn_validToSave:function(data){
+					var validToSave = true;
+					angular.forEach(this.requiredField, function(v, i){
+						console.log(v + ' / ' + data[v]);
+						console.log(!data[v]);
+						if(!data[v]){
+							validToSave = false;
+							console.log(validToSave);
 						}
 					});
+					if(validToSave){
+						add_employee_info(data, data);
+					}
+					console.log(data);
+					return validToSave;
 				}
 			}
 	}
@@ -649,18 +668,7 @@ initTestVariables = function($scope, $http, Blob){
 				// employee_info - для "картотеки лікарів"
 //				var docbodyData = $scope.doc_employee.data; 
 				var docbodyData = $scope.doc_employee.docbody; 
-				var employee_info = 
-					docbodyData.party.last_name
-				+ ' ' +docbodyData.party.first_name
-				+ ' ' +docbodyData.party.second_name
-				+ ' (' +docbodyData.party.birth_date + ')';
-//				$scope.doc_employee.party.last_name
-//				+ ' ' +$scope.doc_employee.party.first_name
-//				+ ' ' +$scope.doc_employee.party.second_name
-//				+ ' (' +$scope.doc_employee.party.birth_date + ')';
-				console.log(employee_info);
-				$scope.doc_employee.employee_info = employee_info;
-				console.log($scope.doc_employee.employee_info);
+				add_employee_info(docbodyData.party, $scope.doc_employee);
 				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response) {
 					console.log(response.data);
 					if(!$scope.doc_employee.doc_id){
@@ -932,5 +940,20 @@ initTestVariables = function($scope, $http, Blob){
 			"consent_text": "Consent text"
 		}
 	};
+
+add_employee_info = function(party_o, target_o){
+	var employee_info = 
+		party_o.last_name
+	+ ' ' +party_o.first_name
+	+ ' ' +party_o.second_name
+	+ ' (' +party_o.birth_date + ')';
+//				$scope.doc_employee.party.last_name
+//				+ ' ' +$scope.doc_employee.party.first_name
+//				+ ' ' +$scope.doc_employee.party.second_name
+//				+ ' (' +$scope.doc_employee.party.birth_date + ')';
+	console.log(employee_info);
+	target_o.employee_info = employee_info;
+	console.log(target_o.employee_info);
+}
 
 }

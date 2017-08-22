@@ -136,7 +136,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					,admin_app:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
 					,ROLE_ADMINMSP:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
 					,admin_region:{name:'Адмін.Регіону',fns:['F']}
-					,ROLE_WAITING_FOR_CONFIRMATION:{name:'Заявка',fns:['J']}
+					,ROLE_WAITING_FOR_CONFIRMATION:{name:'Заявка на логін',fns:['J']}
 				}
 				,fns:{
 					A:{name:'Заведеня хворого'}
@@ -403,7 +403,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		);
 	}else{
 	}
-
 	
 	console.log(pageanchors.doctor_index);
 	$scope.openUrl = function(url){
@@ -414,6 +413,5 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.config_msp_all.doctor_index = $scope.param.doctor_index;
 		console.log($scope.config_msp_all);
 	}
-	
 
 }

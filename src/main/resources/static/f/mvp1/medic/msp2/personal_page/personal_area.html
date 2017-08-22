@@ -1,3 +1,20 @@
 <div class="w3-container">
-	<h4>Підбірка інформації, що стосується особисто мене.</h4>
+	<h4 class="w3-center am-uppercase w3-text-indigo">Підбірка
+		особистої інформації.</h4>
+
+	<div>
+		<b> Лікувальні заклади: </b> <span
+			ng-repeat="msp in principal.user_msp"> {{msp.msp_name}} </span>
+	</div>
+	<div>
+		<b> Права доступу: </b> <span
+			ng-repeat="a in principal.principal.authorities"> {{1 +
+			config_msp_all.info.login.role.keys().indexOf(a.authority)}} -
+			{{config_msp_all.info.login.role[a.authority].name}}{{$last?'.':','}}
+		</span>
+	</div>
+	<!-- 
+{{fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')}}
+	{{principal}}
+ -->
 </div>

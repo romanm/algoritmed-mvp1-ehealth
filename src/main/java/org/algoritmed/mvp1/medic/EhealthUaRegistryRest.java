@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
@@ -112,19 +113,52 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		party.put("family_name", party.get("last_name"));
 		System.err.println(party);
 		int update = db1ParamJdbcTemplate.update(sql_person_update, party);
-
 		return data;
 	}
+
+	private @Value("${sql.employee.update}")		String sql_employee_update;
+	private @Value("${sql.employee.insert}")		String sql_employee_insert;
+	private @Value("${sql.db1.person.update}")		String sql_person_update;
+	private @Value("${sql.db1.person.insert}")		String sql_person_insert;
+	private @Value("${sql.db1.users.update}")		String sql_users_update;
+	private @Value("${sql.db1.users.insert}")		String sql_users_insert;
+	private @Value("${sql.db1.user_role.insert}")	String sql_user_role_insert;
 	
 	@PostMapping("/r/savePersonRegistry")
 	public @ResponseBody Map<String, Object> savePersonRegistry(
 			@RequestBody Map<String, Object> data
+			, Principal userPrincipal
 			) {
 		logger.info("\n---------------\n"
 				+ "/r/savePersonRegistry"
 				+ "\n" + data
 				);
+		boolean isToSave=true;
+		if(isToSave){
+			if(!data.containsKey("family_name")||((String)data.get("family_name")).length()==0) {
+				data.put("family_name", data.get("last_name"));
+			}
+//			persistRootElement(data, doctype_employee, sql_person_insert, sql_person_update);
+			persistRootElement(data, doctype_employee);
+			Integer doc_id = (Integer) data.get("doc_id");
+//			data.put("docbody_id", doc_id);
+			data.put("person_id", doc_id);
+			persistContentElement(data, sql_person_insert, sql_person_update);
+			data.put("user_id", doc_id);
+			persistContentElement(data, sql_users_insert, sql_users_update);
+			data.put("employee_id", doc_id);
+			persistContentElement(data, sql_employee_insert, sql_employee_update);
+			if(true!=(boolean)data.get("update_sql")){
+				addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");
+			}
+		}
 		return data;
+	}
+
+	private void addUserRole(Map<String, Object> data, Integer user_role_id, String role) {
+		data.put("user_role_id", user_role_id);
+		data.put("role", role);
+		int update = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
 	}
 	
 	@PostMapping("/r/saveDeclaration")
@@ -154,7 +188,39 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		return data;
 	}
 
+	private void persistContentElement(Map<String, Object> data, String sql_insert, String sql_update) {
+		boolean update_sql = (boolean) data.get("update_sql");
+		if(update_sql){//update
+//			if(data.containsKey("doc_id")){//update
+			System.err.println(sql_update);
+			int update = db1ParamJdbcTemplate.update(sql_update, data);
+		}else{//insert
+			System.err.println(sql_insert);
+			int update = db1ParamJdbcTemplate.update(sql_insert, data);
+		}
+	}
+
 	private void persistRootElement(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
+		persistRootElement(data, doctype);
+		persistContentElement(data,sql_insert,sql_update);
+	}
+
+	private void persistRootElement(Map<String, Object> data, int doctype) {
+		if(data.containsKey("doc_id")){//update
+			System.err.println("--180----------update--------");
+			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
+			data.put("update_sql", true);
+		}else{//insert
+			System.err.println("--183----------insert--------");
+			Integer doc_id = nextDbId();
+			data.put("update_sql", false);
+			data.put("doc_id", doc_id);
+			data.put("doctype", doctype);
+			insertDocElementWithDocbody(data, doc_id, data);
+		}
+	}
+
+	private void persistRootElement2(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
 		if(data.containsKey("doc_id")){//update
 			System.err.println("--86----------update--------");
 			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
@@ -163,18 +229,15 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			int update = db1ParamJdbcTemplate.update(sql_update, data);
 		}else{//insert
 			System.err.println("--90----------insert--------");
-			data.put("doctype", doctype);
 			Integer doc_id = nextDbId();
 			data.put("doc_id", doc_id);
+			data.put("doctype", doctype);
 			insertDocElementWithDocbody(data, doc_id, data);
 			System.err.println(sql_insert);
 			int update = db1ParamJdbcTemplate.update(sql_insert, data);
 		}
 	}
 	
-	private @Value("${sql.db1.person.update}")		String sql_person_update;
-	private @Value("${sql.employee.update}")		String sql_employee_update;
-	private @Value("${sql.employee.insert}")		String sql_employee_insert;
 	private @Value("${sql.msp.update}")				String sql_msp_update;
 	private @Value("${sql.msp.insert}")				String sql_msp_insert;
 
@@ -191,4 +254,5 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			return legal_entitiesPut;
 		return data;
 	}
+
 }
