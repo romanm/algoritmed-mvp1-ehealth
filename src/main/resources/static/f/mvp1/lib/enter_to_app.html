@@ -18,12 +18,20 @@
 			</header>
 			<div>
 				<div class="w3-row">
-					<div class="w3-col m3 l3 s3 w3-small">Ім’я користувача</div>
+					<div class="w3-col m3 l3 s3 w3-small"
+					ng-class="{'w3-text-red':config_personregistry.autoSave.error.requiredField.username.empty}"
+					>Ім’я користувача</div>
 					<div class="w3-col m9 l9 s9">
 						<input ng-change="config_obj.autoSave.fn_change_count()"
 							placeholder="Логін ім'я" class="w3-border am-width-100pr"
 							ng-model="person_obj.username">
 					</div>
+				</div>
+				<div class="w3-tiny w3-container w3-orange"
+					ng-if="config_personregistry.autoSave.error.checkUsername.exist">
+					Логін ім'я <b>
+						{{config_personregistry.autoSave.error.checkUsername.username}} </b>
+					вже існує.
 				</div>
 				<div class="w3-row">
 					<div class="w3-col m3 l3 s3 ">Пароль:</div>
@@ -40,6 +48,10 @@
 							placeholder="Пароль контроль" class="w3-border am-width-100pr"
 							type="password" ng-model="person_obj.password_control">
 					</div>
+				</div>
+				<div class="w3-tiny w3-container w3-orange"
+					ng-if="config_personregistry.autoSave.error.false_password_control">
+					Неспівпадіння паспорт і паспорт контроль значень.
 				</div>
 			</div>
 			<div

@@ -116,6 +116,21 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		return data;
 	}
 
+	@PostMapping("/r/checkUsername")
+	public @ResponseBody Map<String, Object> checkUsername(@RequestBody String username) {
+		logger.info("\n---------------\n"
+				+ "/r/checkUsername"
+				+ "\n" + username
+				);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("username", username);
+		List<Map<String, Object>> checkUsername_list = db1ParamJdbcTemplate.queryForList(sql_checkUsername, map);
+		map.put("exist", checkUsername_list.size()>0);
+		return map;
+	}
+
+	private @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
+
 	private @Value("${sql.employee.update}")		String sql_employee_update;
 	private @Value("${sql.employee.insert}")		String sql_employee_insert;
 	private @Value("${sql.db1.person.update}")		String sql_person_update;
@@ -141,7 +156,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 //			persistRootElement(data, doctype_employee, sql_person_insert, sql_person_update);
 			persistRootElement(data, doctype_employee);
 			Integer doc_id = (Integer) data.get("doc_id");
-//			data.put("docbody_id", doc_id);
+			data.put("docbody_id", doc_id);
 			data.put("person_id", doc_id);
 			persistContentElement(data, sql_person_insert, sql_person_update);
 			data.put("user_id", doc_id);

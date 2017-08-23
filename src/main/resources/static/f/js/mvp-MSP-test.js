@@ -577,9 +577,7 @@ initTestVariables = function($scope, $http, Blob){
 	}
 	$scope.config_all.init('config_msp');
 	$scope.config_personregistry = {
-			data_template:{
-				x:'y'
-			}
+			data_template:{x:'y'}
 			,autoSave:{
 				fn_httpSave:function(){
 					console.log('--config_personregistry.autoSave.fn_httpSave--------------');
@@ -595,16 +593,36 @@ initTestVariables = function($scope, $http, Blob){
 					}
 				}
 				,requiredField:['username', 'password','first_name','last_name','second_name']
+				,error:{requiredField:{}}
 				,fn_validToSave:function(data){
 					var validToSave = true;
+					var thisError = this.error;
 					angular.forEach(this.requiredField, function(v, i){
 						console.log(v + ' / ' + data[v]);
 						console.log(!data[v]);
 						if(!data[v]){
 							validToSave = false;
-							console.log(validToSave);
+							thisError.requiredField[v]={empty:true};
+						}else{
+							thisError.requiredField[v]={empty:false};
 						}
 					});
+					console.log(this.error);
+					if(data.password_control){
+						console.log(data.password_control);
+						console.log(data.password);
+						if(data.password_control==data.password){
+							thisError.false_password_control = false;
+						}else{
+							thisError.false_password_control = true;
+						}
+					}
+					if(data.username){
+						$http.post('/r/checkUsername', data.username).then(function(response) {
+							thisError.checkUsername = response.data;
+							console.log(thisError);
+						});
+					}
 					if(validToSave){
 						add_employee_info(data, data);
 					}
