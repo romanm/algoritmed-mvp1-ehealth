@@ -1,0 +1,11 @@
+<div id="{{modalDialogData.id}}" class="w3-modal">
+	<div class="w3-modal-content">
+		<span ng-click="config_all.modalDialog.close(modalDialogData.id)"
+			class="w3-button w3-display-topright">&times;</span> 
+		<a
+			class="w3-btn w3-blue w3-display-bottomright"
+			ng-click="config_all.modalDialog.close(modalDialogData.id)">Закрити </a>
+		<div ng-include="modalDialogData.inner_file"></div>
+		<p>&nbsp;</p>
+	</div>
+</div>

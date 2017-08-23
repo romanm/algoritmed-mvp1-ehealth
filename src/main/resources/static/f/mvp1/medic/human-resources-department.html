@@ -2,7 +2,18 @@
 	<h2 class="w3-center am-uppercase ">
 		<span class="w3-tiny">електронний</span> <b class="w3-text-indigo"
 			style="letter-spacing: 3px;"> Відділ кадрів </b>
-		<div class="w3-tiny">{{principal.user_msp[0].msp_public_name}}</div>
+		<div class="w3-tiny">
+			{{principal.user_msp[0].msp_public_name}} 
+			<span
+				class="w3-text-light-gray"> <i
+				ng-click="config_all.modalDialog.open('id01_principal_msp_list')"
+				class="fa fa-list-alt w3-hover-text-yellow" aria-hidden="true"></i>
+			</span>
+			<div
+				ng-repeat="modalDialogData in [{id:'id01_principal_msp_list'
+				,inner_file:'/f/mvp1/medic/msp2/humanRD/humanRD-principal-msp.html'}]"
+				ng-include="'/f/mvp1/lib/modal_dialog.html'"></div>
+		</div>
 	</h2>
 	<div>
 	<!-- 
@@ -24,7 +35,6 @@
 	<div class="w3-card-2"
 		ng-repeat="(k,v) in config_msp_all.human_resources_department.dialogs">
 		 <div ng-include="'/f/mvp1/lib/window_head.html'"></div>
-		 
 		<div ng-if="'opened_card'==k && config_msp_all.opened_dialog==k">
 			<div ng-if="!fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
 				Доступ тільки для відділу кадрів.</div>

@@ -43,7 +43,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				$scope.config_info.read_o('/r/read_docbody/'+person_id,'msp_employee_doc');
 			}else
 			if('doctors_cards'==this.opened_dialog){
-				this.human_resources_department.dialogs[this.opened_dialog].open_dialog();
+				this.human_resources_department.dialogs['doctors_cards'].open_dialog();
 			}
 		}
 		,personal_page:{
@@ -55,10 +55,25 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				,personal_data:{
 					name:'Персональні данні'
 				}
-			}
-		}
+		}	}
 		,human_resources_department:{
-			fn_opened_card_name:function(){
+			choose_user_msp:function(user_msp, modalDialogData){
+				if(0==user_msp) return;
+				console.log(user_msp);
+				var u_m = $scope.principal.user_msp.splice(user_msp,1);
+				$scope.principal.user_msp.splice(0,0,u_m[0]);
+				this.dialogs.doctors_cards.open_dialog();
+//				$scope.config_all.modalDialog.close(modalDialogData.id)
+				/*
+				var a = ['a','b','c']
+				console.log(a);
+				var f = a.splice(2,1);
+				console.log(f);
+				a.splice(0,0,f[0]);
+				console.log(a);
+				 * */
+			}
+			,fn_opened_card_name:function(){
 				if(!$scope.config_info.msp_employee_doc)
 					return;
 				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
@@ -78,16 +93,13 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						}
 						var msp_id = $scope.principal.user_msp[0].msp_id; 
 						$scope.config_info.read_msp_employee(msp_id);
-					}
-				}
+				}	}
 				,new_doctor:{
 					name:'Зареєструвати нового лікаря'
 				}
 				,opened_card:{
 					name:'Відкрита картка:'
-				}
-			}
-		}
+		}	}	}
 		,registry_dialog_open:true
 		,registry_msp_dialog_open:false
 		,registry_doctor_dialog_open:false

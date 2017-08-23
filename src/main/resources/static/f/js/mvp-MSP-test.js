@@ -441,9 +441,7 @@ init_config_info = function($scope, $http){
 			if(this.msp_employee_doc){
 				if(msp_employee.person_id==this.msp_employee_doc.doc_id){
 					$scope.config_msp_all.opened_dialog='opened_card';
-				}
-			}
-		}
+		}	}	}
 		,afterRead_msp_employee_doc:function(msp_employee){
 			console.log(1);
 			var party = this.msp_employee_doc.docbody.party;
@@ -476,9 +474,8 @@ init_config_info = function($scope, $http){
 				thisObj['afterRead_'+read_o_name]();
 				console.log(thisObj['afterRead_'+read_o_name]);
 			});
-		}
-	}
-}
+}	}	}
+
 init_info = function($scope, $http){
 	read_msp_list($http, $scope);
 	init_config_info($scope, $http);

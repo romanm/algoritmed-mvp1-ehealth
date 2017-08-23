@@ -11,6 +11,20 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	$scope.maxChangeForAutoSave=10;
 	$scope.config_all = {'maxChangeForAutoSave':10};
 	$scope.config_all.timeout = {'delay':{'seekMouseOver':780,'autoSaveTextTypingPause':2000}};
+	$scope.config_all.modalDialog = {
+		open:function(id_of_element){
+			document.getElementById(id_of_element).style.display='block';
+			if('id01_principal_msp_list'==id_of_element){
+				console.log($scope.principal);
+			}else
+			if('id01_msp_list'==id_of_element){
+				read_msp_list($http, $scope)
+			}
+		}
+		,close:function(id_of_element){
+			document.getElementById(id_of_element).style.display='none';
+		}
+	};
 	$scope.config_all.init = function(config_obj_key){
 		var config_obj = $scope[config_obj_key]
 		var obj_autoSave = config_obj['autoSave'];

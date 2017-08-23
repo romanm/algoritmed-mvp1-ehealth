@@ -1,0 +1,7 @@
+<div class="w3-gray">Оберіть свій лікувальний заклад</div>
+<hr />
+<div class="w3-left-align w3-container w3-small">
+	<div ng-repeat="user_msp in principal.user_msp" class="w3-hover-green"
+		ng-click="config_msp_all.human_resources_department.choose_user_msp($index, modalDialogData)">
+		{{user_msp.msp_public_name}}</div>
+</div>
