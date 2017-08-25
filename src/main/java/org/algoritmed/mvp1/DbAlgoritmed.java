@@ -51,7 +51,10 @@ public class DbAlgoritmed {
 
 	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap, Timestamp updated) {
 		dbSaveObj.put("updated", updated);
+		docbodyMap.remove("docbody");
 		String docbody = objectToString(docbodyMap);
+		System.err.println("------56--------");
+		System.err.println(docbody);
 		dbSaveObj.put("docbody", docbody);
 		int update = db1ParamJdbcTemplate.update(sql_docbody_update, dbSaveObj);
 		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_update, dbSaveObj);
@@ -64,7 +67,7 @@ public class DbAlgoritmed {
 		updateDocbody(dbSaveObj, docbodyMap, created);
 	}
 	private @Value("${sql.docbody.insertEmpty}")	String sql_docbody_insertEmpty;
-	private @Value("${sql_doc_update_docbody}")	String sql_doc_update_docbody;
+	private @Value("${sql_doc_update_docbody}")		String sql_doc_update_docbody;
 	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId) {
 		insertDocElement(dbSaveObj, parentId);
 		dbSaveObj.put("docbody_id", dbSaveObj.get("doc_id"));

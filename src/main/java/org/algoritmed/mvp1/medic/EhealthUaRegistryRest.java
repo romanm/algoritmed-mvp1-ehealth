@@ -150,22 +150,38 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				);
 		boolean isToSave=true;
 		if(isToSave){
-			if(!data.containsKey("family_name")||((String)data.get("family_name")).length()==0) {
-				data.put("family_name", data.get("last_name"));
-			}
 //			persistRootElement(data, doctype_employee, sql_person_insert, sql_person_update);
 			persistRootElement(data, doctype_employee);
 			Integer doc_id = (Integer) data.get("doc_id");
-			data.put("docbody_id", doc_id);
-			data.put("person_id", doc_id);
-			persistContentElement(data, sql_person_insert, sql_person_update);
+			
+			Map data_party = (Map)data.get("party");
+			data_party.put("person_id", doc_id);
+			data_party.put("update_sql", data.get("update_sql"));
+			persistContentElement(data_party, sql_person_insert, sql_person_update);
+			
 			data.put("user_id", doc_id);
+			System.err.println(data);
 			persistContentElement(data, sql_users_insert, sql_users_update);
-			data.put("employee_id", doc_id);
-			persistContentElement(data, sql_employee_insert, sql_employee_update);
 			if(true!=(boolean)data.get("update_sql")){
 				addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");
 			}
+			
+			Map docbodyMap;
+			if(true==(boolean)data.get("update_sql")){
+				docbodyMap = (Map)data.get("docbody");
+			}else {
+				docbodyMap = data;
+				docbodyMap.remove("password");
+				docbodyMap.remove("password_control");
+				docbodyMap.remove("docbody");
+			}
+			updateDocbody(data, docbodyMap, now());// change for autoSave $scope.doc_employee
+			
+			data.put("docbody_id", doc_id);
+			data.put("employee_id", doc_id);
+			persistContentElement(data, sql_employee_insert, sql_employee_update);
+			
+			
 		}
 		return data;
 	}
@@ -207,10 +223,10 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		boolean update_sql = (boolean) data.get("update_sql");
 		if(update_sql){//update
 //			if(data.containsKey("doc_id")){//update
-			System.err.println(sql_update);
+			System.err.println("213 upd "+sql_update);
 			int update = db1ParamJdbcTemplate.update(sql_update, data);
 		}else{//insert
-			System.err.println(sql_insert);
+			System.err.println("216 ins "+sql_insert);
 			int update = db1ParamJdbcTemplate.update(sql_insert, data);
 		}
 	}

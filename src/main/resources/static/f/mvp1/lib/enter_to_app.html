@@ -10,7 +10,7 @@
 	</div>
 	<div class="w3-col l6 m6 s6  w3-container">
 		<div class="w3-card-2"
-			ng-init="config_obj=config_personregistry;person_obj=config_personregistry.data_template;
+			ng-init="config_obj=config_personRegistry;person_obj=config_personRegistry.data.template;
 			person_type='Персональні дані'">
 			<header class="w3-light-gray">
 				Реєстрація в системі <span class="w3-tiny"> для користувачів
@@ -19,7 +19,7 @@
 			<div>
 				<div class="w3-row">
 					<div class="w3-col m3 l3 s3 w3-small"
-					ng-class="{'w3-text-red':config_personregistry.autoSave.error.requiredField.username.empty}"
+					ng-class="{'w3-text-red':config_obj.data.error.requiredField.username.empty}"
 					>Ім’я користувача</div>
 					<div class="w3-col m9 l9 s9">
 						<input ng-change="config_obj.autoSave.fn_change_count()"
@@ -28,13 +28,15 @@
 					</div>
 				</div>
 				<div class="w3-tiny w3-container w3-orange"
-					ng-if="config_personregistry.autoSave.error.checkUsername.exist">
+					ng-if="config_obj.autoSave.error.checkUsername.exist">
 					Логін ім'я <b>
-						{{config_personregistry.autoSave.error.checkUsername.username}} </b>
+						{{config_obj.data.error.checkUsername.username}} </b>
 					вже існує.
 				</div>
 				<div class="w3-row">
-					<div class="w3-col m3 l3 s3 ">Пароль:</div>
+					<div class="w3-col m3 l3 s3 "
+					ng-class="{'w3-text-red':config_obj.data.error.requiredField.password.empty}"
+					>Пароль:</div>
 					<div class="w3-col m9 l9 s9">
 						<input ng-change="config_obj.autoSave.fn_change_count()"
 							placeholder="Пароль" class="w3-border am-width-100pr"
@@ -42,7 +44,9 @@
 					</div>
 				</div>
 				<div class="w3-row">
-					<div class="w3-col m3 l3 s3 w3-small">Пароль контроль:</div>
+					<div class="w3-col m3 l3 s3 w3-small"
+					ng-class="{'w3-text-red':config_obj.data.error.requiredField.password_control.empty}"
+					>Пароль контроль:</div>
 					<div class="w3-col m9 l9 s9">
 						<input ng-change="config_obj.autoSave.fn_change_count()"
 							placeholder="Пароль контроль" class="w3-border am-width-100pr"
@@ -50,13 +54,14 @@
 					</div>
 				</div>
 				<div class="w3-tiny w3-container w3-orange"
-					ng-if="config_personregistry.autoSave.error.false_password_control">
+					ng-if="config_obj.data.error.false_password_control">
 					Неспівпадіння паспорт і паспорт контроль значень.
 				</div>
 			</div>
 			<div
+			ng-init="person_party_obj=person_obj.party;error=config_obj.data.error.party;"
 				ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-1.html'"></div>
 		</div>
 	</div>
 </div>
-{{config_personregistry.data_template}}
+{{config_obj.data.template}}

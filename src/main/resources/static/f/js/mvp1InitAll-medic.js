@@ -40,6 +40,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				this.opened_dialog=dialog_name
 			if('personal_data'==this.opened_dialog){
 				var person_id = $scope.principal.user.person_id; 
+				console.log('personal_data '+ person_id);
 				$scope.config_info.read_o('/r/read_docbody/'+person_id,'msp_employee_doc');
 			}else
 			if('doctors_cards'==this.opened_dialog){
@@ -47,8 +48,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 		}
 		,personal_page:{
-			x:'y'
-			,dialogs:{
+			dialogs:{
 				personal_area:{
 					name:'Особистий майданчик'
 				}
@@ -64,14 +64,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				$scope.principal.user_msp.splice(0,0,u_m[0]);
 				this.dialogs.doctors_cards.open_dialog();
 //				$scope.config_all.modalDialog.close(modalDialogData.id)
-				/*
-				var a = ['a','b','c']
-				console.log(a);
-				var f = a.splice(2,1);
-				console.log(f);
-				a.splice(0,0,f[0]);
-				console.log(a);
-				 * */
 			}
 			,fn_opened_card_name:function(){
 				if(!$scope.config_info.msp_employee_doc)
@@ -88,7 +80,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					,url:'/r/employee_list'
 					,open_dialog:function(){
-						if(!$scope.principal.user_msp){
+						if(!$scope.principal.user_msp[0]){
 							return;
 						}
 						var msp_id = $scope.principal.user_msp[0].msp_id; 

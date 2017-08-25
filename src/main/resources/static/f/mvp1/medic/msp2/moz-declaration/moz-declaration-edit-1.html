@@ -7,38 +7,38 @@
 </div>
 <div class="w3-row">
 	<div class="w3-col m3 l3 s3"
-	ng-class="{'w3-text-red':config_personregistry.autoSave.error.requiredField.last_name.empty}"
+	ng-class="{'w3-text-red':error.requiredField.last_name.empty}"
 	>
 		<span class="w3-text-gray w3-tiny">1.1</span> Прізвище
 	</div>
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="Прізвище" class="w3-border am-width-100pr"
-			ng-model="person_obj.last_name">
+			ng-model="person_party_obj.last_name">
 	</div>
 </div>
 <div class="w3-row">
 	<div class="w3-col m3 l3 s3"
-	ng-class="{'w3-text-red':config_personregistry.autoSave.error.requiredField.first_name.empty}"
+	ng-class="{'w3-text-red':error.requiredField.first_name.empty}"
 	>
 		<span class="w3-text-gray w3-tiny">1.2</span> Ім'я
 	</div>
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="Ім'я" class="w3-border am-width-100pr"
-			ng-model="person_obj.first_name">
+			ng-model="person_party_obj.first_name">
 	</div>
 </div>
 <div class="w3-row">
 	<div class="w3-col m3 l3 s3 w3-tiny"
-	ng-class="{'w3-text-red':config_personregistry.autoSave.error.requiredField.second_name.empty}"
+	ng-class="{'w3-text-red':error.requiredField.second_name.empty}"
 	>
 		<span class="w3-text-gray w3-tiny">1.3</span> По батькові
 	</div>
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="По батькові" class="w3-border am-width-100pr"
-			ng-model="person_obj.second_name">
+			ng-model="person_party_obj.second_name">
 	</div>
 </div>
 

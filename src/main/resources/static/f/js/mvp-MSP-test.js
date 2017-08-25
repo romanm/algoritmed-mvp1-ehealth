@@ -443,16 +443,11 @@ init_config_info = function($scope, $http){
 					$scope.config_msp_all.opened_dialog='opened_card';
 		}	}	}
 		,afterRead_msp_employee_doc:function(msp_employee){
-			console.log(1);
 			var party = this.msp_employee_doc.docbody.party;
-			console.log(1);
 			$scope.doc_employee = this.msp_employee_doc;
-			console.log(1);
 			$scope.doc_employee.data = this.msp_employee_doc.docbody;
-			console.log(1);
 			console.log($scope.doc_employee);
 			party.last_name = this.msp_employee_selected.family_name;
-			console.log(1);
 		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
 		,click_o:function(this_o_selected_name, o, url, read_o_name){
@@ -573,60 +568,146 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_msp');
-	$scope.config_personregistry = {
-			data_template:{x:'y'}
-			,autoSave:{
-				fn_httpSave:function(){
-					console.log('--config_personregistry.autoSave.fn_httpSave--------------');
-					var data_template = $scope.config_personregistry.data_template;
-					var validToSave = this.fn_validToSave(data_template);
-					if(validToSave){
-						$http.post('/r/savePersonRegistry', data_template).then(function(response) {
-							console.log(response.data);
-							if(!data_template.doc_id){
-								data_template.doc_id = response.data.doc_id
-							}
-						});
-					}
-				}
-				,requiredField:['username', 'password','first_name','last_name','second_name']
-				,error:{requiredField:{}}
-				,fn_validToSave:function(data){
-					var validToSave = true;
-					var thisError = this.error;
-					angular.forEach(this.requiredField, function(v, i){
-						console.log(v + ' / ' + data[v]);
-						console.log(!data[v]);
-						if(!data[v]){
-							validToSave = false;
-							thisError.requiredField[v]={empty:true};
-						}else{
-							thisError.requiredField[v]={empty:false};
-						}
-					});
-					console.log(this.error);
-					if(data.password_control){
-						console.log(data.password_control);
-						console.log(data.password);
-						if(data.password_control==data.password){
-							thisError.false_password_control = false;
-						}else{
-							thisError.false_password_control = true;
-						}
-					}
-					if(data.username){
-						$http.post('/r/checkUsername', data.username).then(function(response) {
-							thisError.checkUsername = response.data;
-							console.log(thisError);
-						});
-					}
-					if(validToSave){
-						add_employee_info(data, data);
-					}
-					console.log(data);
-					return validToSave;
+	$scope.config_personRegistry = {
+		data:{
+			template:{party:{}}
+			,error:{requiredField:{},party:{requiredField:{}}}
+			,validate:{
+				requiredField:{
+					username:{}
+					,password:{}
+					,password_control:{}
+					,party:{requiredField:{
+						first_name:{}
+						,last_name:{}
+						,second_name:{}
+					}}
 				}
 			}
+		}
+		,validToSave:true
+		,fn_validField:function(k, data_template_o, error){
+			console.log(k+' / ');
+			if(!data_template_o[k]){
+				$scope.config_personRegistry.validToSave = false;
+				console.log(k+' / '+$scope.config_personRegistry.validToSave);
+				error.requiredField[k]={empty:true};
+			}else{
+				error.requiredField[k]={empty:false};
+			}
+		}
+		,autoSave:{
+			fn_validToSave:function(){
+				$scope.config_personRegistry.validToSave = true;
+				angular.forEach($scope.config_personRegistry.data.validate.requiredField
+				, function(v, k){
+					if(v.requiredField){
+						angular.forEach(v.requiredField, function(v2, k2){
+							$scope.config_personRegistry.fn_validField(k2
+								,$scope.config_personRegistry.data.template[k]
+								,$scope.config_personRegistry.data.error[k]
+							);
+						});
+					}else{
+						$scope.config_personRegistry.fn_validField(k
+							,$scope.config_personRegistry.data.template
+							,$scope.config_personRegistry.data.error
+						);
+					}
+				});
+				console.log($scope.config_personRegistry.data.error);
+				if($scope.config_personRegistry.data.template.password_control){
+					if($scope.config_personRegistry.data.template.password_control
+					==$scope.config_personRegistry.data.template.password){
+						$scope.config_personRegistry.data.error.false_password_control = false;
+					}else{
+						$scope.config_personRegistry.data.error.false_password_control = true;
+					}
+				}
+				if($scope.config_personRegistry.data.template.username){
+					$http.post('/r/checkUsername'
+					, $scope.config_personRegistry.data.template.username).then(function(response) {
+						$scope.config_personRegistry.data.error.checkUsername = response.data;
+					});
+				}
+				if($scope.config_personRegistry.validToSave){
+					add_employee_info($scope.config_personRegistry.data.template.party
+					, $scope.config_personRegistry.data.template);
+				}
+				console.log($scope.config_personRegistry.data.template);
+				return $scope.config_personRegistry.validToSave;
+			}
+			,fn_httpSave:function(){
+				console.log('--config_personRegistry.autoSave.fn_httpSave--------------');
+				console.log($scope.config_personRegistry.data.template);
+				if(this.fn_validToSave()){
+					$http.post('/r/savePersonRegistry', $scope.config_personRegistry.data.template)
+					.then(function(response) {
+						console.log(response.data);
+						if(!$scope.config_personRegistry.data.template.doc_id){
+							$scope.config_personRegistry.data.template.doc_id = response.data.doc_id
+						}
+					});
+				}
+			}
+		}
+	}
+	$scope.config_all.init('config_personRegistry');
+	$scope.config_personregistry = {
+		data_template:{party:{}}
+		,autoSave:{
+			fn_httpSave:function(){
+				console.log('--config_personregistry.autoSave.fn_httpSave--------------');
+				var data_template = $scope.config_personregistry.data_template;
+				var validToSave = this.fn_validToSave(data_template);
+				if(validToSave){
+					$http.post('/r/savePersonRegistry', data_template).then(function(response) {
+						console.log(response.data);
+						if(!data_template.doc_id){
+							data_template.doc_id = response.data.doc_id
+						}
+					});
+				}
+			}
+			,requiredField:['username', 'password']
+			,requiredPartField:['first_name','last_name','second_name']
+			,error:{requiredField:{},requiredPartField:{}}
+			,fn_validToSave:function(data){
+				var validToSave = true;
+				var thisError = this.error;
+				angular.forEach(this.requiredField, function(v, i){
+					console.log(v + ' / ' + data[v]);
+					console.log(!data[v]);
+					if(!data[v]){
+						validToSave = false;
+						thisError.requiredField[v]={empty:true};
+					}else{
+						thisError.requiredField[v]={empty:false};
+					}
+				});
+				console.log(this.error);
+				if(data.password_control){
+					console.log(data.password_control);
+					console.log(data.password);
+					if(data.password_control==data.password){
+						thisError.false_password_control = false;
+					}else{
+						thisError.false_password_control = true;
+					}
+				}
+				if(data.username){
+					$http.post('/r/checkUsername', data.username).then(function(response) {
+						thisError.checkUsername = response.data;
+						console.log(thisError);
+					});
+				}
+				if(validToSave){
+					add_employee_info(data, data);
+				}
+				console.log(data);
+				return validToSave;
+			}
+		}
 	}
 	$scope.config_all.init('config_personregistry');
 	$scope.config_declaration = {
@@ -957,6 +1038,7 @@ initTestVariables = function($scope, $http, Blob){
 	};
 
 add_employee_info = function(party_o, target_o){
+	party_o.family_name=party_o.last_name;
 	var employee_info = 
 		party_o.last_name
 	+ ' ' +party_o.first_name
