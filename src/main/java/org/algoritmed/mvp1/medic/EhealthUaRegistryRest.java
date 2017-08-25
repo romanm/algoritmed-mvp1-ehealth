@@ -125,6 +125,8 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("username", username);
 		List<Map<String, Object>> checkUsername_list = db1ParamJdbcTemplate.queryForList(sql_checkUsername, map);
+		System.err.println("128---------------");
+		System.err.println(checkUsername_list);
 		map.put("exist", checkUsername_list.size()>0);
 		return map;
 	}

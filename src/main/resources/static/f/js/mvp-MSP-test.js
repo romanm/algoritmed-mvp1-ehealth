@@ -177,6 +177,8 @@ initTestAddress = function($scope, $http){
 //				d.setDate(d.getDate() + 1);
 //				console.log(d.getTime());
 				o['d2e_'+p] = d.getTime();
+				o['d2e_day_'+p] = d.getDate();
+				o['d2e_month_'+p] = ''+d.getMonth();
 				o['d2e_year_'+p] = d.getFullYear();
 //				console.log(o);
 			}
@@ -292,7 +294,7 @@ initTestAddress = function($scope, $http){
 				$scope.doc_dictionaries.response.keys[v.name] = k;
 			});
 //			console.log($scope.doc_dictionaries.response.keys);
-			console.log(this.selectDictionary('GENDER').values);
+			//console.log(this.selectDictionary('GENDER').values);
 		}
 		,selectDictionary:function(k){
 			if(!$scope.doc_dictionaries)

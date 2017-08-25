@@ -40,8 +40,10 @@
 				Доступ тільки для відділу кадрів.</div>
 			<div ng-if="fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
 				<div ng-if="config_info.msp_employee_doc">
+				<!-- 
 					<div ng-init="doc_employee_data=doc_employee.data;"
-						ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
+				 -->
+					<div ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
 				</div>
 				<div ng-if="!config_info.msp_employee_doc">
 					&nbsp;
@@ -55,7 +57,10 @@
 				Доступ тільки для відділу кадрів.</div>
 			<div ng-if="fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')"
 				ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"
+				></div>
+				<!-- 
 				ng-init="doc_employee_data=doc_employee.data;"></div>
+				 -->
 		</div>
 		<div ng-if="'doctors_cards'==k && config_msp_all.opened_dialog==k">
 		<!-- 

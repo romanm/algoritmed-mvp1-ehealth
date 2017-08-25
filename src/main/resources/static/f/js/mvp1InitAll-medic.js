@@ -39,12 +39,11 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			else
 				this.opened_dialog=dialog_name
 			if('personal_data'==this.opened_dialog){
-				var person_id = $scope.principal.user.person_id; 
-				console.log('personal_data '+ person_id);
-				$scope.config_info.read_o('/r/read_docbody/'+person_id,'msp_employee_doc');
+			console.log(3);
+				this.personal_page.dialogs.personal_data.open_dialog();
 			}else
 			if('doctors_cards'==this.opened_dialog){
-				this.human_resources_department.dialogs['doctors_cards'].open_dialog();
+				this.human_resources_department.dialogs.doctors_cards.open_dialog();
 			}
 		}
 		,personal_page:{
@@ -54,6 +53,15 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				}
 				,personal_data:{
 					name:'Персональні данні'
+					,open_dialog:function(){
+			console.log(4);
+						if(!$scope.principal || !$scope.principal.user)
+							return;
+			console.log(5);
+						var person_id = $scope.principal.user.person_id; 
+						console.log('personal_data '+ person_id);
+						$scope.config_info.read_o('/r/read_docbody/'+person_id,'msp_employee_doc');
+					}
 				}
 		}	}
 		,human_resources_department:{
@@ -193,7 +201,14 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		initTestVariables($scope, $http, Blob);
 		initTestAddress($scope, $http);
 		init_config_info($scope, $http);
-		$scope.config_msp_all.opened_dialog='personal_area';
+		$scope.config_msp_all.opened_dialog='personal_data';
+		console.log($scope.config_msp_all.opened_dialog);
+//		$scope.config_msp_all.opened_dialog='personal_area';
+		console.log(1);
+		if($scope.config_msp_all.opened_dialog=='personal_data'){
+			console.log(2);
+			$scope.config_msp_all.personal_page.dialogs.personal_data.open_dialog();
+		}
 	}else
 	if('testMvpCalendar' == $scope.pagePath.last()){
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
@@ -408,7 +423,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else{
 	}
 	
-	console.log(pageanchors.doctor_index);
 	$scope.openUrl = function(url){
 		console.log(url)
 		window.location.href = url;

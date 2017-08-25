@@ -1,6 +1,11 @@
 {{prefix}}
 <span class="w3-dropdown-hover">
+<!-- 
 {{d2e_obj['d2e_'+d2e_param] | date: 'dd'}}
+ -->
+<input ng-change="mvpAddress.config.date.changeDay(d2e_obj['d2e_day_'+d2e_param], d2e_obj, d2e_param)" type="number"
+ style="width: 40px;"  min="1" max="31"
+	class="w3-border" ng-model="d2e_obj['d2e_day_'+d2e_param]">
 <span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue"
  style="right:-90px"
 >
@@ -17,7 +22,17 @@
 <span class="w3-dropdown-hover w3-hover-gray">
 {{d2e_obj['d2e_'+d2e_param] | date: 'MMM'}} 
 <span class="w3-dropdown-content w3-card-2 w3-border w3-border-blue " style="right:-20px">
-	<table class="w3-table">
+		<table>
+			<tr>
+				<td class="w3-border w3-hover-gray"
+					ng-repeat="m in ['0','1','2','3','4','5','6','7','8','9','10','11']"
+					ng-init="mNr=1*m+1;"
+					ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==mNr}"
+					ng-click="mvpAddress.config.date.changeMonth(mNr, d2e_obj, d2e_param)"
+					value="{{m}}">{{1*m+1}}</td>
+			</tr>
+		</table>
+		<table class="w3-table">
 		<tr>
 			<td></td>
 			<td
@@ -30,7 +45,17 @@
 			<td 
 				ng-class="{'w3-green':mvpAddress.config.date.getMonth(d2e_obj, d2e_param)==8}"
 				ng-click="mvpAddress.config.date.changeMonth(8, d2e_obj, d2e_param)" class="w3-border w3-hover-gray">сер</td>
-			<td class="w3-tiny">{{mvpAddress.config.date.getMonth(d2e_obj, d2e_param)}}</td>
+			<td class="w3-tiny">
+				{{1*d2e_obj['d2e_month_'+d2e_param]+1}}
+				<!-- 
+			<td class="w3-tiny"
+				ng-init="m_nr=mvpAddress.config.date.getMonth(d2e_obj, d2e_param);">{{m_nr}}
+				<select ng-model="d2e_obj['d2e_month_'+d2e_param]">
+					<option ng-repeat="m in ['0','1','2','3','4','5','6','7','8','9','10','11']"
+						value="{{m}}">{{m<10?'0':''}}{{1*m+1}}</option>
+				</select>
+				 -->
+			</td>
 		</tr>
 		<tr>
 			<td 
@@ -82,6 +107,7 @@
 </span>
 </span>
 <span class="w3-dropdown-hover w3-hover-gray">
+
 <input ng-change="mvpAddress.config.date.changeYear(d2e_obj['d2e_year_'+d2e_param], d2e_obj, d2e_param)" type="number"
  style="width: 75px;" 
 	class="w3-border" ng-model="d2e_obj['d2e_year_'+d2e_param]">

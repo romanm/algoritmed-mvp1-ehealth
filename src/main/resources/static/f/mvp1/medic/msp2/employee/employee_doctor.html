@@ -4,7 +4,7 @@
 <h3>Документи</h3>
 
 <div class="w3-row-padding"
-	ng-repeat="(k1,v1) in doc_employee_data.doctor"
+	ng-repeat="(k1,v1) in config_info.msp_employee_doc.docbody.doctor"
 ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}"
 	>
 	<div class="w3-col m2">
@@ -27,5 +27,5 @@ ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}"
 </div>
 </div>
 <!-- 
--- {{doc_employee_data.educations}}
+-- {{config_info.msp_employee_doc.docbody.educations}}
  -->
