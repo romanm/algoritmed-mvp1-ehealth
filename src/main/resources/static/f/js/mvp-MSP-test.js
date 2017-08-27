@@ -102,7 +102,7 @@ initTestAddress = function($scope, $http){
 				return d.getDate();
 			}
 			,initDates:function(){
-				$scope.api__legal_entities;
+//				$scope.api__legal_entities;
 				//console.log($scope.api__legal_entities.owner);
 				var thisObj = this;
 				this.initDate($scope.api__legal_entities.owner, 'birth_date',thisObj);
@@ -259,8 +259,15 @@ initTestAddress = function($scope, $http){
 			v.splice(index,1);
 			$scope.config_msp.autoSave.fn_change_count();
 		}
-		,plusPhone:function(v){
-			var np = JSON.parse(JSON.stringify(v[0]));
+		,phone_template:{type:"MOBILE", number:""}
+		,plusPhone:function(v,o){
+//			var np = JSON.parse(JSON.stringify(v[0]));
+			var np = JSON.parse(JSON.stringify(this.phone_template));
+			console.log(np);
+			if(!v){
+				o.phones=[];
+				v=o.phones;
+			}
 			v.push(np)
 			$scope.config_msp.autoSave.fn_change_count();
 		}
@@ -268,6 +275,7 @@ initTestAddress = function($scope, $http){
 		,document_types:['PASSPORT']
 		,street_types:['STREET']
 		,address_types:['REGISTRATION','RESIDENCE']
+		,employee_documents:['educations','qualifications','specialities','science_degree']
 		,accreditation_types:['FIRST','SECOND','THIRD']
 		,type:{
 			VILLAGE:'с.'

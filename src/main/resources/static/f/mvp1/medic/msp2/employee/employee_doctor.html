@@ -4,9 +4,9 @@
 <h3>Документи</h3>
 
 <div class="w3-row-padding"
-	ng-repeat="(k1,v1) in config_info.msp_employee_doc.docbody.doctor"
-ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}"
-	>
+	ng-repeat="k1 in  mvpAddress.config.employee_documents"
+	ng-init="v1=config_info.msp_employee_doc.docbody.doctor[k1]"
+	ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}">
 	<div class="w3-col m2">
 		<b> {{mvpAddress.config.type[k1]}} </b>
 	</div>
@@ -25,7 +25,28 @@ ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}"
 		</div>
 	</div>
 </div>
+<!--
+<div class="w3-row-padding"
+	ng-repeat="(k1,v1) in config_info.msp_employee_doc.docbody.doctor"
+ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}"
+	>
+	<div class="w3-col m2">
+		<b> {{mvpAddress.config.type[k1]}} </b>
+	</div>
+	<div class="w3-col m10">
+		<div ng-if="'science_degree'==k1"
+			ng-init="doc=v1"
+			ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
+		<div ng-if="'science_degree'!=k1">
+				<div ng-repeat="doc in v1">
+				<div
+					ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
+			</div>
+		</div>
+	</div>
 </div>
+-->
+
 <!-- 
--- {{config_info.msp_employee_doc.docbody.educations}}
+ {{config_info.msp_employee_doc.docbody.educations}}
  -->

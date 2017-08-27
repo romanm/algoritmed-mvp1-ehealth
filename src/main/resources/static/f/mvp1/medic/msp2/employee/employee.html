@@ -1,16 +1,19 @@
-<div class="w3-row">
+<div class="w3-row" ng-init="autoSave_o=config_employee">
 	<div class="w3-col m{{12-config_employee.dates_col}}">
 		<div class="w3-container">
-			Посада
-			<select ng-model="config_info.msp_employee_doc.docbody.position">
-			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('POSITION').values"
-				value="{{k}}">{{v}}</option>
-		</select>
-		Тип працівника
-			<select ng-model="config_info.msp_employee_doc.docbody.employee_type">
-			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('EMPLOYEE_TYPE').values"
-				value="{{k}}">{{v}}</option>
-		</select>
+			Посада <select
+				ng-model="config_info.msp_employee_doc.docbody.position"
+				ng-change="autoSave_o.autoSave.fn_change_count()">
+				<option
+					ng-repeat="(k,v) in mvpAddress.config.selectDictionary('POSITION').values"
+					value="{{k}}">{{v}}</option>
+			</select> Тип працівника <select
+				ng-model="config_info.msp_employee_doc.docbody.employee_type"
+				ng-change="config_employee.autoSave.fn_change_count()">
+				<option
+					ng-repeat="(k,v) in mvpAddress.config.selectDictionary('EMPLOYEE_TYPE').values"
+					value="{{k}}">{{v}}</option>
+			</select>
 		</div>
 		<div ng-include="'/f/mvp1/medic/msp2/employee/employee_party.html'">
 		</div>
