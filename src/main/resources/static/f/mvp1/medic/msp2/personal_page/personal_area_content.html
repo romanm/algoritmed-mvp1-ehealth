@@ -1,0 +1,34 @@
+<h4 class="w3-center am-uppercase w3-text-indigo">Підбірка
+	особистої інформації.</h4>
+<div
+ng-init="col1=3;col2=12-col1"
+>
+	<div class="w3-row">
+		<div class="w3-col m{{col1}} l{{col1}} s{{col1}}">
+			<b> Лікувальні заклади: </b>
+		</div>
+		<div class="w3-col m{{col2}} l{{col2}} s{{col2}}">
+			<div ng-if="principal.user_msp.length==0">
+				<input ng-change="config_msp_all.personal_page.dialogs.personal_area.fn_seek_msp()"
+				placeholder="Пошук лікувального закладу"
+					ng-model="config_msp_all.personal_page.dialogs.personal_area.seek_msp"
+					class="w3-border am-width-100pr">
+			</div>
+			<span ng-if="principal.user_msp.length>0"
+				ng-repeat="msp in principal.user_msp"><b>{{1+$index}}</b>)
+				{{msp.msp_name}}{{$last?'.':','}} </span>
+		</div>
+	</div>
+	<div class="w3-row">
+		<div class="w3-col m{{col1}} l{{col1}} s{{col1}}">
+			<b> Права доступу: </b>
+		</div>
+		<div class="w3-col m{{col2}} l{{col2}} s{{col2}}">
+			<span ng-repeat="a in principal.principal.authorities"> <b>{{1+$index}}</b>)
+				{{1 + config_msp_all.info.login.role.keys().indexOf(a.authority)}} -
+				{{config_msp_all.info.login.role[a.authority].name}}{{$last?'.':','}}
+			</span>
+		</div>
+	</div>
+</div>
+

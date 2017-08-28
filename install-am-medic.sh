@@ -1,5 +1,5 @@
 cd /home/roman/algoritmed2.com/algoritmed-mvp1-ehealth
-gradlew clean
+gradle clean
 rm -r bin/
 cd ..
 rm algoritmed-mvp1-ehealth.tar.gz
