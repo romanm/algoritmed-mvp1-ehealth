@@ -50,8 +50,20 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				personal_area:{
 					name:'Особистий майданчик'
 					,seek_msp:null
+					,fn_click_seek_msp:function(msp){
+						console.log(msp);
+						var url = '/r/add_employee_msp';
+						console.log(url);
+						$http.post(url, msp).then( function(response) {
+							console.log(response.data);
+						});
+					}
 					,fn_seek_msp:function(){
-						console.log(this.seek_msp);
+						var url = '/r/seek_msp/'+this.seek_msp;
+						$http.get(url).then( function(response) {
+							$scope.seek_msp = response.data;
+							console.log($scope.seek_msp);
+						});
 					}
 				}
 				,personal_data:{

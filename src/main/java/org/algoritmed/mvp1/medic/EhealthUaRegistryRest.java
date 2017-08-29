@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
@@ -49,6 +48,18 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			u_roles.add(m);
 		}
 		map.put("msp_employee_list", msp_employee_list);
+		return map;
+	}
+
+	private @Value("${sql.msp.seek}")				String sql_msp_seek;
+	@GetMapping(value = "/r/seek_msp/{seek_msp}")
+	public @ResponseBody Map<String, Object>  seek_msp(@PathVariable String seek_msp) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String seek_msp2 = "%"+seek_msp+"%";
+		map.put("seek_msp", seek_msp2);
+		System.err.println(sql_msp_seek.replace(":seek_msp",seek_msp2));
+		List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(sql_msp_seek,map);
+		map.put("list", list);
 		return map;
 	}
 
@@ -92,107 +103,10 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		return map;
 	}
 	
-	@PostMapping("/r/saveEmployee")
-	public @ResponseBody Map<String, Object> saveEmployee(
-			@RequestBody Map<String, Object> data
-			, Principal userPrincipal) {
-		logger.info("\n---------------\n"
-				+ "/r/saveEmployee"
-				+ "\n" + data
-				+ "\n employee_info = " + data.get("employee_info")
-				);
-		// вперше додано для autoSave $scope.doc_employee
-		Integer doc_id = (Integer) data.get("doc_id");
-		data.put("docbody_id", doc_id);
-		data.put("employee_id", doc_id);
-		Map docbody = (Map) data.get("docbody");
-		Map party = (Map) docbody.get("party");
-		persistRootElement(data, doctype_employee, sql_employee_insert, sql_employee_update);
-		System.err.println(party);
-		party.put("person_id", doc_id);
-		party.put("family_name", party.get("last_name"));
-		System.err.println(party);
-		int update = db1ParamJdbcTemplate.update(sql_person_update, party);
-		return data;
-	}
-
-	@PostMapping("/r/checkUsername")
-	public @ResponseBody Map<String, Object> checkUsername(@RequestBody String username) {
-		logger.info("\n---------------\n"
-				+ "/r/checkUsername"
-				+ "\n" + username
-				);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("username", username);
-		List<Map<String, Object>> checkUsername_list = db1ParamJdbcTemplate.queryForList(sql_checkUsername, map);
-		System.err.println("128---------------");
-		System.err.println(checkUsername_list);
-		map.put("exist", checkUsername_list.size()>0);
-		return map;
-	}
-
-	private @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
-
-	private @Value("${sql.employee.update}")		String sql_employee_update;
-	private @Value("${sql.employee.insert}")		String sql_employee_insert;
-	private @Value("${sql.db1.person.update}")		String sql_person_update;
-	private @Value("${sql.db1.person.insert}")		String sql_person_insert;
-	private @Value("${sql.db1.users.update}")		String sql_users_update;
-	private @Value("${sql.db1.users.insert}")		String sql_users_insert;
-	private @Value("${sql.db1.user_role.insert}")	String sql_user_role_insert;
 	
-	@PostMapping("/r/savePersonRegistry")
-	public @ResponseBody Map<String, Object> savePersonRegistry(
-			@RequestBody Map<String, Object> data
-			, Principal userPrincipal
-			) {
-		logger.info("\n---------------\n"
-				+ "/r/savePersonRegistry"
-				+ "\n" + data
-				);
-		boolean isToSave=true;
-		if(isToSave){
-//			persistRootElement(data, doctype_employee, sql_person_insert, sql_person_update);
-			persistRootElement(data, doctype_employee);
-			Integer doc_id = (Integer) data.get("doc_id");
-			
-			Map data_party = (Map)data.get("party");
-			data_party.put("person_id", doc_id);
-			data_party.put("update_sql", data.get("update_sql"));
-			persistContentElement(data_party, sql_person_insert, sql_person_update);
-			
-			data.put("user_id", doc_id);
-			System.err.println(data);
-			persistContentElement(data, sql_users_insert, sql_users_update);
-			if(true!=(boolean)data.get("update_sql")){
-				addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");
-			}
-			
-			Map docbodyMap;
-			if(true==(boolean)data.get("update_sql")){
-				docbodyMap = (Map)data.get("docbody");
-			}else {
-				docbodyMap = data;
-				docbodyMap.remove("password");
-				docbodyMap.remove("password_control");
-				docbodyMap.remove("docbody");
-			}
-			updateDocbody(data, docbodyMap, now());// change for autoSave $scope.doc_employee
-			
-			data.put("docbody_id", doc_id);
-			data.put("employee_id", doc_id);
-			persistContentElement(data, sql_employee_insert, sql_employee_update);
-			
-			
-		}
-		return data;
-	}
 
-	private void addUserRole(Map<String, Object> data, Integer user_role_id, String role) {
-		data.put("user_role_id", user_role_id);
-		data.put("role", role);
-		int update = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
-	}
+	
+
 	
 	@PostMapping("/r/saveDeclaration")
 	public @ResponseBody Map<String, Object> saveDeclaration(
@@ -204,10 +118,6 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				);
 		return data;
 	}
-
-	int doctype_MSP = 12;
-	int doctype_employee = 13;
-	int doctype_declaration = 14;
 	
 	@PostMapping("/r/saveMsp")
 	public @ResponseBody Map<String, Object> saveMsp(
@@ -219,38 +129,6 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				);
 		persistRootElement(data, doctype_MSP, sql_msp_insert, sql_msp_update);
 		return data;
-	}
-
-	private void persistContentElement(Map<String, Object> data, String sql_insert, String sql_update) {
-		boolean update_sql = (boolean) data.get("update_sql");
-		if(update_sql){//update
-//			if(data.containsKey("doc_id")){//update
-			System.err.println("213 upd "+sql_update);
-			int update = db1ParamJdbcTemplate.update(sql_update, data);
-		}else{//insert
-			System.err.println("216 ins "+sql_insert);
-			int update = db1ParamJdbcTemplate.update(sql_insert, data);
-		}
-	}
-
-	private void persistRootElement(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
-		persistRootElement(data, doctype);
-		persistContentElement(data,sql_insert,sql_update);
-	}
-
-	private void persistRootElement(Map<String, Object> data, int doctype) {
-		if(data.containsKey("doc_id")){//update
-			System.err.println("--180----------update--------");
-			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
-			data.put("update_sql", true);
-		}else{//insert
-			System.err.println("--183----------insert--------");
-			Integer doc_id = nextDbId();
-			data.put("update_sql", false);
-			data.put("doc_id", doc_id);
-			data.put("doctype", doctype);
-			insertDocElementWithDocbody(data, doc_id, data);
-		}
 	}
 
 	private void persistRootElement2(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {

@@ -17,6 +17,41 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DbAlgoritmed {
 
+	protected int doctype_MSP = 12;
+	protected int doctype_employee = 13;
+	int doctype_declaration = 14;
+
+	protected void persistRootElement(Map<String, Object> data, int doctype) {
+		if(data.containsKey("doc_id")){//update
+			System.err.println("--180----------update--------");
+			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
+			data.put("update_sql", true);
+		}else{//insert
+			System.err.println("--183----------insert--------");
+			data.put("update_sql", false);
+			Integer doc_id = nextDbId();
+			data.put("doc_id", doc_id);
+			data.put("doctype", doctype);
+			insertDocElementWithDocbody(data, doc_id, data);
+		}
+	}
+	
+	protected void persistRootElement(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
+		persistRootElement(data, doctype);
+		persistContentElement(data,sql_insert,sql_update);
+	}
+	
+	protected void persistContentElement(Map<String, Object> data, String sql_insert, String sql_update) {
+		boolean update_sql = (boolean) data.get("update_sql");
+		if(update_sql){//update
+//			if(data.containsKey("doc_id")){//update
+			System.err.println("213 upd "+sql_update);
+			int update = db1ParamJdbcTemplate.update(sql_update, data);
+		}else{//insert
+			System.err.println("216 ins "+sql_insert);
+			int update = db1ParamJdbcTemplate.update(sql_insert, data);
+		}
+	}
 	protected void docbodyToMap(Map<String, Object> map) {
 		String docbody = (String) map.get("docbody");
 		docbodyStrToMap(map, docbody);
@@ -82,21 +117,25 @@ public class DbAlgoritmed {
 	 * @param dbSaveObj
 	 * @param parentId
 	 */
-	protected void insertDocElement(Map<String, Object> dbSaveObj, Integer parentId) {
-		dbSaveObj.put("parent_id", parentId);
-		if(!dbSaveObj.containsKey("created")){
+	protected void insertDocElement(Map<String, Object> data, Integer parentId, Integer  doctype) {
+		data.put("doctype", doctype);
+		insertDocElement(data, parentId);
+	}
+	protected void insertDocElement(Map<String, Object> data, Integer parentId) {
+		data.put("parent_id", parentId);
+		if(!data.containsKey("created")){
 			Timestamp created = now();
-			dbSaveObj.put("created", created);
+			data.put("created", created);
 		}
-		System.err.println(dbSaveObj);
-		System.err.println(83);
+		System.err.println(data);
+		System.err.println("------127-----------");
 		System.err.println(sql_doc_insert
-				.replace(":"+"doc_id", ""+dbSaveObj.get("doc_id"))
-				.replace(":"+"doctype", ""+dbSaveObj.get("doctype"))
-				.replace(":"+"parent_id", ""+dbSaveObj.get("parent_id"))
+				.replace(":"+"doc_id", ""+data.get("doc_id"))
+				.replace(":"+"doctype", ""+data.get("doctype"))
+				.replace(":"+"parent_id", ""+data.get("parent_id"))
 				);
-		int update = db1ParamJdbcTemplate.update(sql_doc_insert, dbSaveObj);
-		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_insert, dbSaveObj);
+		int update = db1ParamJdbcTemplate.update(sql_doc_insert, data);
+		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_insert, data);
 	}
 	
 	private @Value("${sql.doc.byId}")	String sql_doc_byId;
