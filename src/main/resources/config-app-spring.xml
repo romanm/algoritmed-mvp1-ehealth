@@ -28,10 +28,10 @@
 			<!-- 
 				<value>classpath:application.medic.properties</value>
 				<value>classpath:application.meddoc.properties</value>
+				<value>classpath:config.properties</value>
 			 -->
 				<value>classpath:application.properties</value>
 				<value>classpath:sql.properties</value>
-				<value>classpath:config.properties</value>
 			</list>
 		</property>
 		<!-- <property name="ignoreUnresolvablePlaceholders" value="true" /> -->

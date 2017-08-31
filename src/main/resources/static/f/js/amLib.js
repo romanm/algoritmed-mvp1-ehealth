@@ -66,22 +66,30 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	}
 	//autoSave block END
 	
-	console.log('/r/principal');
-	$http.get('/r/principal').then(function(response) {
-		$scope.principal = response.data;
-		console.log($scope.principal);
-	});
+
 	$scope.fnPrincipal={
-		hasRole:function(r){
+		hasLoginRole:function(r,r_o,r_a){
+			var hasRole = false;
+			angular.forEach(r_o, function(value, index){
+				if(value[r_a]==r){
+					hasRole = true;
+				}
+			});
+			return hasRole;
+		}
+		,hasRole:function(r){
 //			console.log(r);
 			var hasRole = false;
 			if($scope.principal && $scope.principal.principal){
+				hasRole = this.hasLoginRole(r, $scope.principal.principal.authorities, 'authority');
+				/*
 				angular.forEach($scope.principal.principal.authorities, function(value, index){
 //				console.log(value);
 					if(value.authority==r){
 						hasRole = true;
 					}
 				});
+				 * */
 			}
 			return hasRole;
 		}
@@ -99,6 +107,8 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	}
 
 	//modal dialog open/close END
+	
+	read_principal($http, $scope);
 }
 
 function read_msp_list($http, $scope) {
@@ -107,6 +117,15 @@ function read_msp_list($http, $scope) {
 		console.log($scope.msp_list);
 	});
 }
+
+function read_principal($http, $scope) {
+	console.log('/r/principal');
+	$http.get('/r/principal').then(function(response) {
+		$scope.principal = response.data;
+		console.log($scope.principal);
+	});
+}
+
 
 var parameters = {};
 if(window.location.search){

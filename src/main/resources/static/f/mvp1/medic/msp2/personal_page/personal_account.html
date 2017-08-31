@@ -1,0 +1,26 @@
+<div class="w3-row">
+	<div class="w3-col m{{col1}} l{{col1}} s{{col1}}">
+		<b> Права доступу: </b>
+	</div>
+	<div class="w3-col m{{col2}} l{{col2}} s{{col2}}">
+		<span ng-repeat="a in principal.principal.authorities"
+		ng-init="
+		text=(1 + config_msp_all.info.login.role.keys().indexOf(a.authority))
+		+' - '+config_msp_all.info.login.role[a.authority].name + ($last?'.':',')
+		" > <b>{{1+$index}}</b>)
+		<a
+		href="/v/human-resources-department"
+		ng-if="a.authority=='ROLE_HEAD_HUMAN_RESOURCES'"
+		>
+		{{text}}
+		</a>
+			<span
+		ng-if="a.authority!='ROLE_HEAD_HUMAN_RESOURCES'"
+			>
+				{{1 + config_msp_all.info.login.role.keys().indexOf(a.authority)}} -
+				{{config_msp_all.info.login.role[a.authority].name}}{{$last?'.':','}}
+			</span>
+		</span>
+	</div>
+</div>
+{{fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')}}

@@ -1,5 +1,4 @@
 package org.algoritmed.mvp1.medic;
-
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmployeeRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
+
+	@PostMapping("/r/remove_employee_msp")
+	public @ResponseBody Map<String, Object> remove_employee_msp(
+			@RequestBody Integer msp_id
+			, Principal userPrincipal) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msp_id",msp_id);
+		map.put("doc_id",msp_id);
+		logger.info("\n---------------\n"
+				+ "/r/remove_employee_msp"
+				+ "\n" + msp_id
+				+ "\n" + map
+				+ "\n" + userPrincipal
+				);
+		removeDocElement(map);
+		return map;
+	}
 
 	@PostMapping("/r/add_employee_msp")
 	public @ResponseBody Map<String, Object> add_employee_msp(
