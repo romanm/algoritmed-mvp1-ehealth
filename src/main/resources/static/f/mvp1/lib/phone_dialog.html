@@ -17,4 +17,8 @@ class="w3-border"
 	class="w3-btn w3-hover-gray"
 	title="Додати ще один телефон"
 	ng-if="$last" href="#" ng-click="mvpAddress.config.plusPhone(phoneList)">+</a>
+	<a 
+	class="w3-btn w3-hover-gray"
+	title="Поставити телефон першим"
+	ng-if="!$first" href="#" ng-click="mvpAddress.config.upPhone(phoneList, $index)">^</a>
 	<!-- {{phone}} -->

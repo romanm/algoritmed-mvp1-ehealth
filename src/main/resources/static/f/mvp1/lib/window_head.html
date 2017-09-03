@@ -8,6 +8,11 @@
 			class="fa fa-window-minimize w3-border" aria-hidden="true"></i> <i
 			ng-if="config_msp_all.opened_dialog==k" class="fa fa-window-maximize"
 			aria-hidden="true"></i>
-	</span> {{v.name}}
+		</span> {{v.name}}
+	</span> 
+	<span class="w3-right" ng-if="'personal_data'==k && config_msp_all.opened_dialog==k"> 
+		<span class="w3-hover-gray w3-border"> <i
+			class="fa fa-floppy-o" aria-hidden="true"></i> Запис
+	</span>
 	</span>
 </header>

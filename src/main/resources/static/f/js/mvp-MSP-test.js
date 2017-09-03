@@ -255,6 +255,11 @@ initTestAddress = function($scope, $http){
 			var np = JSON.parse(JSON.stringify(v[0]));
 			v.push(np)
 		}
+		,upPhone:function(v, $index){
+			var s_o = v.splice($index,1)[0];
+			v.splice(0,0,s_o);
+			$scope.config_msp.autoSave.fn_change_count();
+		}
 		,minusPhone:function(v, index){
 			v.splice(index,1);
 			$scope.config_msp.autoSave.fn_change_count();
