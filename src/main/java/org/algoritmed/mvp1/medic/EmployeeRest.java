@@ -83,6 +83,30 @@ public class EmployeeRest extends DbAlgoritmed{
 		return data;
 	}
 	
+	@PostMapping("/r/add_user_role")
+	public @ResponseBody Map<String, Object> add_user_role(
+			@RequestBody Map<String, Object> data
+			, Principal userPrincipal
+			) {
+		logger.info("\n---------------\n"
+				+ "/r/add_user_role"
+				+ "\n" + data
+				);
+//		addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");// as example
+		int update = db1ParamJdbcTemplate.update(sql_user_role_deleteConfirmation, data);
+		int update2 = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
+		return data;
+	}
+
+	private @Value("${sql.db1.user_role.deleteConfirmation}")	String sql_user_role_deleteConfirmation;
+	private @Value("${sql.db1.user_role.insert}")	String sql_user_role_insert;
+
+	private void addUserRole(Map<String, Object> data, Integer user_role_id, String role) {
+		data.put("user_role_id", user_role_id);
+		data.put("role", role);
+		int update = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
+	}
+
 	@PostMapping("/r/savePersonRegistry")
 	public @ResponseBody Map<String, Object> savePersonRegistry(
 			@RequestBody Map<String, Object> data
@@ -150,11 +174,6 @@ public class EmployeeRest extends DbAlgoritmed{
 		return map;
 	}
 	
-	private void addUserRole(Map<String, Object> data, Integer user_role_id, String role) {
-		data.put("user_role_id", user_role_id);
-		data.put("role", role);
-		int update = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
-	}
 	
 	private @Value("${sql.doc.update.reference}")	String sql_doc_update_reference;
 	private @Value("${sql.employee.update}")		String sql_employee_update;
@@ -163,7 +182,6 @@ public class EmployeeRest extends DbAlgoritmed{
 	private @Value("${sql.db1.person.insert}")		String sql_person_insert;
 	private @Value("${sql.db1.users.update}")		String sql_users_update;
 	private @Value("${sql.db1.users.insert}")		String sql_users_insert;
-	private @Value("${sql.db1.user_role.insert}")	String sql_user_role_insert;
 	private @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
 	
 }

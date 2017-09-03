@@ -42,7 +42,7 @@
 						ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
 						<b> Підтвердитит логін: </b>
 						<button
-							ng-click="config_msp_all.human_resources_department.fn_add_login('ROLE_USER')"
+							ng-click="config_msp_all.human_resources_department.fn_add_login(e, 'ROLE_USER')"
 							class="w3-btn w3-border">Перевести в логін лікаря</button>
 					</div>
 				</div>

@@ -34,6 +34,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		map.put("msp_id", msp_id);
 		System.err.println("/r/read_msp_employee/{msp_id} "+msp_id);
 		System.err.println(sql_msp_employee_list.replace(":msp_id",""+msp_id));
+		System.err.println(sql_msp_employee_role_list.replace(":msp_id",""+msp_id));
 		Map<Integer, Map<String, Object>> users = new HashMap();
 		List<Map<String, Object>> msp_employee_list = db1ParamJdbcTemplate.queryForList(sql_msp_employee_list, map);
 		for (Map<String, Object> m : msp_employee_list) {

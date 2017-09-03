@@ -106,9 +106,17 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				this.dialogs.doctors_cards.open_dialog();
 //				$scope.config_all.modalDialog.close(modalDialogData.id)
 			}
-			,fn_add_login:function(role_id){
+			,fn_add_login:function(e, role_id){
 				console.log('-------110------------------');
+				console.log(e);
 				console.log(role_id);
+				var url = '/r/add_user_role';
+				console.log(url);
+				var data = {'username':e.username, 'role':role_id};
+				console.log(data);
+				$http.post(url, data).then( function(response) {
+					console.log(response.data);
+				});
 			}
 			,fn_opened_card_name:function(){
 				if(!$scope.config_info.msp_employee_doc)
@@ -312,9 +320,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				ph.docbody.autoSaveCount++;
 				if(rightSave)
 					ph.docbody.autoSaveCount=0;
-				console.log(ph);
-				console.log(ph.docbody);
-				console.log(ph.docbody.autoSaveCount);
 			});
 		}
 		$scope.saveHistory = function (ph){ autoSaveHistory(ph, true); }
