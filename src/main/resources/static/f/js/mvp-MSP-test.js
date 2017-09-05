@@ -248,22 +248,35 @@ initTestAddress = function($scope, $http){
 		}
 		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated']
 		,isNotEditField:function(k){ return !(this.fields_not_edit.indexOf(k)>=0); }
+		,upListElement:function(v, $index){
+			var s_o = v.splice($index,1)[0];
+			v.splice(0,0,s_o);
+		}
 		,minusListElement:function(v, index){
 			v.splice(index,1);
 		}
-		,plusListElement:function(v){
+		,plusListElement:function(o, list_name){
+			if(!o[list_name]){
+				o[list_name]=[];
+			}
+			var np = JSON.parse(JSON.stringify(this['template_'+list_name]));
+			console.log(np);
+			o[list_name].push(np)
+			console.log(o[list_name]);
+		}
+		,plusListElement2:function(v){
 			var np = JSON.parse(JSON.stringify(v[0]));
 			v.push(np)
 		}
 		,upPhone:function(v, $index){
-			var s_o = v.splice($index,1)[0];
-			v.splice(0,0,s_o);
+			this.upListElement(v, $index);
 			$scope.config_msp.autoSave.fn_change_count();
 		}
 		,minusPhone:function(v, index){
 			v.splice(index,1);
 			$scope.config_msp.autoSave.fn_change_count();
 		}
+		,template_documents:{type:null, number:null}
 		,phone_template:{type:"MOBILE", number:""}
 		,plusPhone:function(v,o){
 //			var np = JSON.parse(JSON.stringify(v[0]));
@@ -280,7 +293,8 @@ initTestAddress = function($scope, $http){
 		,document_types:['PASSPORT']
 		,street_types:['STREET']
 		,address_types:['REGISTRATION','RESIDENCE']
-		,employee_documents:['educations','qualifications','specialities','science_degree']
+		,employee_documents:['educations','qualifications','specialities']
+		,employee_documents2:['educations','qualifications','specialities','science_degree']
 		,accreditation_types:['FIRST','SECOND','THIRD']
 		,type:{
 			VILLAGE:'с.'

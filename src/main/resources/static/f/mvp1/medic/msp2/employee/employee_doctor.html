@@ -11,9 +11,6 @@
 		<b> {{mvpAddress.config.type[k1]}} </b>
 	</div>
 	<div class="w3-col m10">
-		<div ng-if="'science_degree'==k1"
-			ng-init="doc=v1"
-			ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
 		<div ng-if="'science_degree'!=k1">
 		<!-- 
 		{{k1}}
@@ -22,6 +19,24 @@
 				<div
 					ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
 			</div>
+		</div>
+	</div>
+</div>
+<div class="w3-row-padding"
+	ng-repeat="k1 in  ['science_degree']"
+	ng-init="v1=config_info.msp_employee_doc.docbody.doctor[k1]"
+	>
+	<div class="w3-col m2">
+		<b> {{mvpAddress.config.type[k1]}} </b>
+	</div>
+	<div class="w3-col m10">
+		<div ng-if="'science_degree'==k1"
+			ng-init="doc=v1"
+			ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
+		<div ng-if="'science_degree'!=k1">
+		<!-- 
+		{{k1}}
+		 -->
 		</div>
 	</div>
 </div>

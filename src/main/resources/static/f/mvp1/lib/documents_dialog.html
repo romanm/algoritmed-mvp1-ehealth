@@ -1,6 +1,9 @@
 <div class="w3-row-padding">
 	<div class="w3-quarter ">
 		<div class="w3-right">
+			<a title="Додати ще один документ"
+				class="w3-btn w3-hover-gray" 
+				href="#" ng-click="mvpAddress.config.plusListElement(obj,'documents');autoSave.fn_change_count();">+</a>
 			<b>Документи</b>
 		</div>
 	</div>
@@ -12,22 +15,24 @@
 		 -->
 		<div ng-repeat="document in obj.documents track by $index"
 				ng-init="objList=obj.documents" >
-			<select ng-model="document.type">
+			<select ng-model="document.type"
+				ng-change="autoSave.fn_change_count()">
 				<option
 					ng-repeat="(k,v) in mvpAddress.config.selectDictionary('DOCUMENT_TYPE').values"
 					value="{{k}}">{{v}}</option>
-			</select> 
-			<b title="Номер документа">№</b>
-			<input ng-change="config_msp.autoSave.fn_change_count()"
+			</select> <b title="Номер документа">№</b>
+			<input ng-change="autoSave.fn_change_count()"
 				placeholder="Номер документа" class="w3-border"
 				ng-model="document.number"> 
-			<a
-				title="Видалити документ"
+			<a title="Видалити документ"
 				class="w3-btn w3-hover-gray"
-				ng-if="!$first" href="#" ng-click="mvpAddress.config.minusListElement(objList, $index);">-</a>
-			<a class="w3-btn w3-hover-gray"
-				title="Додати ще один документ" ng-if="$last" href="#"
-				ng-click="mvpAddress.config.plusListElement(objList);">+</a>
+				ng-if="!$first" href="#" ng-click="mvpAddress.config.minusListElement(objList, $index);autoSave.fn_change_count();">-</a>
+			<a title="Додати ще один документ" 
+				class="w3-btn w3-hover-gray"
+				ng-if="$last" href="#" ng-click="mvpAddress.config.plusListElement(obj,'documents');autoSave.fn_change_count();">+</a>
+			<a title="Поставити документ першим"
+				class="w3-btn w3-hover-gray"
+				ng-if="!$first" href="#" ng-click="mvpAddress.config.upListElement(objList, $index);autoSave.fn_change_count();">^</a>
 		</div>
 		<!--
 	{{obj.documents}}

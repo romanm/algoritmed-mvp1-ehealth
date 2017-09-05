@@ -246,8 +246,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		initTestVariables($scope, $http, Blob);
 		initTestAddress($scope, $http);
 		init_config_info($scope, $http);
-//		$scope.config_msp_all.opened_dialog='personal_data';
-		$scope.config_msp_all.opened_dialog='personal_area';
+		$scope.config_msp_all.opened_dialog='personal_data';
+//		$scope.config_msp_all.opened_dialog='personal_area';
 		console.log($scope.config_msp_all.opened_dialog);
 		if($scope.config_msp_all.opened_dialog=='personal_data'){
 			console.log(2);

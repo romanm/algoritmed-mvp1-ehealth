@@ -30,16 +30,18 @@
 				placeholder="Емайл" class="w3-border"
 				ng-model="config_info.msp_employee_doc.docbody.party.email">
 		</div>
-
-		<div ng-include="'/f/mvp1/lib/documents_dialog.html'"
-			ng-init="obj=config_info.msp_employee_doc.docbody.party"></div>
+<!-- 
+		ng-repeat="c in [{'autoSave':config_employee.autoSave}]"
+ -->
+		<div 
+		ng-include="'/f/mvp1/lib/documents_dialog.html'"
+			ng-init="obj=config_info.msp_employee_doc.docbody.party;autoSave=config_employee.autoSave;"></div>
 
 		<div class="w3-row-padding">
 			<div class="w3-quarter ">
 				<div class="w3-right">
-					<a 
+					<a title="Додати ще один телефон"
 	class="w3-btn w3-hover-gray"
-	title="Додати ще один телефон"
 	 href="#" ng-click="mvpAddress.config.plusPhone(config_info.msp_employee_doc.docbody.party.phones, 
 	 config_info.msp_employee_doc.docbody.party)">+</a>
 					<b> Телефони </b>

@@ -1,4 +1,5 @@
 <div class="w3-row-padding" ng-repeat="(k,v) in api__legal_entities"
+ng-init="isNotObjectNotArray=(!v.isObject() && !v.isArray());"
 	ng-if="mvpAddress.config.isNotEditField(k)"
 >
 	<div class="w3-quarter ">
@@ -18,35 +19,13 @@
 		</div>
 	</div>
 	<div class="w3-threequarter">
-		<input ng-change="config_msp.autoSave.fn_change_count()"
-			class="w3-input w3-border" ng-model="api__legal_entities[k]"
-			ng-if="!v.isObject() && !v.isArray()">
-		<div ng-if="k=='phones'">
-			<div ng-repeat="phone in v track by $index" ng-init="phoneList=v"
-				ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
-		</div>
-		<div ng-if="k=='kveds'">
-			<span ng-repeat="kved in v"> [<a href="#"
-				class="w3-hover-gray"
-				ng-class="{'w3-green':$index==mvpAddress.fn.kveds.index}"
-				ng-click="mvpAddress.fn.kveds.openToEdit(v, $index)">{{kved}}{{kved.length==0?'__.__':''}}</a>]{{!$last?',':''}}
-			</span> <a href="#" ng-click="mvpAddress.fn.kveds.addKved()"
-				class="w3-btn w3-hover-gray"> +додати квед </a>
-			<div ng-if="mvpAddress.fn.kveds.index>=0">
-				<div class="w3-row-padding">
-					<div class="w3-col l2 m2">
-						<input class="w3-input w3-border"
-							ng-model="mvpAddress.fn.kveds.kvedToEdit"> 
-					</div>
-					<div class="w3-col l2 m2">
-						<a
-							title="Видалити квед" class="w3-btn w3-hover-gray" href="#"
-							ng-click="mvpAddress.fn.kveds.minusKved()">-</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_'+k+'.html'"></div>
+		<input ng-change="config_msp.autoSave.fn_change_count()" 
+			class="w3-input w3-border" ng-model="api__legal_entities[k]" 
+			ng-if="isNotObjectNotArray" 
+			>
+		<div 
+			ng-if="!isNotObjectNotArray" 
+		ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_'+k+'.html'"></div>
 	</div>
 </div>
 
