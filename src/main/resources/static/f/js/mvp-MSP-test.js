@@ -256,6 +256,9 @@ initTestAddress = function($scope, $http){
 			v.splice(index,1);
 		}
 		,plusListElement:function(o, list_name){
+			console.log(o);
+			console.log(list_name);
+			console.log(o[list_name]);
 			if(!o[list_name]){
 				o[list_name]=[];
 			}
@@ -276,6 +279,9 @@ initTestAddress = function($scope, $http){
 			v.splice(index,1);
 			$scope.config_msp.autoSave.fn_change_count();
 		}
+		,template_specialities:{}
+		,template_qualifications:{}
+		,template_educations:{}
 		,template_documents:{type:null, number:null}
 		,phone_template:{type:"MOBILE", number:""}
 		,plusPhone:function(v,o){
@@ -599,7 +605,7 @@ initTestVariables = function($scope, $http, Blob){
 	$scope.config_all.init('config_msp');
 	$scope.config_personRegistry = {
 		data:{
-			template:{party:{}}
+			template:{party:{}, doctor:{}}
 			,error:{requiredField:{},party:{requiredField:{}}}
 			,validate:{
 				requiredField:{
@@ -764,6 +770,14 @@ initTestVariables = function($scope, $http, Blob){
 			,signed_at:{title:'дата підпису'}
 			,inserted_at:{title:'час першого запису'}
 			,updated_at:{title:'час оновлення'}
+		}
+		,list_index_specialities:-1
+		,list_index_qualifications:-1
+		,list_index_educations:-1
+		,fn_opened_index:function(index, list_name){
+			if(this['list_index_'+list_name]==index) this['list_index_'+list_name]=-1;
+			else this['list_index_'+list_name]=index;
+			console.log(this['list_index_'+list_name]);
 		}
 		,fn:{
 			clickable_edit_date:{

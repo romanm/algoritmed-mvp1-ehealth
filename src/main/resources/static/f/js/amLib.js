@@ -7,6 +7,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		if (!search) return text;
 		return text.replace(new RegExp(search, 'gi'), '<span class="w3-yellow">$&</span>');
 	}
+
 	//autoSave block
 	$scope.maxChangeForAutoSave=10;
 	$scope.config_all = {'maxChangeForAutoSave':10};

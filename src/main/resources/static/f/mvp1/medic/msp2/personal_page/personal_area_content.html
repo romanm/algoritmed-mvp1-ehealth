@@ -24,16 +24,15 @@ ng-init="col1=3;col2=12-col1"
 			</div>
 			<span ng-if="principal.user_msp.length>0"
 				ng-repeat="msp in principal.user_msp"><b>{{1+$index}}</b>) 
-				<span class="w3-tooltip">
 				<span
 					class="w3-btn w3-border"
 					ng-if="msp.doc_id==config_msp_all.personal_page.dialogs.personal_area.msp_id_to_delete"
 						ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_remove_msp()"
 					 title="Видалити ЛПЗ дійсно">-</span>
+				<span class="w3-tooltip">
 					{{msp.msp_name}}{{$last?'.':','}} 
 					<span class="w3-blue w3-text w3-tag am-tooltip-text">
-					<span
-					class="w3-btn"
+					<span class="w3-btn"
 						ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_minus_msp(msp)"
 					 title="Видалити ЛПЗ">-</span>
 					</span>

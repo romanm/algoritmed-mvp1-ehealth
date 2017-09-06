@@ -1,5 +1,32 @@
-<div class="">
+<div ng-click="config_employee.fn_opened_index($index, k1)"
+ class="w3-hover-gray"
+>
 <b> {{1+$index}}. </b>
+<span class="w3-tooltip">
+	{{mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values[doc.degree]}}
+	Диплом №
+	{{doc.diploma_number}}
+	Спеціальність:
+	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc.speciality]}}
+	Установа що видала:
+	{{doc.institution_name}}
+	
+	Місто {{doc.city}}
+	
+	Рік видачі {{doc.issued_date}}
+	<span class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+		<span class="w3-btn"
+			ng-click="mvpAddress.config.minusListElement(objList, $index);autoSave.fn_change_count();"
+		 title="Видалити запис">-</span>
+		<span class="w3-btn" ng-if="!$first" 
+			ng-click="mvpAddress.config.upListElement(objList, $index);autoSave.fn_change_count();"
+		 title="Перенести запис на перше місце">^</span>
+	</span>
+</span>
+</div>
+
+<div ng-if="config_employee['list_index_'+k1]==$index"
+	class="w3-border w3-border-green w3-card-4 w3-display-container">
 № диплома
 <input ng-change="config_employee.autoSave.fn_change_count()"
 	placeholder="Спеціальність" class="w3-border"
@@ -27,7 +54,11 @@
 	Рік видачі <input ng-change="config_employee.autoSave.fn_change_count()"
 		class="w3-border" ng-model="doc.issued_date">
 
+
 </div>
+
+
+
 <!-- 
 {{doc}}
  -->
