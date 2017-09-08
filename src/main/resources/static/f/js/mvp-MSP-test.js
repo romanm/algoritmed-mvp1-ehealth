@@ -72,7 +72,7 @@ initTestMvpCalendar = function($scope, $http, $filter, $timeout){
 	$scope.basicCalendar.init();
 	console.log($scope.basicCalendar);
 }
-initTestAddress = function($scope, $http){
+initTestAddress = function($scope, $http, $filter){
 	console.log('-----initTestAddress------------');
 	$scope.mvpAddress = {};
 	$scope.mvpAddress.config = {
@@ -85,6 +85,9 @@ initTestAddress = function($scope, $http){
 				,[22,23,24,25,26,27,28]
 				,[29,30,31]
 			]
+			,month3_names:{
+				nominative:'січ_лют_бер_кві_тра_чер_лип_сер_вер_жов_лис_гру'.split('_')
+			}
 			,month_names:{
 				nominative:'січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень'.split('_'),
 				accusative:'січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня'.split('_')
@@ -118,6 +121,7 @@ initTestAddress = function($scope, $http){
 			}
 			,initDate:function(o,p,thisObj){
 				var dateObj = o[p];
+				console.log(dateObj);
 				dateObj = dateObj.split('T')[0];
 				var ymd = dateObj.split('-');
 				//console.log(ymd);
@@ -155,6 +159,11 @@ initTestAddress = function($scope, $http){
 				dt.setFullYear(y);
 				this.setDateParamAll(dt,o,p);
 			}
+			,changeMonth2:function(o,p){
+				var dt = new Date(o['d2e_'+p]);
+				dt.setMonth(o['d2e_month_'+p]);
+				this.setDateParamAll(dt,o,p);
+			}
 			,changeMonth:function(m,o,p){
 //				console.log(m);
 				var dt = new Date(o['d2e_'+p]);
@@ -162,16 +171,22 @@ initTestAddress = function($scope, $http){
 				this.setDateParamAll(dt,o,p);
 			}
 			,changeDay:function(d,o,p){
+				console.log(d);
+				console.log(p);
+				console.log(o['d2e_'+p]);
 				var dt = new Date(o['d2e_'+p]);
+				console.log(dt);
 				dt.setDate(d);
+				console.log(dt);
 				this.setDateParamAll(dt,o,p);
 			}
 			,setDateParamAll:function(d,o,p){
-				var dtt = d.toLocaleFormat('%Y-%m-%d');
-//				console.log(dtt);
+//				var dtt = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+//				var dtt = d.toLocaleFormat('%Y-%m-%d');
+				var dtt = $filter('date')(d, 'yyyy-MM-dd');
+				console.log(dtt);
 				o[p] = dtt;
 				this.setDateParam(d,o,p);
-				$scope.config_msp.autoSave.fn_change_count();
 			}
 			,setDateParam:function(d,o,p){
 //				d.setDate(d.getDate() + 1);

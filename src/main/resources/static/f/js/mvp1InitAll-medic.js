@@ -243,7 +243,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		initTestAddress($scope, $http);
+		initTestAddress($scope, $http, $filter);
 		init_config_info($scope, $http);
 		$scope.config_msp_all.opened_dialog='personal_data';
 //		$scope.config_msp_all.opened_dialog='personal_area';
@@ -260,7 +260,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	||'human-resources-department' == $scope.pagePath.last()
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
-		initTestAddress($scope, $http);
+		initTestAddress($scope, $http, $filter);
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()
 	||'moz-declaration-edit' == $scope.pagePath.last()
@@ -273,7 +273,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		init_info($scope, $http);
 	}else
 	if('testMvpAddress' == $scope.pagePath.last()){
-		initTestAddress($scope, $http);
+		initTestAddress($scope, $http, $filter);
 	}else
 	if('protocol' == $scope.pagePath.last()){
 	console.log('----initAll-----------' + $scope.pagePath.last());

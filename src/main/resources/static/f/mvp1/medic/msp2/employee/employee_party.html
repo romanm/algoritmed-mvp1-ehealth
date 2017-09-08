@@ -4,38 +4,38 @@
 			<b> Картка лікаря </b>
 		</header>
 		<b> Лікар: </b> 
-		<input ng-change="config_employee.autoSave.fn_change_count()"
+		<input 
+		ng-change="autoSave.fn_change_count()"
 			placeholder="Прізвище" class="w3-border"
 			ng-model="config_info.msp_employee_doc.docbody.party.last_name"> 
 		<input
-			ng-change="config_employee.autoSave.fn_change_count()" placeholder="Ім'я"
+			ng-change="autoSave.fn_change_count()" placeholder="Ім'я"
 			class="w3-border" ng-model="config_info.msp_employee_doc.docbody.party.first_name">
-		<input ng-change="config_employee.autoSave.fn_change_count()"
+		<input ng-change="autoSave.fn_change_count()"
 			placeholder="По батькові" class="w3-border"
 			ng-model="config_info.msp_employee_doc.docbody.party.second_name">
 		Стать
-		<select ng-model="config_info.msp_employee_doc.docbody.party.gender">
+		<select 
+		ng-change="autoSave.fn_change_count()"
+		ng-model="config_info.msp_employee_doc.docbody.party.gender">
 			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('GENDER').values"
 				value="{{k}}">{{v}}</option>
 		</select>
 		<div>
 			Ідентифікаційний номер
-			<input ng-change="config_employee.autoSave.fn_change_count()"
+			<input ng-change="autoSave.fn_change_count()"
 				placeholder="Ідентифікаційний номер" class="w3-border"
 				ng-model="config_info.msp_employee_doc.docbody.party.tax_id">
 		</div>
 		<div>
 			Емайл 
-			<input ng-change="config_employee.autoSave.fn_change_count()"
+			<input ng-change="autoSave.fn_change_count()"
 				placeholder="Емайл" class="w3-border"
 				ng-model="config_info.msp_employee_doc.docbody.party.email">
 		</div>
-<!-- 
-		ng-repeat="c in [{'autoSave':config_employee.autoSave}]"
- -->
 		<div 
 		ng-include="'/f/mvp1/lib/documents_dialog.html'"
-			ng-init="obj=config_info.msp_employee_doc.docbody.party;autoSave=config_employee.autoSave;"></div>
+			ng-init="obj=config_info.msp_employee_doc.docbody.party;"></div>
 
 		<div class="w3-row-padding">
 			<div class="w3-quarter ">
@@ -51,27 +51,12 @@
 				<div ng-repeat="phone in config_info.msp_employee_doc.docbody.party.phones track by $index"
 					ng-init="phoneList=config_info.msp_employee_doc.docbody.party.phones"
 					ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
-				<!-- 
-		<div ng-repeat="phone in v.phones">
-		{{phone}}
-		</div>
-		 -->
 			</div>
 		</div>
-		<!-- 
-		--
-		<div class="w3-row-padding" ng-repeat="(k,v) in config_info.msp_employee_doc.docbody.party">
-			<div class="w3-quarter">
-				<div class="w3-right-align">{{k}}</div>
-			</div>
-			<div class="w3-threequarter">-{{v}}-</div>
-		</div>
-		 -->
+		
 <div ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor.html'"
 	ng-init="doctor=config_info.msp_employee_doc.docbody.doctor"
 ></div>
 	</div>
 </div>
-<!-- 
-{{config_info.msp_employee_doc.docbody.party}}
- -->
+
