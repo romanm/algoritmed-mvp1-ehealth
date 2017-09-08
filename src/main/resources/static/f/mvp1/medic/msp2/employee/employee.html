@@ -26,26 +26,8 @@
 			ng-init="v_d=config_employee.dates_name[k_d];v_obj=config_info.msp_employee_doc.docbody;v_e=v_obj[k_d]"
 			ng-include="'/f/mvp1/medic/msp2/employee/employee_date.html'">
 		</div>
-	</div>
-</div>
-<!-- 
-		ng-if="!(['position','employee_type'].indexOf(k)>=0) || v.isObject()" 
- -->
- <!-- 
-<div class="w3-row-padding" ng-repeat="(k,v) in config_info.msp_employee_doc.docbody"
-		ng-if="v.isObject()" 
-		>
-	<div class="w3-col m1">
-		<div class="w3-right-align">{{k}}
-		{{!(['position','employee_type'].indexOf(k)>=0)}}
+		<div ng-repeat="k_d in config_employee.keys_dates">
+		{{k_d}}
 		</div>
 	</div>
-	<div class="w3-col m11">--
-	{{v.isObject()}}
-	{{v}}
-	</div>
 </div>
-  -->
-<!-- 
-{{config_info.msp_employee_doc.docbody}}
- -->

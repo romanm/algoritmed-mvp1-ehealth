@@ -62,8 +62,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					,fn_minus_msp:function(msp){
 //						var answer = alert('Ви впевнені, що хочете виділити ЛПЗ');
-//						console.log(answer);
-						if(this.msp_id_to_delete==msp.msp_id){
+						if(this.msp_id_to_delete==msp.doc_id){
 							this.msp_id_to_delete=null;
 						}else{
 							this.msp_id_to_delete=msp.doc_id

@@ -25,7 +25,7 @@ ng-init="col1=3;col2=12-col1"
 			<span ng-if="principal.user_msp.length>0"
 				ng-repeat="msp in principal.user_msp"><b>{{1+$index}}</b>) 
 				<span
-					class="w3-btn w3-border"
+					class="w3-btn w3-border w3-red"
 					ng-if="msp.doc_id==config_msp_all.personal_page.dialogs.personal_area.msp_id_to_delete"
 						ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_remove_msp()"
 					 title="Видалити ЛПЗ дійсно">-</span>

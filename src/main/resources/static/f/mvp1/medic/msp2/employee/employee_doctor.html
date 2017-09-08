@@ -16,11 +16,36 @@
 	<div class="w3-col m9">
 		<!-- 
 		doctor= {{doctor}}
-		{{k1}}
 		{{v1}}
+		{{k1}}
 		 -->
 		<div ng-repeat="doc in v1">
-			<div
+			 <div ng-click="config_employee.fn_opened_index($index, k1)"
+			 class="w3-hover-gray"
+				 ng-class="{'w3-rightbar w3-topbar w3-border-green':config_employee['list_index_'+k1]==$index}"
+				>
+				<b> {{1+$index}}. </b>
+				<span class="w3-btn w3-border w3-red"
+				ng-if="mvpAddress.config['index_to_delete_'+k1]==$index"
+							ng-click="mvpAddress.config.minusListElement(objList, $index, k1);autoSave.fn_change_count();"
+						 title="Справді Видалити запис">-</span>
+				<span class="w3-tooltip">
+					<span
+					class=""
+						ng-include="'/f/mvp1/medic/msp2/employee/employee_'+k1+'_text.html'"
+						></span>
+					<span class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+						<span class="w3-btn"
+							ng-click="mvpAddress.config.toMinusListElement(k1, $index);"
+						 title="Видалити запис">-</span>
+						<span class="w3-btn" ng-if="!$first" 
+							ng-click="mvpAddress.config.upListElement(objList, $index);autoSave.fn_change_count();"
+						 title="Перенести запис на перше місце">^</span>
+					</span>
+				</span>
+			</div>
+			<div ng-if="config_employee['list_index_'+k1]==$index"
+				class="w3-border w3-rightbar w3-border-green w3-card-4 w3-display-container"
 				ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
 		</div>
 	</div>

@@ -37,15 +37,16 @@
 		 <span class="w3-right w3-hover-gray"
 				ng-click="config_msp_all.registry_doctor_dialog_open=!config_msp_all.registry_doctor_dialog_open">_</span>
 		 </header>
+		 Реєстрація лікарів в БД eHealth знаходиться на сторінці <a
+			href="/v/human-resources-department"> відділ кадрів </a> і доступна для користувача з правами зав. відділом кадрів.
+		<!-- 
 		<div ng-if="!config_msp_all.registry_doctor_dialog_open">
 			Після вибору лікарні відкриється вибір лікарів цієї лікарні.
 		</div>
 		<div ng-if="config_msp_all.registry_doctor_dialog_open">
-		<!-- 
-			<div ng-init="doc_employee_data=doc_employee.data;"
-		 -->
 			<div ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>
 		</div>
+		 -->
 	</div>
 
 	<div class="w3-card-2">
@@ -54,6 +55,12 @@
 			...пацієнта <span class="w3-right w3-hover-gray"
 				ng-click="config_msp_all.registry_patient_dialog_open=!config_msp_all.registry_patient_dialog_open">_</span>
 		</header>
+<h4>
+		Більш інтенсивно розвивається інша сторінка декларації пацієнта
+		<a href="/v/moz-declaration"> переглід</a> і <a
+			href="/v/moz-declaration-edit">редакція</a>.
+</h4>
+<hr/>
 		<div ng-if="!config_msp_all.registry_patient_dialog_open">--</div>
 		<div ng-if="config_msp_all.registry_patient_dialog_open"
 			ng-include="'/f/mvp1/medic/msp2/declaration/declaration.html'">

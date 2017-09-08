@@ -1,0 +1,22 @@
+Спеціальність 
+{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc.speciality]}}
+№ сертифіката 
+{{doc.certificate_number}}
+Категорія 
+{{mvpAddress.config.selectDictionary('SPECIALITY_LEVEL').values[doc.level]}}
+Курси 
+{{mvpAddress.config.selectDictionary('QUALIFICATION_TYPE').values[doc.qualification_type]}}
+
+Установа що видала:
+{{doc.attestation_name}}
+
+Місто 
+{{doc.city}}
+Рік видачі 
+{{doc.attestation_date}}
+Дійсний до 
+{{doc.valid_to_date}}
+
+Комісія 
+{{doc.speciality_officio?'пройдена':'не пройдена'}}
+

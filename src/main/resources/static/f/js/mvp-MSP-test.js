@@ -252,20 +252,25 @@ initTestAddress = function($scope, $http){
 			var s_o = v.splice($index,1)[0];
 			v.splice(0,0,s_o);
 		}
-		,minusListElement:function(v, index){
+		,toMinusListElement:function(key, index){
+			if(this['index_to_delete_'+key]==index){
+				this['index_to_delete_'+key]=null;
+			}else{
+				this['index_to_delete_'+key]=index;
+			}
+		}
+		,minusListElement:function(v, index, key){
 			v.splice(index,1);
+			if(this['index_to_delete_'+key]==index){
+				this['index_to_delete_'+key]=null;
+			}
 		}
 		,plusListElement:function(o, list_name){
-			console.log(o);
-			console.log(list_name);
-			console.log(o[list_name]);
 			if(!o[list_name]){
 				o[list_name]=[];
 			}
 			var np = JSON.parse(JSON.stringify(this['template_'+list_name]));
-			console.log(np);
 			o[list_name].push(np)
-			console.log(o[list_name]);
 		}
 		,plusListElement2:function(v){
 			var np = JSON.parse(JSON.stringify(v[0]));
@@ -477,13 +482,6 @@ init_config_info = function($scope, $http){
 				if(msp_employee.person_id==this.msp_employee_doc.doc_id){
 					$scope.config_msp_all.opened_dialog='opened_card';
 		}	}	}
-		,afterRead_msp_employee_doc:function(msp_employee){
-			var party = this.msp_employee_doc.docbody.party;
-			$scope.doc_employee = this.msp_employee_doc;
-			$scope.doc_employee.data = this.msp_employee_doc.docbody;
-			console.log($scope.doc_employee);
-			party.last_name = this.msp_employee_selected.family_name;
-		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
 		,click_o:function(this_o_selected_name, o, url, read_o_name){
 			//var thisO = this[this_o_name];
@@ -494,6 +492,23 @@ init_config_info = function($scope, $http){
 			this[this_o_selected_name]=o;
 			this.read_o(url, read_o_name);
 		}
+		,afterRead_msp_employee_doc:function(){//msp_employee
+			var party = this.msp_employee_doc.docbody.party;
+			party.last_name = party.family_name;
+			$scope.doc_employee = this.msp_employee_doc;
+//			console.log($scope.doc_employee);
+//			$scope.doc_employee.data = this.msp_employee_doc.docbody;
+//			party.last_name = this.msp_employee_selected.family_name;
+			angular.forEach($scope.config_employee.keys_dates, function(v){
+				if(!$scope.doc_employee.docbody[v]){
+					console.log(v);
+					var sd = new Date();
+					$scope.doc_employee.docbody[v]=sd.getTime() ;
+					$scope.mvpAddress.config.date.setDateParam(sd,$scope.doc_employee.docbody, v);
+				}
+			});
+			console.log($scope.doc_employee.docbody);
+		}
 		,read_o:function(url, read_o_name){
 			var thisObj = this;
 			console.log(url+' / '+read_o_name);
@@ -502,7 +517,7 @@ init_config_info = function($scope, $http){
 				console.log(thisObj[read_o_name]);
 				console.log('afterRead_'+read_o_name);
 				thisObj['afterRead_'+read_o_name]();
-				console.log(thisObj['afterRead_'+read_o_name]);
+				console.log(read_o_name);
 			});
 }	}	}
 

@@ -1,38 +1,10 @@
-<div ng-click="config_employee.fn_opened_index($index, k1)"
- class="w3-hover-gray"
->
-<b> {{1+$index}}. </b>
-<span class="w3-tooltip">
-	{{mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values[doc.degree]}}
-	Диплом №
-	{{doc.diploma_number}}
-	Спеціальність:
-	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc.speciality]}}
-	Установа що видала:
-	{{doc.institution_name}}
-	
-	Місто {{doc.city}}
-	
-	Рік видачі {{doc.issued_date}}
-	<span class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
-		<span class="w3-btn"
-			ng-click="mvpAddress.config.minusListElement(objList, $index);autoSave.fn_change_count();"
-		 title="Видалити запис">-</span>
-		<span class="w3-btn" ng-if="!$first" 
-			ng-click="mvpAddress.config.upListElement(objList, $index);autoSave.fn_change_count();"
-		 title="Перенести запис на перше місце">^</span>
-	</span>
-</span>
-</div>
-
-<div ng-if="config_employee['list_index_'+k1]==$index"
-	class="w3-border w3-border-green w3-card-4 w3-display-container">
 № диплома
-<input ng-change="config_employee.autoSave.fn_change_count()"
+<input ng-change="autoSave.fn_change_count()"
 	placeholder="Спеціальність" class="w3-border"
 	ng-model="doc.diploma_number">
 <div>
 	<span title="Рівень освіти"> Діплом </span> <select
+	 ng-change="autoSave.fn_change_count()"
 		ng-model="doc.degree">
 		<option
 			ng-repeat="(k,v) in mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values"
@@ -45,20 +17,15 @@
 </div>
 <div>
 	Установа що видала
-	<textarea ng-change="config_employee.autoSave.fn_change_count()" row="2"
+	<textarea 
+	 ng-change="autoSave.fn_change_count()"
+	row="2"
 		placeholder="Установа що видала" class="w3-border"
 		ng-model="doc.institution_name"></textarea>
 </div>
-	Місто <input ng-change="config_employee.autoSave.fn_change_count()"
+	Місто <input 
+	 ng-change="autoSave.fn_change_count()"
 		placeholder="Місто" class="w3-border" ng-model="doc.city">
-	Рік видачі <input ng-change="config_employee.autoSave.fn_change_count()"
+	Рік видачі <input 
+	 ng-change="autoSave.fn_change_count()"
 		class="w3-border" ng-model="doc.issued_date">
-
-
-</div>
-
-
-
-<!-- 
-{{doc}}
- -->
