@@ -78,6 +78,12 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			});
 			return hasRole;
 		}
+		,hasHumanResourcesRole:function(){//доступ до картотеки
+			var hasHumanResourcesRole
+			= this.hasRole('ROLE_HEAD_HUMAN_RESOURCES')
+			|| this.hasRole('ROLE_ADMINMSP');
+			return hasHumanResourcesRole;
+		}
 		,hasRole:function(r){
 //			console.log(r);
 			var hasRole = false;

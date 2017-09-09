@@ -20,7 +20,7 @@
 		</tr>
 		<tr ng-if="config_info.msp_employee_doc.doc_id==e.person_id">
 			<td>
-				<div ng-if="fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
+				<div ng-if="fnPrincipal.hasHumanResourcesRole()">
 					<button ng-click="config_msp_all.fn_open_dialog('opened_card')"
 						class="w3-btn w3-border">
 						Відкрити картку: <span class="w3-small">
@@ -30,14 +30,14 @@
 				</div>
 			</td>
 			<td>
-				<div ng-if="!fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
+				<div ng-if="!fnPrincipal.hasHumanResourcesRole()">
 					<div
 						ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
 						Очікується підтвердження заявки на логін.
 						Зверніться в відділ кадрів.
 						</div>
 				</div>
-				<div ng-if="fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')">
+				<div ng-if="fnPrincipal.hasHumanResourcesRole()">
 					<div
 						ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
 						<b> Підтвердитит логін: </b>
@@ -45,23 +45,12 @@
 							ng-click="config_msp_all.human_resources_department.fn_add_login(e, 'ROLE_USER')"
 							class="w3-btn w3-border">Перевести в логін лікаря</button>
 					</div>
+					<a class="w3-btn w3-hover-gray"
+						title="Додати інші ролі і права доступу" href="#"
+						ng-click="extendRoles=!extendRoles">+/-</a>
+					<div ng-if="extendRoles">{{e.roles}} a1</div>
 				</div>
 			</td>
 		</tr>
-		<!-- 
-		<tr ng-if="config_info.msp_employee_doc.docbody.doc_id==e.person_id">
-			<td colspan="2">
-				{{config_info.msp_employee_doc.docbody.data.party.phones[0].number}}
-				{{fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')}}
-				{{e}}
-			</td>
-		</tr>
-		 -->
 	</tbody>
 </table>
-
-<!-- 
-{{config_info.msp_employee_selected.person_id}}
-{{config_info.msp_employee_doc}}
-{{config_info.msp_employee}}
- -->
