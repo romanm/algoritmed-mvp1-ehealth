@@ -33,9 +33,8 @@
 				<div ng-if="!fnPrincipal.hasHumanResourcesRole()">
 					<div
 						ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
-						Очікується підтвердження заявки на логін.
-						Зверніться в відділ кадрів.
-						</div>
+						Очікується підтвердження заявки на логін. Зверніться в відділ
+						кадрів.</div>
 				</div>
 				<div ng-if="fnPrincipal.hasHumanResourcesRole()">
 					<div
@@ -47,8 +46,34 @@
 					</div>
 					<a class="w3-btn w3-hover-gray"
 						title="Додати інші ролі і права доступу" href="#"
-						ng-click="extendRoles=!extendRoles">+/-</a>
-					<div ng-if="extendRoles">{{e.roles}} a1</div>
+						ng-click="config_msp_all.human_resources_department.fn_click_extendRoles()">+/-</a>
+					<div ng-if="config_msp_all.human_resources_department.extendRoles">
+						<table>
+							<tr
+								ng-repeat="role in config_msp_all.human_resources_department.dbRoles"
+								ng-mouseover="config_msp_all.human_resources_department.mouseover_role=role.role_id"
+								class="w3-hover-gray">
+								<td>{{1+$index}}</td>
+								<td
+									ng-class="{'w3-green':fnPrincipal.hasLoginRole(role.role_id,e.roles)}">{{role.role_note}}
+								</td>
+								<td>
+									<div
+										ng-if="config_msp_all.human_resources_department.mouseover_role==role.role_id">
+										<a class="w3-btn w3-hover-red"
+											title="Додати роль і права доступу" href="#"
+											ng-click="config_msp_all.human_resources_department.fn_plus_role(role)">+</a>
+										<a class="w3-btn w3-hover-red"
+											title="Відняти роль і права доступу" href="#"
+											ng-click="config_msp_all.human_resources_department.fn_minus_role(role)">-</a>
+										<a class="w3-btn w3-hover-red"
+											title="Відняти роль і права доступу" href="#"
+											ng-click="config_msp_all.human_resources_department.fn_i_allow_change_role(role)">?</a>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 			</td>
 		</tr>

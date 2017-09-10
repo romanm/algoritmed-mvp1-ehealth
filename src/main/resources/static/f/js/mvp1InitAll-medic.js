@@ -97,7 +97,35 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				}
 		}	}
 		,human_resources_department:{
-			choose_user_msp:function(user_msp, modalDialogData){
+			extendRoles:false
+			,mouseover_role:null
+			,fn_i_allow_change_role:function(role){
+				console.log(role);
+			}
+			,fn_plus_role:function(role){
+				console.log(role);
+			}
+			,fn_minus_role:function(role){
+				console.log(role);
+			}
+			,fn_click_extendRoles:function(){
+				this.extendRoles=!this.extendRoles;
+				if(!this.dbRoles){
+					this.fn_readDbRoles();
+				}
+			}
+			,dbRoles:null
+			,fn_readDbRoles:function(){
+				if(!this.dbRoles){
+					var thisObj = this;
+					$http.get('/r/read_sql_with_param', {params:{sql:'sql.roles.select'}}
+					).then(function(response) {
+						thisObj.dbRoles = response.data.list;
+						console.log(thisObj.dbRoles);
+					});
+				}
+			}
+			,choose_user_msp:function(user_msp, modalDialogData){
 				if(0==user_msp) return;
 				console.log(user_msp);
 				var u_m = $scope.principal.user_msp.splice(user_msp,1);
@@ -184,14 +212,22 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					
 				}
 				,db_role:{ }
+				,fn_role:function(){
+					var hrd = $scope.config_msp_all.human_resources_department;
+					if(!hrd.dbRoles){
+						console.log(hrd.dbRoles);
+						console.log(this.role);
+					}
+					return this.role;
+				}
 				,role:{
 					ROLE_USER:{name:'Лікар',fns:['A','E','B','H']}
-					,ms_registry:{name:'м/с Реєстратури',fns:['A','H']}
-					,head_doctor:{name:'Гол.Лікар',fns:['C','B','D','I']}
+					,ROLE_REGISTRY_NURSE:{name:'м/с Реєстратури',fns:['A','H']}
 					,ROLE_HEAD_HUMAN_RESOURCES:{name:'Зав.Кадрами',fns:['C','B','D']}
-					,admin_app:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
-					,ROLE_ADMINMSP:{name:'Адмін.Лікарні',fns:['A','B','C','D','E','H']}
-					,admin_region:{name:'Адмін.Регіону',fns:['F']}
+					,ROLE_ADMIN_MSP:{name:'Адмін. Лікарні',fns:['A','B','C','D','E','H']}
+					,ROLE_HEAD_MSP:{name:'Гол.Лікар',fns:['C','B','D','I']}
+					,ROLE_ADMIN_REGION:{name:'Адмін. Регіону',fns:['F']}
+					,ROLE_ADMIN_APP:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
 					,ROLE_WAITING_FOR_CONFIRMATION:{name:'Заявка на логін',fns:['J']}
 				}
 				,fns:{

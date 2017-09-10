@@ -15,7 +15,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="(kr,vr) in config_msp_all.info.login.role">
+				<tr ng-repeat="(kr,vr) in config_msp_all.info.login.fn_role()">
 					<td>{{1+$index}}</td>
 					<td>{{vr.name}}</td>
 					<td ng-repeat="(k,v) in config_msp_all.info.login.fns">

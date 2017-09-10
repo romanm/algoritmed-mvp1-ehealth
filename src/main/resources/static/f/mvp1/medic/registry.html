@@ -9,10 +9,10 @@
 				class="w3-right w3-hover-gray"
 				ng-click="config_msp_all.registry_msp_dialog_open=!config_msp_all.registry_msp_dialog_open">_</span>
 		</header>
-		<div class="w3-red" ng-if="!fnPrincipal.hasRole('ROLE_ADMINMSP')">
+		<div class="w3-red" ng-if="!fnPrincipal.hasRole('ROLE_ADMIN_MSP')">
 		Регістрація лікувального закладу дозволена тільки з правами адміністратора
 		</div>
-		<div ng-if="fnPrincipal.hasRole('ROLE_ADMINMSP')">
+		<div ng-if="fnPrincipal.hasRole('ROLE_ADMIN_MSP')">
 			<div ng-if="!config_msp_all.registry_msp_dialog_open">
 				<h3 class="w3-hover-gray"
 				ng-click="config_msp_all.registry_msp_dialog_open=!config_msp_all.registry_msp_dialog_open"

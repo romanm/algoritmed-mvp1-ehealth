@@ -70,6 +70,8 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 
 	$scope.fnPrincipal={
 		hasLoginRole:function(r,r_o,r_a){
+			if(!r_a)
+				r_a='role_id';
 			var hasRole = false;
 			angular.forEach(r_o, function(value, index){
 				if(value[r_a]==r){
@@ -78,10 +80,16 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			});
 			return hasRole;
 		}
+		,myMaxRole:null
+		,fn_myMaxRole:function(){
+			if(this.myMaxRole){
+				console.log();
+			}
+		}
 		,hasHumanResourcesRole:function(){//доступ до картотеки
 			var hasHumanResourcesRole
 			= this.hasRole('ROLE_HEAD_HUMAN_RESOURCES')
-			|| this.hasRole('ROLE_ADMINMSP');
+			|| this.hasRole('ROLE_ADMIN_MSP');
 			return hasHumanResourcesRole;
 		}
 		,hasRole:function(r){
