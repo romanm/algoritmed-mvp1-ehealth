@@ -102,9 +102,10 @@ public class EmployeeRest extends DbAlgoritmed{
 	private @Value("${sql.db1.user_role.deleteConfirmation}")	String sql_user_role_deleteConfirmation;
 	private @Value("${sql.db1.user_role.insert}")	String sql_user_role_insert;
 
-	private void addUserRole(Map<String, Object> data, Integer user_role_id, String role) {
-		data.put("user_role_id", user_role_id);
-		data.put("role", role);
+//	private void addUserRole(Map<String, Object> data, Integer user_role_id, String role_id) {
+	private void addUserRole(Map<String, Object> data, String role_id) {
+//		data.put("user_role_id", user_role_id);
+		data.put("role_id", role_id);
 		int update = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
 	}
 
@@ -132,7 +133,8 @@ public class EmployeeRest extends DbAlgoritmed{
 			System.err.println(data);
 			persistContentElement(data, sql_users_insert, sql_users_update);
 			if(true!=(boolean)data.get("update_sql")){
-				addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");
+//				addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");
+				addUserRole(data, "ROLE_WAITING_FOR_CONFIRMATION");
 			}
 			
 			Map docbodyMap;

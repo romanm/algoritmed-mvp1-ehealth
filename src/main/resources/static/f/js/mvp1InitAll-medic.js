@@ -103,11 +103,29 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				var allow_change_role = myMaxRole>=role.role_sort;
 				return allow_change_role;
 			}
-			,fn_plus_role:function(role){
+			,fn_plus_role:function(e, role){
 				console.log(role);
+				console.log(role.role_id);
+				this.fn_add_login(e, role.role_id);
 			}
-			,fn_minus_role:function(role){
+			,fn_minus_role:function(e, role){
 				console.log(role);
+				var url = '/r/update_sql_with_param';
+				console.log(url);
+				var data = {sql:'sql.db1.user_role.delete_by_username_and_role', username:e.username, role:role.role_id};
+				console.log(data);
+				$http.post(url, data).then( function(response) {
+					console.log(response.data);
+				});
+			}
+			,fn_add_login:function(e, role_id){
+				var url = '/r/add_user_role';
+				console.log(url);
+				var data = {username:e.username, role_id:role_id};
+				console.log(data);
+				$http.post(url, data).then( function(response) {
+					console.log(response.data);
+				});
 			}
 			,extendRoles:false
 			,fn_click_extendRoles:function(){
@@ -129,18 +147,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				$scope.principal.user_msp.splice(0,0,u_m[0]);
 				this.dialogs.doctors_cards.open_dialog();
 //				$scope.config_all.modalDialog.close(modalDialogData.id)
-			}
-			,fn_add_login:function(e, role_id){
-				console.log('-------110------------------');
-				console.log(e);
-				console.log(role_id);
-				var url = '/r/add_user_role';
-				console.log(url);
-				var data = {'username':e.username, 'role':role_id};
-				console.log(data);
-				$http.post(url, data).then( function(response) {
-					console.log(response.data);
-				});
 			}
 			,fn_opened_card_name:function(){
 				if(!$scope.config_info.msp_employee_doc)

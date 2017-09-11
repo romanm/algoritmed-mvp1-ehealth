@@ -1,7 +1,7 @@
 <table class="w3-table">
 	<colgroup>
-		<col style="width: 40%">
-		<col style="width: 60%">
+		<col style="width:40%">
+		<col style="width:60%">
 	</colgroup>
 	<thead>
 		<tr class="w3-yellow w3-border">
@@ -16,10 +16,20 @@
 			<td title="{{e.person_id}}">
 			{{e.family_name?e.family_name:e.last_name}} 
 			{{e.first_name}}
-				{{e.second_name}}</td>
-			<td><span ng-repeat="r in e.roles"> {{1 +
-					config_msp_all.info.login.role.keys().indexOf(r.role_id)}} -
+				{{e.second_name}}
+				{{e.username}}
+				
+				</td>
+			<td><span ng-repeat="r in e.roles">
+					{{fnPrincipal.dbRolesMap[r.role_id].role_sort}} 
+					<!-- 
+					{{1 +
+					config_msp_all.info.login.role.keys().indexOf(r.role_id)}} 
+					{{r}}
+					 -->
+					-
 					{{config_msp_all.info.login.role[r.role_id].name}}{{$last?'.':','}}
+					
 			</span></td>
 		</tr>
 		<tr ng-if="config_info.msp_employee_doc.doc_id==e.person_id">
@@ -51,21 +61,18 @@
 					<a class="w3-btn w3-hover-gray"
 						title="Додати інші ролі і права доступу" href="#"
 						ng-click="config_msp_all.human_resources_department.fn_click_extendRoles()">+/-</a>
-					{{fnPrincipal.myMaxRole}}
 					<div ng-if="config_msp_all.human_resources_department.extendRoles">
+						Після +/- ролі, потрібна перезагрузка сторінки.
 						<table>
 							<colgroup>
 								<col style="width: 10%">
 								<col style="width: 30%">
 								<col style="width: 60%">
 							</colgroup>
-							<tr
-								ng-repeat="role in fnPrincipal.dbRoles"
+							<tr ng-repeat="role in fnPrincipal.dbRoles"
 								ng-mouseover="config_msp_all.human_resources_department.mouseover_role=role.role_id"
 								class="w3-hover-gray">
-								<td
-								title="{{1+$index}}"
-								>{{role.role_sort}}</td>
+								<td title="{{1+$index}}">{{role.role_sort}}</td>
 								<td
 									ng-class="{'w3-green':fnPrincipal.hasLoginRole(role.role_id,e.roles)}">{{role.role_note}}
 								</td>
@@ -77,10 +84,10 @@
 										">
 										<a class="w3-btn w3-hover-red"
 											title="Додати роль і права доступу" href="#"
-											ng-click="config_msp_all.human_resources_department.fn_plus_role(role)">+</a>
+											ng-click="config_msp_all.human_resources_department.fn_plus_role(e, role)">+</a>
 										<a class="w3-btn w3-hover-red"
 											title="Відняти роль і права доступу" href="#"
-											ng-click="config_msp_all.human_resources_department.fn_minus_role(role)">-</a>
+											ng-click="config_msp_all.human_resources_department.fn_minus_role(e, role)">-</a>
 									</div>
 								</td>
 							</tr>
