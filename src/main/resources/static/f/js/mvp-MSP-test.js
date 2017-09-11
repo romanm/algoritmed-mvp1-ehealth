@@ -534,6 +534,7 @@ init_config_info = function($scope, $http){
 				thisObj['afterRead_'+read_o_name]();
 				console.log(read_o_name);
 			});
+			$scope.fnPrincipal.fn_readDbRoles();
 }	}	}
 
 init_info = function($scope, $http){

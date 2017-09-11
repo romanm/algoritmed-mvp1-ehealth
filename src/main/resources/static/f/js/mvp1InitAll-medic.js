@@ -97,10 +97,11 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				}
 		}	}
 		,human_resources_department:{
-			extendRoles:false
-			,mouseover_role:null
+			mouseover_role:null
 			,fn_i_allow_change_role:function(role){
-				console.log(role);
+				var myMaxRole = $scope.fnPrincipal.fn_myMaxRole();
+				var allow_change_role = myMaxRole>=role.role_sort;
+				return allow_change_role;
 			}
 			,fn_plus_role:function(role){
 				console.log(role);
@@ -108,22 +109,18 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			,fn_minus_role:function(role){
 				console.log(role);
 			}
+			,extendRoles:false
 			,fn_click_extendRoles:function(){
 				this.extendRoles=!this.extendRoles;
-				if(!this.dbRoles){
-					this.fn_readDbRoles();
+				console.log(this.extendRoles);
+				console.log($scope.fnPrincipal.dbRoles);
+				if(!$scope.fnPrincipal.dbRoles){
+					console.log();
+					$scope.fnPrincipal.fn_readDbRoles();
 				}
-			}
-			,dbRoles:null
-			,fn_readDbRoles:function(){
-				if(!this.dbRoles){
-					var thisObj = this;
-					$http.get('/r/read_sql_with_param', {params:{sql:'sql.roles.select'}}
-					).then(function(response) {
-						thisObj.dbRoles = response.data.list;
-						console.log(thisObj.dbRoles);
-					});
-				}
+				var myMaxRole = $scope.fnPrincipal.fn_myMaxRole();
+				console.log(myMaxRole);
+
 			}
 			,choose_user_msp:function(user_msp, modalDialogData){
 				if(0==user_msp) return;
@@ -211,7 +208,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					
 				}
-				,db_role:{ }
 				,fn_role:function(){
 					var hrd = $scope.config_msp_all.human_resources_department;
 					if(!hrd.dbRoles){

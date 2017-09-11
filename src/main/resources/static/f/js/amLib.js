@@ -80,11 +80,47 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			});
 			return hasRole;
 		}
+		,db_role:{ }
+		,dbRoles:null
+		,dbRolesMap:{}
+		,fn_readDbRoles:function(){
+			console.log(this.dbRoles);
+			if(!this.dbRoles){
+				console.log();
+				var thisObj = this;
+				$http.get('/r/read_sql_with_param', {params:{sql:'sql.roles.select'}}
+				).then(function(response) {
+					thisObj.dbRoles = response.data.list;
+					console.log(thisObj.dbRoles);
+					angular.forEach(thisObj.dbRoles, function(v, i){
+						thisObj.dbRolesMap[v.role_id] = v;
+					});
+					console.log(thisObj.dbRolesMap);
+				});
+			}
+		}
 		,myMaxRole:null
 		,fn_myMaxRole:function(){
-			if(this.myMaxRole){
-				console.log();
+			if(!this.myMaxRole){
+				console.log(this.dbRolesMap);
+				if(this.dbRolesMap){
+					var thisObj = this;
+					console.log(this.dbRolesMap);
+					this.myMaxRole = 0;
+					angular.forEach($scope.principal.principal.authorities, function(v, i){
+						var role_id = v.authority;
+						console.log(v.authority);
+						console.log(thisObj.dbRolesMap[v.authority]);
+						var role_sort = thisObj.dbRolesMap[v.authority].role_sort;
+						console.log(role_sort);
+						if(thisObj.myMaxRole<role_sort)
+							thisObj.myMaxRole=role_sort;
+					});
+				}else{
+					this.fn_readDbRoles();
+				}
 			}
+			return this.myMaxRole;
 		}
 		,hasHumanResourcesRole:function(){//доступ до картотеки
 			var hasHumanResourcesRole
