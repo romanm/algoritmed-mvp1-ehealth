@@ -14,8 +14,14 @@
 		>
 		{{text}}
 		</a>
+		<a
+		href="/v/admin-msp"
+		ng-if="a.authority=='ROLE_HEAD_MSP'"
+		>
+		{{text}}
+		</a>
 			<span
-		ng-if="a.authority!='ROLE_HEAD_HUMAN_RESOURCES'"
+		ng-if="a.authority!='ROLE_HEAD_HUMAN_RESOURCES' && a.authority!='ROLE_HEAD_MSP'"
 			>
 				{{1 + config_msp_all.info.login.role.keys().indexOf(a.authority)}} -
 				{{config_msp_all.info.login.role[a.authority].name}}{{$last?'.':','}}
@@ -23,4 +29,6 @@
 		</span>
 	</div>
 </div>
+<!-- 
 {{fnPrincipal.hasRole('ROLE_HEAD_HUMAN_RESOURCES')}}
+ -->

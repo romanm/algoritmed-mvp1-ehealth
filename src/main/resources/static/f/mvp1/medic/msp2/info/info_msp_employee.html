@@ -17,8 +17,9 @@
 			{{e.family_name?e.family_name:e.last_name}} 
 			{{e.first_name}}
 				{{e.second_name}}
+				<!-- 
 				{{e.username}}
-				
+				 -->
 				</td>
 			<td><span ng-repeat="r in e.roles">
 					{{fnPrincipal.dbRolesMap[r.role_id].role_sort}} 
