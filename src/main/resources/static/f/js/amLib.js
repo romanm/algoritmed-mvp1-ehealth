@@ -84,35 +84,35 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		,dbRoles:null
 		,dbRolesMap:{}
 		,fn_readDbRoles:function(){
-			console.log(this.dbRoles);
+//			console.log(this.dbRoles);
 			if(!this.dbRoles){
-				console.log();
+//				console.log();
 				var thisObj = this;
 				$http.get('/r/read_sql_with_param', {params:{sql:'sql.roles.select'}}
 				).then(function(response) {
 					thisObj.dbRoles = response.data.list;
-					console.log(thisObj.dbRoles);
+//					console.log(thisObj.dbRoles);
 					angular.forEach(thisObj.dbRoles, function(v, i){
 						thisObj.dbRolesMap[v.role_id] = v;
 					});
-					console.log(thisObj.dbRolesMap);
+//					console.log(thisObj.dbRolesMap);
 				});
 			}
 		}
 		,myMaxRole:null
 		,fn_myMaxRole:function(){
 			if(!this.myMaxRole){
-				console.log(this.dbRolesMap);
+//				console.log(this.dbRolesMap);
 				if(this.dbRolesMap){
 					var thisObj = this;
-					console.log(this.dbRolesMap);
+//					console.log(this.dbRolesMap);
 					this.myMaxRole = 0;
 					angular.forEach($scope.principal.principal.authorities, function(v, i){
 						var role_id = v.authority;
-						console.log(v.authority);
-						console.log(thisObj.dbRolesMap[v.authority]);
+//						console.log(v.authority);
+//						console.log(thisObj.dbRolesMap[v.authority]);
 						var role_sort = thisObj.dbRolesMap[v.authority].role_sort;
-						console.log(role_sort);
+//						console.log(role_sort);
 						if(thisObj.myMaxRole<role_sort)
 							thisObj.myMaxRole=role_sort;
 					});
@@ -122,10 +122,18 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			}
 			return this.myMaxRole;
 		}
+		,hasAdminMSPRole:function(){//доступ до створення MSP
+			var hasHumanResourcesRole
+			= this.hasRole('ROLE_HEAD_MSP')
+			|| this.hasRole('ROLE_ADMIN_MSP')
+			|| this.hasRole('ROLE_ADMIN_APP');
+			return hasHumanResourcesRole;
+		}
 		,hasHumanResourcesRole:function(){//доступ до картотеки
 			var hasHumanResourcesRole
 			= this.hasRole('ROLE_HEAD_HUMAN_RESOURCES')
-			|| this.hasRole('ROLE_ADMIN_MSP');
+			|| this.hasRole('ROLE_ADMIN_MSP')
+			|| this.hasRole('ROLE_ADMIN_APP');
 			return hasHumanResourcesRole;
 		}
 		,hasRole:function(r){
@@ -173,7 +181,7 @@ function read_principal($http, $scope) {
 	console.log('/r/principal');
 	$http.get('/r/principal').then(function(response) {
 		$scope.principal = response.data;
-		console.log($scope.principal);
+		//console.log($scope.principal);
 	});
 }
 
@@ -187,12 +195,12 @@ if(window.location.search){
 	});
 }
 var pageanchors = {};
-console.log(window.location)
+//console.log(window.location)
 var pageanchorStr = (''+window.location).split('!')[1];
 if(!pageanchorStr){
 	pageanchorStr = (''+window.location).split('#')[1];
 }
-console.log(pageanchorStr)
+//console.log(pageanchorStr)
 if(pageanchorStr){
 	pageanchorStr = pageanchorStr.substr(1)
 	angular.forEach(pageanchorStr.split("&"), function(value, index){
@@ -200,7 +208,7 @@ if(pageanchorStr){
 		pageanchors[par[0]] = par[1];
 	});
 }
-console.log(pageanchors)
+//console.log(pageanchors)
 //console.log((''+window.location).split('!')[1].substr(1))
 
 if (!Array.prototype.last){

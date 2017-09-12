@@ -33,7 +33,9 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msp_id", msp_id);
 		System.err.println("/r/read_msp_employee/{msp_id} "+msp_id);
+		System.err.println("sql.msp_employee.list");
 		System.err.println(sql_msp_employee_list.replace(":msp_id",""+msp_id));
+		System.err.println("sql.msp_employee.role.list");
 		System.err.println(sql_msp_employee_role_list.replace(":msp_id",""+msp_id));
 		Map<Integer, Map<String, Object>> users = new HashMap();
 		List<Map<String, Object>> msp_employee_list = db1ParamJdbcTemplate.queryForList(sql_msp_employee_list, map);
@@ -94,20 +96,6 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		map.put("employee_list", list);
 		return map;
 	}
-
-	private @Value("${sql.msp.list}")				String sql_msp_list;
-	@GetMapping(value = "/r/msp_list")
-	public @ResponseBody Map<String, Object>  msp_list() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, Object>> msp_list = db1JdbcTemplate.queryForList(sql_msp_list);
-		map.put("msp_list", msp_list);
-		return map;
-	}
-	
-	
-
-	
-
 	
 	@PostMapping("/r/saveDeclaration")
 	public @ResponseBody Map<String, Object> saveDeclaration(

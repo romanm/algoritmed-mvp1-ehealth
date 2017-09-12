@@ -522,17 +522,19 @@ init_config_info = function($scope, $http){
 					$scope.mvpAddress.config.date.setDateParam(sd,$scope.doc_employee.docbody, v);
 				}
 			});
-			console.log($scope.doc_employee.docbody);
+//			console.log($scope.doc_employee.docbody);
 		}
 		,read_o:function(url, read_o_name){
 			var thisObj = this;
 			console.log(url+' / '+read_o_name);
 			$http.get(url).then(function(response){
 				thisObj[read_o_name] = response.data;
-				console.log(thisObj[read_o_name]);
-				console.log('afterRead_'+read_o_name);
-				thisObj['afterRead_'+read_o_name]();
+				console.log(thisObj);
 				console.log(read_o_name);
+				console.log(thisObj[read_o_name]);
+//				console.log('afterRead_'+read_o_name);
+				thisObj['afterRead_'+read_o_name]();
+//				console.log(read_o_name);
 			});
 			$scope.fnPrincipal.fn_readDbRoles();
 }	}	}
@@ -543,7 +545,7 @@ init_info = function($scope, $http){
 }
 
 initTestVariables = function($scope, $http, Blob){
-	console.log(Blob);
+	//console.log(Blob);
 	
 	if(!$scope.config_msp)
 		$scope.config_msp = {};

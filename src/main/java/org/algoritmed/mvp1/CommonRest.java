@@ -63,6 +63,17 @@ public class CommonRest {
 		return ngController;
 	}
 
+
+	private @Value("${sql.msp.list}")				String sql_msp_list;
+	@GetMapping(value = "/r/msp_list")
+	public @ResponseBody Map<String, Object>  msp_list() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> msp_list = db1JdbcTemplate.queryForList(sql_msp_list);
+		map.put("msp_list", msp_list);
+		return map;
+	}
+
+	
 	@GetMapping("/r/principal")
 	public @ResponseBody Map<String, Object> principal(Principal principal) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -79,9 +90,14 @@ public class CommonRest {
 			map.put("user_id", user_id);
 			List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
 			map.put("user_msp", l);
+			if("admin".equals(name)) {
+				Map<String, Object> msp_list = msp_list();
+				map.put("user_msp", msp_list.get("msp_list"));
+			}
 		}
 		return map;
 	}
+
 	private @Value("${sql.db1.users.fromUsername}") String sqlDb1UsersFromUsername;
 	private @Value("${sql.db1.user.msp}") String sql_user_msp;
 

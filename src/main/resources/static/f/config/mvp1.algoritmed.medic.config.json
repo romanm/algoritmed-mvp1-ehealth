@@ -52,6 +52,13 @@
 	,"fa":"fa-user"
 	,"parent":"home"
 }
+,"admin-msp":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/admin-msp.html'"
+	,"shortName":"Адмін лікувального закладу"
+	,"fa":"fa-user"
+	,"parent":"home"
+}
 ,"human-resources-department":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/human-resources-department.html'"

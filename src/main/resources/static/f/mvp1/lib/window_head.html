@@ -10,9 +10,16 @@
 			aria-hidden="true"></i>
 		</span> {{v.name}}
 	</span> 
-	<span class="w3-right" ng-if="'personal_data'==k && config_msp_all.opened_dialog==k"> 
-		<span class="w3-hover-gray w3-border"> <i
-			class="fa fa-floppy-o" aria-hidden="true"></i> Запис
-	</span>
+	<span class="w3-right" ng-if="config_msp_all.opened_dialog==k"> 
+		<span ng-if="'doctors_cards'==k"> 
+			<span class="w3-hover-gray w3-border"
+			ng-click="config_msp_all.human_resources_department.choose_user_without_msp()"
+			> без обраного ЛЗ </span>
+		</span>
+		<span ng-if="'personal_data'==k"> 
+			<span class="w3-hover-gray w3-border"> <i
+				class="fa fa-floppy-o" aria-hidden="true"></i> Запис
+			</span>
+		</span>
 	</span>
 </header>

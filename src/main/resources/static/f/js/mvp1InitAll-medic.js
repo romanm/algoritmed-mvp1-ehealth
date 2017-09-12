@@ -130,29 +130,50 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			,extendRoles:false
 			,fn_click_extendRoles:function(){
 				this.extendRoles=!this.extendRoles;
-				console.log(this.extendRoles);
-				console.log($scope.fnPrincipal.dbRoles);
+//				console.log(this.extendRoles);
+//				console.log($scope.fnPrincipal.dbRoles);
 				if(!$scope.fnPrincipal.dbRoles){
 					console.log();
 					$scope.fnPrincipal.fn_readDbRoles();
 				}
 				var myMaxRole = $scope.fnPrincipal.fn_myMaxRole();
-				console.log(myMaxRole);
+//				console.log(myMaxRole);
 
-			}
-			,choose_user_msp:function(user_msp, modalDialogData){
-				if(0==user_msp) return;
-				console.log(user_msp);
-				var u_m = $scope.principal.user_msp.splice(user_msp,1);
-				$scope.principal.user_msp.splice(0,0,u_m[0]);
-				this.dialogs.doctors_cards.open_dialog();
-//				$scope.config_all.modalDialog.close(modalDialogData.id)
 			}
 			,fn_opened_card_name:function(){
 				if(!$scope.config_info.msp_employee_doc)
 					return;
 				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
 				return name;
+			}
+			,choose_user_msp:function(user_msp, modalDialogData){
+				if(0==user_msp) return;
+//				console.log(user_msp);
+				var u_m = $scope.principal.user_msp.splice(user_msp,1);
+				$scope.principal.user_msp.splice(0,0,u_m[0]);
+				this.dialogs.doctors_cards.open_dialog();
+//				$scope.config_all.modalDialog.close(modalDialogData.id)
+			}
+			,choose_user_without_msp:function(){
+				$scope.config_info.msp_employee.users={};
+				$http.get('/r/read_sql_with_param', {params:{sql:'sql.without_msp_employee.list'}}
+				).then(function(response) {
+					$scope.config_info.msp_employee.msp_employee_list=response.data.list;
+					angular.forEach($scope.config_info.msp_employee.msp_employee_list, function(v, i){
+						$scope.config_info.msp_employee.users[v.person_id]=i;
+					});
+					$http.get('/r/read_sql_with_param', {params:{sql:'sql.without_msp_employee.role.list'}}
+					).then(function(response) {
+						angular.forEach(response.data.list, function(v, i){
+							var person_id_index = $scope.config_info.msp_employee.users[v.user_id];
+							var person = $scope.config_info.msp_employee.msp_employee_list[person_id_index];
+							if(!person.roles) person.roles=[];
+							person.roles.push(v);
+						});
+						console.log($scope.config_info.msp_employee.msp_employee_list);
+					});
+				});
+
 			}
 			,dialogs:{
 				doctors_cards:{
@@ -215,11 +236,13 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					
 				}
 				,fn_role:function(){
+					/*
 					var hrd = $scope.config_msp_all.human_resources_department;
 					if(!hrd.dbRoles){
 						console.log(hrd.dbRoles);
 						console.log(this.role);
 					}
+					 * */
 					return this.role;
 				}
 				,role:{
