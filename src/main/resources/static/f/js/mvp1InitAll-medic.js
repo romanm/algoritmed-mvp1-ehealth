@@ -45,6 +45,41 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				this.human_resources_department.dialogs.doctors_cards.open_dialog();
 			}
 		}
+		,admin_msp:{
+			dialogs:{
+				msp_data_form:{
+					name:'Данні ЛЗ'
+					,fn_read_msp2:function(){
+						if($scope.principal.user_msp){
+							console.log($scope.principal.user_msp[0].msp_id);
+							$scope.readMsp($scope.principal.user_msp[0].msp_id);
+							console.log($scope.principal.user_msp[0].msp_id);
+						}
+					}
+					,fn_read_msp:function(){
+						var thisObj = this;
+						if($scope.param.doc_id){
+							$scope.readMsp($scope.param.doc_id);
+						}else{
+							console.log($scope.principal);
+							if(!$scope.principal){
+								read_principal($http, $scope, thisObj, 'fn_read_msp2');
+							}else if($scope.principal.user_msp[0]){
+								$scope.readMsp($scope.principal.user_msp[0].msp_id);
+							}else{
+								$scope.newMsp();
+							}
+						}
+					}
+				}
+				,msp_signature:{
+					name:'Реєстрація'
+				}
+				,capitatio_prognosis:{
+					name:'Прогноз капітації'
+				}
+			}
+		}
 		,personal_page:{
 			dialogs:{
 				personal_area:{
@@ -301,6 +336,12 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log(response);
 			}
 		);
+	}else
+	if('admin-msp' == $scope.pagePath.last()){
+		console.log(1234);
+		initTestAddress($scope, $http, $filter);
+		$scope.config_msp_all.opened_dialog='msp_data_form';
+		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);

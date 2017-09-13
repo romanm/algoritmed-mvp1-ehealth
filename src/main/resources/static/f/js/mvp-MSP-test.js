@@ -9,17 +9,16 @@ function initMSPtest($http, $scope, $filter, $timeout, Blob){
 //		console.log('----initTestVariables---------------');
 		initTestVariables($scope, $http, Blob);
 		init_config_info($scope, $http);
-		if($scope.param.doc_id){
-			$scope.readMsp($scope.param.doc_id);
-		}else{
-			$scope.newMsp();
-		}
 
 		$scope.legal_entities = function () {
 			console.log('----legal_entities-----Реєстрація----------');
 			$scope.config_msp.legal_entities($scope.api__legal_entities);
 		}
 	}
+	if('registry' == $scope.pagePath.last()){
+		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
+	}
+
 }
 
 initTestMvpCalendar = function($scope, $http, $filter, $timeout){
@@ -853,70 +852,44 @@ initTestVariables = function($scope, $http, Blob){
 	$scope.config_all.init('config_employee');
 	
 	$scope.config_msp.registry_field_name_ua = {
-		'api__legal_entities':{
-			'name':'назва ГПМД'
-			,'short_name':'коротка назва'
-			,'public_name':'публічне ім´я'
-			,"type": "тип",
-			"owner_property_type": "тип власності",
-			"legal_form": "легальна форма",
-			"edrpou": "ЄДРПОУ",
-			"email": "еМайл",
-			"kveds": "КВЕДи",
-			"addresses": "Адреси",
-			"phones": "телефони",
-			"owner": "власник",
-			"medical_service_provider": "провайдер медичних послуг",
-			"security": "Інтернет",
-			"security1": "security?",
-			"public_offer": "публічна пропозиція",
+		api__legal_entities:{
+			name:'назва ГПМД'
+			,short_name:'коротка назва'
+			,public_name:'публічне ім´я'
+			,type: "тип",
+			owner_property_type: "тип власності",
+			legal_form: "легальна форма",
+			edrpou: "ЄДРПОУ",
+			email: "еМайл",
+			kveds: "КВЕДи",
+			addresses: "Адреси",
+			phones: "телефони",
+			owner: "власник",
+			medical_service_provider: "провайдер медичних послуг",
+			security: "Інтернет",
+			security1: "security?",
+			public_offer: "публічна пропозиція",
 			children:{
-				"addresses": {
-					"type": "тип",
-					"country": "країна",
-					"area": "обл.",
-					"region": "р-н.",
-					"settlement_type": "тип селеща",
-					"settlement": "назва",
-					"settlement_id": "код",
-					"street_type": "тип вулиці",
-					"street": "вулиця",
-					"building": "дім",
-					"apartment": "кв.",
-					"zip": "поштовий індекс"
+				addresses: {
+					type: "тип",
+					country: "країна",
+					area: "обл.",
+					region: "р-н.",
+					settlement_type: "тип селеща",
+					settlement: "назва",
+					settlement_id: "код",
+					street_type: "тип вулиці",
+					street: "вулиця",
+					building: "дім",
+					apartment: "кв.",
+					zip: "поштовий індекс"
 				},
 			}
 		}
 	}
 	
-	$scope.readMsp = function (msp_id) {
-		console.log(msp_id)
-		$http.get('/r/read_msp/'+msp_id).then( function(response) {
-			$scope.api__legal_entities = response.data.docbody;
-			console.log($scope.api__legal_entities);
-			$scope.mvpAddress.config.date.initDates();
-			$scope.closeMsp();
-		});
-		var url_employee = '/f/config/msp/employee.json';
-		console.log(url_employee);
-		$http.get(url_employee).then( function(response) {
-			$scope.doc_employee = response.data;
-			console.log($scope.doc_employee);
-		});
-		var url_declaration = '/f/config/msp/declaration.json';
-		console.log(url_declaration);
-		$http.get(url_declaration).then( function(response) {
-			$scope.doc_declaration = response.data.data[0];
-			var ad = $scope.doc_declaration.legal_entity.addresses[0];
-			$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
-			console.log($scope.doc_declaration.person.address);
-			$scope.doc_declaration.person.registry={};
-			$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
-			console.log($scope.doc_declaration.person.registry);
-		});
-		read_dictionaries($scope, $http);
-	}
 	$scope.newMsp = function(){
+		console.log(123);
 		//$scope.api__legal_entities = angular.copy($scope.tmp_api__legal_entities);
 		$scope.api__legal_entities = $scope.tmp_api__legal_entities;
 		if(document.getElementById('id01_msp_list'))

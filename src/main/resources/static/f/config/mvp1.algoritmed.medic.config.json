@@ -7,15 +7,16 @@
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/cabinet.html'"
 	,"shortName":"Кабінет"
-	,"fa":"fa-user"
+	,"fa":"fa-users"
 	,"parent":"home"
 	,"menuBar":true
 }
 ,"info":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/info.html'"
+	,"shortName2":"Інф."
 	,"shortName":"Інформація"
-	,"fa":"fa-info"
+	,"fa":"fa-life-ring"
 	,"parent":"home"
 	,"menuBar":true
 }

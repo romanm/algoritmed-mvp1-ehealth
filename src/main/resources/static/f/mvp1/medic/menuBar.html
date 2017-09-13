@@ -1,11 +1,11 @@
 <div class="w3-top no-print">
-	<div class="w3-bar w3-light-gray">
+	<div class="w3-bar w3-light-gray w3-small">
 		<a class="w3-bar-item w3-button"
 			href="{{prevousPath()}}"> <i class="fa fa-arrow-circle-o-right"></i>
 			<i class="fa fa-home" aria-hidden="true"></i>
 		</a>
 		<div ng-init="vParent='home'">
-			<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent && v.menuBar"
+			<a ng-repeat="(k,v) in config" ng-if="v.parent == vParent && v.menuBar && k != 'info'"
 				href="/v/{{k}}" class="w3-bar-item w3-button"
 				ng-class="{'w3-green':menuHomeClicked(k)}">
 				<i ng-if="v.fa" class="fa {{v.fa}}"></i>
@@ -13,7 +13,9 @@
 				<i ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
 			</a> 
 			<span ng-if="!principal.principal"
-				class="w3-bar-item w3-orange w3-dropdown-hover"> Демо <span
+				class="w3-bar-item w3-orange w3-dropdown-hover"> 
+				<i class="fa fa-wrench" aria-hidden="true"></i>
+				Демо <span
 				class="w3-dropdown-content w3-border w3-orange"> <a
 					class="w3-button" href="/v/personal-page"> Аутерізуйтесь </a>
 					<div>Для перехода в робочу версію</div>
@@ -21,7 +23,7 @@
 			</span>
 		</div>
 		<div class="w3-dropdown-click w3-right">
-		<!-- 
+			<!-- 
 		{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}
 		 -->
 			<button class="w3-button w3-hover-red" ng-click="logLog=!logLog">
@@ -48,6 +50,12 @@
 				<div ng-include="'/f/mvp1/medic/loginForm.html'"></div>
 			</div>
 		</div>
+		<a ng-repeat="(k,v) in config" ng-if="k == 'info'" href="/v/{{k}}"
+			class="w3-bar-item w3-button w3-right"
+			ng-class="{'w3-green':menuHomeClicked(k)}"> <i ng-if="v.fa"
+			class="fa {{v.fa}}"></i> {{v.shortName}} <i
+			ng-if="config.hasChild('menuHome', k)" class="fa fa-caret-down"></i>
+		</a>
 		<!-- 
 		<a href="#" class="w3-bar-item w3-button w3-right w3-hover-red">
 			{{principal.principal.name}}

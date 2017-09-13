@@ -9,7 +9,15 @@
 		<div ng-include="'/f/mvp1/lib/enter_to_app_head.html'"></div>
 	</a>
 	<h2>
+		<i class="fa fa-hospital-o" aria-hidden="true"></i>
+
+		{{principal.user_msp[0].msp_name}} <a href="/v/admin-msp"
+			class="w3-green"
+			ng-if="0==principal.user_msp.length && fnPrincipal.hasAdminMSPRole()">
+			Створіть новий лікувальний заклад </a>
+		<!-- 
 		{{config_msp_all.msp_list[config_msp_all.msp_index].msp_public_name}}
+ -->
 		<span class="w3-text-light-gray"> <i
 			ng-click="modalMspList('id02_msp_list')"
 			class="fa fa-list-alt w3-hover-text-yellow" aria-hidden="true"></i>
@@ -41,8 +49,10 @@
 	<div class="w3-row">
 		<div class="w3-half w3-container">
 			<div class="w3-card-2">
-				<header class="w3-container w3-light-grey">Кабінет
-					лікуючого лікаря</header>
+				<header class="w3-container w3-light-grey">
+					<i class="fa fa-wrench w3-orange" aria-hidden="true"></i>
+					Кабінет лікуючого лікаря
+				</header>
 				<ul class="w3-ul">
 					<li ng-repeat="d in config_msp_all.doctor_list"
 						class="w3-hover-gray"><a
@@ -52,7 +62,9 @@
 		</div>
 		<div class="w3-half w3-container">
 			<div class="w3-card-2">
-				<header class="w3-container w3-light-grey">Діагностичні кабінети</header>
+				<header class="w3-container w3-light-grey">
+				<i class="fa fa-wrench w3-orange" aria-hidden="true"></i>
+				Діагностичні кабінети</header>
 				<ul class="w3-ul">
 					<li ng-repeat="d in config_msp_all.diagnostic_cabinet_list"
 						class="w3-hover-gray"><a
@@ -67,7 +79,7 @@
 	<div class="w3-card-2 ">
 		<header class="w3-container w3-light-grey">Адміністрація</header>
 		Робоче місце <b>eHealth Поліклініка</b>
-		<div class="w3-bar w3-light-gray">
+		<div class="w3-bar w3-light-gray w3-small">
 			<div class="w3-bar-item w3-hover-gray">
 				<a href="/v/admin-msp">Адміністратор ЛЗ </a>
 			</div>
@@ -85,12 +97,21 @@
 			class="w3-button w3-display-topright">&times;</span> <a
 			class="w3-btn w3-blue w3-display-bottomright"
 			ng-click="closeModalDialog('id02_msp_list')">Закрити </a>
+			<!-- 
 		<p ng-repeat="msp in config_msp_all.msp_list"
+			 -->
+		<p ng-repeat="msp in principal.user_msp"
 			class=" w3-hover-border-green w3-border w3-border-white">
 			<a href="#"
 				ng-click="config_msp_all.msp_index=$index;closeModalDialog('id02_msp_list');">
 				{{msp.msp_id}} : {{msp.msp_public_name}} : {{msp.msp_name}} </a>
 		</p>
 		<p>&nbsp;</p>
+		<div ng-if="!!principal || principal.user_msp.length">
+			<p>&nbsp;</p>
+			<p>Вибір іншого лікувального закладу, якщо більше одного місця
+				роботи</p>
+			<p>&nbsp;</p>
+		</div>
 	</div>
 </div>

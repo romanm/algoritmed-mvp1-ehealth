@@ -166,6 +166,34 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	}
 
 	//modal dialog open/close END
+
+	$scope.readMsp = function (msp_id) {
+		console.log(msp_id)
+		$http.get('/r/read_msp/'+msp_id).then( function(response) {
+			$scope.api__legal_entities = response.data.docbody;
+			console.log($scope.api__legal_entities);
+			$scope.mvpAddress.config.date.initDates();
+			//$scope.closeMsp();
+		});
+		var url_employee = '/f/config/msp/employee.json';
+		console.log(url_employee);
+		$http.get(url_employee).then( function(response) {
+			$scope.doc_employee = response.data;
+			console.log($scope.doc_employee);
+		});
+		var url_declaration = '/f/config/msp/declaration.json';
+		console.log(url_declaration);
+		$http.get(url_declaration).then( function(response) {
+			$scope.doc_declaration = response.data.data[0];
+			var ad = $scope.doc_declaration.legal_entity.addresses[0];
+			$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
+			console.log($scope.doc_declaration.person.address);
+			$scope.doc_declaration.person.registry={};
+			$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
+			console.log($scope.doc_declaration.person.registry);
+		});
+		read_dictionaries($scope, $http);
+	}
 	
 	read_principal($http, $scope);
 }
@@ -177,14 +205,22 @@ function read_msp_list($http, $scope) {
 	});
 }
 
-function read_principal($http, $scope) {
-	console.log('/r/principal');
-	$http.get('/r/principal').then(function(response) {
-		$scope.principal = response.data;
-		//console.log($scope.principal);
-	});
+function read_principal($http, $scope, fn_o, fn_p) {
+	console.log($scope.principal);
+	if(!$scope.principal){
+		console.log('/r/principal');
+		$http.get('/r/principal').then(function(response) {
+			if(!$scope.principal){
+				$scope.principal = response.data;
+				console.log($scope.principal);
+			}
+			console.log(fn_o);
+			if(fn_o&&fn_p) fn_o[fn_p]();
+		});
+	}else{
+		console.log('/r/principal непотрібно');
+	}
 }
-
 
 var parameters = {};
 if(window.location.search){
