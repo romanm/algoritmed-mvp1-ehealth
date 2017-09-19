@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @PropertySource("classpath:sql.properties")
-public class CommonDbRest {
+public class CommonDbRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(CommonDbRest.class);
 	
 	@PostMapping("/r/update_sql_with_param")
@@ -70,7 +68,5 @@ public class CommonDbRest {
 	}
 
 	@Autowired private Environment env;
-	@Autowired JdbcTemplate db1JdbcTemplate;
-	@Autowired NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 
 }

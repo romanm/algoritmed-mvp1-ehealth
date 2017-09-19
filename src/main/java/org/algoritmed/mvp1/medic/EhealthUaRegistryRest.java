@@ -115,8 +115,21 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		logger.info("\n---76------------\n"
 				+ "/r/saveMsp"
 				+ "\n" + data
+				+ "\n" + userPrincipal
 				);
-		persistRootElement(data, doctype_MSP, sql_msp_insert, sql_msp_update);
+		Map<String, Object> principal = principal(userPrincipal);
+		boolean isAdminMSPRole = hasAdminMSPRole(principal);
+		if(isAdminMSPRole){
+			persistRootElement(data, doctype_MSP, sql_msp_insert, sql_msp_update);
+			boolean update_sql = (boolean) data.get("update_sql");
+			if(!update_sql) {
+				System.err.println(principal);
+				System.err.println("додати головного лікаря");
+				Integer parentId = (Integer) principal.get("user_id");
+				Integer reference = (Integer) data.get("doc_id");
+				insertChildWithReference(parentId, reference);
+			}
+		}
 		return data;
 	}
 

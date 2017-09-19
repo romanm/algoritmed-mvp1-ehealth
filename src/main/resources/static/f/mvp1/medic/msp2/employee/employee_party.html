@@ -37,19 +37,19 @@
 		ng-include="'/f/mvp1/lib/documents_dialog.html'"
 			ng-init="obj=config_info.msp_employee_doc.docbody.party;"></div>
 
-		<div class="w3-row-padding">
+		<div class="w3-row-padding"
+					ng-init="phoneList_o=config_info.msp_employee_doc.docbody.party;phoneList=phoneList_o.phones"
+		>
 			<div class="w3-quarter ">
 				<div class="w3-right">
 					<a title="Додати ще один телефон"
 	class="w3-btn w3-hover-gray"
-	 href="#" ng-click="mvpAddress.config.plusPhone(config_info.msp_employee_doc.docbody.party.phones, 
-	 config_info.msp_employee_doc.docbody.party)">+</a>
+	 href="#" ng-click="mvpAddress.config.plusPhone(phoneList, phoneList_o)">+</a>
 					<b> Телефони </b>
 				</div>
 			</div>
 			<div class="w3-threequarter">
-				<div ng-repeat="phone in config_info.msp_employee_doc.docbody.party.phones track by $index"
-					ng-init="phoneList=config_info.msp_employee_doc.docbody.party.phones"
+				<div ng-repeat="phone in phoneList track by $index"
 					ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
 			</div>
 		</div>

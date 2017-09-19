@@ -69,18 +69,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	
 
 	$scope.fnPrincipal={
-		hasLoginRole:function(r,r_o,r_a){
-			if(!r_a)
-				r_a='role_id';
-			var hasRole = false;
-			angular.forEach(r_o, function(value, index){
-				if(value[r_a]==r){
-					hasRole = true;
-				}
-			});
-			return hasRole;
-		}
-		,db_role:{ }
+		db_role:{ }
 		,dbRoles:null
 		,dbRolesMap:{}
 		,fn_readDbRoles:function(){
@@ -150,6 +139,17 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				});
 				 * */
 			}
+			return hasRole;
+		}
+		,hasLoginRole:function(r,r_o,r_a){
+			if(!r_a)
+				r_a='role_id';
+			var hasRole = false;
+			angular.forEach(r_o, function(value, index){
+				if(value[r_a]==r){
+					hasRole = true;
+				}
+			});
 			return hasRole;
 		}
 	}

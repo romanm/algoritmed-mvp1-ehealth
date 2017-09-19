@@ -34,6 +34,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	$scope.config_msp_all={
 		opened_dialog:'назва відкритого віконця діалогу'
 		,fn_open_dialog:function(dialog_name){
+			console.log(dialog_name);
 			if(this.opened_dialog==dialog_name)
 				this.opened_dialog='закрити';
 			else
@@ -50,25 +51,26 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				msp_data_form:{
 					name:'Данні ЛЗ'
 					,fn_read_msp2:function(){
-						if($scope.principal.user_msp){
-							console.log($scope.principal.user_msp[0].msp_id);
-							$scope.readMsp($scope.principal.user_msp[0].msp_id);
-							console.log($scope.principal.user_msp[0].msp_id);
+						if($scope.fnPrincipal.hasAdminMSPRole()){
+							if($scope.principal.user_msp[0]){
+								console.log($scope.principal.user_msp[0].msp_id);
+								$scope.readMsp($scope.principal.user_msp[0].msp_id);
+								console.log($scope.principal.user_msp[0].msp_id);
+							}else{
+								$scope.newMsp();
+							}
+						}else{
+							console.log($scope.fnPrincipal);
+							console.log($scope.fnPrincipal.hasAdminMSPRole());
+							console.log($scope.principal);
 						}
 					}
 					,fn_read_msp:function(){
 						var thisObj = this;
 						if($scope.param.doc_id){
 							$scope.readMsp($scope.param.doc_id);
-						}else{
-							console.log($scope.principal);
-							if(!$scope.principal){
-								read_principal($http, $scope, thisObj, 'fn_read_msp2');
-							}else if($scope.principal.user_msp[0]){
-								$scope.readMsp($scope.principal.user_msp[0].msp_id);
-							}else{
-								$scope.newMsp();
-							}
+						}else if(!$scope.principal){
+							read_principal($http, $scope, thisObj, 'fn_read_msp2');
 						}
 					}
 				}
@@ -338,7 +340,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		);
 	}else
 	if('admin-msp' == $scope.pagePath.last()){
-		console.log(1234);
+		initTestVariables($scope, $http, Blob);
 		initTestAddress($scope, $http, $filter);
 		$scope.config_msp_all.opened_dialog='msp_data_form';
 		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
@@ -373,6 +375,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('info' == $scope.pagePath.last()){
 		console.log('----------info-------------- ');
 		init_info($scope, $http);
+		initTestAddress($scope, $http, $filter);
 	}else
 	if('testMvpAddress' == $scope.pagePath.last()){
 		initTestAddress($scope, $http, $filter);

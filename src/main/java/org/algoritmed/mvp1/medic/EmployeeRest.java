@@ -49,14 +49,8 @@ public class EmployeeRest extends DbAlgoritmed{
 		String userName = userPrincipal.getName();
 		Map<String, Object> userNameMap = checkUsername(userName);
 		Integer parentId = (Integer) userNameMap.get("user_id");
-		Integer doc_id = nextDbId();
-		data.put("doc_id", doc_id);
-		insertDocElement(data, parentId, doctype_MSP);
-
-		//with reference to msp
 		Integer reference = (Integer) data.get("msp_id");
-		data.put("reference", reference);
-		int update = db1ParamJdbcTemplate.update(sql_doc_update_reference, data);
+		insertChildWithReference(parentId, reference);
 		return data;
 	}
 
@@ -64,11 +58,12 @@ public class EmployeeRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object> saveEmployee(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
-		logger.info("\n---------------\n"
+		logger.info("\n-------61--------\n"
 				+ "/r/saveEmployee"
 				+ "\n" + data
 				+ "\n employee_info = " + data.get("employee_info")
 				);
+//		if(true) return data;
 		// вперше додано для autoSave $scope.doc_employee
 		Integer doc_id = (Integer) data.get("doc_id");
 		data.put("docbody_id", doc_id);
@@ -178,13 +173,10 @@ public class EmployeeRest extends DbAlgoritmed{
 	}
 	
 	
-	private @Value("${sql.doc.update.reference}")	String sql_doc_update_reference;
 	private @Value("${sql.employee.update}")		String sql_employee_update;
 	private @Value("${sql.employee.insert}")		String sql_employee_insert;
 	private @Value("${sql.db1.person.update}")		String sql_person_update;
 	private @Value("${sql.db1.person.insert}")		String sql_person_insert;
 	private @Value("${sql.db1.users.update}")		String sql_users_update;
 	private @Value("${sql.db1.users.insert}")		String sql_users_insert;
-	private @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
-	
 }

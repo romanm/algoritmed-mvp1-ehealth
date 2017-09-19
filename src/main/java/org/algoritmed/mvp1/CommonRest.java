@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class CommonRest {
+public class CommonRest  extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(CommonRest.class);
 	@Autowired	ReadJsonFromFile readJsonFromFile;
 
@@ -63,47 +61,19 @@ public class CommonRest {
 		return ngController;
 	}
 
-
-	private @Value("${sql.msp.list}")				String sql_msp_list;
 	@GetMapping(value = "/r/msp_list")
 	public @ResponseBody Map<String, Object>  msp_list() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<String, Object>> msp_list = db1JdbcTemplate.queryForList(sql_msp_list);
-		map.put("msp_list", msp_list);
+		Map<String, Object> map = super.msp_list();
 		return map;
 	}
 
-	
 	@GetMapping("/r/principal")
 	public @ResponseBody Map<String, Object> principal(Principal principal) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("principal", principal);
-		logger.info(" --------- \n"
-				+ "/v/principal \n" + map);
-		if(null!=principal) {
-			String name = principal.getName();
-			System.err.println("name = "+name);
-			map.put("username", name);
-			Map<String, Object> queryForMap = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
-			map.put("user", queryForMap);
-			Integer user_id = (Integer) queryForMap.get("user_id");
-			map.put("user_id", user_id);
-			List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
-			map.put("user_msp", l);
-			if("admin".equals(name)) {
-				Map<String, Object> msp_list = msp_list();
-				map.put("user_msp", msp_list.get("msp_list"));
-			}
-		}
+		Map<String, Object> map = 
+				super.principal(principal);
 		return map;
 	}
 
-	private @Value("${sql.db1.users.fromUsername}") String sqlDb1UsersFromUsername;
-	private @Value("${sql.db1.user.msp}") String sql_user_msp;
-
-	@Autowired JdbcTemplate db1JdbcTemplate;
-	@Autowired NamedParameterJdbcTemplate db1ParamJdbcTemplate;
-	
 	@GetMapping("/r/testUUID")
 	public @ResponseBody Map<String, Object> testUUI(Principal principal) {
 		Map<String, Object> map = new HashMap<String, Object>();

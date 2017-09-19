@@ -1,30 +1,53 @@
 package org.algoritmed.mvp1;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DbAlgoritmed {
-
+	private static final Logger logger = LoggerFactory.getLogger(DbAlgoritmed.class);
+	protected @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
+	
 	protected int doctype_MSP = 12;
 	protected int doctype_employee = 13;
 	int doctype_declaration = 14;
 
+	protected void insertChildWithReference(Integer parentId, Integer reference) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		Integer doc_id = nextDbId();
+		data.put("doc_id", doc_id);
+		insertDocElement(data, parentId, doctype_MSP);
+		//with reference to msp
+		data.put("reference", reference);
+		int update = db1ParamJdbcTemplate.update(sql_doc_update_reference, data);
+	}
+	private @Value("${sql.doc.update.reference}")	String sql_doc_update_reference;
+	
 	protected void persistRootElement(Map<String, Object> data, int doctype) {
+		System.err.println("--43--------");
 		if(data.containsKey("doc_id")){//update
 			System.err.println("--180----------update--------");
-			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
+			if(!data.containsKey("docbody_id"))
+				data.put("docbody_id", data.get("doc_id"));
+			System.err.println(data);
+//			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
+			updateDocbody(data, data, now());// change for autoSave $scope.doc_employee
 			data.put("update_sql", true);
 		}else{//insert
 			System.err.println("--183----------insert--------");
@@ -35,12 +58,12 @@ public class DbAlgoritmed {
 			insertDocElementWithDocbody(data, doc_id, data);
 		}
 	}
-	
+
 	protected void persistRootElement(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
 		persistRootElement(data, doctype);
 		persistContentElement(data,sql_insert,sql_update);
 	}
-	
+
 	protected void persistContentElement(Map<String, Object> data, String sql_insert, String sql_update) {
 		boolean update_sql = (boolean) data.get("update_sql");
 		if(update_sql){//update
@@ -78,22 +101,27 @@ public class DbAlgoritmed {
 		dbSaveObj.put("numberOfDeletedRows", numberOfDeletedRows);
 	}
 
-	protected @Value("${sql.docbody.update}")		String sql_docbody_update;
-	protected @Value("${sql_doctimestamp_update}")	String sql_doctimestamp_update;
 	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap) {
 		updateDocbody(dbSaveObj, docbodyMap, now());
 	}
 
 	protected void updateDocbody(Map<String, Object> dbSaveObj, Map<String, Object> docbodyMap, Timestamp updated) {
-		dbSaveObj.put("updated", updated);
-		docbodyMap.remove("docbody");
+		System.err.println(docbodyMap);
 		String docbody = objectToString(docbodyMap);
 		System.err.println("------56--------");
 		System.err.println(docbody);
-		dbSaveObj.put("docbody", docbody);
-		int update = db1ParamJdbcTemplate.update(sql_docbody_update, dbSaveObj);
-		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_update, dbSaveObj);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("docbody", docbody);
+		map.put("docbody_id", docbodyMap.get("docbody_id"));
+		map.put("doc_id", docbodyMap.get("docbody_id"));
+		map.put("updated", updated);
+		System.err.println(map);
+//		if(true) return;
+		int update = db1ParamJdbcTemplate.update(sql_docbody_update, map);
+		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_update, map);
 	}
+	protected @Value("${sql.docbody.update}")		String sql_docbody_update;
+	protected @Value("${sql_doctimestamp_update}")	String sql_doctimestamp_update;
 
 	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId
 			, Map<String, Object> docbodyMap) {
@@ -189,5 +217,50 @@ public class DbAlgoritmed {
 
 	protected @Autowired JdbcTemplate db1JdbcTemplate;
 	protected @Autowired NamedParameterJdbcTemplate db1ParamJdbcTemplate;
+
+	String adminMSPRoles = "ROLE_HEAD_MSP;ROLE_ADMIN_MSP;ROLE_ADMIN_APP";
+	protected boolean hasAdminMSPRole(Map<String, Object> principal) {
+		UsernamePasswordAuthenticationToken upat = (UsernamePasswordAuthenticationToken) principal.get("principal");
+		for (GrantedAuthority grantedAuthority : upat.getAuthorities()) 
+			if(adminMSPRoles.indexOf(grantedAuthority.getAuthority())>=0)
+				return true;
+		return false;
+	}
+	
+	public Map<String, Object> principal(Principal principal) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("principal", principal);
+		logger.info(" --------- \n"
+				+ "/v/principal \n" + map);
+		if(null!=principal) {
+			String name = principal.getName();
+			System.err.println("name = "+name);
+			map.put("username", name);
+			Map<String, Object> queryForMap = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
+			map.put("user", queryForMap);
+			Integer user_id = (Integer) queryForMap.get("user_id");
+			map.put("user_id", user_id);
+			List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
+			map.put("user_msp", l);
+			if("admin".equals(name)) {
+				Map<String, Object> msp_list = msp_list();
+				map.put("user_msp", msp_list.get("msp_list"));
+			}
+		}
+		return map;
+	}
+
+	private @Value("${sql.db1.users.fromUsername}") String sqlDb1UsersFromUsername;
+	private @Value("${sql.db1.user.msp}") String sql_user_msp;
+	private @Value("${sql.msp.list}")				String sql_msp_list;
+	
+	public Map<String, Object> msp_list() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> msp_list = db1JdbcTemplate.queryForList(sql_msp_list);
+		map.put("msp_list", msp_list);
+		return map;
+	}
+
+	
 
 }

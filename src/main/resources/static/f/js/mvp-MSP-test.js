@@ -18,7 +18,6 @@ function initMSPtest($http, $scope, $filter, $timeout, Blob){
 	if('registry' == $scope.pagePath.last()){
 		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 	}
-
 }
 
 initTestMvpCalendar = function($scope, $http, $filter, $timeout){
@@ -71,6 +70,7 @@ initTestMvpCalendar = function($scope, $http, $filter, $timeout){
 	$scope.basicCalendar.init();
 	console.log($scope.basicCalendar);
 }
+
 initTestAddress = function($scope, $http, $filter){
 	console.log('-----initTestAddress------------');
 	$scope.mvpAddress = {};
@@ -119,6 +119,12 @@ initTestAddress = function($scope, $http, $filter){
 				});
 			}
 			,initDate:function(o,p,thisObj){
+//				console.log(p);
+				if(!o[p]){
+					var d = new Date();
+					var n = d.toISOString();
+					o[p] = n;
+				}
 				var dateObj = o[p];
 				console.log(dateObj);
 				dateObj = dateObj.split('T')[0];
@@ -257,10 +263,11 @@ initTestAddress = function($scope, $http, $filter){
 				angular.forEach(vNew, function(v, k){
 					console.log(k+'='+v);
 				});
+				Жильбер Огюстан Николя
 				 * */
 			}
 		}
-		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated']
+		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated', 'update_sql']
 		,isNotEditField:function(k){ return !(this.fields_not_edit.indexOf(k)>=0); }
 		,upListElement:function(v, $index){
 			var s_o = v.splice($index,1)[0];
@@ -507,20 +514,23 @@ init_config_info = function($scope, $http){
 			this.read_o(url, read_o_name);
 		}
 		,afterRead_msp_employee_doc:function(){//msp_employee
+			console.log(this.msp_employee_doc);
 			var party = this.msp_employee_doc.docbody.party;
 			party.last_name = party.family_name;
 			$scope.doc_employee = this.msp_employee_doc;
 //			console.log($scope.doc_employee);
 //			$scope.doc_employee.data = this.msp_employee_doc.docbody;
 //			party.last_name = this.msp_employee_selected.family_name;
-			angular.forEach($scope.config_employee.keys_dates, function(v){
-				if(!$scope.doc_employee.docbody[v]){
-					console.log(v);
-					var sd = new Date();
-					$scope.doc_employee.docbody[v]=sd.getTime() ;
-					$scope.mvpAddress.config.date.setDateParam(sd,$scope.doc_employee.docbody, v);
-				}
-			});
+//			console.log($scope.doc_employee);
+			if($scope.doc_employee['keys_dates'])
+				angular.forEach($scope.config_employee.keys_dates, function(v){
+					if(!$scope.doc_employee.docbody[v]){
+						console.log(v);
+						var sd = new Date();
+						$scope.doc_employee.docbody[v]=sd.getTime() ;
+						$scope.mvpAddress.config.date.setDateParam(sd,$scope.doc_employee.docbody, v);
+					}
+				});
 //			console.log($scope.doc_employee.docbody);
 		}
 		,read_o:function(url, read_o_name){
@@ -528,11 +538,12 @@ init_config_info = function($scope, $http){
 			console.log(url+' / '+read_o_name);
 			$http.get(url).then(function(response){
 				thisObj[read_o_name] = response.data;
-				console.log(thisObj);
-				console.log(read_o_name);
-				console.log(thisObj[read_o_name]);
+//				console.log(thisObj);
+//				console.log(read_o_name);
+//				console.log(thisObj[read_o_name]);
 //				console.log('afterRead_'+read_o_name);
-				thisObj['afterRead_'+read_o_name]();
+				if(thisObj['afterRead_'+read_o_name])
+					thisObj['afterRead_'+read_o_name]();
 //				console.log(read_o_name);
 			});
 			$scope.fnPrincipal.fn_readDbRoles();
@@ -592,6 +603,7 @@ initTestVariables = function($scope, $http, Blob){
 			}
 		}
 		, getFieldName:function(k, kp1){
+//			console.log(k)
 			var translateObject = $scope.config_msp.registry_field_name_ua.api__legal_entities;
 			if(kp1)
 				translateObject = translateObject.children[kp1];
@@ -889,12 +901,15 @@ initTestVariables = function($scope, $http, Blob){
 	}
 	
 	$scope.newMsp = function(){
-		console.log(123);
-		//$scope.api__legal_entities = angular.copy($scope.tmp_api__legal_entities);
 		$scope.api__legal_entities = $scope.tmp_api__legal_entities;
+		console.log(123);
+		/*
+		//$scope.api__legal_entities = angular.copy($scope.tmp_api__legal_entities);
 		if(document.getElementById('id01_msp_list'))
 			$scope.closeMsp();
+		 * */
 	}
+
 	$scope.tmp4_api__legal_entities = 
 	{
 			  "name": "Хмельницький міський центр первинної медико-санітарної допомоги Nr.3",
@@ -981,27 +996,23 @@ initTestVariables = function($scope, $http, Blob){
 			  }
 			}
 	$scope.tmp_api__legal_entities = 
-	{ "name":"КНП „Хмельницький міський центр первинної медико-санітарної допомоги Nr.3”"
-		, "short_name":"КНП „Хмельницький міський ЦПМСД Nr.3”"
-		, "public_name":"КНП „Хмельницький міський центр первинної медико-санітарної допомоги Nr.3”"
-		, "type":"MSP", "owner_property_type":"PRIVATE", "legal_form":"150"
-		, "edrpou":"1560503515"
-		, "email":"algoritmed.info@gmail.com", "kveds":[ "86.10" ]
-		, "addresses":[ { "type":"REGISTRATION", "country":"UA", "area":"ХМЕЛЬНИЦЬКА", "region":"ХМЕЛЬНИЦЬКА"
-		, "settlement":"Хмельницький", "settlement_type":"CITY", "settlement_id":"cf312385-7788-4dde-ba22-f549462c17a0"
-		, "street_type":"STREET", "street":"Гагаріна", "building":"13" }, { "type":"RESIDENCE", "country":"UA"
-		, "area":"ХМЕЛЬНИЦЬКА", "region":"ХМЕЛЬНИЦЬКА", "settlement":"Хмельницький", "settlement_type":"CITY"
-		, "settlement_id":"cf312385-7788-4dde-ba22-f549462c17a0", "street_type":"STREET", "street":"Гагаріна", "building":"34" } ]
-		, "phones":[ { "type":"LAND_LINE", "number":"+380976428677" } ]
-		, "owner":{ "first_name":"Федір", "last_name":"Міщенко", "second_name":"Пилипович", "tax_id":"1111111111"
-		, "birth_date":"1942-09-21", "birth_place":"birth_place", "gender":"MALE", "email":"algoritmed.info@gmail.com", "position":"P3"
-		, "documents":[ { "type":"PASSPORT", "number":"111" } ], "phones":[ { "type":"LAND_LINE", "number":"+380976428677" } ] }
-		, "medical_service_provider":{ "licenses":[ { "license_number":"Lic", "issued_by":"issued_by", "issued_date":"2014-01-01"
-		, "expiry_date":"2020-01-01", "active_from_date":"2020-01-01", "what_licensed":"what_licensed" }
-		, { "license_number":"Lic2", "issued_by":"issued_by2", "issued_date":"2014-01-02", "expiry_date":"2020-01-02"
-		, "active_from_date":"2020-01-02", "what_licensed":"what_licensed2" } ]
-		, "accreditation":{ "category":"FIRST", "issued_date":"2014-01-03", "expiry_date":"2020-01-03", "order_no":"1235we", "order_date":"2020-01-03" } }
-		, "security":{ "redirect_uri":"https://google.com.ua" }, "public_offer":{ "consent":true, "consent_text":"consent_text" } 
+	{ name:"" , short_name:"" , public_name:""
+		, type:"", owner_property_type:"", legal_form:""
+		, email:""
+		, edrpou:""
+		, kveds:[]
+		, addresses:[ { type:"", country:"", area:"", region:"", settlement:"", settlement_type:"", settlement_id:""
+		, street_type:"", street:"", building:"" } ]
+		, phones:[ { type:"", number:"" } ]
+		, owner:{ first_name:"", last_name:"", second_name:"", tax_id:""
+		, birth_date:null, birth_place:"", gender:"", email:"", position:""
+		, documents:[ { type:"", number:"" } ], phones:[ { type:"", number:"" } ] }
+		, medical_service_provider:{ licenses:[ { license_number:"", issued_by:"", issued_date:""
+		, expiry_date:"", active_from_date:"", what_licensed:"" }
+		, {license_number:"", issued_by:"", issued_date:"", expiry_date:""
+		, active_from_date:"", what_licensed:"" } ]
+		, accreditation:{ category:"", issued_date:"", expiry_date:"", order_no:"", order_date:"" } }
+		, security:{ redirect_uri:"" }, public_offer:{ consent:true, consent_text:"" } 
 	}
 	$scope.tmp2_api__legal_entities = {
 		"name": "Hello World! - Клініка Адоніс",
