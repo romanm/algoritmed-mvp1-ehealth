@@ -299,28 +299,20 @@ initTestAddress = function($scope, $http, $filter){
 		}
 		,upPhone:function(v, $index){
 			this.upListElement(v, $index);
-			$scope.config_msp.autoSave.fn_change_count();
 		}
-		,minusPhone:function(v, index){
-			v.splice(index,1);
-			$scope.config_msp.autoSave.fn_change_count();
+		,minusPhone:function(v, $index){
+			v.splice($index,1);
+		}
+		,plusPhone:function(k,o){
+			if(!o[k]) o[k]=[];
+			var np = JSON.parse(JSON.stringify(this.phone_template));
+			o[k].push(np)
 		}
 		,template_specialities:{}
 		,template_qualifications:{}
 		,template_educations:{}
 		,template_documents:{type:null, number:null}
 		,phone_template:{type:"MOBILE", number:""}
-		,plusPhone:function(v,o){
-//			var np = JSON.parse(JSON.stringify(v[0]));
-			var np = JSON.parse(JSON.stringify(this.phone_template));
-			console.log(np);
-			if(!v){
-				o.phones=[];
-				v=o.phones;
-			}
-			v.push(np)
-			$scope.config_msp.autoSave.fn_change_count();
-		}
 		,phone_types:['LAND_LINE', 'MOBILE']
 		,document_types:['PASSPORT']
 		,street_types:['STREET']
@@ -515,7 +507,8 @@ init_config_info = function($scope, $http){
 		}
 		,afterRead_msp_employee_doc:function(){//msp_employee
 			console.log(this.msp_employee_doc);
-			var party = this.msp_employee_doc.docbody.party;
+			//var party = this.msp_employee_doc.docbody.party;
+			var party = this.msp_employee_doc.party;
 			party.last_name = party.family_name;
 			$scope.doc_employee = this.msp_employee_doc;
 //			console.log($scope.doc_employee);
@@ -537,7 +530,10 @@ init_config_info = function($scope, $http){
 			var thisObj = this;
 			console.log(url+' / '+read_o_name);
 			$http.get(url).then(function(response){
-				thisObj[read_o_name] = response.data;
+				if(response.data.docbody)
+					thisObj[read_o_name] = response.data.docbody;
+				else
+					thisObj[read_o_name] = response.data;
 //				console.log(thisObj);
 //				console.log(read_o_name);
 //				console.log(thisObj[read_o_name]);
@@ -636,7 +632,7 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		,autoSave:{
 			fn_httpSave:function(){
-				console.log('--config_msp.autoSave.fn_httpSave--------------');
+				console.log('--autoSave.fn_httpSave--------------');
 				$http.post('/r/saveMsp', $scope.api__legal_entities).then(function(response) {
 					console.log(response.data);
 					if(!$scope.api__legal_entities.doc_id){
@@ -850,9 +846,10 @@ initTestVariables = function($scope, $http, Blob){
 				console.log('--config_employee.autoSave.fn_httpSave--------------');
 				// employee_info - для "картотеки лікарів"
 //				var docbodyData = $scope.doc_employee.data; 
-				var docbodyData = $scope.doc_employee.docbody; 
+				//var docbodyData = $scope.doc_employee.docbody; 
+				var docbodyData = $scope.doc_employee; 
 				add_employee_info(docbodyData.party, $scope.doc_employee);
-				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response) {
+				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response){
 					console.log(response.data);
 					if(!$scope.doc_employee.doc_id){
 						$scope.doc_employee.doc_id = response.data.doc_id

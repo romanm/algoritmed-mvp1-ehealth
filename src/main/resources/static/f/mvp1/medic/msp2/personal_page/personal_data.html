@@ -1,9 +1,11 @@
 <a href="#" class="w3-btn w3-border"
-	ng-if="!config_info.msp_employee_doc.docbody"
+	ng-if="!config_info.msp_employee_doc.party"
 	ng-click="config_msp_all.personal_page.dialogs.personal_data.open_dialog()">
 	Зчитата персональні дані </a>
 <!-- 
+	ng-if="!config_info.msp_employee_doc.docbody"
 <div ng-init="doc_employee_data=doc_employee.data;"
--->
 <div ng-if="config_info.msp_employee_doc.docbody"
+-->
+<div ng-if="config_info.msp_employee_doc.party"
 	ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"></div>

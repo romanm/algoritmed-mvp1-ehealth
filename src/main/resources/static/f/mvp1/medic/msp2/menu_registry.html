@@ -4,7 +4,7 @@ ng-if="config_msp.menu_registry.step=='data'"
 	<div class="w3-bar-item">
 		<b> Введення даних: </b> {{api__legal_entities.short_name}} <span class="w3-tiny">
 			автозбереження:
-			{{config_msp.autoSave.save_count}}/{{config_msp.autoSave.change_count}}</span>
+			{{autoSave.save_count}}/{{autoSave.change_count}}</span>
 	</div>
 	<div class="w3-bar-item w3-right w3-light-gray  w3-hover-gray"
 		ng-click="config_msp.menu_registry.step='digitalsign';config_msp.menu_registry.name='data'">

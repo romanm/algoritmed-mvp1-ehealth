@@ -68,8 +68,9 @@ public class EmployeeRest extends DbAlgoritmed{
 		Integer doc_id = (Integer) data.get("doc_id");
 		data.put("docbody_id", doc_id);
 		data.put("employee_id", doc_id);
-		Map docbody = (Map) data.get("docbody");
-		Map party = (Map) docbody.get("party");
+//		Map docbody = (Map) data.get("docbody");
+//		Map party = (Map) docbody.get("party");
+		Map party = (Map) data.get("party");
 		persistRootElement(data, doctype_employee, sql_employee_insert, sql_employee_update);
 		System.err.println(party);
 		party.put("person_id", doc_id);

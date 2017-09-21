@@ -180,7 +180,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			,fn_opened_card_name:function(){
 				if(!$scope.config_info.msp_employee_doc)
 					return;
-				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
+//				var name = $scope.config_info.msp_employee_doc.docbody.party.last_name;
+				var name = $scope.config_info.msp_employee_doc.party.last_name;
 				return name;
 			}
 			,choose_user_msp:function(user_msp, modalDialogData){

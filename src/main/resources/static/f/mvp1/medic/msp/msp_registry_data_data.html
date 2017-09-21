@@ -2,7 +2,7 @@
 	<div class="w3-bar-item">
 		<b> Назва: </b> {{api__legal_entities.short_name}} <span class="w3-tiny">
 			автозбереження:
-			{{config_msp.autoSave.save_count}}/{{config_msp.autoSave.change_count}}</span>
+			{{autoSave.save_count}}/{{autoSave.change_count}}</span>
 	</div>
 	<div class="w3-bar-item w3-right w3-light-gray  w3-hover-gray"
 		ng-click="config_msp.menu_registry.step='digitalsign';config_msp.menu_registry.name='data'">
@@ -20,7 +20,7 @@
 				{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
 				{{config_msp.getFieldName(k)}} </span> : 
 			<input
-				ng-change="config_msp.autoSave.fn_change_count()"
+				ng-change="autoSave.fn_change_count()"
 				class="w3-input w3-border" ng-model="api__legal_entities[k]"
 				ng-if="!v.isObject() && !v.isArray()">
 			<ul class="w3-ul" ng-if="config_msp.openedGroup.contains(k)">
@@ -30,7 +30,7 @@
 						<li ng-repeat="(k2,v2) in v1">
 							{{config_msp.getFieldName(k2, k)}}:
 							<input
-								ng-change="config_msp.autoSave.fn_change_count()"
+								ng-change="autoSave.fn_change_count()"
 								class="w3-input w3-border" ng-model="v1[k2]"
 								ng-if="!v2.isObject() && !v2.isArray()">
 						</li>

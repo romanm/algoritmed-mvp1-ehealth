@@ -7,17 +7,17 @@
 		<input 
 		ng-change="autoSave.fn_change_count()"
 			placeholder="Прізвище" class="w3-border"
-			ng-model="config_info.msp_employee_doc.docbody.party.last_name"> 
+			ng-model="config_info.msp_employee_doc.party.last_name"> 
 		<input
 			ng-change="autoSave.fn_change_count()" placeholder="Ім'я"
-			class="w3-border" ng-model="config_info.msp_employee_doc.docbody.party.first_name">
+			class="w3-border" ng-model="config_info.msp_employee_doc.party.first_name">
 		<input ng-change="autoSave.fn_change_count()"
 			placeholder="По батькові" class="w3-border"
-			ng-model="config_info.msp_employee_doc.docbody.party.second_name">
+			ng-model="config_info.msp_employee_doc.party.second_name">
 		Стать
 		<select 
 		ng-change="autoSave.fn_change_count()"
-		ng-model="config_info.msp_employee_doc.docbody.party.gender">
+		ng-model="config_info.msp_employee_doc.party.gender">
 			<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('GENDER').values"
 				value="{{k}}">{{v}}</option>
 		</select>
@@ -25,38 +25,22 @@
 			Ідентифікаційний номер
 			<input ng-change="autoSave.fn_change_count()"
 				placeholder="Ідентифікаційний номер" class="w3-border"
-				ng-model="config_info.msp_employee_doc.docbody.party.tax_id">
+				ng-model="config_info.msp_employee_doc.party.tax_id">
 		</div>
 		<div>
 			Емайл 
 			<input ng-change="autoSave.fn_change_count()"
 				placeholder="Емайл" class="w3-border"
-				ng-model="config_info.msp_employee_doc.docbody.party.email">
+				ng-model="config_info.msp_employee_doc.party.email">
 		</div>
-		<div 
-		ng-include="'/f/mvp1/lib/documents_dialog.html'"
-			ng-init="obj=config_info.msp_employee_doc.docbody.party;"></div>
+		<div ng-include="'/f/mvp1/lib/documents_dialog.html'"
+			ng-init="obj=config_info.msp_employee_doc.party;"></div>
 
 		<div class="w3-row-padding"
-					ng-init="phoneList_o=config_info.msp_employee_doc.docbody.party;phoneList=phoneList_o.phones"
-		>
-			<div class="w3-quarter ">
-				<div class="w3-right">
-					<a title="Додати ще один телефон"
-	class="w3-btn w3-hover-gray"
-	 href="#" ng-click="mvpAddress.config.plusPhone(phoneList, phoneList_o)">+</a>
-					<b> Телефони </b>
-				</div>
-			</div>
-			<div class="w3-threequarter">
-				<div ng-repeat="phone in phoneList track by $index"
-					ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
-			</div>
-		</div>
-		
-<div ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor.html'"
-	ng-init="doctor=config_info.msp_employee_doc.docbody.doctor"
-></div>
+			ng-init="phoneList_o=config_info.msp_employee_doc.party;phoneList_k='phones'"
+			ng-include="'/f/mvp1/lib/phone_dialog_row.html'"></div>
+
+		<div ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor.html'"
+			ng-init="doctor=config_info.msp_employee_doc.doctor"></div>
 	</div>
 </div>
-

@@ -1,31 +1,27 @@
-<div class="w3-row-padding" ng-repeat="(k,v) in api__legal_entities"
-ng-init="isNotObjectNotArray=(!v.isObject() && !v.isArray());"
-	ng-if="mvpAddress.config.isNotEditField(k)"
+<div
+ ng-init="autoSave=config_msp.autoSave;outers={phones:{file:'/f/mvp1/lib/phone_dialog_row.html'},x:{}}"
 >
-	<div class="w3-quarter ">
-		<div class="w3-right-align">
-		<!-- 
-		{{k}}
-		<div class="w3-right">
-		 -->
-		<b>
-		<!-- 
-			<a ng-if="v.isArray()" href="#" ng-click="config_msp.openGroup(k)">
-				{{config_msp.getFieldName(k)}} </a> <span ng-if="!v.isArray()">
-				{{config_msp.getFieldName(k)}} </span>
-		 -->
-				{{config_msp.getFieldName(k)}} 
-		</b>
+	<div class="w3-row-padding" ng-repeat="(k,v) in api__legal_entities"
+		ng-init="isNotObjectNotArray=(!v.isObject() && !v.isArray());"
+		ng-if="mvpAddress.config.isNotEditField(k)">
+
+		<div ng-if="outers[k] && k=='phones'"
+			ng-init="phoneList_o=api__legal_entities;phoneList_k='phones'"
+			ng-include="outers[k].file"></div>
+
+		<div ng-if="!outers[k]">
+			<div class="w3-quarter ">
+				<div class="w3-right-align">
+					<b> {{config_msp.getFieldName(k)}} </b>
+				</div>
+			</div>
+			<div class="w3-threequarter">
+				<input ng-change="autoSave.fn_change_count()"
+					class="w3-input w3-border" ng-model="api__legal_entities[k]"
+					ng-if="isNotObjectNotArray">
+				<div ng-if="!isNotObjectNotArray"
+					ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_'+k+'.html'"></div>
+			</div>
 		</div>
 	</div>
-	<div class="w3-threequarter">
-		<input ng-change="config_msp.autoSave.fn_change_count()" 
-			class="w3-input w3-border" ng-model="api__legal_entities[k]" 
-			ng-if="isNotObjectNotArray" 
-			>
-		<div 
-			ng-if="!isNotObjectNotArray" 
-		ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_'+k+'.html'"></div>
-	</div>
 </div>
-

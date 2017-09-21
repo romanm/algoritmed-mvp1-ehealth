@@ -1,14 +1,11 @@
-
-<b class="w3-large">
-Пацієнт:
-</b>
-<input ng-change="config_msp.autoSave.fn_change_count()"
+<b class="w3-large"> Пацієнт: </b>
+<input ng-change="autoSave.fn_change_count()"
 	placeholder="Прізвище" class="w3-border"
 	ng-model="doc_declaration.person.last_name"> 
 <input
-	ng-change="config_msp.autoSave.fn_change_count()" placeholder="Ім'я"
+	ng-change="autoSave.fn_change_count()" placeholder="Ім'я"
 	class="w3-border" ng-model="doc_declaration.person.first_name">
-<input ng-change="config_msp.autoSave.fn_change_count()"
+<input ng-change="autoSave.fn_change_count()"
 	placeholder="По батькові" class="w3-border"
 	ng-model="doc_declaration.person.second_name">
 <div>
@@ -19,13 +16,13 @@
 <b>
 Місце народження:
 </b>
-<input ng-change="config_msp.autoSave.fn_change_count()"
+<input ng-change="autoSave.fn_change_count()"
 	placeholder="Місце народження" class="w3-border"
 	ng-model="doc_declaration.person.birth_settlement">
 </div>
 <div>
 Ідентифікаційний номер <input
-	ng-change="config_msp.autoSave.fn_change_count()"
+	ng-change="autoSave.fn_change_count()"
 	placeholder="Ідентифікаційний номер" class="w3-border"
 	ng-model="doc_employee.data.party.tax_id">
 </div>
@@ -42,10 +39,10 @@
 			ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
 	</div>
 </div>
-	<div class="w3-right-align w3-small">
-		<b> У випадку наявності дубляжа даних пацієнта, поєднати з </b>
-		<span title="merged_ids">
-		{{doc_declaration.person.merged_ids}}
-		</span>
-	</div>
-	
+
+<div class="w3-right-align w3-small">
+	<b> У випадку наявності дубляжа даних пацієнта, поєднати з </b>
+	<span title="merged_ids">
+	{{doc_declaration.person.merged_ids}}
+	</span>
+</div>

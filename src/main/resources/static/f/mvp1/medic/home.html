@@ -9,17 +9,13 @@
 		<div ng-include="'/f/mvp1/lib/enter_to_app_head.html'"></div>
 	</a>
 	<h2>
-		<i class="fa fa-hospital-o" aria-hidden="true"></i>
-
-		{{principal.user_msp[0].msp_name}} <a href="/v/admin-msp"
-			class="w3-green"
+		<i class="fa fa-hospital-o" aria-hidden="true"></i> 
+		<i class="w3-text-light-gray" ng-if="!principal.principal">Назва лікувального
+			закладу де ви працюєте</i> {{principal.user_msp[0].msp_name}} 
+		<a href="/v/admin-msp" class="w3-green"
 			ng-if="0==principal.user_msp.length && fnPrincipal.hasAdminMSPRole()">
-			Створіть новий лікувальний заклад </a>
-		<!-- 
-		{{config_msp_all.msp_list[config_msp_all.msp_index].msp_public_name}}
- -->
-		<span class="w3-text-light-gray"> <i
-			ng-click="modalMspList('id02_msp_list')"
+			Створіть новий лікувальний заклад </a> 
+			<i ng-click="modalMspList('id02_msp_list')"
 			class="fa fa-list-alt w3-hover-text-yellow" aria-hidden="true"></i>
 		</span>
 	</h2>
@@ -78,6 +74,7 @@
 	</div>
 	<div class="w3-card-2 ">
 		<header class="w3-container w3-light-grey">Адміністрація</header>
+		<i class="fa fa-wrench w3-orange" aria-hidden="true"></i>
 		Робоче місце <b>eHealth Поліклініка</b>
 		<div class="w3-bar w3-light-gray w3-small">
 			<div class="w3-bar-item w3-hover-gray">

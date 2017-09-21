@@ -1,24 +1,20 @@
 
-<select ng-model="phone.type">
+<select ng-model="phone.type" ng-change="autoSave.fn_change_count()">
 	<option ng-repeat="(k,v) in mvpAddress.config.selectDictionary('PHONE_TYPE').values"
 		value="{{k}}">{{v}}</option>
 </select>
-<!-- 
-<input ng-change="config_msp.autoSave.fn_change_count()"
- -->
+
 <input ng-change="autoSave.fn_change_count()"
 class="w3-border"
 	ng-model="phone.number">
-	<a
-	title="Видалити телефон"
-	class="w3-btn w3-hover-gray"
-	 ng-if="!$first" href="#" ng-click="mvpAddress.config.minusPhone(phoneList, $index)">-</a>
-	<a 
-	class="w3-btn w3-hover-gray"
-	title="Додати ще один телефон"
-	ng-if="$last" href="#" ng-click="mvpAddress.config.plusPhone(phoneList)">+</a>
-	<a 
-	class="w3-btn w3-hover-gray"
-	title="Поставити телефон першим"
-	ng-if="!$first" href="#" ng-click="mvpAddress.config.upPhone(phoneList, $index)">^</a>
+
+	<a title="Видалити телефон" href="#" class="w3-btn w3-hover-gray"
+	 ng-if="!$first" ng-click="mvpAddress.config.minusPhone(phoneList_o[phoneList_k], $index);autoSave.fn_change_count()">-</a>
+	 
+	<a title="Додати ще один телефон" href="#" class="w3-btn w3-hover-gray"
+	ng-if="$last" ng-click="mvpAddress.config.plusPhone(phoneList_k, phoneList_o);autoSave.fn_change_count()">+</a>
+	
+	<a title="Поставити телефон першим" href="#" class="w3-btn w3-hover-gray"
+	ng-if="!$first" ng-click="mvpAddress.config.upPhone(phoneList_o[phoneList_k], $index);autoSave.fn_change_count()">^</a>
+	
 	<!-- {{phone}} -->
