@@ -24,10 +24,11 @@ public class EhealthUaRegistryWebClient {
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryWebClient.class);
 
 //	String prefix_uri = "/api";
-	String prefix_uri = "";
+//	String prefix_uri = "";
 
 	public Map apiGet(Map<String, Object> data) {
-		String path_uri = prefix_uri+data.get("add_uri");
+//		String path_uri = prefix_uri+data.get("add_uri");
+		String path_uri = (String) data.get("add_uri");
 		if(data.containsKey("queryString"))
 			path_uri += "?"+data.get("queryString");
 		System.err.println(path_uri);

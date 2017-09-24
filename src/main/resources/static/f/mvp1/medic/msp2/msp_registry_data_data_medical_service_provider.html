@@ -35,14 +35,32 @@
 		</div>
 		<div class="w3-threequarter">
 			<div class="w3-hover-gray"
-				ng-click="mvpAddress.config.edit.openLicense($index)">
-				<b> № </b> <span ng-if="!license.license_number">
-					_____________ </span><u>{{license.license_number}}</u>, <b
-					class="w3-small">Орган що видав:</b> <span
-					ng-if="!license.issued_by"> _____________ </span><u>{{license.issued_by}}</u>,
-				<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
-					ng-init="d=mvpAddress.config.edit.date_types[kda]"> {{d.p}}
-					{{license[kda] | date : 'shortDate'}} </span>
+				ng-class="{'w3-rightbar w3-topbar w3-border-green':mvpAddress.config.edit.license==$index}"
+			>
+				<span class="w3-btn w3-border w3-red"
+				ng-if="mvpAddress.config['index_to_delete_licenses']==$index"
+							ng-click="mvpAddress.config.minusListElement(v.licenses, $index, 'licenses');autoSave.fn_change_count();"
+						 title="Справді Видалити запис">-</span>
+				<span class="w3-tooltip" 
+					ng-click="mvpAddress.config.edit.openLicense($index)"
+				>
+					<span class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+						<span class="w3-btn"
+						ng-if="!($first && $last)"
+							ng-click="mvpAddress.config.toMinusListElement('licenses', $index);"
+						 title="Видалити запис">-</span>
+						<span class="w3-btn" ng-if="!$first" 
+							ng-click="mvpAddress.config.upListElement(v.licenses, $index);autoSave.fn_change_count();"
+						 title="Перенести запис на перше місце">^</span>
+					</span>
+					<b> № </b> <span ng-if="!license.license_number">
+						_____________ </span><u>{{license.license_number}}</u>, <b
+						class="w3-small">Орган що видав:</b> <span
+						ng-if="!license.issued_by"> _____________ </span><u>{{license.issued_by}}</u>,
+					<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
+						ng-init="d=mvpAddress.config.edit.date_types[kda]"> {{d.p}}
+						{{license[kda] | date : 'shortDate'}} </span>
+				</span>
 			</div>
 			<div class="w3-border w3-border-green w3-card-4 w3-display-container"
 				ng-if="mvpAddress.config.edit.license==$index">
@@ -58,7 +76,6 @@
 				<div>
 					<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
 						ng-init="d=mvpAddress.config.edit.date_types[kda]">
-						
 						<span ng-init="d2e_param=kda;d2e_obj=license;prefix=d.p" ng-include="'/f/mvp1/lib/d2e_dialog.html'">
 						</span>{{$last?'':','}}
 					</span>
