@@ -897,13 +897,8 @@ initTestVariables = function($scope, $http, Blob){
 	}
 	
 	$scope.newMsp = function(){
+		console.log('$scope.newMsp');
 		$scope.api__legal_entities = $scope.tmp_api__legal_entities;
-		console.log(123);
-		/*
-		//$scope.api__legal_entities = angular.copy($scope.tmp_api__legal_entities);
-		if(document.getElementById('id01_msp_list'))
-			$scope.closeMsp();
-		 * */
 	}
 
 	$scope.tmp4_api__legal_entities = 
@@ -992,23 +987,24 @@ initTestVariables = function($scope, $http, Blob){
 			  }
 			}
 	$scope.tmp_api__legal_entities = 
-	{ name:"" , short_name:"" , public_name:""
-		, type:"", owner_property_type:"", legal_form:""
-		, email:""
-		, edrpou:""
+	{ name:'' , short_name:'' , public_name:''
+		, type:'', owner_property_type:'', legal_form:''
+		, email:''
+		, edrpou:''
 		, kveds:[]
-		, addresses:[ { type:"", country:"", area:"", region:"", settlement:"", settlement_type:"", settlement_id:""
-		, street_type:"", street:"", building:"" } ]
-		, phones:[ { type:"", number:"" } ]
-		, owner:{ first_name:"", last_name:"", second_name:"", tax_id:""
-		, birth_date:null, birth_place:"", gender:"", email:"", position:""
-		, documents:[ { type:"", number:"" } ], phones:[ { type:"", number:"" } ] }
-		, medical_service_provider:{ licenses:[ { license_number:"", issued_by:"", issued_date:""
-		, expiry_date:"", active_from_date:"", what_licensed:"" }
-		, {license_number:"", issued_by:"", issued_date:"", expiry_date:""
-		, active_from_date:"", what_licensed:"" } ]
-		, accreditation:{ category:"", issued_date:"", expiry_date:"", order_no:"", order_date:"" } }
-		, security:{ redirect_uri:"" }, public_offer:{ consent:true, consent_text:"" } 
+		, addresses:[ { type:'', country:'', area:'', region:'', settlement:'', settlement_type:'', settlement_id:''
+		, street_type:'', street:'', building:'' } ]
+		, phones:[ { type:'', number:'' } ]
+		, owner:{ first_name:'', last_name:'', second_name:'', tax_id:''
+		, birth_date:null, birth_place:'', gender:'', email:'', position:''
+		, documents:[ { type:'', number:'' } ], phones:[ { type:'', number:'' } ] }
+		, medical_service_provider:{ 
+			licenses:[ { license_number:'', issued_by:'', issued_date:''
+				, expiry_date:'', active_from_date:'', what_licensed:'' }
+				, {license_number:'', issued_by:'', issued_date:'', expiry_date:''
+				, active_from_date:'', what_licensed:'' } ]
+			, accreditation:{ category:'', issued_date:'', expiry_date:'', order_no:'', order_date:'' } }
+		, security:{ redirect_uri:'' }, public_offer:{ consent:true, consent_text:'' } 
 	}
 	$scope.tmp2_api__legal_entities = {
 		"name": "Hello World! - Клініка Адоніс",
