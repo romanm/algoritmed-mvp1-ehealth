@@ -23,16 +23,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class EhealthUaRegistryWebClient {
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryWebClient.class);
 
-	String prefix_uri = "/api";
-//	String prefix_uri = "";
+//	String prefix_uri = "/api";
+	String prefix_uri = "";
 
 	public Map apiGet(Map<String, Object> data) {
 		String path_uri = prefix_uri+data.get("add_uri");
 		if(data.containsKey("queryString"))
 			path_uri += "?"+data.get("queryString");
-		logger.info("\n"+34);
 		System.err.println(path_uri);
 		data.put("test_api_URL", uri_registry + path_uri);
+		logger.info(""
+				+ "\n"+36
+				+ "\n"+data
+				);
 		Builder wsClientInvocation = getInvocationBuilder(path_uri);
 		Response response = wsClientInvocation.get();
 		String readEntity_body = response.readEntity(String.class);

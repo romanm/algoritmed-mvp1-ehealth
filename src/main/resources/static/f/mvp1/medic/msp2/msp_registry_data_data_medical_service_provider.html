@@ -23,27 +23,33 @@
 <div ng-repeat="license in v.licenses" >
 	<div class="w3-row-padding">
 		<div class="w3-quarter">
-			<b ng-if="$first"> Ліцензії: </b>
+			<span ng-if="$first"> <a title="Додати Запис в розділі"
+				class="w3-btn w3-hover-gray" href="#"
+				ng-click="mvpAddress.config.plusListElement(v,'licenses');autoSave.fn_change_count();">+</a>
+				<b> Ліцензії: </b>
+			</span>
 			<div class="w3-right w3-hover-gray">
 				<a href="#" ng-click="mvpAddress.config.edit.openLicense($index)">
-					{{1 + $index}}. <b> № </b>
-				</a>
+					{{1 + $index}}. </a>
 			</div>
 		</div>
 		<div class="w3-threequarter">
 			<div class="w3-hover-gray"
 				ng-click="mvpAddress.config.edit.openLicense($index)">
-				{{license.license_number}}, <b class="w3-small">Орган що видав:</b> {{license.issued_by}},
+				<b> № </b> <span ng-if="!license.license_number">
+					_____________ </span><u>{{license.license_number}}</u>, <b
+					class="w3-small">Орган що видав:</b> <span
+					ng-if="!license.issued_by"> _____________ </span><u>{{license.issued_by}}</u>,
 				<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
-						ng-init="d=mvpAddress.config.edit.date_types[kda]">
-						{{d.p}}
-						{{license[kda]}}
-					</span>
+					ng-init="d=mvpAddress.config.edit.date_types[kda]"> {{d.p}}
+					{{license[kda] | date : 'shortDate'}} </span>
 			</div>
 			<div class="w3-border w3-border-green w3-card-4 w3-display-container"
 				ng-if="mvpAddress.config.edit.license==$index">
 				<span ng-click="mvpAddress.config.edit.openLicense($index)"
-					class="w3-button w3-display-topright">×</span> <input
+					class="w3-button w3-display-topright">×</span> 
+					<b> № </b>
+					<input
 					ng-change="autoSave.fn_change_count()" type="text"
 					class="w3-border" ng-model="license.license_number">,
 				<br /> <b class="w3-small">Орган що видав:</b> <input

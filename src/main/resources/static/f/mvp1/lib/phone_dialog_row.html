@@ -1,0 +1,12 @@
+<div class="w3-quarter ">
+	<div class="w3-right">
+		<a title="Додати ще один телефон" class="w3-btn w3-hover-gray"
+			href="#"
+			ng-click="mvpAddress.config.plusPhone(phoneList_k, phoneList_o);autoSave.fn_change_count()">+</a>
+		<b> Телефони </b>
+	</div>
+</div>
+<div class="w3-threequarter">
+	<div ng-repeat="phone in phoneList_o[phoneList_k] track by $index"
+		ng-include="'/f/mvp1/lib/phone_dialog.html'"></div>
+</div>

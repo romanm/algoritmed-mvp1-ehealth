@@ -1,11 +1,7 @@
-<!-- 
-<h3>Освіта</h3>
- -->
 <h3>Документи</h3>
-
 <div class="w3-row-padding"
 	ng-repeat="k1 in  mvpAddress.config.employee_documents"
-	ng-init="v1=doctor[k1];objList=v1;"
+	ng-init="v1=doctor[k1];"
 	ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}">
 	<div class="w3-col m3">
 	<a title="Додати Запис в розділі"
@@ -14,11 +10,6 @@
 		<b> {{mvpAddress.config.type[k1]}} </b>
 	</div>
 	<div class="w3-col m9">
-		<!-- 
-		doctor= {{doctor}}
-		{{v1}}
-		{{k1}}
-		 -->
 		<div ng-repeat="doc in v1">
 			 <div ng-click="config_employee.fn_opened_index($index, k1)"
 			 class="w3-hover-gray"
@@ -27,11 +18,10 @@
 				<b> {{1+$index}}. </b>
 				<span class="w3-btn w3-border w3-red"
 				ng-if="mvpAddress.config['index_to_delete_'+k1]==$index"
-							ng-click="mvpAddress.config.minusListElement(objList, $index, k1);autoSave.fn_change_count();"
+							ng-click="mvpAddress.config.minusListElement(v1, $index, k1);autoSave.fn_change_count();"
 						 title="Справді Видалити запис">-</span>
 				<span class="w3-tooltip">
 					<span
-					class=""
 						ng-include="'/f/mvp1/medic/msp2/employee/employee_'+k1+'_text.html'"
 						></span>
 					<span class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
@@ -39,7 +29,7 @@
 							ng-click="mvpAddress.config.toMinusListElement(k1, $index);"
 						 title="Видалити запис">-</span>
 						<span class="w3-btn" ng-if="!$first" 
-							ng-click="mvpAddress.config.upListElement(objList, $index);autoSave.fn_change_count();"
+							ng-click="mvpAddress.config.upListElement(v1, $index);autoSave.fn_change_count();"
 						 title="Перенести запис на перше місце">^</span>
 					</span>
 				</span>
@@ -61,35 +51,5 @@
 		<div ng-if="'science_degree'==k1"
 			ng-init="doc=v1"
 			ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
-		<div ng-if="'science_degree'!=k1">
-		<!-- 
-		{{k1}}
-		 -->
-		</div>
 	</div>
 </div>
-<!--
-<div class="w3-row-padding"
-	ng-repeat="(k1,v1) in config_info.msp_employee_doc.docbody.doctor"
-ng-class="{'w3-card-2':k1=='educations' || k1=='specialities'}"
-	>
-	<div class="w3-col m2">
-		<b> {{mvpAddress.config.type[k1]}} </b>
-	</div>
-	<div class="w3-col m10">
-		<div ng-if="'science_degree'==k1"
-			ng-init="doc=v1"
-			ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
-		<div ng-if="'science_degree'!=k1">
-				<div ng-repeat="doc in v1">
-				<div
-					ng-include="'/f/mvp1/medic/msp2/employee/employee_doctor_'+k1+'.html'"></div>
-			</div>
-		</div>
-	</div>
-</div>
--->
-
-<!-- 
- {{config_info.msp_employee_doc.docbody.educations}}
- -->

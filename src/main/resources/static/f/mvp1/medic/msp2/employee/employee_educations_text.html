@@ -1,11 +1,30 @@
-{{mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values[doc.degree]}}
+<span> <u>
+		{{mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values[doc.degree]}}</u>
+	<span
+	ng-if="!mvpAddress.config.selectDictionary('EDUCATION_DEGREE').values[doc.degree]">
+		_<u class="w3-text-gray">тип диплома</u>__
+</span>
+</span>
 Диплом №
-{{doc.diploma_number}}
+<span> {{doc.diploma_number}} <span ng-if="!doc.diploma_number">
+		___________ </span>
+</span>
 Спеціальність:
-{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc.speciality]}}
+<span>
+	{{mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc.speciality]}}
+	<span
+	ng-if="!mvpAddress.config.selectDictionary('SPECIALITY_TYPE').values[doc.speciality]">
+		___________ </span>
+</span>
 Установа що видала:
-{{doc.institution_name}}
-
-Місто {{doc.city}}
-
-Рік видачі {{doc.issued_date}}
+<span> {{doc.institution_name}} <span
+	ng-if="!doc.institution_name"> ___________ </span>
+</span>
+Місто 
+<span> {{doc.city}} <span
+	ng-if="!doc.city"> ___________ </span>
+</span>
+Рік видачі
+<span> {{doc.issued_date}} <span ng-if="!doc.issued_date">
+		___________ </span>
+</span>

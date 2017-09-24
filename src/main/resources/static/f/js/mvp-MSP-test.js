@@ -287,9 +287,7 @@ initTestAddress = function($scope, $http, $filter){
 			}
 		}
 		,plusListElement:function(o, list_name){
-			if(!o[list_name]){
-				o[list_name]=[];
-			}
+			if(!o[list_name]) o[list_name]=[];
 			var np = JSON.parse(JSON.stringify(this['template_'+list_name]));
 			o[list_name].push(np)
 		}
@@ -308,6 +306,7 @@ initTestAddress = function($scope, $http, $filter){
 			var np = JSON.parse(JSON.stringify(this.phone_template));
 			o[k].push(np)
 		}
+		,template_licenses:{}
 		,template_specialities:{}
 		,template_qualifications:{}
 		,template_educations:{}

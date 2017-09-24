@@ -222,7 +222,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					,url:'/r/employee_list'
 					,open_dialog:function(){
-						if(!$scope.principal.user_msp[0]){
+						if(!$scope.principal.user_msp
+						|| !$scope.principal.user_msp[0]
+						){
 							return;
 						}
 						var msp_id = $scope.principal.user_msp[0].msp_id; 
@@ -354,7 +356,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 //		$scope.config_msp_all.opened_dialog='personal_area';
 		console.log($scope.config_msp_all.opened_dialog);
 		if($scope.config_msp_all.opened_dialog=='personal_data'){
-			console.log(2);
 			$scope.config_msp_all.personal_page.dialogs.personal_data.open_dialog();
 		}
 	}else
@@ -362,10 +363,19 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
 	}else
 	if('registry' == $scope.pagePath.last()
-	||'human-resources-department' == $scope.pagePath.last()
+	|| 'human-resources-department' == $scope.pagePath.last()
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 		initTestAddress($scope, $http, $filter);
+		$scope.config_msp_all.opened_dialog='doctors_cards';
+		if('doctors_cards'==$scope.config_msp_all.opened_dialog){
+			if(!$scope.principal){ 
+				read_principal($http, $scope
+				, $scope.config_msp_all.human_resources_department.dialogs.doctors_cards, 'open_dialog');
+			}else{
+				$scope.config_msp_all.human_resources_department.dialogs.doctors_cards.open_dialog();
+			}
+		}
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()
 	||'moz-declaration-edit' == $scope.pagePath.last()
