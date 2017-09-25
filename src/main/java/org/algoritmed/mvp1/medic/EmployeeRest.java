@@ -39,14 +39,16 @@ public class EmployeeRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object> add_employee_msp(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
-		logger.info("\n---------------\n"
+		logger.info("\n------42---------\n"
 				+ "/r/add_employee_msp"
 				+ "\n" + data
 				+ "\n" + userPrincipal
 				);
 
 		//insert user doc child, with reference to msp
-		String userName = userPrincipal.getName();
+//		String userName = userPrincipal.getName();
+		String userName = (String) data.get("username");
+		System.err.println(userName);
 		Map<String, Object> userNameMap = checkUsername(userName);
 		Integer parentId = (Integer) userNameMap.get("user_id");
 		Integer reference = (Integer) data.get("msp_id");

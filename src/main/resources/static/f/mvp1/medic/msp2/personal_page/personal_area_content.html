@@ -1,8 +1,6 @@
 <h4 class="w3-center am-uppercase w3-text-indigo">Підбірка
 	особистої інформації.</h4>
-<div
-ng-init="col1=3;col2=12-col1"
->
+<div ng-init="col1=3;col2=12-col1">
 	<div class="w3-row">
 		<div class="w3-col m{{col1}} l{{col1}} s{{col1}}">
 			<b> Лікувальні заклади: </b>
@@ -18,29 +16,27 @@ ng-init="col1=3;col2=12-col1"
 				<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue "
 					style="width: 100%">
 					<div ng-repeat="msp in seek_msp.list" title="{{msp.msp_id}}"
-						ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_click_seek_msp(msp)"
+						ng-click="config_msp_all.personal_page.dialogs.personal_area
+							.fn_click_seek_msp(msp,{username:principal.username})"
 						class="w3-hover-gray">{{msp.msp_name}}</div>
 				</div>
 			</div>
 			<span ng-if="principal.user_msp.length>0"
-				ng-repeat="msp in principal.user_msp"><b>{{1+$index}}</b>) 
-				<span
-					class="w3-btn w3-border w3-red"
-					ng-if="msp.doc_id==config_msp_all.personal_page.dialogs.personal_area.msp_id_to_delete"
-						ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_remove_msp()"
-					 title="Видалити ЛПЗ дійсно">-</span>
-				<span class="w3-tooltip">
-					{{msp.msp_name}}{{$last?'.':','}} 
-					<span class="w3-blue w3-text w3-tag am-tooltip-text">
-					<span class="w3-btn"
+				ng-repeat="msp in principal.user_msp"><b>{{1+$index}}</b>) <span
+				class="w3-btn w3-border w3-red"
+				ng-if="msp.doc_id==config_msp_all.personal_page.dialogs.personal_area.msp_id_to_delete"
+				ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_remove_msp()"
+				title="Видалити ЛПЗ дійсно">-</span> <span class="w3-tooltip">
+					{{msp.msp_name}}{{$last?'.':','}} <span
+					class="w3-blue w3-text w3-tag am-tooltip-text"> <span
+						class="w3-btn"
 						ng-click="config_msp_all.personal_page.dialogs.personal_area.fn_minus_msp(msp)"
-					 title="Видалити ЛПЗ">-</span>
-					</span>
+						title="Видалити ЛПЗ">-</span>
+				</span>
 			</span> </span>
 		</div>
 	</div>
 	<div
 		ng-include="'/f/mvp1/medic/msp2/personal_page/personal_account.html'"></div>
-
 </div>
 

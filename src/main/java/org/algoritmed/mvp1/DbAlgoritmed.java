@@ -236,12 +236,14 @@ public class DbAlgoritmed {
 			String name = principal.getName();
 			System.err.println("name = "+name);
 			map.put("username", name);
-			Map<String, Object> queryForMap = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
-			map.put("user", queryForMap);
-			Integer user_id = (Integer) queryForMap.get("user_id");
-			map.put("user_id", user_id);
-			List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
-			map.put("user_msp", l);
+			Map<String, Object> user = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
+			user.remove("password");
+			map.put("user", user);
+
+			Integer user_id = (Integer) user.get("user_id");
+			
+			read_user_msp(map, user_id);
+
 			if("admin".equals(name)) {
 				Map<String, Object> msp_list = msp_list();
 				map.put("user_msp", msp_list.get("msp_list"));
@@ -250,8 +252,14 @@ public class DbAlgoritmed {
 		return map;
 	}
 
-	private @Value("${sql.db1.users.fromUsername}") String sqlDb1UsersFromUsername;
-	private @Value("${sql.db1.user.msp}") String sql_user_msp;
+	private void read_user_msp(Map<String, Object> map, Integer user_id) {//as samples for use throws /r/read_sql_with_param
+		map.put("user_id", user_id);
+		List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
+		map.put("user_msp", l);
+	}
+
+	private @Value("${sql.db1.users.fromUsername}")	String sqlDb1UsersFromUsername;
+	private @Value("${sql.db1.user.msp}")			String sql_user_msp;
 	private @Value("${sql.msp.list}")				String sql_msp_list;
 	
 	public Map<String, Object> msp_list() {
@@ -260,7 +268,5 @@ public class DbAlgoritmed {
 		map.put("msp_list", msp_list);
 		return map;
 	}
-
-	
 
 }

@@ -12,20 +12,17 @@
 	<tbody ng-repeat="e in config_info.msp_employee.msp_employee_list">
 		<tr class="w3-border w3-hover-gray" title="{{e.person_id}}"
 		ng-class="{'w3-leftbar w3-border-green':config_info.msp_employee_doc.doc_id==e.person_id}"
-			ng-click="config_info.click_msp_employee(e)">
+			ng-click="config_info.click_msp_employee(e)"
+			>
 			<td title="{{e.person_id}}">
 			{{e.family_name?e.family_name:e.last_name}} 
 			{{e.first_name}}
 				{{e.second_name}}
-				<!-- 
-				{{e.username}}
-				 -->
 				</td>
 			<td><span ng-repeat="r in e.roles">
 					{{fnPrincipal.dbRolesMap[r.role_id].role_sort}} 
 					<!-- 
-					{{1 +
-					config_msp_all.info.login.role.keys().indexOf(r.role_id)}} 
+					{{1 +config_msp_all.info.login.role.keys().indexOf(r.role_id)}} 
 					{{r}}
 					 -->
 					-
@@ -33,6 +30,7 @@
 					
 			</span></td>
 		</tr>
+		
 		<tr ng-if="config_info.msp_employee_doc.doc_id==e.person_id">
 			<td>
 				<div ng-if="fnPrincipal.hasHumanResourcesRole()">
@@ -46,14 +44,12 @@
 			</td>
 			<td>
 				<div ng-if="!fnPrincipal.hasHumanResourcesRole()">
-					<div
-						ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
+					<div ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
 						Очікується підтвердження заявки на логін. Зверніться в відділ
 						кадрів.</div>
 				</div>
 				<div ng-if="fnPrincipal.hasHumanResourcesRole()">
-					<div
-						ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
+					<div ng-if="fnPrincipal.hasLoginRole('ROLE_WAITING_FOR_CONFIRMATION',e.roles,'role_id')">
 						<b> Підтвердитит логін: </b>
 						<button
 							ng-click="config_msp_all.human_resources_department.fn_add_login(e, 'ROLE_USER')"
@@ -63,7 +59,8 @@
 						title="Додати інші ролі і права доступу" href="#"
 						ng-click="config_msp_all.human_resources_department.fn_click_extendRoles()">+/-</a>
 					<div ng-if="config_msp_all.human_resources_department.extendRoles">
-						Після +/- ролі, потрібна перезагрузка сторінки.
+						<i class="w3-small"> Після +/- ролі, потрібна перезагрузка
+							сторінки. </i>
 						<table>
 							<colgroup>
 								<col style="width: 10%">
@@ -95,6 +92,31 @@
 						</table>
 					</div>
 				</div>
+			</td>
+		</tr>
+		<tr ng-if="config_info.msp_employee_doc.doc_id==e.person_id">
+			<td colspan="2">
+			<i class="w3-small"> Після +/- ЛЗ, потрібна перезагрузка
+					сторінки. </i>
+				<ul>
+					<li ng-if="e.msps.length>0">Лікувальні заклади працівника
+						<div class="w3-hover-gray" ng-repeat="msp in e.msps">{{msp.msp_name}}
+						</div>
+					</li>
+					<li>Додати лікувальний заклад
+						<div class="w3-hover-gray" ng-repeat="msp in principal.user_msp"
+							ng-if="e.msps_ids.indexOf(msp.msp_id)<0">
+							<span class="w3-tooltip"> {{msp.msp_name}} 
+								<span class="w3-blue w3-text w3-tag am-tooltip-text"> 
+									<span class="w3-btn"
+									ng-click="config_msp_all.personal_page.dialogs.personal_area
+							.fn_click_seek_msp(msp,{username:e.username})"
+									title="Додати ЛПЗ">+</span>
+							</span>
+							</span>
+						</div>
+					</li>
+				</ul>
 			</td>
 		</tr>
 	</tbody>

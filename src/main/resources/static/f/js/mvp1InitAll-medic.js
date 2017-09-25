@@ -105,10 +105,10 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 							this.msp_id_to_delete=msp.doc_id
 						}
 					}
-					,fn_click_seek_msp:function(msp){
-						console.log(msp);
+					,fn_click_seek_msp:function(msp, add_o){
 						var url = '/r/add_employee_msp';
 						console.log(url);
+						msp.addAllPropertyFrom(add_o)
 						$http.post(url, msp).then( function(response) {
 							console.log(response.data);
 							read_principal($http, $scope);

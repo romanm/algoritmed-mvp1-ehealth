@@ -487,13 +487,29 @@ init_config_info = function($scope, $http){
 				'msp_table_selected', msp, '/r/read_msp_employee/'+msp.msp_id, 'msp_employee');
 		}
 		,is_msp_employee_selected:function(me){return this.is_o_selected('msp_employee_selected', me);}
+		,show_o:function(o){
+			console.log(o);
+		}
 		,click_msp_employee:function(msp_employee){
 			this.click_o(
 				'msp_employee_selected', msp_employee, '/r/read_docbody/'+msp_employee.person_id, 'msp_employee_doc');
+			$http.get('/r/read_sql_with_param', {params:{sql:'sql.db1.user.msp',user_id:msp_employee.person_id}}
+			).then(function(response) {
+				msp_employee.msps_ids = [];
+				msp_employee.msps = response.data.list;
+				angular.forEach(msp_employee.msps, function(v){
+					msp_employee.msps_ids.push(v.msp_id)
+				});
+				console.log(msp_employee.msps_ids);
+			});
+
+			/*
 			if(this.msp_employee_doc){
 				if(msp_employee.person_id==this.msp_employee_doc.doc_id){
 					$scope.config_msp_all.opened_dialog='opened_card';
-		}	}	}
+			}	}	
+			 * */
+		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
 		,click_o:function(this_o_selected_name, o, url, read_o_name){
 			//var thisO = this[this_o_name];
@@ -506,14 +522,9 @@ init_config_info = function($scope, $http){
 		}
 		,afterRead_msp_employee_doc:function(){//msp_employee
 			console.log(this.msp_employee_doc);
-			//var party = this.msp_employee_doc.docbody.party;
 			var party = this.msp_employee_doc.party;
 			party.last_name = party.family_name;
 			$scope.doc_employee = this.msp_employee_doc;
-//			console.log($scope.doc_employee);
-//			$scope.doc_employee.data = this.msp_employee_doc.docbody;
-//			party.last_name = this.msp_employee_selected.family_name;
-//			console.log($scope.doc_employee);
 			if($scope.doc_employee['keys_dates'])
 				angular.forEach($scope.config_employee.keys_dates, function(v){
 					if(!$scope.doc_employee.docbody[v]){
@@ -523,7 +534,6 @@ init_config_info = function($scope, $http){
 						$scope.mvpAddress.config.date.setDateParam(sd,$scope.doc_employee.docbody, v);
 					}
 				});
-//			console.log($scope.doc_employee.docbody);
 		}
 		,read_o:function(url, read_o_name){
 			var thisObj = this;

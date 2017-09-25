@@ -47,9 +47,8 @@ public class CommonDbRest extends DbAlgoritmed{
 			@RequestParam(value = "sql", required = true) String sql
 			,HttpServletRequest request
 			) {
-		//user for sql.roles.select
 		Map<String, Object> map = sqlParamToMap(sql, request);
-		List<Map<String, Object>> list = db1JdbcTemplate.queryForList(env.getProperty(sql));
+		List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(env.getProperty(sql), map);
 		map.put("list", list);
 		return map;
 	}

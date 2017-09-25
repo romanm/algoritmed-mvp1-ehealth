@@ -121,6 +121,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		,hasHumanResourcesRole:function(){//доступ до картотеки
 			var hasHumanResourcesRole
 			= this.hasRole('ROLE_HEAD_HUMAN_RESOURCES')
+			|| this.hasRole('ROLE_HEAD_MSP')
 			|| this.hasRole('ROLE_ADMIN_MSP')
 			|| this.hasRole('ROLE_ADMIN_APP');
 			return hasHumanResourcesRole;
@@ -265,6 +266,15 @@ if (!Array.prototype.last){
 	}
 	Object.prototype.isW3Row = function(){
 		return this.class.indexOf('w3-row')>=0;
+	}
+	Object.prototype.addAllPropertyFrom = function(add_o){
+		if(add_o){
+			var thisObj = this;
+			angular.forEach(add_o, function(v, k){
+				thisObj[k] = v;
+			});
+		}
+		return this;
 	}
 	Object.prototype.keys = function(){
 		return Object.keys(this);
