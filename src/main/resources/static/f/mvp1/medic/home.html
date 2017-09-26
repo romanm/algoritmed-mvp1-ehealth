@@ -17,7 +17,12 @@
 		<header class="w3-container w3-light-grey w3-small">
 			<b> Реєстратура цПМСД</b>
 		</header>
-		Робоче місце м/с реєстратути
+		<span ng-init="receptionWord='Робоче місце м/с реєстратути'"> <span
+			ng-if="!fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+				{{receptionWord}} </span> <a href="/v/reception"
+			ng-if="fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+				{{receptionWord}} </a>
+		</span>
 		<div class="w3-bar w3-light-gray">
 			<div class="w3-bar-item w3-hover-green">
 				<i class="fa fa-calendar-plus-o" aria-hidden="true"></i>

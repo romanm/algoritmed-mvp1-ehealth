@@ -10,7 +10,15 @@
 			aria-hidden="true"></i>
 		</span> {{v.name}}
 	</span> 
-	<span class="w3-right" ng-if="config_msp_all.opened_dialog==k"> 
+	<span class="w3-right" ng-if="config_msp_all.opened_dialog==k">
+		<span ng-if="'new_patient'==k"> 
+			<span class="w3-hover-gray w3-border"
+			ng-click="config_reception.dialogs.new_patient.save()"
+			> запис </span>
+			<span class="w3-hover-gray w3-border"
+			ng-click="config_reception.dialogs.new_patient.empty_form()"
+			> оновити форму </span>
+		</span>
 		<span ng-if="'doctors_cards'==k"> 
 			<span class="w3-hover-gray w3-border"
 			ng-click="config_msp_all.human_resources_department.choose_user_without_msp()"

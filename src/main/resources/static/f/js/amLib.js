@@ -26,6 +26,31 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			document.getElementById(id_of_element).style.display='none';
 		}
 	};
+	$scope.config_all.validateField = function(k, data, error, objToValidate){
+		console.log(k+' / ');
+		if(!data[k]){
+			objToValidate.validToSave = false;
+			console.log(k+' / '+objToValidate.validToSave);
+			error.requiredField[k]={empty:true};
+		}else{
+			error.requiredField[k]={empty:false};
+		}
+	}
+	$scope.config_all.validate = function(objToValidate, key_data){
+		objToValidate.validToSave = true;
+		console.log(objToValidate);
+		angular.forEach(objToValidate.data_support.validate.requiredField
+			, function(v, k){
+				if(v.requiredField){
+				}else{
+					$scope.config_all.validateField(k, objToValidate[key_data]
+						, objToValidate.data_support.error, objToValidate);
+				}
+			}
+		);
+		console.log(objToValidate);
+		return objToValidate.validToSave;
+	}
 	$scope.config_all.init = function(config_obj_key){
 		var config_obj = $scope[config_obj_key]
 		var obj_autoSave = config_obj['autoSave'];
@@ -38,7 +63,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				,fn_autoSave : function() {
 //					console.log('--fn_auto_save-------------- ' + this.change_count);
 					if(this.change_count > $scope.config_all.maxChangeForAutoSave){
-						this.fn_httpSave();
+						this.fn_httpSave();//call fn to save
 						this.change_count = 0;
 						this.save_count++;
 					}

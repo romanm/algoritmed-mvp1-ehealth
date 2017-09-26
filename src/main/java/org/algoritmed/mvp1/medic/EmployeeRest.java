@@ -154,6 +154,8 @@ public class EmployeeRest extends DbAlgoritmed{
 		return data;
 	}
 
+	private @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
+	
 	@PostMapping("/r/checkUsername")
 	public @ResponseBody Map<String, Object> checkUsername(@RequestBody String username) {
 		logger.info("\n---------------\n"

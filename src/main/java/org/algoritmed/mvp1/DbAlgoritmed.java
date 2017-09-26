@@ -7,11 +7,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,10 +23,29 @@ import org.springframework.security.core.GrantedAuthority;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@PropertySource("classpath:sql.properties")
 public class DbAlgoritmed {
 	private static final Logger logger = LoggerFactory.getLogger(DbAlgoritmed.class);
-	protected @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
+	@Autowired protected Environment env;
 	
+	public enum DocType {
+		PATIENT(1)
+		, MSP(12)
+		, EMPLOYEE(13)
+		, DECLARATION(14)
+		;
+		
+		public int id() {
+			return id;
+		}
+		
+		private int id;
+
+		DocType(int id){
+			this.id=id;
+		}
+	}
+	protected int doctype_patient = 1;
 	protected int doctype_MSP = 12;
 	protected int doctype_employee = 13;
 	int doctype_declaration = 14;
@@ -41,6 +63,8 @@ public class DbAlgoritmed {
 	
 	protected void persistRootElement(Map<String, Object> data, int doctype) {
 		System.err.println("--43--------");
+		System.err.println(data.containsKey("doc_id"));
+		System.err.println(data.get("doc_id"));
 		if(data.containsKey("doc_id")){//update
 			System.err.println("--180----------update--------");
 			if(!data.containsKey("docbody_id"))
@@ -220,9 +244,13 @@ public class DbAlgoritmed {
 
 	String adminMSPRoles = "ROLE_HEAD_MSP;ROLE_ADMIN_MSP;ROLE_ADMIN_APP";
 	protected boolean hasAdminMSPRole(Map<String, Object> principal) {
+		return hasRole(principal, adminMSPRoles);
+	}
+
+	private boolean hasRole(Map<String, Object> principal, String roles) {
 		UsernamePasswordAuthenticationToken upat = (UsernamePasswordAuthenticationToken) principal.get("principal");
-		for (GrantedAuthority grantedAuthority : upat.getAuthorities()) 
-			if(adminMSPRoles.indexOf(grantedAuthority.getAuthority())>=0)
+		for (GrantedAuthority grantedAuthority : upat.getAuthorities())
+			if(roles.indexOf(grantedAuthority.getAuthority())>=0)
 				return true;
 		return false;
 	}
@@ -269,4 +297,39 @@ public class DbAlgoritmed {
 		return map;
 	}
 
+	/**
+	 * Створює новий UUID в БД
+	 * @param map об'єкт для внесення даних
+	 * @return 
+	 */
+	protected Map<String, Object> generateNewUuid(Map<String, Object> map, Integer dbId) {
+		addUuid(map);
+
+		map.put("dbId", dbId);
+		int update = db1ParamJdbcTemplate.update(sqlInsertUUID, map);
+		
+		Map<String, Object> dbUuid = db1ParamJdbcTemplate.queryForMap(sqlSelectUUID_byId, map);
+		map.put("dbUuid", dbUuid);
+		
+		return dbUuid;
+	}
+	/**
+	 * Генерує випадковий universally unique identifier (UUID), 
+	 * додає його до map
+	 * @param map об'єкт для довавання новоствореного UUID
+	 * @return новостворений UUID
+	 */
+	protected UUID addUuid(Map<String, Object> map) {
+		UUID uuid = UUID.randomUUID();
+		map.put("uuid", uuid);
+		return uuid;
+	}
+	/**
+	 * SQL select для зчитування UUID з БД
+	 */
+	private @Value("${sql.selectUUI_byId}") String sqlSelectUUID_byId;
+	/**
+	 * SQL insert для запису UUID в БД
+	 */
+	private @Value("${sql.insertUUI}") String sqlInsertUUID;
 }

@@ -30,43 +30,6 @@ public class MedDocRest extends DbAlgoritmed{
 	@Autowired
 	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 	
-	/**
-	 * SQL insert для запису UUID в БД
-	 */
-	private @Value("${sql.insertUUI}") String sqlInsertUUID;
-	/**
-	 * SQL select для зчитування UUID з БД
-	 */
-	private @Value("${sql.selectUUI_byId}") String sqlSelectUUID_byId;
-	/**
-	 * Створює новий UUID в БД
-	 * @param map об'єкт для внесення даних
-	 * @return 
-	 */
-	protected Map<String, Object> generateNewUuid(Map<String, Object> map, Integer nextDbId) {
-		addUuid(map);
-		map.put("nextDbId", nextDbId);
-		map.put("dbId", nextDbId);
-		
-		int update = db1ParamJdbcTemplate.update(sqlInsertUUID, map);
-		
-		Map<String, Object> dbUuid = db1ParamJdbcTemplate.queryForMap(sqlSelectUUID_byId, map);
-		map.put("dbUuid", dbUuid);
-		
-		return dbUuid;
-	}
-	/**
-	 * Генерує випадковий universally unique identifier (UUID), 
-	 * додає його до map
-	 * @param map об'єкт для довавання новоствореного UUID
-	 * @return новостворений UUID
-	 */
-	protected UUID addUuid(Map<String, Object> map) {
-		UUID uuid = UUID.randomUUID();
-		map.put("uuid", uuid);
-		return uuid;
-	}
-
 	@PostMapping("/r/removeDataDictionary")
 	public @ResponseBody Map<String, Object> removeDataDictionary(
 			@RequestBody Map<String, Object> dbSaveObj

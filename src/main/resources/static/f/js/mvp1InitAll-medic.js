@@ -348,6 +348,11 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.config_msp_all.opened_dialog='msp_data_form';
 		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 	}else
+	if('reception' == $scope.pagePath.last()){
+		initTestVariables($scope, $http, Blob);
+		$scope.config_msp_all.opened_dialog='new_patient';
+//		$scope.config_msp_all.opened_dialog='seek_parient';
+	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
 		initTestAddress($scope, $http, $filter);

@@ -37,12 +37,12 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		System.err.println(sql_msp_employee_list.replace(":msp_id",""+msp_id));
 		System.err.println("sql.msp_employee.role.list");
 		System.err.println(sql_msp_employee_role_list.replace(":msp_id",""+msp_id));
-		Map<Integer, Map<String, Object>> users = new HashMap();
+		Map<Integer, Map<String, Object>> users = new HashMap<Integer, Map<String, Object>>();
 		List<Map<String, Object>> msp_employee_list = db1ParamJdbcTemplate.queryForList(sql_msp_employee_list, map);
 		for (Map<String, Object> m : msp_employee_list) {
 			Integer person_id = (Integer) m.get("person_id");
 			users.put(person_id, m);
-			m.put("roles", new ArrayList());
+			m.put("roles", new ArrayList<Object>());
 		}
 		List<Map<String, Object>> e_roles = db1ParamJdbcTemplate.queryForList(sql_msp_employee_role_list, map);
 		for (Map<String, Object> m : e_roles) {
@@ -97,6 +97,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		return map;
 	}
 	
+	
 	@PostMapping("/r/saveDeclaration")
 	public @ResponseBody Map<String, Object> saveDeclaration(
 			@RequestBody Map<String, Object> data
@@ -107,6 +108,33 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				);
 		return data;
 	}
+	
+	@PostMapping("/r/savePatient")
+	public @ResponseBody Map<String, Object> savePatient(
+			@RequestBody Map<String, Object> data
+			, Principal userPrincipal) {
+		logger.info("\n-----------104----\n"
+				+ "/r/savePatient"
+				+ "\n" + data
+				);
+		persistRootElement(data
+			, DocType.PATIENT.id()
+			);
+		if(!(boolean) data.get("update_sql")){
+			Integer dbId = (Integer)data.get("doc_id");
+			data.put("patient_id", dbId);
+			generateNewUuid(data, dbId);
+		}
+		persistContentElement(data
+			, env.getProperty("sql.insertPatient")
+			, env.getProperty("sql.updatePatient")
+			);
+		System.err.println(data);
+		return data;
+	}
+	
+	private @Value("${sql.msp.update}")				String sql_msp_update;
+	private @Value("${sql.msp.insert}")				String sql_msp_insert;
 	
 	@PostMapping("/r/saveMsp")
 	public @ResponseBody Map<String, Object> saveMsp(
@@ -136,7 +164,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private void persistRootElement2(Map<String, Object> data, int doctype, String sql_insert, String sql_update) {
 		if(data.containsKey("doc_id")){//update
 			System.err.println("--86----------update--------");
-			updateDocbody(data, (Map)data.get("docbody"), now());// change for autoSave $scope.doc_employee
+			updateDocbody(data, (Map<String, Object>)data.get("docbody"), now());// change for autoSave $scope.doc_employee
 			//updateDocbody(data, data, now()); 
 			System.err.println(sql_update);
 			int update = db1ParamJdbcTemplate.update(sql_update, data);
@@ -150,9 +178,6 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			int update = db1ParamJdbcTemplate.update(sql_insert, data);
 		}
 	}
-	
-	private @Value("${sql.msp.update}")				String sql_msp_update;
-	private @Value("${sql.msp.insert}")				String sql_msp_insert;
 
 	@PostMapping("/r/legal_entities")
 	public @ResponseBody Map<String, Object> legal_entities(
@@ -162,7 +187,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				+ "/r/legal_entities"
 				+ "\n" + data
 				);
-		Map legal_entitiesPut = registryWebClient.legal_entitiesPut(data);
+		Map<String, Object> legal_entitiesPut = registryWebClient.legal_entitiesPut(data);
 		if(legal_entitiesPut!= null)
 			return legal_entitiesPut;
 		return data;

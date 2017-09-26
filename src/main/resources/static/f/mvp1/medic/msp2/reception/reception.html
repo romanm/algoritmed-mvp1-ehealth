@@ -1,0 +1,15 @@
+<h2 class="w3-center am-uppercase">Регістратура</h2>
+<div class="w3-container">
+	<div class="w3-bar w3-light-gray">
+		<div ng-repeat="(k,v) in config_reception.dialogs"
+			class="w3-bar-item w3-hover-gray"
+			ng-class="{'w3-green':k==config_msp_all.opened_dialog}"
+			ng-click="config_msp_all.fn_open_dialog(k)">{{v.name}}</div>
+	</div>
+	<div class="w3-card"
+		ng-repeat="(k,v) in config_reception.dialogs">
+		<div ng-include="'/f/mvp1/lib/window_head.html'"></div>
+		<div ng-if="config_msp_all.opened_dialog==k"
+			ng-include="'/f/mvp1/medic/msp2/reception/reception_'+k+'.html'"></div>
+	</div>
+</div>

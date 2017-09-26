@@ -737,6 +737,7 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_personRegistry');
+	/*
 	$scope.config_personregistry = {
 		data_template:{party:{}}
 		,autoSave:{
@@ -794,6 +795,60 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_personregistry');
+	 * */
+	$scope.config_reception = {
+		dialogs:{
+			seek_parient:{
+				name:'Пошук пацієнта'
+			}
+			,new_patient:{
+				name:'Новий пацієнт'
+				,save:function(){
+					console.log(321);
+					$scope.config_reception.autoSave.fn_httpSave();
+				}
+				,empty_form:function(){
+					console.log($scope.config_reception.patient_data);
+					$scope.config_reception.patient_data={};
+					console.log($scope.config_reception.patient_data);
+				}
+			}
+		}
+		,patient_data:{}
+		,data_support:{
+			error:{requiredField:{}}
+			,validate:{
+				requiredField:{
+					last_name:{}
+					,first_name:{}
+					,second_name:{}
+				}
+			}
+		}
+		,validToSave:true
+		,autoSave:{
+			fn_httpSave:function(){
+				console.log('-- config_reception.autoSave.fn_httpSave --');
+				if($scope.config_all.validate($scope.config_reception, 'patient_data')){
+					var patient_data = 
+						$scope.config_reception.patient_data.addAllPropertyFrom({
+							patient_pib:$scope.config_reception.patient_data.last_name
+							+' '+$scope.config_reception.patient_data.first_name
+							+' '+$scope.config_reception.patient_data.second_name
+						});
+					$http.post('/r/savePatient', patient_data).then(function(response) {
+						console.log(response.data);
+						console.log($scope.config_reception.patient_data);
+						
+						$scope.config_reception.patient_data=response.data;
+						
+					});
+				}
+			}
+		}
+	}
+	$scope.config_all.init('config_reception');
+	console.log($scope.config_reception);
 	$scope.config_declaration = {
 		autoSave:{
 			fn_httpSave:function(){

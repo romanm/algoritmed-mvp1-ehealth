@@ -60,6 +60,13 @@
 	,"fa":"fa-user"
 	,"parent":"home"
 }
+,"reception":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/msp2/reception/reception.html'"
+	,"shortName":"Регістратура поліклініки"
+	,"fa":"fa-user"
+	,"parent":"home"
+}
 ,"human-resources-department":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/human-resources-department.html'"
