@@ -38,9 +38,14 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			if(this.opened_dialog==dialog_name)
 				this.opened_dialog='закрити';
 			else
-				this.opened_dialog=dialog_name
+				this.opened_dialog=dialog_name;
+			//after dialog open action
 			if('personal_data'==this.opened_dialog){
 				this.personal_page.dialogs.personal_data.open_dialog();
+			}else
+			if('seek_patient'==this.opened_dialog){
+				console.log(dialog_name);
+				$scope.config_reception.seek_msp_patients();
 			}else
 			if('doctors_cards'==this.opened_dialog){
 				this.human_resources_department.dialogs.doctors_cards.open_dialog();
@@ -314,11 +319,11 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('testMvpPatient' == $scope.pagePath.last()){
 		console.log('----initAll---------------' + $scope.pagePath.last());
 		$scope.ehealthapi1 = {
-				"keys":{
-					"pip":"ПІП"
-					,"birth_date":"дата народження"
-					,"addresses":"Адреса"
-				}
+			keys:{
+				pip:"ПІП"
+				,birth_date:"дата народження"
+				,addresses:"Адреса"
+			}
 		};
 		console.log($scope.ehealthapi1);
 		$scope.urlPatient1 = 'https://private-anon-318b831b7e-ehealthapi1.apiary-mock.com/persons/1';
@@ -351,7 +356,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('reception' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
 		$scope.config_msp_all.opened_dialog='new_patient';
-//		$scope.config_msp_all.opened_dialog='seek_parient';
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);

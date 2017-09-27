@@ -1,0 +1,18 @@
+
+<table class="w3-table w3-table-all">
+<caption>
+Пацієнти ЛЗ
+</caption>
+	<tr>
+		<th>ПІП</th>
+	</tr>
+	<tr ng-repeat="patient in config_reception.msp_patients.list">
+		<td>{{patient.patient_pib}}</td>
+	</tr>
+</table>
+
+<!-- 
+<div>
+	{{config_reception.msp_patients}}
+</div>
+ -->

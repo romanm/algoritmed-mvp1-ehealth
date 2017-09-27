@@ -116,14 +116,18 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		logger.info("\n-----------104----\n"
 				+ "/r/savePatient"
 				+ "\n" + data
+				+ "\n" + Integer.MAX_VALUE
 				);
+		
 		persistRootElement(data
 			, DocType.PATIENT.id()
 			);
-		if(!(boolean) data.get("update_sql")){
+		if(!(boolean) data.get("update_sql")){//insert
 			Integer dbId = (Integer)data.get("doc_id");
+			Integer msp_id = (Integer)data.get("msp_id");
 			data.put("patient_id", dbId);
 			generateNewUuid(data, dbId);
+			insertChildWithReference(dbId, msp_id);
 		}
 		persistContentElement(data
 			, env.getProperty("sql.insertPatient")

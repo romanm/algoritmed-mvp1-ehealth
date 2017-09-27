@@ -59,6 +59,7 @@ public class DbAlgoritmed {
 		data.put("reference", reference);
 		int update = db1ParamJdbcTemplate.update(sql_doc_update_reference, data);
 	}
+
 	private @Value("${sql.doc.update.reference}")	String sql_doc_update_reference;
 	
 	protected void persistRootElement(Map<String, Object> data, int doctype) {
@@ -188,6 +189,9 @@ public class DbAlgoritmed {
 				);
 		int update = db1ParamJdbcTemplate.update(sql_doc_insert, data);
 		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_insert, data);
+		if(data.containsKey("reference")){
+			
+		}
 	}
 	
 	private @Value("${sql.doc.byId}")	String sql_doc_byId;

@@ -798,7 +798,7 @@ initTestVariables = function($scope, $http, Blob){
 	 * */
 	$scope.config_reception = {
 		dialogs:{
-			seek_parient:{
+			seek_patient:{
 				name:'Пошук пацієнта'
 			}
 			,new_patient:{
@@ -825,17 +825,31 @@ initTestVariables = function($scope, $http, Blob){
 				}
 			}
 		}
+		,seek_msp_patients:function(){
+			var url ='/r/seek_msp_patients';
+			console.log(url);
+			$http.get('/r/read_sql_with_param'
+			, {params:{sql:'sql.medical.selectPatientByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
+			.then(function(response) {
+				console.log(response.data);
+				$scope.config_reception.msp_patients = response.data;
+				console.log($scope.config_reception.msp_patients);
+			});
+		}
 		,validToSave:true
 		,autoSave:{
 			fn_httpSave:function(){
 				console.log('-- config_reception.autoSave.fn_httpSave --');
 				if($scope.config_all.validate($scope.config_reception, 'patient_data')){
+					console.log($scope.principal.user_msp[0].doc_id);
 					var patient_data = 
 						$scope.config_reception.patient_data.addAllPropertyFrom({
-							patient_pib:$scope.config_reception.patient_data.last_name
+							 msp_id:$scope.principal.user_msp[0].msp_id
+							,patient_pib:$scope.config_reception.patient_data.last_name
 							+' '+$scope.config_reception.patient_data.first_name
 							+' '+$scope.config_reception.patient_data.second_name
 						});
+					console.log(patient_data);
 					$http.post('/r/savePatient', patient_data).then(function(response) {
 						console.log(response.data);
 						console.log($scope.config_reception.patient_data);
