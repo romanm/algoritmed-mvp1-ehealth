@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +43,10 @@ public class CommonDbRest extends DbAlgoritmed{
 			@RequestParam(value = "sql", required = true) String sql
 			,HttpServletRequest request
 			) {
+		logger.info("\n------46-------\n"
+				+ "/r/update_sql_with_param"
+				+ "\n" + request.getParameterMap()
+				);
 		Map<String, Object> map = sqlParamToMap(sql, request);
 		List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(env.getProperty(sql), map);
 		map.put("list", list);
@@ -56,11 +58,15 @@ public class CommonDbRest extends DbAlgoritmed{
 		String sql_from_env = env.getProperty(sql);
 		map.put(sql, sql_from_env);
 		Map<String, String[]> parameterMap = request.getParameterMap();
+		System.err.println(parameterMap.keySet());
 		map.put("parameterMap", parameterMap);
 		for (String key : parameterMap.keySet()) {
 			String[] v = parameterMap.get(key);
-			map.put(key, v[0]);
+			String val = v[0];
+			System.err.print(" & "+key+"/"+val);
+			map.put(key, val);
 		}
+		System.err.println();
 		return map;
 	}
 

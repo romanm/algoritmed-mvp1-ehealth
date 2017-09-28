@@ -482,11 +482,26 @@ init_config_info = function($scope, $http){
 	$scope.config_info = {
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
 		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
+		,read_msp0_employee:function(){
+			var msp_id = $scope.principal.user_msp[0].msp_id; 
+			$scope.config_info.read_msp_employee(msp_id);
+			console.log(this.msp_employee);
+		}
 		,click_msp:function(msp){
 			this.click_o(
 				'msp_table_selected', msp, '/r/read_msp_employee/'+msp.msp_id, 'msp_employee');
 		}
 		,is_msp_employee_selected:function(me){return this.is_o_selected('msp_employee_selected', me);}
+		,run_with_principal:function(run_fn){
+			if(!$scope.principal){
+				$http.get('/r/principal').then(function(response) {
+					if(!$scope.principal)
+						$scope.principal = response.data;
+					run_fn();
+				});
+			}else
+				run_fn();
+		}
 		,show_o:function(o){
 			console.log(o);
 		}
@@ -543,9 +558,9 @@ init_config_info = function($scope, $http){
 					thisObj[read_o_name] = response.data.docbody;
 				else
 					thisObj[read_o_name] = response.data;
-//				console.log(thisObj);
-//				console.log(read_o_name);
-//				console.log(thisObj[read_o_name]);
+				console.log(thisObj);
+				console.log(read_o_name);
+				console.log(thisObj[read_o_name]);
 //				console.log('afterRead_'+read_o_name);
 				if(thisObj['afterRead_'+read_o_name])
 					thisObj['afterRead_'+read_o_name]();
@@ -814,6 +829,22 @@ initTestVariables = function($scope, $http, Blob){
 				}
 			}
 		}
+		,fn_seek_patient:function(){
+			console.log(this.seek_patient);
+			$http.get('/r/read_sql_with_param'
+			, {params:
+				{sql:'sql.medical.seekMspPatient'
+					,q:'%'+this.seek_patient+'%'
+					,msp_id:$scope.principal.user_msp[0].msp_id
+				}
+			})
+			.then(function(response) {
+				console.log(response.data);
+				$scope.config_reception.msp_patients = response.data;
+				console.log($scope.config_reception.msp_patients);
+			});
+			
+		}
 		,patient_data:{}
 		,data_support:{
 			error:{requiredField:{}}
@@ -826,12 +857,10 @@ initTestVariables = function($scope, $http, Blob){
 			}
 		}
 		,seek_msp_patients:function(){
-			var url ='/r/seek_msp_patients';
-			console.log(url);
+			console.log('/r/read_sql_with_param');
 			$http.get('/r/read_sql_with_param'
 			, {params:{sql:'sql.medical.selectPatientByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
 			.then(function(response) {
-				console.log(response.data);
 				$scope.config_reception.msp_patients = response.data;
 				console.log($scope.config_reception.msp_patients);
 			});

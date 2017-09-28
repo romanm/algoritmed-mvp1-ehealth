@@ -1,15 +1,31 @@
+<div class="w3-row" ng-init="cl1=2;cl2=12-cl1">
+	<div class="w3-col m{{cl1}} l{{cl1}} s{{cl1}} w3-right-align">Пошук:</div>
+	<div class="w3-col m{{cl2}} l{{cl2}} s{{cl2}}">
+		<input ng-change="config_reception.fn_seek_patient()"
+			placeholder="Пошук" class="w3-border am-width-100pr"
+			style="width: 90%;"
+			ng-model="config_reception.seek_patient">
+	</div>
+</div>
+<div style="max-height: 160px; overflow: auto;">
+	<table class="w3-table w3-table-all">
+		<!-- 
+	<caption>Пацієнти ЛЗ</caption>
+-->
+		<tr class="w3-small">
+			<th>ПІП</th>
+			<th><i class="fa fa-map-signs" aria-hidden="true"></i> <i
+				title="Декларація" class="fa fa-university" aria-hidden="true"></i></th>
+		</tr>
+		<tr ng-repeat="patient in config_reception.msp_patients.list">
+			<td>{{patient.patient_pib}}</td>
+			<td><i class="fa fa-sign-in" aria-hidden="true"></i> <i
+				title="декларації ще не підписана" class="fa fa-gavel"
+				aria-hidden="true"></i></td>
+		</tr>
+	</table>
+</div>
 
-<table class="w3-table w3-table-all">
-<caption>
-Пацієнти ЛЗ
-</caption>
-	<tr>
-		<th>ПІП</th>
-	</tr>
-	<tr ng-repeat="patient in config_reception.msp_patients.list">
-		<td>{{patient.patient_pib}}</td>
-	</tr>
-</table>
 
 <!-- 
 <div>

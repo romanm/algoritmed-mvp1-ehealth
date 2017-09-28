@@ -355,7 +355,11 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('reception' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		$scope.config_msp_all.opened_dialog='new_patient';
+		initTestAddress($scope, $http, $filter);
+		init_config_info($scope, $http);
+//		$scope.config_msp_all.opened_dialog='new_patient';
+		read_principal($http, $scope, $scope.config_reception, 'seek_msp_patients');
+		$scope.config_info.run_with_principal($scope.config_info.read_msp0_employee);
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
