@@ -236,7 +236,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						$scope.config_info.read_msp_employee(msp_id);
 				}	}
 				,new_doctor:{
-					name:'Зареєструвати нового лікаря'
+					name:'Зареєструвати нового співробітника'
+					,name2:'Зареєструвати нового лікаря'
 				}
 				,opened_card:{
 					name:'Відкрита картка:'
@@ -358,8 +359,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		initTestAddress($scope, $http, $filter);
 		init_config_info($scope, $http);
 //		$scope.config_msp_all.opened_dialog='new_patient';
-		read_principal($http, $scope, $scope.config_reception, 'seek_msp_patients');
-		$scope.config_info.run_with_principal($scope.config_info.read_msp0_employee);
+//		read_principal($http, $scope, $scope.config_reception, 'seek_msp_patients');
+		$scope.config_info.run_with_principal($scope.config_reception.seek_msp_patients);
+		$scope.config_info.run_with_principal($scope.config_info.read_msp0_doctors);
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
@@ -380,7 +382,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 		initTestAddress($scope, $http, $filter);
-		$scope.config_msp_all.opened_dialog='doctors_cards';
+		$scope.config_msp_all.opened_dialog='new_doctor';
+//		$scope.config_msp_all.opened_dialog='doctors_cards';
 		if('doctors_cards'==$scope.config_msp_all.opened_dialog){
 			if(!$scope.principal){ 
 				read_principal($http, $scope

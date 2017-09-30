@@ -30,7 +30,7 @@
 }
 ,"personal-page":{
 	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/personal-page.html'"
+	,"ng_template":"'/f/mvp1/medic/msp2/personal_page/personal-page.html'"
 	,"shortName":"Персональна сторінка"
 	,"shortName2":"Зареєструватись"
 	,"fa":"fa-sign-in"
@@ -39,7 +39,7 @@
 }
 ,"registry":{
 	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/registry.html'"
+	,"ng_template":"'/f/mvp1/medic/msp2/registry.html'"
 	,"shortName":"Персональна сторінка"
 	,"shortName2":"Зареєструватись"
 	,"fa":"fa-sign-in"
@@ -69,7 +69,7 @@
 }
 ,"human-resources-department":{
 	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/human-resources-department.html'"
+	,"ng_template":"'/f/mvp1/medic/msp2/humanRD/human-resources-department.html'"
 	,"shortName":"Відділ кадрів"
 	,"fa":"fa-user"
 	,"parent":"home"

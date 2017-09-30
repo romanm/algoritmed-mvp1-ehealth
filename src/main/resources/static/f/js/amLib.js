@@ -240,7 +240,6 @@ function read_principal($http, $scope, fn_o, fn_p) {
 				$scope.principal = response.data;
 				console.log($scope.principal);
 			}
-			console.log(fn_o);
 			if(fn_o&&fn_p) fn_o[fn_p]();
 		});
 	}else{

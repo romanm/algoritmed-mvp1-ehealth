@@ -50,8 +50,13 @@
 			<div ng-if="!fnPrincipal.hasHumanResourcesRole()">
 				Доступ тільки для відділу кадрів.</div>
 			<div ng-if="fnPrincipal.hasHumanResourcesRole()"
+				ng-include="'/f/mvp1/lib/new_employee.html'"
+				></div>
+				<!-- 
+			<div ng-if="fnPrincipal.hasHumanResourcesRole()"
 				ng-include="'/f/mvp1/medic/msp2/employee/employee.html'"
 				></div>
+				 -->
 		</div>
 		<div ng-if="'doctors_cards'==k && config_msp_all.opened_dialog==k">
 			<div ng-include="'/f/mvp1/medic/msp2/info/info_msp_employee.html'"

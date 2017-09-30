@@ -482,10 +482,15 @@ init_config_info = function($scope, $http){
 	$scope.config_info = {
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
 		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
-		,read_msp0_employee:function(){
+		,read_msp0_doctors:function(){
 			var msp_id = $scope.principal.user_msp[0].msp_id; 
-			$scope.config_info.read_msp_employee(msp_id);
-			console.log(this.msp_employee);
+			//$scope.config_info.read_msp_employee(msp_id);
+			$http.get('/r/read_sql_with_param'
+			, {params:{sql:'sql.medical.selectDoctorByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
+			.then(function(response) {
+				$scope.config_info.msp_doctors = response.data;
+				console.log($scope.config_info.msp_doctors);
+			});
 		}
 		,click_msp:function(msp){
 			this.click_o(
@@ -558,9 +563,9 @@ init_config_info = function($scope, $http){
 					thisObj[read_o_name] = response.data.docbody;
 				else
 					thisObj[read_o_name] = response.data;
-				console.log(thisObj);
-				console.log(read_o_name);
-				console.log(thisObj[read_o_name]);
+//				console.log(thisObj);
+//				console.log(read_o_name);
+//				console.log(thisObj[read_o_name]);
 //				console.log('afterRead_'+read_o_name);
 				if(thisObj['afterRead_'+read_o_name])
 					thisObj['afterRead_'+read_o_name]();

@@ -43,11 +43,11 @@ public class CommonDbRest extends DbAlgoritmed{
 			@RequestParam(value = "sql", required = true) String sql
 			,HttpServletRequest request
 			) {
-		logger.info("\n------46-------\n"
-				+ "/r/update_sql_with_param"
-				+ "\n" + request.getParameterMap()
-				);
 		Map<String, Object> map = sqlParamToMap(sql, request);
+		logger.info("\n------46-------\n"
+				+ "/r/read_sql_with_param"
+				+ "\n" + map
+				);
 		List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(env.getProperty(sql), map);
 		map.put("list", list);
 		return map;

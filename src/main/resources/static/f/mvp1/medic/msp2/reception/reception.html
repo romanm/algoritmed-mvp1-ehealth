@@ -45,9 +45,13 @@
 						<th>Лікарі</th>
 					</tr>
 					<tr
-						ng-repeat="employee in config_info.msp_employee.msp_employee_list">
+						ng-repeat="employee in config_info.msp_doctors.list">
 						<td></td>
-						<td>{{employee.family_name}}</td>
+						<td>
+						{{employee.family_name}}
+						{{employee.first_name}}
+						{{employee.second_name}}
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -55,7 +59,7 @@
 				<table>
 					<tr>
 					<th class="w3-small w3-border"
-						ng-repeat="employee in config_info.msp_employee.msp_employee_list">
+						ng-repeat="employee in config_info.msp_doctors.list">
 						{{employee.family_name}}
 					</th>
 					</tr>
