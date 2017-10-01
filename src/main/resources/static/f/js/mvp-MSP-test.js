@@ -269,9 +269,9 @@ initTestAddress = function($scope, $http, $filter){
 		}
 		,fields_not_edit:['doctype', 'doc_id', 'parent_id', 'created', 'docbody_id', 'updated', 'update_sql']
 		,isNotEditField:function(k){ return !(this.fields_not_edit.indexOf(k)>=0); }
-		,upListElement:function(v, $index){
-			var s_o = v.splice($index,1)[0];
-			v.splice(0,0,s_o);
+		,upListElement:function(list, $index){
+			var s_o = list.splice($index, 1)[0];
+			list.splice(0 ,0 ,s_o);
 		}
 		,toMinusListElement:function(key, index){
 			if(this['index_to_delete_'+key]==index){
@@ -483,8 +483,8 @@ init_config_info = function($scope, $http){
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
 		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
 		,read_msp0_doctors:function(){
-			var msp_id = $scope.principal.user_msp[0].msp_id; 
-			//$scope.config_info.read_msp_employee(msp_id);
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0])
+				return
 			$http.get('/r/read_sql_with_param'
 			, {params:{sql:'sql.medical.selectDoctorByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
 			.then(function(response) {
@@ -863,6 +863,8 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		,seek_msp_patients:function(){
 			console.log('/r/read_sql_with_param');
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0])
+				return
 			$http.get('/r/read_sql_with_param'
 			, {params:{sql:'sql.medical.selectPatientByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
 			.then(function(response) {
