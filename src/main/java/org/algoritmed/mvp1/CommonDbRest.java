@@ -32,9 +32,41 @@ public class CommonDbRest extends DbAlgoritmed{
 		logger.info("\n-------------\n"
 				+ "/r/update_sql_with_param"
 				+ "\n" + data
+				+ "\n" + sql_from_env
 				);
-		int update = db1ParamJdbcTemplate.update(sql_from_env, data);
-		data.put("update", update);
+		if(sql_from_env.contains(";")) {
+			if(data.containsKey("lotOfNewIds")) {
+				int lotOfNewIds = (int) data.get("lotOfNewIds");
+				for (int i = 1; i <= lotOfNewIds; i++) {
+					Integer nextDbId = nextDbId();
+					data.put("nextDbId"+i, nextDbId);
+				}
+				System.err.println(data);
+			}
+			String[] sqls_from_env = sql_from_env.split(";");
+			for (int i = 0; i < sqls_from_env.length; i++) {
+				String sql_command = sqls_from_env[i].trim();
+				System.err.print(sql_command);
+				if(sql_command.length()==0)
+					continue;
+				System.err.print("-"+i+"->");
+				String first_word = sql_command.split(" ")[0];
+				System.err.println(first_word);
+				if("INSERT".equals(first_word)
+				|| "UPDATE".equals(first_word)
+				|| "DELETE".equals(first_word)
+				){
+					int update = db1ParamJdbcTemplate.update(sql_command, data);
+					data.put("update"+i, update);
+				}else if("SELECT".equals(first_word)) {
+					List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(sql_command, data);
+					data.put("list"+i, list);
+				}
+			}
+		}else {
+			int update = db1ParamJdbcTemplate.update(sql_from_env, data);
+			data.put("update", update);
+		}
 		return data;
 	}
 

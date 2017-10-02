@@ -33,15 +33,23 @@
 						version="1.1" viewBox="0 0 15 16" width="15">
 					<path fill-rule="evenodd"
 							d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"></path></svg>
-					черги
+					черги: 
+					<b class="w3-text-blue"> <u>
+							{{basicCalendar.todayDate | date : 'fullDate'}} </u>
+					</b>
 				</div>
 			</div>
 		</header>
 		<div class="w3-row">
 			<div class="w3-col m{{cll1}} l{{cll1}} s{{cll1}}">
 				<table class="w3-table-all">
+					<colgroup>
+						<col>
+						<col  align="right" class="w3-right-align" style="text-align: right;">
+					</colgroup>
 					<tr class="w3-small">
-						<th><i class="fa fa-sign-in" aria-hidden="true"></i></th>
+						<th
+						><i class="fa fa-sign-in" aria-hidden="true"></i></th>
 						<th>Лікарі</th>
 					</tr>
 					<tr class="w3-hover-gray"
@@ -49,19 +57,42 @@
 						ng-click="mvpAddress.config.upListElement(config_info.msp_doctors.list, $index)">
 						<td></td>
 						<td>{{employee.family_name}} {{employee.first_name}}
-							{{employee.second_name}}</td>
+							{{employee.second_name}}
+							</td>
 					</tr>
 				</table>
 			</div>
 			<div class="w3-col m{{cll2}} l{{cll2}} s{{cll2}} w3-card">
-				<table>
-					<tr>
-					<th class="w3-small w3-border"
-						ng-repeat="employee in config_info.msp_doctors.list">
-						{{employee.family_name}}
-					</th>
-					</tr>
-				</table>
+				<div class="w3-responsive">
+					<table>
+						<tr>
+							<th class="w3-small w3-border"
+								ng-repeat="employee in config_info.msp_doctors.list">
+								{{employee.family_name}}</th>
+						</tr>
+						<tr>
+							<td class="w3-border-right" valign="top"
+								ng-repeat="employee in config_info.msp_doctors.list">
+								<div class="w3-hover-gray"
+									ng-repeat="patient in config_reception.queue_today"
+									ng-if="employee.person_id==patient.physitian_id">
+										<span class="w3-btn w3-border w3-red"
+											ng-if="mvpAddress.config['index_to_delete_queue']==$index"
+											ng-click="config_reception.queue.remove_from_queue($index);"
+											title="Справді Видалити запис">-</span> 
+									<span
+										class="w3-tooltip"> {{patient.patient_pib}} <span
+										class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+											<span class="w3-btn"
+											ng-click="mvpAddress.config.toMinusListElement('queue', $index);"
+											title="Видалити запис">-</span>
+									</span>
+									</span>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 

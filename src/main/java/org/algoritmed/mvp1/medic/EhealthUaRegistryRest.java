@@ -118,7 +118,6 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				+ "\n" + data
 				+ "\n" + Integer.MAX_VALUE
 				);
-		
 		persistRootElement(data
 			, DocType.PATIENT.id()
 			);

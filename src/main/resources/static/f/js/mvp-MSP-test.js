@@ -279,6 +279,9 @@ initTestAddress = function($scope, $http, $filter){
 			}else{
 				this['index_to_delete_'+key]=index;
 			}
+			console.log(key)
+			console.log('index_to_delete_'+key)
+			console.log(this)
 		}
 		,minusListElement:function(v, index, key){
 			v.splice(index,1);
@@ -479,6 +482,12 @@ read_dictionaries = function($scope, $http) {
 
 init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
+	$scope.commonDbRest = {
+		update_sql_with_param:function(data,fn){
+			console.log(data);
+			$http.post('/r/update_sql_with_param', data).then(fn);
+		}
+	}
 	$scope.config_info = {
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
 		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
@@ -817,7 +826,39 @@ initTestVariables = function($scope, $http, Blob){
 	$scope.config_all.init('config_personregistry');
 	 * */
 	$scope.config_reception = {
-		dialogs:{
+		queue:{
+			remove_from_queue:function($index){
+				console.log($index)
+				console.log($scope.config_reception.queue_today[$index])
+				console.log($scope.config_reception.queue_today[$index].doc_id)
+				$scope.commonDbRest.update_sql_with_param(
+					{sql:'sql.queue.remove_from_queue'
+						, doc_id:$scope.config_reception.queue_today[$index].doc_id
+					},function(response){
+						console.log(response.data);
+						$scope.config_reception.queue_today = response.data.list2;
+					}
+				);
+			}
+			,add_to_queue:function(patient,employee){
+				console.log(patient)
+				console.log(employee)
+				$scope.commonDbRest.update_sql_with_param(
+					{sql:'sql.queue.add_to_queue'
+						, lotOfNewIds:2
+						, msp_id:$scope.principal.user_msp[0].msp_id
+						, patient_id:patient.patient_id
+						, employee_id:employee.person_id
+					},function(response){
+						console.log(response.data);
+						$scope.config_reception.queue_today = response.data.list2;
+					}
+				);
+			}
+			,fn_queue_today:function(response){
+			}
+		}
+		,dialogs:{
 			seek_patient:{
 				name:'Пошук пацієнта'
 			}
@@ -833,6 +874,19 @@ initTestVariables = function($scope, $http, Blob){
 					console.log($scope.config_reception.patient_data);
 				}
 			}
+		}
+		,fn_queue_today:function(){
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
+			$http.get('/r/read_sql_with_param'
+			, {params:
+				{sql:'sql.queue.queue_today'
+					,msp_id:$scope.principal.user_msp[0].msp_id
+				}
+			})
+			.then(function(response) {
+				console.log(response.data);
+				$scope.config_reception.queue_today = response.data.list;
+			});
 		}
 		,fn_seek_patient:function(){
 			console.log(this.seek_patient);
@@ -863,8 +917,7 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		,seek_msp_patients:function(){
 			console.log('/r/read_sql_with_param');
-			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0])
-				return
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
 			$http.get('/r/read_sql_with_param'
 			, {params:{sql:'sql.medical.selectPatientByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
 			.then(function(response) {
