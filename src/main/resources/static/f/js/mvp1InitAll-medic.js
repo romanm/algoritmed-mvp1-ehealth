@@ -199,14 +199,16 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 			,choose_user_without_msp:function(){
 				$scope.config_info.msp_employee.users={};
-				$http.get('/r/read_sql_with_param', {params:{sql:'sql.without_msp_employee.list'}}
-				).then(function(response) {
+				$scope.commonDbRest.read_sql_with_param(
+				{sql:'sql.without_msp_employee.list'
+				},function(response) {
 					$scope.config_info.msp_employee.msp_employee_list=response.data.list;
 					angular.forEach($scope.config_info.msp_employee.msp_employee_list, function(v, i){
 						$scope.config_info.msp_employee.users[v.person_id]=i;
 					});
-					$http.get('/r/read_sql_with_param', {params:{sql:'sql.without_msp_employee.role.list'}}
-					).then(function(response) {
+					$scope.commonDbRest.read_sql_with_param(
+					{sql:'sql.without_msp_employee.role.list'
+					},function(response) {
 						angular.forEach(response.data.list, function(v, i){
 							var person_id_index = $scope.config_info.msp_employee.users[v.user_id];
 							var person = $scope.config_info.msp_employee.msp_employee_list[person_id_index];
@@ -216,7 +218,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						console.log($scope.config_info.msp_employee.msp_employee_list);
 					});
 				});
-
 			}
 			,dialogs:{
 				doctors_cards:{
@@ -360,7 +361,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		init_config_info($scope, $http);
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
 //		$scope.config_msp_all.opened_dialog='new_patient';
-//		read_principal($http, $scope, $scope.config_reception, 'seek_msp_patients');
 		$scope.config_info.run_with_principal($scope.config_reception.seek_msp_patients);
 		$scope.config_info.run_with_principal($scope.config_reception.fn_queue_today);
 		$scope.config_info.run_with_principal($scope.config_info.read_msp0_doctors);

@@ -84,7 +84,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			var config_object_name = config_obj_key;
 			var config_object = $scope[config_obj_key];
 			$scope.$watch(config_obj_key + '.autoSave.change_count', function(newValue){
-				console.log(config_obj_key + '.autoSave.change_count = ' + newValue);
+//				console.log(config_obj_key + '.autoSave.change_count = ' + newValue);
 //				$scope[obj_autoSave.config_object_name].autoSave.fn_autoSave();
 				config_object.autoSave.fn_autoSave();
 			});
@@ -98,18 +98,16 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		,dbRoles:null
 		,dbRolesMap:{}
 		,fn_readDbRoles:function(){
-//			console.log(this.dbRoles);
 			if(!this.dbRoles){
-//				console.log();
 				var thisObj = this;
-				$http.get('/r/read_sql_with_param', {params:{sql:'sql.roles.select'}}
-				).then(function(response) {
+				$scope.commonDbRest.read_sql_with_param(
+				{sql:'sql.roles.select'
+				},function(response) {
 					thisObj.dbRoles = response.data.list;
-//					console.log(thisObj.dbRoles);
 					angular.forEach(thisObj.dbRoles, function(v, i){
 						thisObj.dbRolesMap[v.role_id] = v;
 					});
-//					console.log(thisObj.dbRolesMap);
+					console.log(thisObj.dbRoles);
 				});
 			}
 		}
@@ -232,9 +230,8 @@ function read_msp_list($http, $scope) {
 }
 
 function read_principal($http, $scope, fn_o, fn_p) {
-	console.log($scope.principal);
 	if(!$scope.principal){
-		console.log('/r/principal');
+//		console.log('/r/principal');
 		$http.get('/r/principal').then(function(response) {
 			if(!$scope.principal){
 				$scope.principal = response.data;

@@ -68,7 +68,7 @@ initTestMvpCalendar = function($scope, $http, $filter, $timeout){
 	};
 	$scope.basicCalendar.todayTime = $scope.basicCalendar.todayDate.getTime();
 	$scope.basicCalendar.init();
-	console.log($scope.basicCalendar);
+//	console.log($scope.basicCalendar);
 }
 
 initTestAddress = function($scope, $http, $filter){
@@ -226,7 +226,7 @@ initTestAddress = function($scope, $http, $filter){
 				console.log(vNew);
 				console.log(a);
 				var keyToKey = {
-					'area':'name'
+					area:'name'
 				}
 				this.setAddressParamaters(vNew, a, keyToKey);
 				$scope.mvpAddress.fn.seekInRegions = null;
@@ -279,9 +279,6 @@ initTestAddress = function($scope, $http, $filter){
 			}else{
 				this['index_to_delete_'+key]=index;
 			}
-			console.log(key)
-			console.log('index_to_delete_'+key)
-			console.log(this)
 		}
 		,minusListElement:function(v, index, key){
 			v.splice(index,1);
@@ -361,8 +358,6 @@ initTestAddress = function($scope, $http, $filter){
 	$scope.mvpAddress.config.date.initYearsLists();
 
 	$scope.mvpAddress.data = {choose:{}, uri_prefix:'/r/gcc'};
-	/*
-	 * */
 	$scope.$watch('mvpAddress.fn.kveds.kvedToEdit', function(newValue){
 		if(!newValue) return;
 		console.log(newValue);
@@ -370,7 +365,7 @@ initTestAddress = function($scope, $http, $filter){
 			= newValue;
 	});
 	$scope.$watch('mvpAddress.fn.seekInRegions', function(newValue){
-		console.log($scope.mvpAddress.data.regions);
+		//console.log($scope.mvpAddress.data.regions);
 		if(!newValue) return;
 		console.log(newValue);
 		console.log($scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address]);
@@ -484,6 +479,7 @@ init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn){
+			//console.log(params);
 			$http.get('/r/read_sql_with_param', {params:params}).then(fn);
 		}
 		,update_sql_with_param:function(data,fn){
@@ -495,13 +491,13 @@ init_config_info = function($scope, $http){
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
 		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
 		,read_msp0_doctors:function(){
-			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0])
-				return
-			$http.get('/r/read_sql_with_param'
-			, {params:{sql:'sql.medical.selectDoctorByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
-			.then(function(response) {
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:'sql.medical.selectDoctorByMsp'
+				, msp_id:$scope.principal.user_msp[0].msp_id
+			},function(response){
 				$scope.config_info.msp_doctors = response.data;
-				console.log($scope.config_info.msp_doctors);
+				//console.log($scope.config_info.msp_doctors);
 			});
 		}
 		,click_msp:function(msp){
@@ -525,8 +521,10 @@ init_config_info = function($scope, $http){
 		,click_msp_employee:function(msp_employee){
 			this.click_o(
 				'msp_employee_selected', msp_employee, '/r/read_docbody/'+msp_employee.person_id, 'msp_employee_doc');
-			$http.get('/r/read_sql_with_param', {params:{sql:'sql.db1.user.msp',user_id:msp_employee.person_id}}
-			).then(function(response) {
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:'sql.db1.user.msp'
+				, user_id:msp_employee.person_id
+			},function(response) {
 				msp_employee.msps_ids = [];
 				msp_employee.msps = response.data.list;
 				angular.forEach(msp_employee.msps, function(v){
@@ -534,13 +532,6 @@ init_config_info = function($scope, $http){
 				});
 				console.log(msp_employee.msps_ids);
 			});
-
-			/*
-			if(this.msp_employee_doc){
-				if(msp_employee.person_id==this.msp_employee_doc.doc_id){
-					$scope.config_msp_all.opened_dialog='opened_card';
-			}	}	
-			 * */
 		}
 		,is_o_selected:function(this_o_selected_name, o){ return this[this_o_selected_name]==o;}
 		,click_o:function(this_o_selected_name, o, url, read_o_name){
@@ -851,9 +842,7 @@ initTestVariables = function($scope, $http, Blob){
 			}
 			,fn_queue_today:function(response){
 				$scope.config_reception.queue_today = response.data.list2;
-				console.log($scope.mvpAddress.config['index_to_delete_queue'])
 				$scope.mvpAddress.config['index_to_delete_queue']=null;
-				console.log($scope.mvpAddress.config['index_to_delete_queue'])
 			}
 		}
 		,dialogs:{
@@ -863,44 +852,42 @@ initTestVariables = function($scope, $http, Blob){
 			,new_patient:{
 				name:'Новий пацієнт'
 				,save:function(){
-					console.log(321);
 					$scope.config_reception.autoSave.fn_httpSave();
 				}
 				,empty_form:function(){
-					console.log($scope.config_reception.patient_data);
 					$scope.config_reception.patient_data={};
-					console.log($scope.config_reception.patient_data);
 				}
 			}
 		}
 		,fn_queue_today:function(){
 			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
-			$http.get('/r/read_sql_with_param'
-			, {params:
-				{sql:'sql.queue.queue_today'
-					,msp_id:$scope.principal.user_msp[0].msp_id
-				}
-			})
-			.then(function(response) {
-				console.log(response.data);
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:'sql.queue.queue_today'
+				, msp_id:$scope.principal.user_msp[0].msp_id
+			},function(response) {
 				$scope.config_reception.queue_today = response.data.list;
 			});
 		}
 		,fn_seek_patient:function(){
-			console.log(this.seek_patient);
-			$http.get('/r/read_sql_with_param'
-			, {params:
-				{sql:'sql.medical.seekMspPatient'
-					,q:'%'+this.seek_patient+'%'
-					,msp_id:$scope.principal.user_msp[0].msp_id
-				}
-			})
-			.then(function(response) {
-				console.log(response.data);
+			//console.log(this.seek_patient);
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:'sql.medical.seekMspPatient'
+				, q:'%'+this.seek_patient+'%'
+				, msp_id:$scope.principal.user_msp[0].msp_id
+			},function(response) {
 				$scope.config_reception.msp_patients = response.data;
-				console.log($scope.config_reception.msp_patients);
+				//console.log($scope.config_reception.msp_patients);
 			});
-			
+		}
+		,seek_msp_patients:function(){
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:'sql.medical.selectPatientByMsp'
+				,msp_id:$scope.principal.user_msp[0].msp_id
+			},function(response) {
+				$scope.config_reception.msp_patients = response.data;
+				//console.log($scope.config_reception.msp_patients);
+			});
 		}
 		,patient_data:{}
 		,data_support:{
@@ -912,16 +899,6 @@ initTestVariables = function($scope, $http, Blob){
 					,second_name:{}
 				}
 			}
-		}
-		,seek_msp_patients:function(){
-			console.log('/r/read_sql_with_param');
-			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
-			$http.get('/r/read_sql_with_param'
-			, {params:{sql:'sql.medical.selectPatientByMsp',msp_id:$scope.principal.user_msp[0].msp_id}})
-			.then(function(response) {
-				$scope.config_reception.msp_patients = response.data;
-				console.log($scope.config_reception.msp_patients);
-			});
 		}
 		,validToSave:true
 		,autoSave:{
@@ -949,7 +926,6 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_reception');
-	console.log($scope.config_reception);
 	$scope.config_declaration = {
 		autoSave:{
 			fn_httpSave:function(){

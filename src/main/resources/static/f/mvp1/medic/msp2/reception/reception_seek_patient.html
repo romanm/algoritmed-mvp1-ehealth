@@ -12,10 +12,6 @@
 </div>
 <div style="max-height: 160px; overflow: auto;">
 	<table class="w3-table-all">
-		
-		<!-- 
-	<caption>Пацієнти ЛЗ</caption>
--->
 		<tr class="w3-small">
 			<th>ПІП</th>
 			<th class="w3-right"
@@ -23,7 +19,9 @@
 				title="Декларація" class="fa fa-university" aria-hidden="true"></i></th>
 		</tr>
 		<tr ng-repeat="patient in config_reception.msp_patients.list">
-			<td class="w3-tooltip">{{patient.patient_pib}} <span
+			<td class="w3-tooltip">
+				<span ng-bind-html="highlight(patient.patient_pib, config_reception.seek_patient)"></span>
+			<span
 				class="w3-text"> <span class="w3-dropdown-hover"> <i
 					class="fa fa-map-signs" aria-hidden="true"></i>
 					<div class="w3-dropdown-content w3-border">
