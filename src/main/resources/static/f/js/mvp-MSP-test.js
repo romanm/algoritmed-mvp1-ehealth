@@ -483,8 +483,11 @@ read_dictionaries = function($scope, $http) {
 init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
 	$scope.commonDbRest = {
-		update_sql_with_param:function(data,fn){
-			console.log(data);
+		read_sql_with_param:function(params,fn){
+			$http.get('/r/read_sql_with_param', {params:params}).then(fn);
+		}
+		,update_sql_with_param:function(data,fn){
+			//console.log(data);
 			$http.post('/r/update_sql_with_param', data).then(fn);
 		}
 	}
@@ -828,34 +831,29 @@ initTestVariables = function($scope, $http, Blob){
 	$scope.config_reception = {
 		queue:{
 			remove_from_queue:function($index){
-				console.log($index)
-				console.log($scope.config_reception.queue_today[$index])
-				console.log($scope.config_reception.queue_today[$index].doc_id)
 				$scope.commonDbRest.update_sql_with_param(
 					{sql:'sql.queue.remove_from_queue'
 						, doc_id:$scope.config_reception.queue_today[$index].doc_id
-					},function(response){
-						console.log(response.data);
-						$scope.config_reception.queue_today = response.data.list2;
 					}
+					,$scope.config_reception.queue.fn_queue_today
 				);
 			}
 			,add_to_queue:function(patient,employee){
-				console.log(patient)
-				console.log(employee)
 				$scope.commonDbRest.update_sql_with_param(
 					{sql:'sql.queue.add_to_queue'
 						, lotOfNewIds:2
 						, msp_id:$scope.principal.user_msp[0].msp_id
 						, patient_id:patient.patient_id
 						, employee_id:employee.person_id
-					},function(response){
-						console.log(response.data);
-						$scope.config_reception.queue_today = response.data.list2;
 					}
+					,$scope.config_reception.queue.fn_queue_today
 				);
 			}
 			,fn_queue_today:function(response){
+				$scope.config_reception.queue_today = response.data.list2;
+				console.log($scope.mvpAddress.config['index_to_delete_queue'])
+				$scope.mvpAddress.config['index_to_delete_queue']=null;
+				console.log($scope.mvpAddress.config['index_to_delete_queue'])
 			}
 		}
 		,dialogs:{
