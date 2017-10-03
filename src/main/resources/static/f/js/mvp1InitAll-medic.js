@@ -351,24 +351,21 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('admin-msp' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		initTestAddress($scope, $http, $filter);
 		$scope.config_msp_all.opened_dialog='msp_data_form';
 		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 	}else
 	if('reception' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		initTestAddress($scope, $http, $filter);
-		init_config_info($scope, $http);
+		//init_config_info($scope, $http);
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
 //		$scope.config_msp_all.opened_dialog='new_patient';
 		$scope.config_info.run_with_principal($scope.config_reception.seek_msp_patients);
 		$scope.config_info.run_with_principal($scope.config_reception.fn_queue_today);
-		$scope.config_info.run_with_principal($scope.config_info.read_msp0_doctors);
+		//$scope.config_info.run_with_principal($scope.config_info.read_msp0_doctors);
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		initTestAddress($scope, $http, $filter);
-		init_config_info($scope, $http);
+		//init_config_info($scope, $http);
 		$scope.config_msp_all.opened_dialog='personal_data';
 //		$scope.config_msp_all.opened_dialog='personal_area';
 		console.log($scope.config_msp_all.opened_dialog);
@@ -383,7 +380,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	|| 'human-resources-department' == $scope.pagePath.last()
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
-		initTestAddress($scope, $http, $filter);
 		$scope.config_msp_all.opened_dialog='new_doctor';
 //		$scope.config_msp_all.opened_dialog='doctors_cards';
 		if('doctors_cards'==$scope.config_msp_all.opened_dialog){
@@ -404,10 +400,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('info' == $scope.pagePath.last()){
 		console.log('----------info-------------- ');
 		init_info($scope, $http);
-		initTestAddress($scope, $http, $filter);
 	}else
 	if('testMvpAddress' == $scope.pagePath.last()){
-		initTestAddress($scope, $http, $filter);
 	}else
 	if('protocol' == $scope.pagePath.last()){
 	console.log('----initAll-----------' + $scope.pagePath.last());

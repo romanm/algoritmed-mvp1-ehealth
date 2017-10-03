@@ -497,7 +497,7 @@ init_config_info = function($scope, $http){
 				, msp_id:$scope.principal.user_msp[0].msp_id
 			},function(response){
 				$scope.config_info.msp_doctors = response.data;
-				//console.log($scope.config_info.msp_doctors);
+				console.log($scope.config_info.msp_doctors);
 			});
 		}
 		,click_msp:function(msp){
@@ -579,7 +579,7 @@ init_config_info = function($scope, $http){
 
 init_info = function($scope, $http){
 	read_msp_list($http, $scope);
-	init_config_info($scope, $http);
+	//init_config_info($scope, $http);
 }
 
 initTestVariables = function($scope, $http, Blob){

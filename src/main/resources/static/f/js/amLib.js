@@ -219,7 +219,10 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		read_dictionaries($scope, $http);
 	}
 	
-	read_principal($http, $scope);
+	//read_principal($http, $scope);
+	initTestAddress($scope, $http, $filter);
+	init_config_info($scope, $http);
+	$scope.config_info.run_with_principal($scope.config_info.read_msp0_doctors);
 }
 
 function read_msp_list($http, $scope) {
