@@ -822,28 +822,34 @@ initTestVariables = function($scope, $http, Blob){
 	$scope.config_reception = {
 		queue:{
 			remove_from_queue:function($index){
-				$scope.commonDbRest.update_sql_with_param(
-					{sql:'sql.queue.remove_from_queue'
-						, doc_id:$scope.config_reception.queue_today[$index].doc_id
-					}
-					,$scope.config_reception.queue.fn_queue_today
-				);
-			}
+				var params ={sql:'sql.queue.remove_from_queue'
+					, doc_id:$scope.config_reception.queue_today[$index].doc_id
+					, msp_id:$scope.principal.user_msp[0].msp_id
+				};
+				$scope.config_reception.queue.add_seek_queue_date_params(params, new Date());
+				$scope.commonDbRest.update_sql_with_param(params ,$scope.config_reception.queue.fn_queue_today);
+			} 
 			,add_to_queue:function(patient,employee){
-				$scope.commonDbRest.update_sql_with_param(
-					{sql:'sql.queue.add_to_queue'
-						, lotOfNewIds:2
-						, msp_id:$scope.principal.user_msp[0].msp_id
-						, patient_id:patient.patient_id
-						, employee_id:employee.person_id
-					}
-					,$scope.config_reception.queue.fn_queue_today
-				);
+				var currentDate = new Date();
+				var params = {sql:'sql.queue.add_to_queue'
+					, lotOfNewIds:2
+					, msp_id:$scope.principal.user_msp[0].msp_id
+					, patient_id:patient.patient_id
+					, employee_id:employee.person_id
+					, begin_queue:currentDate
+				}
+				$scope.config_reception.queue.add_seek_queue_date_params(params, currentDate);
+				$scope.commonDbRest.update_sql_with_param(params ,$scope.config_reception.queue.fn_queue_today);
 			}
 			,fn_queue_today:function(response){
-				$scope.config_reception.queue_today = response.data.list2;
+				$scope.config_reception.queue_today = response.data.list3;
 				$scope.mvpAddress.config['index_to_delete_queue']=null;
 			}
+			,add_seek_queue_date_params:function(params,date){
+				params.begin_queue_year = date.getFullYear();
+				params.begin_queue_month = 1 + date.getMonth();
+				params.begin_queue_dayOfMonth = date.getDate();
+			} 
 		}
 		,dialogs:{
 			seek_patient:{
@@ -861,11 +867,15 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		,fn_queue_today:function(){
 			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
-			$scope.commonDbRest.read_sql_with_param(
-			{sql:'sql.queue.queue_today'
+			var params = {sql:'sql.queue.queue_today'
 				, msp_id:$scope.principal.user_msp[0].msp_id
-			},function(response) {
+			};
+			$scope.config_reception.queue.add_seek_queue_date_params(params, new Date());
+			$scope.commonDbRest.read_sql_with_param(params
+			,function(response) {
+				console.log(response.data);
 				$scope.config_reception.queue_today = response.data.list;
+				console.log($scope.config_reception.queue_today);
 			});
 		}
 		,fn_seek_patient:function(){

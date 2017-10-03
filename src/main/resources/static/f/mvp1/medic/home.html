@@ -29,7 +29,12 @@
 				<!-- 
 			<i class="fa fa-address-book" aria-hidden="true"></i>
 			 -->
-				Запис пацієнта на прийом
+				<span ng-if="!fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+					Запис пацієнта на прийом </span>
+				<a 
+				href="/v/reception"
+				ng-if="fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+					Запис пацієнта на прийом </a>
 			</div>
 			<div class="w3-bar-item w3-hover-gray"
 				ng-click="openUrl('/v/testMvpCalendar')">
@@ -48,20 +53,13 @@
 					<i class="fa fa-wrench w3-orange" aria-hidden="true"></i>
 					Кабінет лікуючого лікаря
 				</header>
-				<ul class="w3-ul"
-					ng-if="config_info.msp_doctors"	
-				>
+				<ul class="w3-ul" ng-if="config_info.msp_doctors">
 					<li ng-repeat="d in config_info.msp_doctors.list"
 						class="w3-hover-gray"><a
 						href="/v/cabinet?doctor_index={{$index}}&x=y">
-							{{d.family_name}}
-							{{d.first_name}}
-							{{d.second_name}}
-						</a></li>
+							{{d.family_name}} {{d.first_name}} {{d.second_name}} </a></li>
 				</ul>
-				<ul class="w3-ul"
-					ng-if="!config_info.msp_doctors"	
-				>
+				<ul class="w3-ul" ng-if="!config_info.msp_doctors">
 					<li ng-repeat="d in config_msp_all.doctor_list"
 						class="w3-hover-gray"><a
 						href="/v/cabinet?doctor_index={{$index}}&x=y"> {{d.name}} </a></li>

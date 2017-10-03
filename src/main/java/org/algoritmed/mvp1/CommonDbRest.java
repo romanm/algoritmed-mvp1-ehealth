@@ -90,6 +90,7 @@ public class CommonDbRest extends DbAlgoritmed{
 		String sql_from_env = env.getProperty(sql);
 		map.put(sql, sql_from_env);
 		Map<String, String[]> parameterMap = request.getParameterMap();
+		System.err.println("---93--------");
 		System.err.println(parameterMap.keySet());
 		map.put("parameterMap", parameterMap);
 		for (String key : parameterMap.keySet()) {

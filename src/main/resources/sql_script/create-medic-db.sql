@@ -96,3 +96,11 @@ CREATE TABLE "icd10uatree" (
 	, FOREIGN KEY (icd10uatree_parent_id) REFERENCES icd10uatree(icd10uatree_id)
 ) ;
 
+CREATE TABLE queue_timestamp (
+	queue_timestamp_id INT PRIMARY KEY
+ 	,begin_queue TIMESTAMP
+ 	,begin_physician TIMESTAMP
+ 	,end_physician TIMESTAMP
+  , CONSTRAINT doc_queue_timestamp FOREIGN KEY (queue_timestamp_id) REFERENCES doc(doc_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
