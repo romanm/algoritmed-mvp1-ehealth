@@ -4,14 +4,13 @@
  -->
 Регістратура</h2>
 <div class="w3-container">
-	<div class="w3-row" ng-init="col1=7;col2=12-col1">
-		<div class="w3-col m{{col1}} l{{col1}} s{{col1}} w3-card">
-			<header class="w3-light-gray w3-small"> 
-			<!-- 
-			<i class="fa fa-group"></i>
-			 -->
-			Список пацієнтів ЛЗ</header>
-			<div ng-include="'/f/mvp1/medic/msp2/reception/reception_seek_patient.html'"></div>
+
+	<div class="w3-row" ng-init="col1=7;col2=12-col1"
+	ng-if="fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')"
+	>
+		<div class="w3-col m{{col1}} l{{col1}} s{{col1}}">
+			<div class="w3-card"
+				ng-include="'/f/mvp1/lib/patient_list_seek.html'"></div>
 		</div>
 		<div class="w3-col m{{col2}} l{{col2}} s{{col2}} w3-container">
 			<header class="w3-light-gray w3-small">
@@ -20,6 +19,8 @@
 			<div ng-include="'/f/mvp1/medic/msp2/reception/reception_new_patient.html'"></div>
 		</div>
 	</div>
+	
+	
 	<div>&nbsp;</div>
 	<div ng-init="cll1=4;cll2=12-cll1">
 		<header class="w3-light-gray w3-small">
@@ -74,18 +75,20 @@
 							<td class="w3-border-right" valign="top"
 								ng-repeat="employee in config_info.msp_doctors.list">
 								<div class="w3-hover-gray"
-									ng-repeat="patient in config_reception.queue_today"
-									ng-if="employee.person_id==patient.physitian_id">
+										ng-repeat="patient in config_reception.queue_today"
+										ng-if="employee.person_id==patient.physitian_id">
+									<span ng-if="!fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">{{patient.patient_pib}}</span>
+									<span ng-if="fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
 										<span class="w3-btn w3-border w3-red"
-											ng-if="mvpAddress.config['index_to_delete_queue']==$index"
-											ng-click="config_reception.queue.remove_from_queue($index);"
-											title="Справді Видалити запис">-</span> 
-									<span
+										ng-if="mvpAddress.config['index_to_delete_queue']==$index"
+										ng-click="config_reception.queue.remove_from_queue($index);"
+										title="Справді Видалити запис">-</span> <span
 										class="w3-tooltip"> {{patient.patient_pib}} <span
-										class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
-											<span class="w3-btn"
-											ng-click="mvpAddress.config.toMinusListElement('queue', $index);"
-											title="Видалити запис">-</span>
+											class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+												<span class="w3-btn"
+												ng-click="mvpAddress.config.toMinusListElement('queue', $index);"
+												title="Видалити запис">-</span>
+										</span>
 									</span>
 									</span>
 								</div>

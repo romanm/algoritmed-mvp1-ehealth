@@ -497,7 +497,7 @@ init_config_info = function($scope, $http){
 				, msp_id:$scope.principal.user_msp[0].msp_id
 			},function(response){
 				$scope.config_info.msp_doctors = response.data;
-				console.log($scope.config_info.msp_doctors);
+				//console.log($scope.config_info.msp_doctors);
 			});
 		}
 		,click_msp:function(msp){
@@ -872,8 +872,8 @@ initTestVariables = function($scope, $http, Blob){
 			};
 			$scope.config_reception.queue.add_seek_queue_date_params(params, new Date());
 			$scope.commonDbRest.read_sql_with_param(params
-			,function(response) {
-				console.log(response.data);
+			,function(response){
+				//console.log(response.data);
 				$scope.config_reception.queue_today = response.data.list;
 				console.log($scope.config_reception.queue_today);
 			});

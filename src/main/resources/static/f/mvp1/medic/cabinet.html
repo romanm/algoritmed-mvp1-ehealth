@@ -1,19 +1,84 @@
-<div class="w3-container">
+<div class="w3-container"
+ ng-init="user=principal.user;"
+>
 	<div class="w3-panel" style="margin-bottom: 0;">
 		<div class="w3-left">
 			<div class="w3-large">
-				<span class="w3-text-light-gray"> Робочий кабінет лікаря </span>
-				{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}
+				<span class="w3-text-light-gray"> Робочий кабінет лікаря </span> 
+				<span ng-if="!principal.user">
+					{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}} </span> 
+				<span ng-if="principal.user"
+					ng-include="'/f/mvp1/lib/user_name.html'"> </span>
 			</div>
 		</div>
 		<div class="w3-right w3-small">
-			<a href="/v/testMvpCalendar"> Календар </a>
+			<span class="w3-dropdown-hover">
+				<button class="w3-button w3-white">
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</button>
+				<div class="w3-dropdown-content w3-bar-block w3-border">
+					<a href="/v/reception" class="w3-bar-item w3-button">регістратура</a>
+				</div>
+			</span> <a href="/v/testMvpCalendar"> Календар </a>
+		</div>
+	</div>
+	<div class="w3-row" ng-init="col1=6;col2=12-col1"
+		ng-if="principal.user">
+		<div class="w3-col m{{col1}} l{{col1}} s{{col1}} w3-container">
+			<div class="w3-card">
+				<header class="w3-light-gray w3-small">
+					<svg aria-hidden="true" class="octicon octicon-project" height="16"
+						version="1.1" viewBox="0 0 15 16" width="15">
+					<path fill-rule="evenodd"
+							d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"></path></svg>
+					черга: <b class="w3-text-blue"> <u>
+							{{basicCalendar.todayDate | date : 'fullDate'}} </u>
+					</b>
+				</header>
+				<table>
+					<tr>
+						<th class="w3-small w3-border">
+							{{user.family_name}}</th>
+					</tr>
+					<tr>
+						<td class="w3-border-right" valign="top">
+							<div class="w3-hover-gray"
+								ng-repeat="patient in config_reception.queue_today"
+								ng-if="user.person_id==patient.physitian_id">
+								<span class="w3-btn w3-border w3-red"
+									ng-if="mvpAddress.config['index_to_delete_queue']==$index"
+									ng-click="config_reception.queue.remove_from_queue($index);"
+									title="Справді Видалити запис">-</span> 
+								<span class="w3-tooltip"> <a href="/v/patient?id={{patient.patient_id}}"
+									ng-if="!fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+										{{patient.patient_pib}} 
+										</a> <span
+									ng-if="fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+										{{patient.patient_pib}} </span> 
+									<span
+										class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+											<span class="w3-btn"
+											ng-click="mvpAddress.config.toMinusListElement('queue', $index);"
+											title="Видалити запис">-</span>
+									</span>
+								</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="w3-col m{{col2}} l{{col2}} s{{col2}}">
+			<div class="w3-card"
+				ng-include="'/f/mvp1/lib/patient_list_seek.html'"></div>
 		</div>
 	</div>
 	<!-- 
 	<div ng-include="'/f/mvp1/medic/menu-cabinet.html'"></div>
 	 -->
-	<div class="w3-row-padding w3-margin-top">
+	<div class="w3-row-padding w3-margin-top"
+		ng-if="!principal.user"
+	>
 		<div class="w3-third">
 			<div class="w3-card-2">
 				<header class="w3-container w3-light-grey w3-tiny">Прийом

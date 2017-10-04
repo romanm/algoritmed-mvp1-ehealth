@@ -579,15 +579,19 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 		}
 
-		$http.get('/r/medical/patients').then(
-			function(response) {
-				$scope.medicPatients = response.data.medicPatients;
-				console.log($scope.medicPatients);
+		initTestMvpCalendar($scope, $http, $filter, $timeout);
+		initTestVariables($scope, $http, Blob);
+		$scope.config_info.run_with_principal($scope.config_reception.fn_queue_today);
+		$scope.config_info.run_with_principal($scope.config_reception.seek_msp_patients);
+		$scope.config_info.run_with_principal(function(){
+			if(!$scope.principal.user){
+				$http.get('/r/medical/patients').then(
+				function(response) {
+					$scope.medicPatients = response.data.medicPatients;
+					console.log($scope.medicPatients);
+				});
 			}
-			, function(response) {
-				console.log(response);
-			}
-		);
+		});
 	}else{
 	}
 	

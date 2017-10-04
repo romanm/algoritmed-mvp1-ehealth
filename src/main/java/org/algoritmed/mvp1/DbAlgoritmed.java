@@ -183,10 +183,10 @@ public class DbAlgoritmed {
 		System.err.println(data);
 		System.err.println("------127-----------");
 		System.err.println(sql_doc_insert
-				.replace(":"+"doc_id", ""+data.get("doc_id"))
-				.replace(":"+"doctype", ""+data.get("doctype"))
-				.replace(":"+"parent_id", ""+data.get("parent_id"))
-				);
+			.replace(":"+"doc_id", ""+data.get("doc_id"))
+			.replace(":"+"doctype", ""+data.get("doctype"))
+			.replace(":"+"parent_id", ""+data.get("parent_id"))
+		);
 		int update = db1ParamJdbcTemplate.update(sql_doc_insert, data);
 		int update2 = db1ParamJdbcTemplate.update(sql_doctimestamp_insert, data);
 		if(data.containsKey("reference")){

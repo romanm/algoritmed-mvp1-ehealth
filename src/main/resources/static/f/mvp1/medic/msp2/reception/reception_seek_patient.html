@@ -25,13 +25,17 @@
 				class="w3-text"> <span class="w3-dropdown-hover"> <i
 					class="fa fa-map-signs" aria-hidden="true"></i>
 					<div class="w3-dropdown-content w3-border">
-					<!-- додати в чергу до лікаря -->
-						<span class="w3-small w3-border w3-hover-gray"
-							ng-repeat="employee in config_info.msp_doctors.list"
-						ng-click="config_reception.queue.add_to_queue(patient,employee)"
-							>
-							{{employee.family_name}} </span> 
-					</div>
+							<!-- додати в чергу до лікаря -->
+							<span ng-if="!fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')"><span class="w3-small w3-border w3-hover-gray"
+								ng-click="config_reception.queue.add_to_queue(patient,user)">
+									{{user.family_name}} </span></span>
+							<span ng-if="fnPrincipal.hasRole('ROLE_REGISTRY_NURSE')">
+								<span class="w3-small w3-border w3-hover-gray"
+								ng-repeat="employee in config_info.msp_doctors.list"
+								ng-click="config_reception.queue.add_to_queue(patient,employee)">
+									{{employee.family_name}} </span>
+							</span>
+						</div>
 				</span>
 			</span>
 			</td>
