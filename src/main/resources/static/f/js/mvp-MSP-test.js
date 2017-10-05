@@ -479,7 +479,7 @@ init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn){
-			//console.log(params);
+			console.log(params);
 			$http.get('/r/read_sql_with_param', {params:params}).then(fn);
 		}
 		,update_sql_with_param:function(data,fn){
@@ -937,7 +937,26 @@ initTestVariables = function($scope, $http, Blob){
 	}
 	$scope.config_all.init('config_reception');
 	$scope.config_declaration = {
-		read_declaration_template:function(){
+		read_declaration:function(){
+			var physician_id = $scope.principal.user_id;
+			if($scope.param.id && $scope.principal.user_id){
+				console.log("read declaration if exist");
+				console.log(physician_id);
+				console.log($scope.param.id);
+				$scope.commonDbRest.read_sql_with_param(
+				{sql:'sql.declaration.read_declaration'
+					, physician_id:$scope.principal.user_id
+					, patient_id:$scope.param.id
+				}, function(response) {
+					$scope.db_doc_declaration = response.data;
+					$scope.doc_declaration = $scope.db_doc_declaration.docbody.docbody;
+					console.log($scope.doc_declaration);
+				});
+			}else{
+				$scope.config_declaration.read_declaration_template();
+			}
+		}
+		,read_declaration_template:function(){
 			var url_declaration = '/f/config/msp/declaration.json';
 			console.log(url_declaration);
 			$http.get(url_declaration).then(function(response){
@@ -956,16 +975,18 @@ initTestVariables = function($scope, $http, Blob){
 				console.log('--config_declaration.autoSave.fn_httpSave--------------');
 				console.log($scope.patientById);
 				var data = {};
-				if($scope.doc_declaration.docbody_id){
+				if($scope.db_doc_declaration.docbody.declaration_id){
 					data = { sql:		'sql.declaration.add_to_declaration'
-						, docbody_id:	$scope.doc_declaration.docbody_id
 						, docbodyMap:	$scope.doc_declaration
+						, docbody_id:	$scope.db_doc_declaration.docbody.declaration_id
+						, patient_id:	$scope.patientById.patient_id
+						, physician_id:	$scope.principal.user_id
 					};
 				}else{//insert
 					data = { sql:		'sql.declaration.insert_declaration'
+						, docbodyMap:	$scope.doc_declaration
 						, patient_id:	$scope.patientById.patient_id
 						, physician_id:	$scope.principal.user_id
-						, docbodyMap:	$scope.doc_declaration
 						, lotOfNewIds:	1
 					};
 				}
@@ -973,6 +994,9 @@ initTestVariables = function($scope, $http, Blob){
 				//$http.post('/r/saveDeclaration', data).then(function(response) {
 				$http.post('/r/update_sql_with_param', data).then(function(response) {
 					console.log(response.data);
+					console.log(response.data.nextDbId1);
+					if(response.data.nextDbId1)
+						$scope.doc_declaration.docbody_id = response.data.nextDbId1;
 				});
 			}
 		}

@@ -55,17 +55,21 @@ public class CommonDbRest extends DbAlgoritmed{
 				if(sql_command.length()==0)
 					continue;
 				System.err.print("-"+i+"->");
-				String first_word = sql_command.split(" ")[0];
+				String[] split = sql_command.split(" ");
+				String first_word = split[0];
 				System.err.println(first_word);
 				if("INSERT".equals(first_word)
 				|| "UPDATE".equals(first_word)
 				|| "DELETE".equals(first_word)
 				){
+					if("docbody".equals(split[1])) {
+						String docbody = objectToString(data.get("docbodyMap"));
+						data.put("docbody", docbody);
+					}
 					int update = db1ParamJdbcTemplate.update(sql_command, data);
 					data.put("update"+i, update);
 				}else if("SELECT".equals(first_word)) {
-					List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(sql_command, data);
-					data.put("list"+i, list);
+					read_select(data, sql_command, i);
 				}
 			}
 		}else {
@@ -73,6 +77,22 @@ public class CommonDbRest extends DbAlgoritmed{
 			data.put("update", update);
 		}
 		return data;
+	}
+
+	private void read_select(Map<String, Object> data, String sql_command, Integer i) {
+		String nr = null==i?"":(""+i);
+		System.err.println(sql_command);
+		System.err.println(sql_command.indexOf("SELECT 'docbody' datatype"));
+		if(sql_command.indexOf("SELECT 'docbody' datatype")==0) {
+			Map<String, Object> docbodyMap = db1ParamJdbcTemplate.queryForMap(sql_command, data);
+			String docbodyStr = (String) docbodyMap.get("docbody");
+			Map<String, Object> docbodyStr2Map = stringToMap(docbodyStr);
+			docbodyMap.put("docbody", docbodyStr2Map);
+			data.put("docbody"+nr, docbodyMap);
+		}else{
+			List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(sql_command, data);
+			data.put("list"+nr, list);
+		}
 	}
 
 	@GetMapping("/r/read_sql_with_param")
@@ -85,8 +105,9 @@ public class CommonDbRest extends DbAlgoritmed{
 				+ "/r/read_sql_with_param"
 				+ "\n" + map
 				);
-		List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(env.getProperty(sql), map);
-		map.put("list", list);
+		read_select(map, env.getProperty(sql), null);
+//		List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(env.getProperty(sql_command), map);
+//		map.put("list", list);
 		return map;
 	}
 

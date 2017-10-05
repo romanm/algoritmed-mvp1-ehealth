@@ -413,7 +413,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	||'moz-declaration' == $scope.pagePath.last()
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
-		$scope.config_declaration.read_declaration_template();
+		$scope.config_info.run_with_principal($scope.config_declaration.read_declaration);
 	}else
 	if('info' == $scope.pagePath.last()){
 		console.log('----------info-------------- ');
