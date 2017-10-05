@@ -937,14 +937,42 @@ initTestVariables = function($scope, $http, Blob){
 	}
 	$scope.config_all.init('config_reception');
 	$scope.config_declaration = {
-		autoSave:{
+		read_declaration_template:function(){
+			var url_declaration = '/f/config/msp/declaration.json';
+			console.log(url_declaration);
+			$http.get(url_declaration).then(function(response){
+				console.log(response.data);
+				$scope.doc_declaration = response.data.data[0];
+				var ad = $scope.doc_declaration.legal_entity.addresses[0];
+				$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
+				console.log($scope.doc_declaration.person.address);
+				$scope.doc_declaration.person.registry={};
+				$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
+				console.log($scope.doc_declaration.person.registry);
+			});
+		}
+		,autoSave:{
 			fn_httpSave:function(){
 				console.log('--config_declaration.autoSave.fn_httpSave--------------');
-				$http.post('/r/saveDeclaration', $scope.doc_declaration).then(function(response) {
+				console.log($scope.patientById);
+				var data = {};
+				if($scope.doc_declaration.docbody_id){
+					data = { sql:		'sql.declaration.add_to_declaration'
+						, docbody_id:	$scope.doc_declaration.docbody_id
+						, docbodyMap:	$scope.doc_declaration
+					};
+				}else{//insert
+					data = { sql:		'sql.declaration.insert_declaration'
+						, patient_id:	$scope.patientById.patient_id
+						, physician_id:	$scope.principal.user_id
+						, docbodyMap:	$scope.doc_declaration
+						, lotOfNewIds:	1
+					};
+				}
+				console.log(data);
+				//$http.post('/r/saveDeclaration', data).then(function(response) {
+				$http.post('/r/update_sql_with_param', data).then(function(response) {
 					console.log(response.data);
-					if(!$scope.doc_declaration.doc_id){
-						$scope.doc_declaration.doc_id = response.data.doc_id
-					}
 				});
 			}
 		}

@@ -1,9 +1,24 @@
 <div class="w3-panel" style="margin-bottom: 0;">
-	<div class="w3-left">Кабінет лікаря:
-		{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}</div>
-	<div class="w3-right w3-small" >
-		<span ng-repeat="cp in config_msp_all.cabinet_part_list"> <a
-			href="{{cp.url}}">{{cp.name}}</a> {{$last?'':'|'}}
-		</span> 
+	<div class="w3-left">
+		<span class="w3-text-light-gray"> лікар: </span> 
+		<span class="w3-orange" ng-if="!principal.user">
+			{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}} </span> 
+		<span ng-if="principal.user"> {{principal.user.family_name}} </span>
+		<span
+			style="white-space: nowrap"> <u class="w3-text-light-gray">пацієнт:</u> <span class="">
+				{{patientById.patient_pib}} </span>
+		</span>
+	</div>
+	<div class="w3-right w3-small w3-light-grey">
+		<span ng-repeat="cp in config_msp_all.cabinet_part_list"> 
+			<a class="w3-bar-item w3-hover-grey" 
+			ng-class="{'w3-green':config_msp_all.cabinet_part_selected(cp)}"
+			href="{{cp.url}}&id={{param.id}}
+			"> <i
+				ng-if="cp.fa" class="fa {{cp.fa}}" aria-hidden="true"></i>
+				{{cp.name}}
+			</a> 
+		{{$last?'':'|'}}
+		</span>
 	</div>
 </div>

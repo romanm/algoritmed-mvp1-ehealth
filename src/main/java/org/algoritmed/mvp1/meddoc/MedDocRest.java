@@ -79,7 +79,6 @@ public class MedDocRest extends DbAlgoritmed{
 	}
 
 	private @Value("${sql.meddoc.protocol.name.update}") String sqlMeddocProtocolNameUpdate;
-	private @Value("${sql.meddoc.docbody.update}") String sqlMeddocDocbodyUpdate;
 	@PostMapping("/r/saveProtocol")
 	public @ResponseBody Map<String, Object> saveProtocol(
 			@RequestBody Map<String, Object> dbSaveObj1
@@ -102,6 +101,7 @@ public class MedDocRest extends DbAlgoritmed{
 					+ "\n" + dbSaveObj2 
 					);
 			int update = db1ParamJdbcTemplate.update(sqlMeddocProtocolNameUpdate, map);
+			String sqlMeddocDocbodyUpdate = env.getProperty("sql.meddoc.docbody.update");
 			int update2 = db1ParamJdbcTemplate.update(sqlMeddocDocbodyUpdate, map);
 		}else{//insert
 			dbId = nextDbId();

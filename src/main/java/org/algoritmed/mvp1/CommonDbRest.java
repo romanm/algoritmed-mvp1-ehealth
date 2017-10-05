@@ -35,6 +35,11 @@ public class CommonDbRest extends DbAlgoritmed{
 				+ "\n" + sql_from_env
 				);
 		if(sql_from_env.contains(";")) {
+			if(data.containsKey("docbodyMap")) {
+				Map<String,Object> docbodyMap = (Map<String, Object>) data.get("docbodyMap");
+				String docbody = objectToString(docbodyMap);
+				data.put("docbody", docbody);
+			}
 			if(data.containsKey("lotOfNewIds")) {
 				int lotOfNewIds = (int) data.get("lotOfNewIds");
 				for (int i = 1; i <= lotOfNewIds; i++) {

@@ -30,17 +30,16 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
 
 	/**
-	 * SQL select для зчитування всіх пацієнтів медіка
-	 */
-	private @Value("${sql.medical.selectPatients}") String sqlMedicalSelectPatients;
-	
-	/**
 	 * Зчитування всіх пацієнтів медичної установи
 	 * @return Map об'єкт що містить всіх пацієнтів медіка
 	 */
 	@GetMapping(value = "/r/medical/patients")
 	public @ResponseBody Map<String, Object>  patients() {
 		Map<String, Object> map = new HashMap<String, Object>();
+		/**
+		 * SQL select для зчитування всіх DEMO пацієнтів медіка
+		 */
+		String sqlMedicalSelectPatients = env.getProperty("sql.medical.selectPatients");
 		List<Map<String, Object>> medicPatients = db1JdbcTemplate.queryForList(sqlMedicalSelectPatients);
 		map.put("medicPatients", medicPatients);
 		return map;

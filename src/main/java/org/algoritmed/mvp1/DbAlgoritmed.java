@@ -159,8 +159,8 @@ public class DbAlgoritmed {
 	protected void insertDocElementWithDocbody(Map<String, Object> dbSaveObj, Integer parentId) {
 		insertDocElement(dbSaveObj, parentId);
 		dbSaveObj.put("docbody_id", dbSaveObj.get("doc_id"));
-		int update2 = db1ParamJdbcTemplate.update(sql_doc_update_docbody, dbSaveObj);
 		int update3 = db1ParamJdbcTemplate.update(sql_docbody_insertEmpty, dbSaveObj);
+		int update2 = db1ParamJdbcTemplate.update(sql_doc_update_docbody, dbSaveObj);
 	}
 	private @Value("${sql.doc.insert}")				String sql_doc_insert;
 	private @Value("${sql.doctimestamp.insert}")	String sql_doctimestamp_insert;

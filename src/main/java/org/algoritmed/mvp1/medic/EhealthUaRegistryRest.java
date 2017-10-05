@@ -1,11 +1,12 @@
 package org.algoritmed.mvp1.medic;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
+import org.algoritmed.mvp1.CommonDbRest;
 import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.EhealthUaRegistryWebClient;
 import org.slf4j.Logger;
@@ -30,6 +31,10 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object>  msp_employee_list(@PathVariable Integer msp_id
 			, Principal userPrincipal
 		) {
+		logger.info("---------------\n"
+				+ "/r/read_msp_employee/{msp_id}"
+				+ "\n" + userPrincipal
+				);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msp_id", msp_id);
 		System.err.println("/r/read_msp_employee/{msp_id} "+msp_id);
@@ -100,9 +105,9 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	
 	@PostMapping("/r/saveDeclaration")
 	public @ResponseBody Map<String, Object> saveDeclaration(
-			@RequestBody Map<String, Object> data
+			 @RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
-		logger.info("\n---------------\n"
+		logger.info("\n-----110----------\n"
 				+ "/r/saveDeclaration"
 				+ "\n" + data
 				);

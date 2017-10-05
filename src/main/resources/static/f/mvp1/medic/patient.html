@@ -2,19 +2,16 @@
 <div class="w3-container">
 	<div class="w3-row-padding w3-margin-top">
 		<div class="w3-threequarter">
-			<div>
-				<span class="w3-small">Пацієнт на прийомі:</span> <span
-					class="w3-large"> {{patientById.patient_pib}} </span>
-			</div>
 			<div class="w3-card-2">
 				<header class="w3-container w3-bar w3-light-grey w3-tiny">
 					<div class="w3-bar-item">
-						<b> Прийом:</b>
+						<b class="w3-orange"> Прийом:</b>
 					</div>
 					<div class="w3-bar-item w3-hover-grey"
 						ng-click="newPatientHistoryRecord()">
 						<i class="fa fa-pencil" aria-hidden="true"></i> Новий запис
 					</div>
+					<!-- 
 					<div class="w3-bar-item w3-hover-grey">
 						<a href="/v/patient?id={{param.id}}"> <i class="fa fa-pencil"
 							aria-hidden="true"></i> Амбулаторна картка
@@ -27,6 +24,7 @@
 							class="fa fa-stethoscope" aria-hidden="true"></i> Веденя хворого
 						</a>
 					</div>
+					 -->
 					<div class="w3-bar-item w3-hover-grey w3-right"
 						ng-class="{'w3-green':param.cabinet_part=='druck'}"
 					>

@@ -254,10 +254,27 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			,{msp_public_name:'цПМСД "Поділля - Стара Синява"'}
 		]
 		,cabinet_part_index:0
+		,cabinet_part_selected:function(cabinet_part_list){
+			if('Календар'		==cabinet_part_list.name
+			&& 'testMvpCalendar' == $scope.pagePath.last()
+			) return true;
+			else if('Веденя хворого'	==cabinet_part_list.name
+			&& $scope.param.cabinet_part
+			) return true;
+			else if('Декларація'==cabinet_part_list.name
+			&& 'moz-declaration-edit' == $scope.pagePath.last()
+			) return true;
+			else if('Амбулаторна картка'==cabinet_part_list.name
+			&& 'patient' == $scope.pagePath.last()
+			&& !$scope.param.cabinet_part
+			) return true;
+			return false;
+		}
 		,cabinet_part_list:[
-			{name:'Календар',url:'/v/testMvpCalendar'}
-			,{name:'Амбулаторна картка',url:'/v/patient?id=3'}
-			,{name:'Веденя хворого',url:'/v/patient?id=3&cabinet_part=protocol'}
+			{name:'Календар'			,url:'/v/testMvpCalendar?'				,fa:'fa-calendar'}
+			,{name:'Амбулаторна картка'	,url:'/v/patient?'						,fa:'fa-pencil'}
+			,{name:'Веденя хворого'		,url:'/v/patient?cabinet_part=protocol'	,fa:'fa-stethoscope'}
+			,{name:'Декларація'			,url:'/v/moz-declaration-edit?'			,fa:'fa-handshake-o'}
 		]
 		,diagnostic_cabinet_list:[
 			{name:'УЗД',cabinet_nr:12}
@@ -380,8 +397,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	|| 'human-resources-department' == $scope.pagePath.last()
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
-		$scope.config_msp_all.opened_dialog='new_doctor';
-//		$scope.config_msp_all.opened_dialog='doctors_cards';
+//		$scope.config_msp_all.opened_dialog='new_doctor';
+		$scope.config_msp_all.opened_dialog='doctors_cards';
 		if('doctors_cards'==$scope.config_msp_all.opened_dialog){
 			if(!$scope.principal){ 
 				read_principal($http, $scope
@@ -396,6 +413,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	||'moz-declaration' == $scope.pagePath.last()
 	){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
+		$scope.config_declaration.read_declaration_template();
 	}else
 	if('info' == $scope.pagePath.last()){
 		console.log('----------info-------------- ');
@@ -434,9 +452,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			);
 		}
 		
-	}
-	else
-	if('patient' == $scope.pagePath.last()){
+	} else if('patient' == $scope.pagePath.last()){
 		var fnTimeoutAutoSaveHistory;
 		autoSaveHistory = function (ph, rightSave){
 			ph.docbody.autoSaveChangeCount=0;
@@ -552,16 +568,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				$scope.patientById.children.splice(0,0,response.data.newPatientHistoryRecord);
 			});
 		}
-		if($scope.param.id){
-			var url = '/r/medical/patient/'+$scope.param.id;
-			console.log(url);
-			$http.get(url).then( function(response) {
-				$scope.patientById = response.data.patientById;
-				console.log($scope.patientById);
-			});
-		}
-	}else
-	if('cabinet' == $scope.pagePath.last()){
+	}else if('cabinet' == $scope.pagePath.last()){
 		$scope.patient = {'patient_pib':'','patient_address':''};
 		$scope.seekPatient = function (){
 			console.log($scope.patient.patient_pib);
@@ -594,6 +601,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		});
 	}else{
 	}
+	console.log('config_msp_all.opened_dialog = '+$scope.config_msp_all.opened_dialog)
 	
 	$scope.openUrl = function(url){
 		console.log(url)
@@ -604,4 +612,12 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		console.log($scope.config_msp_all);
 	}
 
+	if($scope.param.id){
+		var url = '/r/medical/patient/'+$scope.param.id;
+		console.log(url);
+		$http.get(url).then( function(response) {
+			$scope.patientById = response.data.patientById;
+			console.log($scope.patientById);
+		});
+	}
 }

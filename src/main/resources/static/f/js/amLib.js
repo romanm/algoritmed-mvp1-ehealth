@@ -205,17 +205,6 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			$scope.doc_employee = response.data;
 			console.log($scope.doc_employee);
 		});
-		var url_declaration = '/f/config/msp/declaration.json';
-		console.log(url_declaration);
-		$http.get(url_declaration).then( function(response) {
-			$scope.doc_declaration = response.data.data[0];
-			var ad = $scope.doc_declaration.legal_entity.addresses[0];
-			$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
-			console.log($scope.doc_declaration.person.address);
-			$scope.doc_declaration.person.registry={};
-			$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
-			console.log($scope.doc_declaration.person.registry);
-		});
 		read_dictionaries($scope, $http);
 	}
 	
