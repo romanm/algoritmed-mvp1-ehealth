@@ -25,7 +25,7 @@ public class CommonDbRest extends DbAlgoritmed{
 			@RequestBody Map<String, Object> data
 			,HttpServletRequest request
 			,Principal principal
-			) {
+		) {
 		String sql = (String) data.get("sql");
 		String sql_from_env = env.getProperty(sql);
 		data.put(sql, sql_from_env);
@@ -84,11 +84,14 @@ public class CommonDbRest extends DbAlgoritmed{
 		System.err.println(sql_command);
 		System.err.println(sql_command.indexOf("SELECT 'docbody' datatype"));
 		if(sql_command.indexOf("SELECT 'docbody' datatype")==0) {
-			Map<String, Object> docbodyMap = db1ParamJdbcTemplate.queryForMap(sql_command, data);
-			String docbodyStr = (String) docbodyMap.get("docbody");
-			Map<String, Object> docbodyStr2Map = stringToMap(docbodyStr);
-			docbodyMap.put("docbody", docbodyStr2Map);
-			data.put("docbody"+nr, docbodyMap);
+			List<Map<String, Object>> docbodyList = db1ParamJdbcTemplate.queryForList(sql_command, data);
+			if(docbodyList.size()>0) {
+				Map<String, Object> docbodyMap = docbodyList.get(0);
+				String docbodyStr = (String) docbodyMap.get("docbody");
+				Map<String, Object> docbodyStr2Map = stringToMap(docbodyStr);
+				docbodyMap.put("docbody", docbodyStr2Map);
+				data.put("docbody"+nr, docbodyMap);
+			}
 		}else{
 			List<Map<String, Object>> list = db1ParamJdbcTemplate.queryForList(sql_command, data);
 			data.put("list"+nr, list);

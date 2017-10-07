@@ -949,8 +949,12 @@ initTestVariables = function($scope, $http, Blob){
 					, patient_id:$scope.param.id
 				}, function(response) {
 					$scope.db_doc_declaration = response.data;
-					$scope.doc_declaration = $scope.db_doc_declaration.docbody.docbody;
-					console.log($scope.doc_declaration);
+					if($scope.db_doc_declaration.docbody){
+						$scope.doc_declaration = $scope.db_doc_declaration.docbody.docbody;
+						console.log($scope.doc_declaration);
+					}else{//declaration not exist
+						$scope.config_declaration.read_declaration_template();
+					}
 				});
 			}else{
 				$scope.config_declaration.read_declaration_template();
@@ -975,7 +979,11 @@ initTestVariables = function($scope, $http, Blob){
 				console.log('--config_declaration.autoSave.fn_httpSave--------------');
 				console.log($scope.patientById);
 				var data = {};
-				if($scope.db_doc_declaration.docbody.declaration_id){
+				console.log($scope.db_doc_declaration);
+				console.log($scope.db_doc_declaration.docbody);
+				if($scope.db_doc_declaration.docbody
+				&& $scope.db_doc_declaration.docbody.declaration_id
+				){
 					data = { sql:		'sql.declaration.add_to_declaration'
 						, docbodyMap:	$scope.doc_declaration
 						, docbody_id:	$scope.db_doc_declaration.docbody.declaration_id
