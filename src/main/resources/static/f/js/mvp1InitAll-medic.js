@@ -1,11 +1,8 @@
 function initAll ($http, $scope, $filter, $timeout, Blob){
-	console.log('----initAll---------------');
 
 	initAllAlgoritmed($http, $scope, $filter, $timeout);
-//	console.log('----initAll---------------' + $scope.pagePath.last());
 	
 	var url = '/f/config/mvp1.algoritmed.medic.config.json';
-//	console.log(url);
 	$http.get(url).then( function(response) {
 		initConfig($scope, response);
 		$scope.menuHomeIndex = [];
@@ -14,7 +11,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				$scope.menuHomeIndex.push(i);
 			}
 		});
-		//console.log($scope.config);
 		initAllServer($http, $scope, $filter, $timeout);
 	});
 	$scope.readCentralProtocols = function(){
@@ -84,6 +80,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				}
 				,capitatio_prognosis:{
 					name:'Прогноз капітації'
+				}
+				,declaration:{
+					name:'Декларації'
 				}
 			}
 		}
@@ -199,24 +198,18 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 			,choose_user_without_msp:function(){
 				$scope.config_info.msp_employee.users={};
+				$scope.config_info.msp_employee_readDbCount=0;
 				$scope.commonDbRest.read_sql_with_param(
 				{sql:'sql.without_msp_employee.list'
 				},function(response) {
 					$scope.config_info.msp_employee.msp_employee_list=response.data.list;
-					angular.forEach($scope.config_info.msp_employee.msp_employee_list, function(v, i){
-						$scope.config_info.msp_employee.users[v.person_id]=i;
-					});
-					$scope.commonDbRest.read_sql_with_param(
-					{sql:'sql.without_msp_employee.role.list'
-					},function(response) {
-						angular.forEach(response.data.list, function(v, i){
-							var person_id_index = $scope.config_info.msp_employee.users[v.user_id];
-							var person = $scope.config_info.msp_employee.msp_employee_list[person_id_index];
-							if(!person.roles) person.roles=[];
-							person.roles.push(v);
-						});
-						console.log($scope.config_info.msp_employee.msp_employee_list);
-					});
+					$scope.config_info.msp_employee.readDbCount++;
+				});
+				$scope.commonDbRest.read_sql_with_param(
+				{sql:'sql.without_msp_employee.role.list'
+				},function(response) {
+					$scope.config_info.msp_employee.msp_employee_role_list=response.data.list;
+					$scope.config_info.msp_employee.readDbCount++;
 				});
 			}
 			,dialogs:{
@@ -334,9 +327,28 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		}
 	};
 
+	$scope.config_info.msp_employee_readDbCount=0;
+	$scope.$watch('config_info.msp_employee_readDbCount', function(newValue){
+		if(newValue==2){
+			console.log($scope.config_info.msp_employee.msp_employee_list);
+			console.log($scope.config_info.msp_employee.msp_employee_role_list);
+			angular.forEach($scope.config_info.msp_employee.msp_employee_list, function(v, i){
+				$scope.config_info.msp_employee.users[v.person_id]=i;
+			});
+			angular.forEach($scope.config_info.msp_employee.msp_employee_role_list
+			, function(v, i){
+				var person_id_index = $scope.config_info.msp_employee.users[v.user_id];
+				var person = $scope.config_info.msp_employee.msp_employee_list[person_id_index];
+				if(!person.roles) person.roles=[];
+				person.roles.push(v);
+			});
+			console.log($scope.config_info.msp_employee.msp_employee_list);
+		}
+	});
 
+
+	console.log('---initAll---	' + $scope.pagePath.last());
 	if('testMvpPatient' == $scope.pagePath.last()){
-		console.log('----initAll---------------' + $scope.pagePath.last());
 		$scope.ehealthapi1 = {
 			keys:{
 				pip:"ПІП"
@@ -368,17 +380,32 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('admin-msp' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		$scope.config_msp_all.opened_dialog='msp_data_form';
-		$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
+		$scope.config_msp_all.opened_dialog='declaration';
+//		$scope.config_msp_all.opened_dialog='msp_data_form';
+		if('declaration'==$scope.config_msp_all.opened_dialog){
+			console.log('read msp declaration');
+			$scope.$watch('principal.user_msp', function(newValue){ if(!newValue) return;
+				console.log($scope.principal.user_msp[0].msp_id);
+				$scope.commonDbRest.read_sql_with_param(
+				{sql:'sql.declaration.all_patient_physician_declaration'
+				},function(response) {
+					$scope.config_msp.declaration_list = response.data.list;
+					console.log($scope.config_msp.declaration_list);
+					console.log($scope.config_msp);
+				});
+			});
+		}else
+		if('msp_data_form'==$scope.config_msp_all.opened_dialog){
+			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
+		}
 	}else
 	if('reception' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		//init_config_info($scope, $http);
 		initTestMvpCalendar($scope, $http, $filter, $timeout);
 //		$scope.config_msp_all.opened_dialog='new_patient';
 		$scope.config_info.run_with_principal($scope.config_reception.seek_msp_patients);
 		$scope.config_info.run_with_principal($scope.config_reception.fn_queue_today);
-		//$scope.config_info.run_with_principal($scope.config_info.read_msp0_doctors);
+		$scope.mvpAddress.config.date.initObjectDate($scope.config_reception.patient_data, 'birth_date');
 	}else
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
@@ -569,7 +596,18 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			});
 		}
 	}else if('cabinet' == $scope.pagePath.last()){
-		$scope.patient = {'patient_pib':'','patient_address':''};
+		console.log($scope.param);
+		if($scope.param.physician_id){
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:			'sql.employee.byId'
+			, employee_id:	$scope.param.physician_id
+			},function(response) {
+				console.log(response.data);
+				$scope.physician=response.data.list[0];
+				console.log($scope.physician);
+			});
+		}
+		$scope.patient = {patient_pib:'',patient_address:''};
 		$scope.seekPatient = function (){
 			console.log($scope.patient.patient_pib);
 			console.log($scope.patient.patient_pib.length);
@@ -601,7 +639,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		});
 	}else{
 	}
-	console.log('config_msp_all.opened_dialog = '+$scope.config_msp_all.opened_dialog)
+	
+	console.log($scope.config_msp_all.opened_dialog);
 	
 	$scope.openUrl = function(url){
 		console.log(url)
@@ -618,6 +657,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$http.get(url).then( function(response) {
 			$scope.patientById = response.data.patientById;
 			console.log($scope.patientById);
+			$scope.patientById.docbody = JSON.parse($scope.patientById.docbody);
 		});
 	}
 }

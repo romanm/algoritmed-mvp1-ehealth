@@ -1,3 +1,14 @@
+<header class="w3-light-gray w3-small">
+				<i class="fa fa-user"></i> Новий пацієнт <span
+				ng-if="config_reception.data_support.error.requiredField.keys().length>0"
+					class="w3-right w3-border"
+					ng-click="config_reception.clickSave()"
+					ng-class="{
+					'w3-text-red':!config_reception.validToSave
+					,'w3-hover-gray':config_reception.validToSave
+					}"
+					> запис </span>
+			</header>
 <div class="w3-yellow w3-container">
 	<b class="w3-text-blue">1</b> Паціент
 </div>
@@ -40,13 +51,20 @@
 	</div>
 
 	<div>
-		<span class="w3-text-gray w3-tiny">1.4</span> Дата народження <span
-			title="{{person_obj.birth_date}}">
-			{{doc_declaration.person.birth_date | date : 'dd'}}</span> / <span
-			title="{{person_obj.birth_date}}">
-			{{doc_declaration.person.birth_date | date : 'MM'}}</span> / <span
-			title="{{person_obj.birth_date}}">
-			{{doc_declaration.person.birth_date | date : 'yyyy'}}</span> <span
-			class="w3-text-gray w3-tiny">1.5</span> Стать Ч/Ж
+		<span class="w3-text-gray w3-tiny">1.4</span> <span
+			title="Дата народження"> Д. н. </span> <span
+			ng-init="d2e_param='birth_date';d2e_obj=config_reception.patient_data;prefix=''"
+			ng-include="'/f/mvp1/lib/d2e_dialog.html'"></span>
+	</div>
+	<div>
+		<span
+			ng-class="{'w3-text-red':config_reception.data_support.error.requiredField.gender.empty}">
+			<span class="w3-text-gray w3-tiny">1.5</span> Стать
+		</span> <select ng-change="autoSave.fn_change_count()"
+			ng-model="config_reception.patient_data.gender">
+			<option
+				ng-repeat="(k,v) in mvpAddress.config.selectDictionary('GENDER').values"
+				value="{{k}}">{{v}}</option>
+		</select>
 	</div>
 </div>

@@ -1,4 +1,8 @@
-<span ng-if="!principal.user">
-	{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}} </span>
-<span ng-if="principal.user" ng-include="'/f/mvp1/lib/user_name.html'">
+<span ng-if="param.physician_id"> <span ng-init="user=physician"
+	ng-include="'/f/mvp1/lib/user_name.html'"> </span>
+</span>
+<span ng-if="!param.physician_id"> <span ng-if="!principal.user">
+		{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}} </span> <span
+	ng-if="principal.user" ng-include="'/f/mvp1/lib/user_name.html'">
+</span>
 </span>

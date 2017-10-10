@@ -132,6 +132,8 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			data.put("patient_id", dbId);
 			generateNewUuid(data, dbId);
 			insertChildWithReference(dbId, msp_id);
+			data.put("sql","sql.patient.add_insert_patient");
+			update_sql_script(data);
 		}
 		persistContentElement(data
 			, env.getProperty("sql.insertPatient")

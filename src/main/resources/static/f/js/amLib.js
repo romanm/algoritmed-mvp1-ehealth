@@ -27,7 +27,6 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		}
 	};
 	$scope.config_all.validateField = function(k, data, error, objToValidate){
-		console.log(k+' / ');
 		if(!data[k]){
 			objToValidate.validToSave = false;
 			console.log(k+' / '+objToValidate.validToSave);
@@ -38,7 +37,6 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	}
 	$scope.config_all.validate = function(objToValidate, key_data){
 		objToValidate.validToSave = true;
-		console.log(objToValidate);
 		angular.forEach(objToValidate.data_support.validate.requiredField
 			, function(v, k){
 				if(v.requiredField){
@@ -48,7 +46,6 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				}
 			}
 		);
-		console.log(objToValidate);
 		return objToValidate.validToSave;
 	}
 	$scope.config_all.init = function(config_obj_key){
@@ -70,9 +67,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 					$timeout.cancel(this.fn_timeout_autoSave);
 					var aso = this;
 					this.fn_timeout_autoSave = $timeout(function(){
-//						console.log('fn_timeout_autoSave start');
 						if(aso.change_count!=0){
-							console.log('fn_timeout_autoSave is to save');
 							aso.fn_httpSave();
 							aso.change_count = 0;
 							this.save_count++;

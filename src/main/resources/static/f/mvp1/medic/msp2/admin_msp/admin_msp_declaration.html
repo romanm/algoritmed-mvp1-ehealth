@@ -1,0 +1,15 @@
+<table class="w3-table-all">
+	<thead>
+		<tr>
+			<th>Пацієнт</th>
+			<th>Лікар</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="d in config_msp.declaration_list">
+			<td class="w3-border-right">{{d.patient_pib}}</td>
+			<td><a href="/v/cabinet?physician_id={{d.physician_id}}">
+					{{d.employee_info}} </a></td>
+		</tr>
+	</tbody>
+</table>

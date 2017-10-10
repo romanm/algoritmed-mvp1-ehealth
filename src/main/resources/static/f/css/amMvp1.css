@@ -12,6 +12,9 @@ html{
 
 
 textarea{width:100%;}
+.b{
+	font-weight:bold;
+}
 .am-width-100pr{
 	width: 100%;
 }

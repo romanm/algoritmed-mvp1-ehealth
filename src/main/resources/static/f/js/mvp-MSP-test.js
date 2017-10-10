@@ -21,7 +21,6 @@ function initMSPtest($http, $scope, $filter, $timeout, Blob){
 }
 
 initTestMvpCalendar = function($scope, $http, $filter, $timeout){
-	console.log('-----initTestMvpCalendar----------------');
 	$scope.basicCalendar = {
 		dayPart:{
 			list:['day','week','month','4day','termin']
@@ -72,7 +71,6 @@ initTestMvpCalendar = function($scope, $http, $filter, $timeout){
 }
 
 initTestAddress = function($scope, $http, $filter){
-	console.log('-----initTestAddress------------');
 	$scope.mvpAddress = {};
 	$scope.mvpAddress.config = {
 		listOpen:{}
@@ -118,18 +116,27 @@ initTestAddress = function($scope, $http, $filter){
 					thisObj.initDate(v, 'active_from_date',thisObj);
 				});
 			}
+			,initObjectDate:function(o,p){
+				var thisObj = this;
+				thisObj.initDate(o,p,thisObj);
+				angular.forEach(o , function(v, k){
+					if(k.indexOf('d2e_')>=0){
+						if(k.indexOf(p)>=0){
+						o[k]=null;
+						}
+					}
+				});
+				console.log(o)
+			}
 			,initDate:function(o,p,thisObj){
-//				console.log(p);
 				if(!o[p]){
 					var d = new Date();
 					var n = d.toISOString();
 					o[p] = n;
 				}
 				var dateObj = o[p];
-				console.log(dateObj);
 				dateObj = dateObj.split('T')[0];
 				var ymd = dateObj.split('-');
-				//console.log(ymd);
 				var d = new Date(ymd[0],ymd[1]-1,ymd[2])
 				thisObj.setDateParam(d,o,p);
 			}
@@ -468,7 +475,6 @@ initTestAddress = function($scope, $http, $filter){
 
 read_dictionaries = function($scope, $http) {
 	var url_dictionaries = '/f/config/msp/dictionaries.json';
-	console.log(url_dictionaries);
 	$http.get(url_dictionaries).then( function(response) {
 		$scope.doc_dictionaries = response.data;
 		$scope.mvpAddress.config.initCCDictionaries();
@@ -491,7 +497,8 @@ init_config_info = function($scope, $http){
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
 		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
 		,read_msp0_doctors:function(){
-			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return
+			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return;
+			var msp_id = $scope.principal.user_msp[0].msp_id;
 			$scope.commonDbRest.read_sql_with_param(
 			{sql:'sql.medical.selectDoctorByMsp'
 				, msp_id:$scope.principal.user_msp[0].msp_id
@@ -590,11 +597,11 @@ initTestVariables = function($scope, $http, Blob){
 
 	//"edrpou": "38782323",
 	$scope.config_msp = {
-		'menu_registry':{'name':'data','step':'data'
-			,'steps':{
-				'data':{'text':'Ввести дані','short':'Введеня даних'}
-				,'digitalsign':{'text':'Накласти електроний підпис (ЕЦП)','short':'ЕЦП'}
-				,'registry':{'text':'Відправити в центральний реєстр','short':'Реєстр'}
+		menu_registry:{name:'data', step:'data'
+			,steps:{
+				data:{text:'Ввести дані',short:'Введеня даних'}
+				,digitalsign:{text:'Накласти електроний підпис (ЕЦП)', short:'ЕЦП'}
+				,registry:{text:'Відправити в центральний реєстр', short:'Реєстр'}
 			}
 		}
 		, legal_entities:function(data){
@@ -819,6 +826,7 @@ initTestVariables = function($scope, $http, Blob){
 	}
 	$scope.config_all.init('config_personregistry');
 	 * */
+
 	$scope.config_reception = {
 		queue:{
 			remove_from_queue:function($index){
@@ -873,9 +881,7 @@ initTestVariables = function($scope, $http, Blob){
 			$scope.config_reception.queue.add_seek_queue_date_params(params, new Date());
 			$scope.commonDbRest.read_sql_with_param(params
 			,function(response){
-				//console.log(response.data);
 				$scope.config_reception.queue_today = response.data.list;
-				console.log($scope.config_reception.queue_today);
 			});
 		}
 		,fn_seek_patient:function(){
@@ -907,14 +913,21 @@ initTestVariables = function($scope, $http, Blob){
 					last_name:{}
 					,first_name:{}
 					,second_name:{}
+					,gender:{}
 				}
 			}
 		}
-		,validToSave:true
+		,validToSave:false
+		,clickSave:function(){
+			this.autoSave.fn_httpSave(true);
+		}
 		,autoSave:{
-			fn_httpSave:function(){
+			fn_httpSave:function(clickSave){
 				console.log('-- config_reception.autoSave.fn_httpSave --');
 				if($scope.config_all.validate($scope.config_reception, 'patient_data')){
+					$scope.config_reception.patient_data.clickSave=false;
+					if(clickSave)
+						$scope.config_reception.patient_data.clickSave=true;
 					console.log($scope.principal.user_msp[0].doc_id);
 					var patient_data = 
 						$scope.config_reception.patient_data.addAllPropertyFrom({
@@ -927,7 +940,6 @@ initTestVariables = function($scope, $http, Blob){
 					$http.post('/r/savePatient', patient_data).then(function(response) {
 						console.log(response.data);
 						console.log($scope.config_reception.patient_data);
-						
 						$scope.config_reception.patient_data=response.data;
 						
 					});
@@ -936,6 +948,7 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_reception');
+
 	$scope.config_declaration = {
 		read_declaration:function(){
 			var physician_id = $scope.principal.user_id;
@@ -960,19 +973,36 @@ initTestVariables = function($scope, $http, Blob){
 				$scope.config_declaration.read_declaration_template();
 			}
 		}
+		,init_new_declaration:function(){
+			console.log($scope.patientById);
+			console.log($scope.patientById.docbody);
+			$scope.doc_declaration = {person:$scope.patientById.docbody};
+			console.log($scope.doc_declaration);
+		}
 		,read_declaration_template:function(){
 			var url_declaration = '/f/config/msp/declaration.json';
 			console.log(url_declaration);
 			$http.get(url_declaration).then(function(response){
 				console.log(response.data);
+				return
 				$scope.doc_declaration = response.data.data[0];
 				var ad = $scope.doc_declaration.legal_entity.addresses[0];
 				$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
-				console.log($scope.doc_declaration.person.address);
+//				console.log($scope.doc_declaration.person.address);
 				$scope.doc_declaration.person.registry={};
 				$scope.doc_declaration.person.registry.address = JSON.parse(JSON.stringify(ad));
-				console.log($scope.doc_declaration.person.registry);
+//				console.log($scope.doc_declaration.person.registry);
+				console.log($scope.doc_declaration);
+				console.log($scope.doc_declaration.person);
 			});
+			if(!$scope.patientById){
+				$scope.$watch('patientById', function(newValue){
+					if(!newValue) return;
+					$scope.config_declaration.init_new_declaration();
+				});
+			}else{
+				$scope.config_declaration.init_new_declaration();
+			}
 		}
 		,autoSave:{
 			fn_httpSave:function(){
@@ -1318,3 +1348,4 @@ add_employee_info = function(party_o, target_o){
 }
 
 }
+

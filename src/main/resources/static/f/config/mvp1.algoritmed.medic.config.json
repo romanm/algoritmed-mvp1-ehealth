@@ -26,7 +26,7 @@
 	,"shortName":"Декларація"
 	,"fa":"fa-user"
 	,"parent":"home"
-	,"menuBar":true
+	,"menuBar":false
 }
 ,"personal-page":{
 	"th_template":"mvp1-medic"
@@ -55,7 +55,7 @@
 }
 ,"admin-msp":{
 	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/admin-msp.html'"
+	,"ng_template":"'/f/mvp1/medic/msp2/admin_msp/admin-msp.html'"
 	,"shortName":"Адмін лікувального закладу"
 	,"fa":"fa-user"
 	,"parent":"home"

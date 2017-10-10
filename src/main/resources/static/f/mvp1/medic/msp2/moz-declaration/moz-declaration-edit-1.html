@@ -14,7 +14,8 @@
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="Прізвище" class="w3-border am-width-100pr"
-			ng-model="person_party_obj.last_name">
+			readonly
+			ng-model="doc_declaration.person.last_name">
 	</div>
 </div>
 <div class="w3-row">
@@ -26,7 +27,7 @@
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="Ім'я" class="w3-border am-width-100pr"
-			ng-model="person_party_obj.first_name">
+			ng-model="doc_declaration.person.first_name">
 	</div>
 </div>
 <div class="w3-row">
@@ -38,19 +39,21 @@
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="По батькові" class="w3-border am-width-100pr"
-			ng-model="person_party_obj.second_name">
+			ng-model="doc_declaration.person.second_name">
 	</div>
 </div>
 
 <div>
 	<span class="w3-text-gray w3-tiny">1.4</span> Дата народження <span
-		title="{{person_obj.birth_date}}">
+		title="{{doc_declaration.person.birth_date}}">
 		{{doc_declaration.person.birth_date | date : 'dd'}}</span> / <span
-		title="{{person_obj.birth_date}}">
+		title="{{doc_declaration.person.birth_date}}">
 		{{doc_declaration.person.birth_date | date : 'MM'}}</span> / <span
-		title="{{person_obj.birth_date}}">
+		title="{{doc_declaration.person.birth_date}}">
 		{{doc_declaration.person.birth_date | date : 'yyyy'}}</span> <span
-		class="w3-text-gray w3-tiny">1.5</span> Стать Ч/Ж
+		class="w3-text-gray w3-tiny">1.5</span> Стать <span
+		ng-class="{'b':'MALE'==doc_declaration.person.gender}">Ч</span>/<span
+		ng-class="{'b':'FEMALE'==doc_declaration.person.gender}">Ж</span>
 </div>
 <!-- 
  <span ng-repeat="k in doc_declaration.person.keys()">

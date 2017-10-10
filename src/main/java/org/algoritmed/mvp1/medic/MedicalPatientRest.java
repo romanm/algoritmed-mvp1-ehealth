@@ -60,6 +60,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 				+ "\n" + map
 				);
 		Map<String, Object> patientById = getMap(sql_medical_selectPatientById, map);
+//		Map<String, Object> docbodyMap = stringToMap((String) patientById.get("docbody"));
 		HashMap<Integer, Object> docIdMap = new HashMap<>();
 		HashMap<Integer, Object> docIdMapPath = new HashMap<>();
 		patientById.put("docIdMap", docIdMapPath);
