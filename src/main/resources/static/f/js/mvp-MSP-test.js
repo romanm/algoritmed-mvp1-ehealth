@@ -1033,8 +1033,12 @@ initTestVariables = function($scope, $http, Blob){
 				$http.post('/r/update_sql_with_param', data).then(function(response) {
 					console.log(response.data);
 					console.log(response.data.nextDbId1);
-					if(response.data.nextDbId1)
-						$scope.doc_declaration.docbody_id = response.data.nextDbId1;
+				console.log($scope.db_doc_declaration);
+					if(response.data.nextDbId1){
+						$scope.db_doc_declaration.docbody = {declaration_id:response.data.nextDbId1}
+					}
+					console.log($scope.db_doc_declaration.docbody);
+					console.log($scope.db_doc_declaration.docbody.declaration_id);
 				});
 			}
 		}

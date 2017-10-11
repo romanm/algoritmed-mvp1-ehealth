@@ -113,7 +113,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				);
 		return data;
 	}
-	
+
 	@PostMapping("/r/savePatient")
 	public @ResponseBody Map<String, Object> savePatient(
 			@RequestBody Map<String, Object> data
@@ -132,17 +132,16 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			data.put("patient_id", dbId);
 			generateNewUuid(data, dbId);
 			insertChildWithReference(dbId, msp_id);
+			int update = db1ParamJdbcTemplate.update(env.getProperty("sql.insertPatient"), data);
 			data.put("sql","sql.patient.add_insert_patient");
 			update_sql_script(data);
+		}else {
+			int update = db1ParamJdbcTemplate.update( env.getProperty("sql.updatePatient") , data);
 		}
-		persistContentElement(data
-			, env.getProperty("sql.insertPatient")
-			, env.getProperty("sql.updatePatient")
-			);
 		System.err.println(data);
 		return data;
 	}
-	
+
 	private @Value("${sql.msp.update}")				String sql_msp_update;
 	private @Value("${sql.msp.insert}")				String sql_msp_insert;
 	
