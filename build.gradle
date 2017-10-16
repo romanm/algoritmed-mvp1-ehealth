@@ -64,6 +64,5 @@ dependencies {
 	compile 'org.bouncycastle:bcprov-jdk15on:1.57'
 	
 	compile 'org.webjars.bower:angular-file-saver:1.1.3'
-	
 
 }
