@@ -20,9 +20,9 @@
 			</div>
 			<div class="w3-dropdown-content w3-card-2">
 				<div>&nbsp;
-					<u ng-if="icdConf.selectedItem"
+					<span class="am-u" ng-if="icdConf.selectedItem"
 						ng-bind-html="highlight(
-						icdConf.selectedItem.icd_code+': '+icdConf.selectedItem.icd_name, icdConf.search)"></u>
+						icdConf.selectedItem.icd_code+': '+icdConf.selectedItem.icd_name, icdConf.search)"></</span>
 				</div>
 				<div class="w3-bar w3-tiny w3-border">
 					<a href="#" class="w3-bar-item w3-button"
@@ -34,8 +34,8 @@
 						ng-mouseover="icdConf.icdSeekContent='code'"
 						> <i
 							class="fa fa-qrcode" aria-hidden="true"></i> код <span
-							ng-if="icdDb.count"> - <u
-								ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"></u>
+							ng-if="icdDb.count"> - <span class="am-u"
+								ng-include="'/f/mvp1/meddoc/icd10Db-codeCount.html'"></span>
 					</span>
 					</a>
 					<a href="#" class="w3-bar-item w3-button"

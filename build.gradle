@@ -1,6 +1,7 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.M4'
+		springBootVersion = '2.0.0.M5'
+		//springBootVersion = '2.0.0.M4'
 		//springBootVersion = '2.0.0.M3'
 		//springBootVersion = '1.5.4.RELEASE'
 		//springBootVersion = '1.5.2.RELEASE'
@@ -17,7 +18,8 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+//apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 

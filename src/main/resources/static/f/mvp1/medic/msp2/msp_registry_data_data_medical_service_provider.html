@@ -54,9 +54,9 @@
 						 title="Перенести запис на перше місце">^</span>
 					</span>
 					<b> № </b> <span ng-if="!license.license_number">
-						_____________ </span><u>{{license.license_number}}</u>, <b
+						_____________ </span><span class="am-u">{{license.license_number}}</span>, <b
 						class="w3-small">Орган що видав:</b> <span
-						ng-if="!license.issued_by"> _____________ </span><u>{{license.issued_by}}</u>,
+						ng-if="!license.issued_by"> _____________ </span><span class="am-u">{{license.issued_by}}</span>,
 					<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
 						ng-init="d=mvpAddress.config.edit.date_types[kda]"> {{d.p}}
 						{{license[kda] | date : 'shortDate'}} </span>
