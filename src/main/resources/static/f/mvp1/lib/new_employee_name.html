@@ -17,7 +17,7 @@
 	 -->
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="Прізвище" class="w3-border am-width-100pr"
-			ng-model="doc_declaration.person.last_name">
+			ng-model="person_party_obj.last_name">
 	</div>
 </div>
 <div class="w3-row">
@@ -29,7 +29,7 @@
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="Ім'я" class="w3-border am-width-100pr"
-			ng-model="doc_declaration.person.first_name">
+			ng-model="person_party_obj.first_name">
 	</div>
 </div>
 <div class="w3-row">
@@ -41,7 +41,7 @@
 	<div class="w3-col m9 l9 s9">
 		<input ng-change="config_obj.autoSave.fn_change_count()"
 			placeholder="По батькові" class="w3-border am-width-100pr"
-			ng-model="doc_declaration.person.second_name">
+			ng-model="person_party_obj.second_name">
 	</div>
 </div>
 
@@ -62,4 +62,6 @@
  {{k}}
  </span>
  {{doc_declaration.person}}
+ {{config_personRegistry}}
  -->
+ {{config_obj}}

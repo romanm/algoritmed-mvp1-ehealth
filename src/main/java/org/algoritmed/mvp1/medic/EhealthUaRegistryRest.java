@@ -132,11 +132,11 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 			data.put("patient_id", dbId);
 			generateNewUuid(data, dbId);
 			insertChildWithReference(dbId, msp_id);
-			int update = db1ParamJdbcTemplate.update(env.getProperty("sql.insertPatient"), data);
+			db1ParamJdbcTemplate.update(env.getProperty("sql.insertPatient"), data);
 			data.put("sql","sql.patient.add_insert_patient");
 			update_sql_script(data);
 		}else {
-			int update = db1ParamJdbcTemplate.update( env.getProperty("sql.updatePatient") , data);
+			db1ParamJdbcTemplate.update( env.getProperty("sql.updatePatient") , data);
 		}
 		System.err.println(data);
 		return data;

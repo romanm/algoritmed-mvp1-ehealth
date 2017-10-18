@@ -286,7 +286,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				page_design:{
 					head:{
 						text:'Вхід'
-						,suffix:'в програму'
+						,suffix:'в програму: medic.algoritmed.com'
 						,text1:'Реєстрація'
 						,suffix1:'в програмі'
 					}
@@ -310,7 +310,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					,ROLE_HEAD_MSP:{name:'Гол.Лікар',fns:['C','B','D','I']}
 					,ROLE_ADMIN_REGION:{name:'Адмін. Регіону',fns:['F']}
 					,ROLE_ADMIN_APP:{name:'Адмін.програми',fns:['A','B','C','D','E','F','H','I']}
-					,ROLE_WAITING_FOR_CONFIRMATION:{name:'Заявка на логін',fns:['J']}
+					,ROLE_WAITING_FOR_CONFIRMATION:{name:'Заявка на користування програмою: medic.algoritmed.com',fns:['J']}
 				}
 				,fns:{
 					A:{name:'Заведеня хворого'}

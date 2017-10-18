@@ -1,9 +1,6 @@
 <div
 	ng-init="config_obj=config_personRegistry;person_obj=config_personRegistry.data.template;
 			person_type='Персональні дані'">
-<div
-		ng-init="person_party_obj=person_obj.party;error=config_obj.data.error.party;"
-		ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-1.html'"></div>
 	<div class="w3-row">
 		<div class="w3-col m3 l3 s3 w3-small"
 			ng-class="{'w3-text-red':config_obj.data.error.requiredField.username.empty}">Ім’я
@@ -41,4 +38,13 @@
 	<div class="w3-tiny w3-container w3-orange"
 		ng-if="config_obj.data.error.false_password_control">
 		Неспівпадіння паспорт і паспорт контроль значень.</div>
+	<div
+		ng-init="person_party_obj=config_personRegistry.data.template.party;
+		error=config_personRegistry.data.error.party;"
+		ng-include="'/f/mvp1/lib/new_employee_name.html'"></div>
+		<!-- 
+	<div
+		ng-init="person_party_obj=config_personRegistry.data.template.party;error=config_personRegistry.data.error.party;"
+		ng-include="'/f/mvp1/medic/msp2/moz-declaration/moz-declaration-edit-1.html'"></div>
+		 -->
 </div>
