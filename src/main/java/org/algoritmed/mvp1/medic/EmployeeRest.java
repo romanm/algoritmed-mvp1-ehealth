@@ -92,8 +92,10 @@ public class EmployeeRest extends DbAlgoritmed{
 				+ "\n" + data
 				);
 //		addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");// as example
-		int update = db1ParamJdbcTemplate.update(sql_user_role_deleteConfirmation, data);
 		int update2 = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
+		System.err.println(update2);
+		int update = db1ParamJdbcTemplate.update(sql_user_role_deleteConfirmation, data);
+		System.err.println(update);
 		return data;
 	}
 
@@ -149,7 +151,7 @@ public class EmployeeRest extends DbAlgoritmed{
 			data.put("docbody_id", doc_id);
 			data.put("employee_id", doc_id);
 			persistContentElement(data, sql_employee_insert, sql_employee_update);
-			
+			System.err.println(currDbId());
 		}
 		return data;
 	}

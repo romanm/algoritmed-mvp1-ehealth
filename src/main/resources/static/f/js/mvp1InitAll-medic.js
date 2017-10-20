@@ -45,6 +45,11 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}else
 			if('doctors_cards'==this.opened_dialog){
 				this.human_resources_department.dialogs.doctors_cards.open_dialog();
+			}else
+			if('msp_data_form'==$scope.config_msp_all.opened_dialog){
+				console.log(1);
+				$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
+				console.log(2);
 			}
 		}
 		,admin_msp:{
@@ -52,12 +57,16 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				msp_data_form:{
 					name:'Данні ЛЗ'
 					,fn_read_msp2:function(){
+						console.log(1);
+						console.log($scope.fnPrincipal.hasAdminMSPRole());
 						if($scope.fnPrincipal.hasAdminMSPRole()){
+							console.log(2);
 							if($scope.principal.user_msp[0]){
 								console.log($scope.principal.user_msp[0].msp_id);
 								$scope.readMsp($scope.principal.user_msp[0].msp_id);
 								console.log($scope.principal.user_msp[0].msp_id);
 							}else{
+								console.log(3);
 								$scope.newMsp();
 							}
 						}else{
@@ -67,11 +76,16 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						}
 					}
 					,fn_read_msp:function(){
+						console.log(1)
 						var thisObj = this;
+						console.log(thisObj)
 						if($scope.param.doc_id){
 							$scope.readMsp($scope.param.doc_id);
-						}else if(!$scope.principal){
+						}else{ 
+							//if(!$scope.principal){
+							console.log(4);
 							read_principal($http, $scope, thisObj, 'fn_read_msp2');
+							console.log(5);
 						}
 					}
 				}
@@ -81,7 +95,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				,capitatio_prognosis:{
 					name:'Прогноз капітації'
 				}
-				,declaration:{
+				,msp_declaration:{
 					name:'Декларації'
 				}
 			}
@@ -380,12 +394,13 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}else
 	if('admin-msp' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
-		$scope.config_msp_all.opened_dialog='declaration';
-//		$scope.config_msp_all.opened_dialog='msp_data_form';
-		if('declaration'==$scope.config_msp_all.opened_dialog){
-			console.log('read msp declaration');
+		$scope.config_msp_all.opened_dialog='msp_declaration';
+		$scope.config_msp_all.opened_dialog='msp_data_form';
+		if('msp_declaration'==$scope.config_msp_all.opened_dialog){
 			$scope.$watch('principal.user_msp', function(newValue){ if(!newValue) return;
-				console.log($scope.principal.user_msp[0].msp_id);
+				//console.log($scope.principal.user_msp[0].msp_id);
+				console.log($scope.principal);
+				console.log($scope.principal.user_msp);
 				$scope.commonDbRest.read_sql_with_param(
 				{sql:'sql.declaration.all_patient_physician_declaration'
 				},function(response) {
@@ -410,9 +425,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('personal-page' == $scope.pagePath.last()){
 		initTestVariables($scope, $http, Blob);
 		//init_config_info($scope, $http);
-		$scope.config_msp_all.opened_dialog='personal_data';
-//		$scope.config_msp_all.opened_dialog='personal_area';
-		console.log($scope.config_msp_all.opened_dialog);
+//		$scope.config_msp_all.opened_dialog='personal_data';
+		$scope.config_msp_all.opened_dialog='personal_area';
 		if($scope.config_msp_all.opened_dialog=='personal_data'){
 			$scope.config_msp_all.personal_page.dialogs.personal_data.open_dialog();
 		}

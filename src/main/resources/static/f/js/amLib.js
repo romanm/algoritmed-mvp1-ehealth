@@ -228,6 +228,7 @@ function read_principal($http, $scope, fn_o, fn_p) {
 		});
 	}else{
 		console.log('/r/principal непотрібно');
+		if(fn_o&&fn_p) fn_o[fn_p]();
 	}
 }
 
@@ -264,7 +265,12 @@ if (!Array.prototype.last){
 		return this.indexOf(k) > - 1;
 	}
 	Array.prototype.last = function(){
-		return this[this.length - 1];
+		var last_split1 = this[this.length - 1];
+		if(last_split1){
+			var last_split2 = last_split1.split('#')[0];
+			return last_split2;
+		}
+		return;
 	}
 	Array.prototype.forLast = function(){
 		return this[this.length - 2];

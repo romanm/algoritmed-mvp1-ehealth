@@ -316,6 +316,12 @@ public class DbAlgoritmed {
 		return nextDbId;
 	}
 
+	protected Integer currDbId() {
+		String sql_currDbId = env.getProperty("sql.currDbId");
+		Integer currDbId = db1JdbcTemplate.queryForObject(sql_currDbId, Integer.class);
+		return currDbId;
+	}
+
 	protected @Autowired JdbcTemplate db1JdbcTemplate;
 	protected @Autowired NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 
