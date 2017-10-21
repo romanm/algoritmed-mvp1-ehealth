@@ -247,11 +247,13 @@ initTestAddress = function($scope, $http, $filter){
 				'region':'region'
 					,'district':'district'
 				 * */
+				console.log(vNew);
 				var keyToKey = {
-					'region':'district'
-					,'settlement':'settlement_name'
+					'region':'region'
+					,'settlement':'name'
 					,'settlement_type':'type'
 					,'settlement_id':'id'
+					,'id':'id'
 				}
 				this.setAddressParamaters(vNew, a, keyToKey);
 				console.log('------------------');
@@ -382,17 +384,28 @@ initTestAddress = function($scope, $http, $filter){
 		var area = $scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].area;
 		console.log(area);
 		var url = $scope.mvpAddress.data.uri_prefix
-			+'/uaddresses/search/settlements?settlement_name='+newValue+'&region='+area;
+		+'/uaddresses/settlements?name='+newValue;
+//		if($scope.mvpAddress.data.region.name){
+		if($scope.mvpAddress.data.region){
+			console.log(1);
+			url +='&region='+$scope.mvpAddress.data.region.name;
+		}
+//+'/uaddresses/search/settlements?name='+newValue+'&region='+area;
+//		+'/uaddresses/search/settlements?settlement_name='+newValue+'&region='+area;
 //		+'/uaddresses/search/settlements?settlement_name='+newValue+'&region=хмельницька';
 		console.log(url);
 		$http.get(url).then( function(response) {
 			console.log(response.data.response.data);
 			$scope.mvpAddress.config.seek_addresses = response.data.response.data;
 			console.log($scope.mvpAddress.config.seek_addresses);
+/*
+			console.log($scope.mvpAddress.data);
+			console.log($scope.mvpAddress.data.choose);
 			var r = $scope.mvpAddress.fn.element.region();
 			console.log(r);
 			r.seek_addresses = response.data.response.data;
 			console.log(r.seek_addresses);
+ * */
 		});
 		$scope.mvpAddress.fn.list.regions();
 	});
@@ -465,11 +478,14 @@ initTestAddress = function($scope, $http, $filter){
 				$scope.mvpAddress.config.listOpen.regions
 					= !$scope.mvpAddress.config.listOpen.regions;
 				if(!$scope.mvpAddress.data.regions){
-					var url = '/r/gcc/uaddresses/search/regions';
+//					var url = '/r/gcc/uaddresses/search/regions';
+					var url = '/r/gcc/uaddresses/regions?limit=30';
 					console.log(url)
 					$http.get(url).then( function(response) {
 						$scope.mvpAddress.data.regions = response.data.response.data;
 					});
+				}else{
+					console.log($scope.mvpAddress.data.regions);
 				}
 			}
 		}
