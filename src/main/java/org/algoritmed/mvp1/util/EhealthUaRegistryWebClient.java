@@ -1,4 +1,4 @@
-package org.algoritmed.mvp1.util;
+package org.algoritmed.mvp1.util ;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class EhealthUaRegistryWebClient {
 		data.put("test_api_URL", uri_registry + path_uri);
 		logger.info(""
 				+ "\n"+36
-				+ "\n"+data
+				+ "\n"+data.toString().replaceAll(", ", "\n , ")
 				);
 		Builder wsClientInvocation = getInvocationBuilder(path_uri);
 		Response response = wsClientInvocation.get();

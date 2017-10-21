@@ -41,6 +41,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	compile 'org.springframework.boot:spring-boot-starter-tomcat'
+	compile 'org.springframework.boot:spring-boot-starter-jersey'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	
 	compile 'org.springframework:spring-jdbc'
@@ -61,8 +62,10 @@ dependencies {
 	compile 'org.webjars:angularjs:1.6.4'
 	compile 'org.webjars:font-awesome:4.7.0'
 	
-	compile 'com.healthmarketscience.jackcess:jackcess:2.1.6'
-	compile 'org.glassfish.jersey.core:jersey-client:2.25.1'
+	//compile 'com.healthmarketscience.jackcess:jackcess:2.1.6'
+	//compile 'org.glassfish.jersey.core:jersey-client:2.26'
+	//compile 'org.glassfish.jersey.core:jersey-common:2.26'
+	//compile 'org.glassfish.jersey.core:jersey-client:2.25.1'
 	compile 'org.bouncycastle:bcprov-jdk15on:1.57'
 	
 	compile 'org.webjars.bower:angular-file-saver:1.1.3'
