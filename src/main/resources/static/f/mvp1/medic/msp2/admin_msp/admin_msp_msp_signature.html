@@ -1,3 +1,22 @@
-<div>
-{{v}}-{{k}}
+<div>&nbsp;</div>
+<div class="w3-container">
+	<div class="w3-card">
+		<header class="w3-light-gray w3-small"> Стан реєестрації в
+			центральному реєстрі </header>
+		<div class="w3-row">
+			<div class="w3-threequarter">
+				<b>Лікувальний заклад:</b> {{api__legal_entities.name}}
+			</div>
+			<div class="w3-quarter ">Реєстрація триває</div>
+		</div>
+	</div>
+</div>
+<div>&nbsp;</div>
+<div class="w3-container">
+	<div class="w3-card">
+		<header class="w3-light-gray w3-small"> Накладання ЕЦП і реєстрація
+			лікувального закладу в центральному реєстрі </header>
+		<div
+			ng-include="'/f/mvp1/medic/msp2/msp_registry_data_digitalsign.html'"></div>
+	</div>
 </div>

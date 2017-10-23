@@ -667,14 +667,16 @@ initTestVariables = function($scope, $http, Blob){
 			fn = fn.substr(0,1).toUpperCase() + fn.substr(1);
 			return fn;
 		}
-		, registryMspFileName:function(){
-			return 'registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
+		, registryMspFileName:'registry_MSP_???'
+		, setRegistryMspFileName:function(){
+			this.registryMspFileName='registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
 		}
 		, mspToSave:function(){
 			var a = document.createElement("a");
 			document.body.appendChild(a);
 			a.style = "display: none";
-			a.download = this.registryMspFileName();
+//			a.download = this.registryMspFileName();
+			a.download = this.registryMspFileName;
 			var dataJson = $scope.api__legal_entities;
 			['doc_id','doctype','parent_id','created','docbody_id','updated'].forEach(function(k){
 				delete dataJson[k]

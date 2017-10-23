@@ -43,6 +43,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log(dialog_name);
 				$scope.config_reception.seek_msp_patients();
 			}else
+			if('msp_signature'==this.opened_dialog){
+				$scope.config_msp.setRegistryMspFileName();
+			}else
 			if('doctors_cards'==this.opened_dialog){
 				this.human_resources_department.dialogs.doctors_cards.open_dialog();
 			}else
@@ -57,10 +60,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				msp_data_form:{
 					name:'Данні ЛЗ'
 					,fn_read_msp2:function(){
-						console.log(1);
 						console.log($scope.fnPrincipal.hasAdminMSPRole());
 						if($scope.fnPrincipal.hasAdminMSPRole()){
-							console.log(2);
 							if($scope.principal.user_msp[0]){
 								console.log($scope.principal.user_msp[0].msp_id);
 								$scope.readMsp($scope.principal.user_msp[0].msp_id);
@@ -396,6 +397,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		initTestVariables($scope, $http, Blob);
 		$scope.config_msp_all.opened_dialog='msp_declaration';
 		$scope.config_msp_all.opened_dialog='msp_data_form';
+		$scope.config_msp_all.opened_dialog='msp_signature';
 		if('msp_declaration'==$scope.config_msp_all.opened_dialog){
 			$scope.$watch('principal.user_msp', function(newValue){ if(!newValue) return;
 				//console.log($scope.principal.user_msp[0].msp_id);
@@ -409,6 +411,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					console.log($scope.config_msp);
 				});
 			});
+		}else
+		if('msp_signature'==$scope.config_msp_all.opened_dialog){
+			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 		}else
 		if('msp_data_form'==$scope.config_msp_all.opened_dialog){
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();

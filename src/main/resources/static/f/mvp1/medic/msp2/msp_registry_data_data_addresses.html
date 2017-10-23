@@ -11,11 +11,6 @@
 			:(address.settlement_type=='VILLAGE'?'с.':'')}}{{address.settlement}}
 			{{address.street_type=='STREET'?'вул.':''}}{{address.street}} дім
 			{{address.building}} </span>
-			a1
-			{{address.id}}
-			<div>
-			{{address}}
-			</div>
 	</a>
 	<div ng-if="mvpAddress.config.edit.address==$index"
 	class="w3-border w3-border-green w3-card-4 w3-display-container"
@@ -23,6 +18,7 @@
 	<span ng-click="mvpAddress.config.edit.openAddress($index)"
 					class="w3-button w3-display-topright">×</span>
 		<div class="w3-row-padding">
+
 			<div class="w3-quarter ">
 				<div class="w3-right">
 					<b>Тип адреси</b>
@@ -72,13 +68,13 @@
 					населені пункти</p>
 						<div ng-repeat="sd in mvpAddress.config.seek_addresses"
 							class="w3-hover-gray"
-							ng-click="mvpAddress.config.edit.clickAddress(sd, address)"
+							ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
 							ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
 							{{sd.name}}
 							</div>
 						<div ng-repeat="sd in mvpAddress.config.seek_addresses"
 							class="w3-hover-gray"
-							ng-click="mvpAddress.config.edit.clickAddress(sd, address)"
+							ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
 							ng-if="sd.district">
 							<span ng-if="!mvpAddress.data.region">
 							{{sd.region}}

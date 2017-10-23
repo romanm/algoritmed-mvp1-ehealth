@@ -191,6 +191,10 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
 			console.log($scope.api__legal_entities);
+			console.log($scope.api__legal_entities.doc_id);
+			$scope.config_msp.setRegistryMspFileName();
+			console.log($scope.config_msp.registryMspFileName);
+			console.log($scope.api__legal_entities);
 			$scope.mvpAddress.config.date.initDates();
 			//$scope.closeMsp();
 		});
