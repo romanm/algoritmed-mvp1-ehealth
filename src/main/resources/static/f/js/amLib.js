@@ -198,6 +198,18 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			$scope.mvpAddress.config.date.initDates();
 			//$scope.closeMsp();
 		});
+		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
+		console.log(url_last_registry_error);
+		$http.get(url_last_registry_error).then( function(response) {
+			$scope.last_registry_error = response.data;
+			$scope.last_registry_error.map = {};
+			console.log($scope.last_registry_error);
+			angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
+				console.log(v.entry.split('.')[1])
+				$scope.last_registry_error.map[v.entry.split('.')[1]] = v;
+			});
+			console.log($scope.last_registry_error);
+		});
 		var url_employee = '/f/config/msp/employee.json';
 		console.log(url_employee);
 		$http.get(url_employee).then( function(response) {

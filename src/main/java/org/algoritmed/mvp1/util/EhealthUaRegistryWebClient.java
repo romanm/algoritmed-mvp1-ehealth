@@ -47,25 +47,30 @@ public class EhealthUaRegistryWebClient {
 	}
 
 	public Map legal_entitiesPut(Map<String, Object> data) {
+		String readEntity_body = legal_entitiesPutStr(data);
+		Map readValue_mapBody = strToMap(readEntity_body);
+		return readValue_mapBody;
+	}
+
+	public String legal_entitiesPutStr(Map<String, Object> data) {
 		String readEntity_body = null;
 		try {
 			String dataStr = mapper.writeValueAsString(data);
-			System.err.println(26);
-			System.err.println(dataStr);
-			System.err.println(28);
+//			System.err.println(26);
+//			System.err.println(dataStr);
+//			System.err.println(28);
 			Entity<String> dataJson = Entity.json(dataStr);
 			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
 			Response response = wsClientInvocation.put(dataJson);
 			readEntity_body = response.readEntity(String.class);
-			System.err.println(53);
-			System.err.println(readEntity_body);
-			System.err.println(readEntity_body.length());
-			System.err.println(55);
+//			System.err.println(53);
+//			System.err.println(readEntity_body);
+//			System.err.println(readEntity_body.length());
+//			System.err.println(55);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		Map readValue_mapBody = strToMap(readEntity_body);
-		return null;
+		return readEntity_body;
 	}
 
 	private Map strToMap(String readEntity_body) {
@@ -74,7 +79,7 @@ public class EhealthUaRegistryWebClient {
 			try {
 				readValue_mapBody = mapper.readValue(readEntity_body, Map.class);
 				String writeValueAsString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(readValue_mapBody);
-				System.err.println(writeValueAsString);
+//				System.err.println(writeValueAsString);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

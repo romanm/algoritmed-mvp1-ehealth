@@ -14,9 +14,29 @@
 <div>&nbsp;</div>
 <div class="w3-container">
 	<div class="w3-card">
-		<header class="w3-light-gray w3-small"> Накладання ЕЦП і реєстрація
-			лікувального закладу в центральному реєстрі </header>
-		<div
-			ng-include="'/f/mvp1/medic/msp2/msp_registry_data_digitalsign.html'"></div>
+		<div class="w3-row">
+			<div class="w3-threequarter">
+		<header class="w3-light-gray w3-small w3-border-right"> Накладання ЕЦП і
+			реєстрація лікувального закладу в центральному реєстрі </header>
+				<div
+				class="w3-border-right"
+					ng-include="'/f/mvp1/medic/msp2/msp_registry_data_digitalsign.html'"></div>
+			</div>
+			<div class="w3-quarter ">
+				<header class="w3-light-gray w3-small">Відповідь на
+					останній запит реєстрації</header>
+				<div ng-repeat="invalid in last_registry_error.error.invalid"
+					ng-init="invalid_path = invalid.entry.split('.')">
+					<div ng-if="invalid_path[1]">
+					{{config_msp.getFieldName(invalid_path[1])}}
+					<!-- 
+					{{invalid_path[1]}}
+					.
+					 -->
+					{{invalid_path[2]}}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

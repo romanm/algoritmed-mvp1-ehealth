@@ -25,6 +25,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
 
+	
 	private @Value("${sql.msp_employee.list}")			String sql_msp_employee_list;
 	private @Value("${sql.msp_employee.role.list}")		String sql_msp_employee_role_list;
 	@GetMapping(value = "/r/read_msp_employee/{msp_id}")

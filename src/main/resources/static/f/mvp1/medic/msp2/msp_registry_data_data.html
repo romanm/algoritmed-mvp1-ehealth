@@ -13,7 +13,13 @@
 		<div ng-if="!outers[k]">
 			<div class="w3-quarter ">
 				<div class="w3-right-align">
-					<b> {{config_msp.getFieldName(k)}} </b>
+					<b
+					ng-class="{'w3-orange':last_registry_error.map[k]}"
+					> {{config_msp.getFieldName(k)}} </b>
+					<!-- 
+					{{k}}
+					{{!!last_registry_error.map[k]}}
+					 -->
 				</div>
 			</div>
 			<div class="w3-threequarter">
