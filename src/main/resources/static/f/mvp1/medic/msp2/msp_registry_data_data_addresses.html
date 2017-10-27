@@ -1,27 +1,28 @@
-<div ng-repeat="address in v" >
+<div ng-repeat="address in v"
+	ng-init="error_address=last_registry_error.map[k]['['+$index+']']">
 	<a href="#"
-	ng-class="{'w3-border-top w3-border-left w3-border-right w3-border-green':mvpAddress.config.edit.address==$index}"
-		ng-click="mvpAddress.config.edit.openAddress($index)" class="w3-hover-gray">
-	{{1+$index}}. 
-		<b> {{mvpAddress.config.type[address.type]}} </b> <span
-		title="{{address.id}}"
-		>
-			{{address.area}} обл., <span ng-if="address.region">{{address.region}} р-н.</span>
+		ng-class="{'w3-border-top w3-border-left w3-border-right w3-border-green':mvpAddress.config.edit.address==$index}"
+		ng-click="mvpAddress.config.edit.openAddress($index)"
+		class="w3-hover-gray"> {{1+$index}}. <b>
+			{{mvpAddress.config.type[address.type]}} </b> <span
+		title="{{address.id}}"> {{address.area}} обл., <span
+			ng-if="address.region">{{address.region}} р-н.</span>
 			{{address.settlement_type=='CITY'?'м.'
 			:(address.settlement_type=='VILLAGE'?'с.':'')}}{{address.settlement}}
 			{{address.street_type=='STREET'?'вул.':''}}{{address.street}} дім
-			{{address.building}} </span>
+			{{address.building}}
+	</span>
 	</a>
 	<div ng-if="mvpAddress.config.edit.address==$index"
-	class="w3-border w3-border-green w3-card-4 w3-display-container"
-	>
-	<span ng-click="mvpAddress.config.edit.openAddress($index)"
-					class="w3-button w3-display-topright">×</span>
+		class="w3-border w3-border-green w3-card-4 w3-display-container">
+
+		<span ng-click="mvpAddress.config.edit.openAddress($index)"
+			class="w3-button w3-display-topright">×</span>
 		<div class="w3-row-padding">
 
 			<div class="w3-quarter ">
 				<div class="w3-right">
-					<b>Тип адреси</b>
+					<b ng-class="{'w3-orange':error_address.type}">Тип адреси</b>
 				</div>
 			</div>
 			<div class="w3-threequarter">
@@ -30,12 +31,9 @@
 						value="{{at}}">{{mvpAddress.config.type[at]}}</option>
 				</select> <span class="w3-dropdown-hover w3-hover-gray"> <span
 					ng-mouseover="mvpAddress.fn.list.regions()" title="індекс:{{v_e}}">
-						область:
-						<span ng-if="!mvpAddress.data.region.name">
-						_______________ 
-						</span>
-						{{mvpAddress.data.region.name}}
-						</span>
+						область: <span ng-if="!mvpAddress.data.region.name">
+							_______________ </span> {{mvpAddress.data.region.name}}
+				</span>
 					<div class="w3-dropdown-content w3-bar-block">
 						<header class="w3-light-gray w3-tiny">
 							<b> області України </b>
@@ -66,25 +64,21 @@
 				style="width: 100%">
 				<p ng-if="!(mvpAddress.config.seek_addresses.length>0)">Знайдені
 					населені пункти</p>
-						<div ng-repeat="sd in mvpAddress.config.seek_addresses"
-							class="w3-hover-gray"
-							ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
-							ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
-							{{sd.name}}
-							</div>
-						<div ng-repeat="sd in mvpAddress.config.seek_addresses"
-							class="w3-hover-gray"
-							ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
-							ng-if="sd.district">
-							<span ng-if="!mvpAddress.data.region">
-							{{sd.region}}
-							обл.,
-							</span>
-							
-							{{sd.district}} р-н.
-							{{mvpAddress.config.type[sd.type]}} {{sd.name}}
-							</div>
-							<!-- 
+				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+					class="w3-hover-gray"
+					ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
+					ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
+					{{sd.name}}</div>
+				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+					class="w3-hover-gray"
+					ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
+					ng-if="sd.district">
+					<span ng-if="!mvpAddress.data.region"> {{sd.region}} обл., </span>
+
+					{{sd.district}} р-н. {{mvpAddress.config.type[sd.type]}}
+					{{sd.name}}
+				</div>
+				<!-- 
 				<div class="w3-row"
 					ng-if="mvpAddress.config.seek_addresses.length>0">
 					<div class="w3-container w3-twothird">
@@ -99,53 +93,54 @@
 							<!--
 							class="w3-hover-gray" ng-click="mvpAddress.fn.list.districts(r)">
 							-->
-					</div>
-				</div>
 			</div>
 		</div>
-		<!-- 
-		 -->
+		
 		<div class="w3-row">
 			<div class="w3-col l2 m2">
 				<div class="w3-right">
-					<select ng-model="address.street_type">
+				
+					<select ng-model="address.street_type"
+						ng-change="autoSave.fn_change_count()">
+						<option
+							ng-repeat="(k1,v1) in mvpAddress.config.selectDictionary('street_type').values"
+							value="{{k1}}">{{v1}}</option>
+					</select> 
+<!-- 
+					<select ng-model="address.street_type"
+							 ng-class="{'w3-orange':error_address.street_type}"
+					>
 						<option ng-repeat="t in mvpAddress.config.street_types"
 							value="{{t}}">{{mvpAddress.config.type[t]}}</option>
 					</select>
+ -->					
 				</div>
 			</div>
 			<div class="w3-col l5 m5">
 				<input class="w3-input w3-border" type="text"
+							 ng-class="{'w3-orange':error_address.street}"
 					ng-model="address.street" placeholder="вулиця">
 			</div>
 			<div class="w3-col l1 m1">
-				<div class="w3-right">дім.</div>
+				<div class="w3-right"
+			 ng-class="{'w3-orange':error_address.building}"
+				>дім.</div>
 			</div>
-			<div class="w3-col l1 m1">
+			<div class="w3-col l1 m1"
+			>
 				<input class="w3-input w3-border" type="text"
 					ng-model="address.building" placeholder="Nr">
 			</div>
 		</div>
-		<!-- 
-		<div class="w3-row-padding" ng-repeat="(k2,v2) in address">
-			<div class="w3-quarter ">
-				<div class="w3-right">
-				<b>
-				{{k2}}
-				</b>
-				</div>
-			</div>
-			<div class="w3-threequarter">
-				{{v2}}
-			</div>
-		</div>
-		{{address}}
-		 -->
-		 <p>
-					<div class="w3-display-bottomright">
-					<a class="w3-btn w3-blue"
-						ng-click="mvpAddress.config.edit.openAddress($index)">Закрити </a>
-					</div>
-				</p>
+
+<p>
+<div class="w3-display-bottomright">
+	<a class="w3-btn w3-blue"
+		ng-click="mvpAddress.config.edit.openAddress($index)">Закрити </a>
+</div>
+</p>
+
+		
 	</div>
 </div>
+

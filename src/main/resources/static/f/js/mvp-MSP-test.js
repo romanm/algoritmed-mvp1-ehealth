@@ -226,6 +226,9 @@ initTestAddress = function($scope, $http, $filter){
 			}
 			,address:-1
 			,openAddress:function(index){
+
+				console.log($scope.last_registry_error.map['addresses']['['+index+']'])
+
 				if(this.address==index) this.address=-1;
 				else this.address=index;
 			}
@@ -347,8 +350,8 @@ initTestAddress = function($scope, $http, $filter){
 			,science_degree:'наукова ступінь'
 		}
 		,initCCDictionaries:function(){
-			console.log($scope.doc_dictionaries);
-			console.log($scope.doc_dictionaries.data);
+			console.log('$scope.doc_dictionaries.data');
+//			console.log($scope.doc_dictionaries.data);
 			$scope.doc_dictionaries.keys = {};
 			angular.forEach($scope.doc_dictionaries.data, function(v, k){
 				$scope.doc_dictionaries.keys[v.name] = k;
@@ -361,7 +364,7 @@ initTestAddress = function($scope, $http, $filter){
 				return ;
 //			var i = $scope.doc_dictionaries.response.keys[k];
 //			var v = $scope.doc_dictionaries.response.data[i];
-			var i = $scope.doc_dictionaries.keys[k];
+			var i = $scope.doc_dictionaries.keys[k.toUpperCase()];
 			var v = $scope.doc_dictionaries.data[i];
 			return v;
 		}
@@ -504,7 +507,8 @@ init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn){
-			console.log(params);
+			console.log('params');
+//			console.log(params);
 			$http.get('/r/read_sql_with_param', {params:params}).then(fn);
 		}
 		,update_sql_with_param:function(data,fn){
@@ -1255,7 +1259,7 @@ initTestVariables = function($scope, $http, Blob){
 			}
 	$scope.tmp_api__legal_entities = 
 	{ name:'' , short_name:'' , public_name:''
-		, type:'', owner_property_type:'', legal_form:''
+		, type:'MSP', owner_property_type:'STATE', legal_form:'140'
 		, email:''
 		, edrpou:''
 		, kveds:[]

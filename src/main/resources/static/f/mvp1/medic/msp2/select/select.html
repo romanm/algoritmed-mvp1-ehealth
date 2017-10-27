@@ -1,0 +1,18 @@
+<div class="w3-quarter ">
+	<div class="w3-right-align">
+		<b ng-class="{'w3-orange':last_registry_error.map[k]}">
+			{{config_msp.getFieldName(k)}} </b>
+		<!-- {{k}} {{!!last_registry_error.map[k]}} -->
+	</div>
+</div>
+<div class="w3-threequarter w3-container">
+	<select ng-model="api__legal_entities[k]"
+		ng-change="autoSave.fn_change_count()">
+		<option
+			ng-repeat="(k1,v1) in mvpAddress.config.selectDictionary(outers[k].type_dictionary).values"
+			value="{{k1}}">{{v1}}</option>
+	</select>
+
+	<div ng-if="!isNotObjectNotArray"
+		ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_'+k+'.html'"></div>
+</div>

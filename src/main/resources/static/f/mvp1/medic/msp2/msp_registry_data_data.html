@@ -1,10 +1,19 @@
-
 <div
- ng-init="autoSave=config_msp.autoSave;outers={phones:{file:'/f/mvp1/lib/phone_dialog_row.html'},x:{}}"
+ ng-init="autoSave=config_msp.autoSave;
+ outers={
+ 	phones:{file:'/f/mvp1/lib/phone_dialog_row.html'}
+ 	,type:{file:'/f/mvp1/medic/msp2/select/type.html', type_dictionary:'LEGAL_ENTITY_TYPE'}
+ 	,owner_property_type:{file:'/f/mvp1/medic/msp2/select/type.html', type_dictionary:'OWNER_PROPERTY_TYPE'}
+ 	,legal_form:{file:'/f/mvp1/medic/msp2/select/select.html', type_dictionary:'LEGAL_FORM'}
+ 	}"
 >
+
 	<div class="w3-row-padding" ng-repeat="(k,v) in api__legal_entities"
 		ng-init="isNotObjectNotArray=(!v.isObject() && !v.isArray());"
 		ng-if="mvpAddress.config.isNotEditField(k)">
+
+		<div ng-if="outers[k] && k!='phones'"
+			ng-include="outers[k].file"></div>
 
 		<div ng-if="outers[k] && k=='phones'"
 			ng-init="phoneList_o=api__legal_entities;phoneList_k='phones'"
@@ -16,8 +25,8 @@
 					<b
 					ng-class="{'w3-orange':last_registry_error.map[k]}"
 					> {{config_msp.getFieldName(k)}} </b>
-					<!-- 
 					{{k}}
+					<!-- 
 					{{!!last_registry_error.map[k]}}
 					 -->
 				</div>

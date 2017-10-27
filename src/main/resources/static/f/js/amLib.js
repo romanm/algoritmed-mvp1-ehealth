@@ -161,8 +161,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			return hasRole;
 		}
 		,hasLoginRole:function(r,r_o,r_a){
-			if(!r_a)
-				r_a='role_id';
+			if(!r_a) r_a='role_id';
 			var hasRole = false;
 			angular.forEach(r_o, function(value, index){
 				if(value[r_a]==r){
@@ -187,26 +186,40 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	//modal dialog open/close END
 
 	$scope.readMsp = function (msp_id) {
-		console.log(msp_id)
+//		console.log(msp_id)
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
-			console.log($scope.api__legal_entities);
-			console.log($scope.api__legal_entities.doc_id);
+			console.log('$scope.api__legal_entities');
+//			console.log($scope.api__legal_entities);
 			$scope.config_msp.setRegistryMspFileName();
-			console.log($scope.config_msp.registryMspFileName);
-			console.log($scope.api__legal_entities);
+//			console.log($scope.config_msp.registryMspFileName);
 			$scope.mvpAddress.config.date.initDates();
 			//$scope.closeMsp();
 		});
-		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
+//		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
+		var url_last_registry_error = '/r/read_registry_response/'+msp_id;
 		console.log(url_last_registry_error);
 		$http.get(url_last_registry_error).then( function(response) {
 			$scope.last_registry_error = response.data;
 			$scope.last_registry_error.map = {};
 			console.log($scope.last_registry_error);
 			angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
-				console.log(v.entry.split('.')[1])
-				$scope.last_registry_error.map[v.entry.split('.')[1]] = v;
+				var entity_path = v.entry.split('.');
+//				console.log(entity_path)
+//				console.log(entity_path[1]+'/'+entity_path[2])
+				if(entity_path[2]){
+					if(!$scope.last_registry_error.map[entity_path[1]]){
+						$scope.last_registry_error.map[entity_path[1]] = {};
+					}
+					if(entity_path[3]){
+						if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]]){
+							$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = {};
+						}
+						$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = v;
+					}else
+						$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = v;
+				}else
+						$scope.last_registry_error.map[entity_path[1]] = v;
 			});
 			console.log($scope.last_registry_error);
 		});
