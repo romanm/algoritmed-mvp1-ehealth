@@ -245,6 +245,11 @@ initTestAddress = function($scope, $http, $filter){
 					console.log(k+'='+v+'/'+a[k]+'/'+vNew[v]);
 					a[k] = vNew[v];
 				});
+			},clickStreet:function(vNew, a){
+				a.street=vNew.name;
+				a.street_type=vNew.type;
+				console.log(vNew);
+				console.log(a);
 			},clickAddress:function(vNew, a){
 				/*
 				'region':'region'
@@ -389,6 +394,7 @@ initTestAddress = function($scope, $http, $filter){
 		console.log(url);
 		$http.get(url).then( function(response) {
 			console.log(response.data.response.data);
+			$scope.mvpAddress.config.seek_street = response.data.response.data;
 		});
 	});
 	$scope.$watch('mvpAddress.fn.seekInRegions', function(newValue){

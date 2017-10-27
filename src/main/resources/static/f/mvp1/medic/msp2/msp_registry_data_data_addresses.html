@@ -87,7 +87,9 @@
 						ng-change="autoSave.fn_change_count()">
 						<option
 							ng-repeat="(k1,v1) in mvpAddress.config.selectDictionary('street_type').values"
-							value="{{k1}}">{{v1}}</option>
+							value="{{k1}}">
+							{{v1}}
+							</option>
 					</select> 
 				</div>
 			</div>
@@ -95,12 +97,22 @@
 				<span class="w3-dropdown-hover" style="width: 100%"> <input
 					class="w3-input w3-border" type="text"
 					ng-class="{'w3-orange':error_address.street}"
-					ng-model="mvpAddress.fn.seekStreet" placeholder="вулиця">
-					<!--
+					ng-model="mvpAddress.fn.seekStreet" placeholder="вулиця"> <!--
 					ng-model="address.street" placeholder="вулиця">
 					-->
 					<div class="w3-dropdown-content w3-bar-block w3-border"
-						style="width: 100%">Знайдені вулиці в населеному пункті</div>
+						style="width: 100%">
+					<p ng-if="!(mvpAddress.config.seek_street.length>0)">
+						Знайдені вулиці в населеному пункті
+					</p>
+						<div ng-repeat="street in mvpAddress.config.seek_street"
+						class="w3-hover-gray"
+						ng-click="mvpAddress.config.edit.clickStreet(street, address);autoSave.fn_change_count();"
+						>
+						{{mvpAddress.config.selectDictionary('street_type').values[street.type]}}
+						{{street.name}}
+						</div>
+					</div>
 				</span>
 			</div>
 			<div class="w3-col l1 m1">
