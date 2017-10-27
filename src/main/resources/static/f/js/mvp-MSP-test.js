@@ -379,6 +379,18 @@ initTestAddress = function($scope, $http, $filter){
 		$scope.api__legal_entities.kveds[$scope.mvpAddress.fn.kveds.index]
 			= newValue;
 	});
+	$scope.$watch('mvpAddress.fn.seekStreet', function(newValue){
+		if(!newValue) return;
+		console.log(newValue);
+		var settlement_id=$scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].settlement_id;
+		console.log(settlement_id);
+		var url = $scope.mvpAddress.data.uri_prefix
+		+'/uaddresses/streets?settlement_id='+settlement_id+'&name='+newValue;
+		console.log(url);
+		$http.get(url).then( function(response) {
+			console.log(response.data.response.data);
+		});
+	});
 	$scope.$watch('mvpAddress.fn.seekInRegions', function(newValue){
 		//console.log($scope.mvpAddress.data.regions);
 		if(!newValue) return;
@@ -415,6 +427,7 @@ initTestAddress = function($scope, $http, $filter){
 	
 	$scope.mvpAddress.fn = {
 		seekInRegions:null,
+		seekStreet:null,
 		kveds:{
 			index:-1
 			,kvedToEdit:null

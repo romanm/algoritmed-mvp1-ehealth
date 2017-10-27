@@ -49,77 +49,59 @@
 				</span>
 			</div>
 		</div>
-		<div class="w3-dropdown-hover" style="width: 90%">
-			<div class="w3-row">
-				<div class="w3-col w3-light-gray" style="width: 50px">
-					<i class="w3-xxlarge fa fa-search"></i>
-				</div>
+		<div class="w3-row">
+			<div class="w3-col w3-light-gray" style="width: 50px">
+				<i class="w3-xxlarge fa fa-search"></i>
+			</div>
+			<div class="w3-dropdown-hover" style="width: 90%">
 				<div class="w3-rest">
 					<input class="w3-input w3-border" name="first" type="text"
 						ng-model="mvpAddress.fn.seekInRegions"
 						placeholder="пошук населеного пункту">
 				</div>
-			</div>
-			<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue "
-				style="width: 100%">
-				<p ng-if="!(mvpAddress.config.seek_addresses.length>0)">Знайдені
-					населені пункти</p>
-				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
-					class="w3-hover-gray"
-					ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
-					ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
-					{{sd.name}}</div>
-				<div ng-repeat="sd in mvpAddress.config.seek_addresses"
-					class="w3-hover-gray"
-					ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
-					ng-if="sd.district">
-					<span ng-if="!mvpAddress.data.region"> {{sd.region}} обл., </span>
-
-					{{sd.district}} р-н. {{mvpAddress.config.type[sd.type]}}
-					{{sd.name}}
-				</div>
-				<!-- 
-				<div class="w3-row"
-					ng-if="mvpAddress.config.seek_addresses.length>0">
-					<div class="w3-container w3-twothird">
+				<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue "
+					style="width: 100%">
+					<p ng-if="!(mvpAddress.config.seek_addresses.length>0)">Знайдені
+						населені пункти</p>
+					<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+						class="w3-hover-gray"
+						ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
+						ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
+						{{sd.name}}</div>
+					<div ng-repeat="sd in mvpAddress.config.seek_addresses"
+						class="w3-hover-gray"
+						ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
+						ng-if="sd.district">
+						<span ng-if="!mvpAddress.data.region"> {{sd.region}} обл.,
+						</span> {{sd.district}} р-н. {{mvpAddress.config.type[sd.type]}}
+						{{sd.name}}
 					</div>
-					<div class="w3-container w3-third">
-						<div class="w3-green">області</div>
-						<div ng-repeat="r in mvpAddress.data.regions | filter: mvpAddress.fn.seekInRegions"
-							title="{{r.koatuu}}"
-							ng-class="{'w3-green':$index==mvpAddress.data.choose.region.index}"
-							class="w3-hover-gray" ng-click="mvpAddress.config.edit.clickAddressArea(r, address)">
-							{{r.name}}</div>
-							<!--
-							class="w3-hover-gray" ng-click="mvpAddress.fn.list.districts(r)">
-							-->
+				</div>
 			</div>
 		</div>
-		
+
 		<div class="w3-row">
 			<div class="w3-col l2 m2">
 				<div class="w3-right">
-				
 					<select ng-model="address.street_type"
 						ng-change="autoSave.fn_change_count()">
 						<option
 							ng-repeat="(k1,v1) in mvpAddress.config.selectDictionary('street_type').values"
 							value="{{k1}}">{{v1}}</option>
 					</select> 
-<!-- 
-					<select ng-model="address.street_type"
-							 ng-class="{'w3-orange':error_address.street_type}"
-					>
-						<option ng-repeat="t in mvpAddress.config.street_types"
-							value="{{t}}">{{mvpAddress.config.type[t]}}</option>
-					</select>
- -->					
 				</div>
 			</div>
 			<div class="w3-col l5 m5">
-				<input class="w3-input w3-border" type="text"
-							 ng-class="{'w3-orange':error_address.street}"
+				<span class="w3-dropdown-hover" style="width: 100%"> <input
+					class="w3-input w3-border" type="text"
+					ng-class="{'w3-orange':error_address.street}"
+					ng-model="mvpAddress.fn.seekStreet" placeholder="вулиця">
+					<!--
 					ng-model="address.street" placeholder="вулиця">
+					-->
+					<div class="w3-dropdown-content w3-bar-block w3-border"
+						style="width: 100%">Знайдені вулиці в населеному пункті</div>
+				</span>
 			</div>
 			<div class="w3-col l1 m1">
 				<div class="w3-right"
