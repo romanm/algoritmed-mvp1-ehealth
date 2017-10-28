@@ -67,14 +67,15 @@
 						class="w3-hover-gray"
 						ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
 						ng-if="!sd.district">{{mvpAddress.config.type[sd.type]}}
-						{{sd.name}}</div>
+						<span ng-bind-html="highlight(sd.name, mvpAddress.fn.seekInRegions)"></span>
+						</div>
 					<div ng-repeat="sd in mvpAddress.config.seek_addresses"
 						class="w3-hover-gray"
 						ng-click="mvpAddress.config.edit.clickAddress(sd, address);autoSave.fn_change_count();"
 						ng-if="sd.district">
 						<span ng-if="!mvpAddress.data.region"> {{sd.region}} обл.,
 						</span> {{sd.district}} р-н. {{mvpAddress.config.type[sd.type]}}
-						{{sd.name}}
+						<span ng-bind-html="highlight(sd.name, mvpAddress.fn.seekInRegions)"></span>
 					</div>
 				</div>
 			</div>
@@ -94,7 +95,8 @@
 				</div>
 			</div>
 			<div class="w3-col l5 m5">
-				<span class="w3-dropdown-hover" style="width: 100%"> <input
+				<span class="w3-dropdown-hover" style="width: 100%"> 
+				<input
 					class="w3-input w3-border" type="text"
 					ng-class="{'w3-orange':error_address.street}"
 					ng-model="mvpAddress.fn.seekStreet" placeholder="вулиця"> <!--
@@ -110,7 +112,7 @@
 						ng-click="mvpAddress.config.edit.clickStreet(street, address);autoSave.fn_change_count();"
 						>
 						{{mvpAddress.config.selectDictionary('street_type').values[street.type]}}
-						{{street.name}}
+						<span ng-bind-html="highlight(street.name, mvpAddress.fn.seekStreet)"></span>
 						</div>
 					</div>
 				</span>

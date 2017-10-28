@@ -245,11 +245,11 @@ initTestAddress = function($scope, $http, $filter){
 					console.log(k+'='+v+'/'+a[k]+'/'+vNew[v]);
 					a[k] = vNew[v];
 				});
-			},clickStreet:function(vNew, a){
-				a.street=vNew.name;
-				a.street_type=vNew.type;
-				console.log(vNew);
-				console.log(a);
+			},clickStreet:function(street, address){
+				address.street=street.name;
+				address.street_type=street.type;
+				console.log(street);
+				console.log(address);
 			},clickAddress:function(vNew, a){
 				/*
 				'region':'region'
