@@ -5,6 +5,15 @@
 <input ng-change="autoSave.fn_change_count()"
 	placeholder="По батькові" class="w3-border" ng-model="v.second_name">
 <br/>
+
+<span ng-class="{'w3-orange':last_registry_error.map.owner.gender}">
+	Стать: </span>
+<span class="w3-hover-gray" ng-click="v.gender='MALE';autoSave.fn_change_count()"
+	ng-class="{'b':'MALE'==v.gender}">Ч</span>
+/
+<span ng-click="v.gender='FEMALE';autoSave.fn_change_count()" class="w3-hover-gray"
+	ng-class="{'b':'FEMALE'==v.gender}">Ж</span>,
+
 <span ng-init="d2e_param='birth_date';d2e_obj=v;prefix='д.н.'" ng-include="'/f/mvp1/lib/d2e_dialog.html'"></span>
 
 Місце народження
@@ -14,12 +23,27 @@
 <div class="w3-row-padding">
 	<div class="w3-quarter ">
 		<div class="w3-right">
-			<b> ід.нр. </b>
+			<b
+			ng-class="{'w3-orange':last_registry_error.map.owner.tax_id}"
+			> ід.нр. </b>
 		</div>
 	</div>
 	<div class="w3-threequarter">
 		<input ng-change="autoSave.fn_change_count()" type="text"
 			class="w3-border" ng-model="v.tax_id">
+	</div>
+</div>
+<div class="w3-row-padding">
+	<div class="w3-quarter ">
+		<div class="w3-right">
+			<b
+			ng-class="{'w3-orange':last_registry_error.map.owner.email}"
+			> Ел.пошта </b>
+		</div>
+	</div>
+	<div class="w3-threequarter">
+		<input ng-change="autoSave.fn_change_count()" type="text"
+			class="w3-border" ng-model="v.email">
 	</div>
 </div>
 

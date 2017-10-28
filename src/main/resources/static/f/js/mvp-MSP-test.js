@@ -226,9 +226,6 @@ initTestAddress = function($scope, $http, $filter){
 			}
 			,address:-1
 			,openAddress:function(index){
-
-				console.log($scope.last_registry_error.map['addresses']['['+index+']'])
-
 				if(this.address==index) this.address=-1;
 				else this.address=index;
 			}
@@ -254,10 +251,18 @@ initTestAddress = function($scope, $http, $filter){
 				/*
 				'region':'region'
 					,'district':'district'
+				var keyToKey = {
+						'region':'region'
+							,'settlement':'name'
+								,'settlement_type':'type'
+									,'settlement_id':'id'
+										,'id':'id'
+				}
 				 * */
 				console.log(vNew);
 				var keyToKey = {
-					'region':'region'
+					'area':'region'
+					,'region':'district'
 					,'settlement':'name'
 					,'settlement_type':'type'
 					,'settlement_id':'id'
@@ -694,6 +699,28 @@ initTestVariables = function($scope, $http, Blob){
 		, setRegistryMspFileName:function(){
 			this.registryMspFileName='registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
 		}
+		, cleanNoRegistryAttrubutes:function(dataJson){
+			['doc_id','doctype','parent_id','created','docbody_id','updated'].forEach(function(k){
+				delete dataJson[k]
+			});
+			$scope.config_msp.cleanD2e(dataJson);
+		}
+		, cleanD2e:function(o){
+			if(o.isObject())
+				angular.forEach(o , function(v1, k1){
+					if(k1.indexOf('d2e_')==0) delete o[k1]
+					else if(k1.indexOf('$$')==0) delete o[k1]
+					else if(Array.isArray(v1))
+						angular.forEach(v1 , function(v0, k0){
+							$scope.config_msp.cleanD2e(v0);
+							if('addresses'==k1){
+								 delete v0.id
+							}
+						});
+					else
+					$scope.config_msp.cleanD2e(v1);
+				});
+		}
 		, mspToSave:function(){
 			var a = document.createElement("a");
 			document.body.appendChild(a);
@@ -701,9 +728,8 @@ initTestVariables = function($scope, $http, Blob){
 //			a.download = this.registryMspFileName();
 			a.download = this.registryMspFileName;
 			var dataJson = $scope.api__legal_entities;
-			['doc_id','doctype','parent_id','created','docbody_id','updated'].forEach(function(k){
-				delete dataJson[k]
-			});
+			$scope.config_msp.cleanNoRegistryAttrubutes(dataJson);
+console.log(dataJson)
 			var json = JSON.stringify(dataJson),
 				blob = new Blob([json], {type: "octet/stream"}),
 			url = window.URL.createObjectURL(blob);
@@ -1282,7 +1308,7 @@ initTestVariables = function($scope, $http, Blob){
 		, email:''
 		, edrpou:''
 		, kveds:[]
-		, addresses:[ { type:'', country:'', area:'', region:'', settlement:'', settlement_type:'', settlement_id:''
+		, addresses:[ { type:'', country:'UA', area:'', region:'', settlement:'', settlement_type:'', settlement_id:''
 		, street_type:'', street:'', building:'' } ]
 		, phones:[ { type:'', number:'' } ]
 		, owner:{ first_name:'', last_name:'', second_name:'', tax_id:''

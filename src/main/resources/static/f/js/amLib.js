@@ -323,8 +323,9 @@ if (!Array.prototype.last){
 		return Object.keys(this);
 	}
 	Object.prototype.isObject = function(){
+//		return (typeof this)!='string' && Object.keys(this).length>0;
 		var keys = Object.keys(this);
-		return keys.length>0 && keys[0]!=0; 
+		return (typeof this)!='string' && keys.length>0 && keys[0]!=0; 
 	}
 }
 
