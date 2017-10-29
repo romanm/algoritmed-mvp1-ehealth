@@ -4,7 +4,9 @@
 			<a title="Додати ще один документ"
 				class="w3-btn w3-hover-gray" 
 				href="#" ng-click="mvpAddress.config.plusListElement(obj,'documents');autoSave.fn_change_count();">+</a>
-			<b>Документи</b>
+			<b
+			ng-class="{'w3-orange':last_registry_error.map.owner.documents}"
+			>Документи</b>
 		</div>
 	</div>
 	<div class="w3-threequarter">

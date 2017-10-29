@@ -50,7 +50,7 @@
 <div ng-include="'/f/mvp1/lib/documents_dialog.html'"
 	ng-init="obj=v"></div>
 
-	<div ng-init="phoneList_o=v;phoneList_k='phones'"
+	<div ng-init="phoneList_o=v;phoneList_k='phones';error_phones=last_registry_error.map.owner.phones"
 			ng-include="'/f/mvp1/lib/phone_dialog_row.html'"></div>
 
 <!-- 

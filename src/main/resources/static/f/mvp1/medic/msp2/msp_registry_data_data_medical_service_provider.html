@@ -1,6 +1,8 @@
 <div class="w3-row-padding">
 	<div class="w3-quarter">
-	<b>Рівень</b>
+	<b
+	ng-class="{'w3-orange':last_registry_error.map.medical_service_provider.accreditation}"
+	>Рівень</b>
 		<select ng-model="v.accreditation.category"
 			ng-change="autoSave.fn_change_count()">
 			<option ng-repeat="t in mvpAddress.config.accreditation_types"
@@ -26,11 +28,14 @@
 			<span ng-if="$first"> <a title="Додати Запис в розділі"
 				class="w3-btn w3-hover-gray" href="#"
 				ng-click="mvpAddress.config.plusListElement(v,'licenses');autoSave.fn_change_count();">+</a>
-				<b> Ліцензії: </b>
+				<b
+				ng-class="{'w3-orange':last_registry_error.map.medical_service_provider.licenses}"
+				> Ліцензії: </b>
 			</span>
 			<div class="w3-right w3-hover-gray">
-				<a href="#" ng-click="mvpAddress.config.edit.openLicense($index)">
-					{{1 + $index}}. </a>
+				<a href="#" ng-click="mvpAddress.config.edit.openLicense($index)"
+				ng-class="{'w3-orange':last_registry_error.map.medical_service_provider.licenses['['+$index+']']}"
+				> {{1 + $index}}. </a>
 			</div>
 		</div>
 		<div class="w3-threequarter">
