@@ -27,6 +27,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		);
 	}
 
+	$scope.msp_divisions={};
 	$scope.config_msp_all={
 		opened_dialog:'назва відкритого віконця діалогу'
 		,fn_open_dialog:function(dialog_name){
@@ -87,6 +88,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				}
 				,msp_signature:{
 					name:'Реєстрація'
+				}
+				,msp_divisions:{
+					name:'Підрозділи'
 				}
 				,capitatio_prognosis:{
 					name:'Прогноз капітації'
@@ -393,6 +397,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.config_msp_all.opened_dialog='msp_declaration';
 		$scope.config_msp_all.opened_dialog='msp_signature';
 		$scope.config_msp_all.opened_dialog='msp_data_form';
+		$scope.config_msp_all.opened_dialog='msp_divisions';
 		if('msp_declaration'==$scope.config_msp_all.opened_dialog){
 			$scope.$watch('principal.user_msp', function(newValue){ if(!newValue) return;
 				//console.log($scope.principal.user_msp[0].msp_id);
@@ -408,6 +413,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		}else
 		if('msp_signature'==$scope.config_msp_all.opened_dialog){
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
+		}else
+		if('msp_divisions'==$scope.config_msp_all.opened_dialog){
+				$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 		}else
 		if('msp_data_form'==$scope.config_msp_all.opened_dialog){
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();

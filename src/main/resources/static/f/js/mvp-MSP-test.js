@@ -295,6 +295,13 @@ initTestAddress = function($scope, $http, $filter){
 			var s_o = list.splice($index, 1)[0];
 			list.splice(0 ,0 ,s_o);
 		}
+		,toEditListElement:function(key, index){
+			if(this['index_to_edit_'+key]==index){
+				this['index_to_edit_'+key]=null;
+			}else{
+				this['index_to_edit_'+key]=index;
+			}
+		}
 		,toMinusListElement:function(key, index){
 			if(this['index_to_delete_'+key]==index){
 				this['index_to_delete_'+key]=null;
@@ -309,8 +316,10 @@ initTestAddress = function($scope, $http, $filter){
 			}
 		}
 		,plusListElement:function(o, list_name){
+			console.log(o)
 			if(!o[list_name]) o[list_name]=[];
 			var np = JSON.parse(JSON.stringify(this['template_'+list_name]));
+			console.log(np)
 			o[list_name].push(np)
 		}
 		,plusListElement2:function(v){
@@ -332,6 +341,7 @@ initTestAddress = function($scope, $http, $filter){
 		,template_specialities:{}
 		,template_qualifications:{}
 		,template_educations:{}
+		,template_divisions:{ addresses:[ { country:'UA'} ] }
 		,template_documents:{type:null, number:null}
 		,phone_template:{type:"MOBILE", number:""}
 		,phone_types:['LAND_LINE', 'MOBILE']
@@ -697,14 +707,27 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		, registryMspFileName:'registry_MSP_???'
 		, setRegistryMspFileName:function(){
-			this.registryMspFileName='registry_MSP_'+$scope.api__legal_entities.doc_id + '.json';
+			var msp_doc_id = '[msp_doc_id]';
+			if($scope.api__legal_entities)
+				msp_doc_id = $scope.api__legal_entities.doc_id;
+			this.registryMspFileName='registry_MSP_'+msp_doc_id+ '.json';
 		}
 		, cleanNoRegistryAttrubutes:function(dataJson){
-			['doc_id','doctype','parent_id','created','docbody_id','updated'].forEach(function(k){
+			['doc_id','doctype','parent_id','created','docbody_id','updated','update_sql']
+			.forEach(function(k){
 				delete dataJson[k]
+			});
+			[dataJson.owner.phones, dataJson.phones]
+			.forEach(function(phones){
+				phones.forEach(function(phone){
+				if(phone.number.indexOf('+38')<0)
+					phone.number = '+38'+phone.number;
+				console.log(phone.number);
+				});
 			});
 			$scope.config_msp.cleanD2e(dataJson);
 		}
+		, date_only:['issued_date','expiry_date','order_date','active_from_date']
 		, cleanD2e:function(o){
 			if(o.isObject())
 				angular.forEach(o , function(v1, k1){
@@ -719,6 +742,9 @@ initTestVariables = function($scope, $http, Blob){
 						});
 					else
 					$scope.config_msp.cleanD2e(v1);
+					if($scope.config_msp.date_only.indexOf(k1)>=0){
+						o[k1]=v1.split('T')[0];
+					}
 				});
 		}
 		, mspToSave:function(){

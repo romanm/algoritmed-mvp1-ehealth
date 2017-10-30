@@ -58,10 +58,21 @@
 							ng-click="mvpAddress.config.upListElement(v.licenses, $index);autoSave.fn_change_count();"
 						 title="Перенести запис на перше місце">^</span>
 					</span>
-					<b> № </b> <span ng-if="!license.license_number">
-						_____________ </span><span class="am-u">{{license.license_number}}</span>, <b
+					<b> № ліцензії</b> <span ng-if="!license.license_number">
+						_____________ </span><span class="am-u">{{license.license_number}}</span>, 
+						
+					<b> реєстраційний № </b> <span ng-if="!license.order_no">
+						_____________ </span><span class="am-u">{{license.order_no}}</span>, 
+						<br/>
+						<b
+						class="">ЛІЦЕНЗІЯ:</b> <span
+						ng-if="!license.what_licensed"> _____________ </span><span class="am-u">{{license.what_licensed}}</span>,
+						<br/>
+						<b
 						class="w3-small">Орган що видав:</b> <span
 						ng-if="!license.issued_by"> _____________ </span><span class="am-u">{{license.issued_by}}</span>,
+						
+						
 					<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
 						ng-init="d=mvpAddress.config.edit.date_types[kda]"> {{d.p}}
 						{{license[kda] | date : 'shortDate'}} </span>
@@ -71,13 +82,24 @@
 				ng-if="mvpAddress.config.edit.license==$index">
 				<span ng-click="mvpAddress.config.edit.openLicense($index)"
 					class="w3-button w3-display-topright">×</span> 
-					<b> № </b>
+					<b> № ліцензії</b>
 					<input
 					ng-change="autoSave.fn_change_count()" type="text"
-					class="w3-border" ng-model="license.license_number">,
+					class="w3-border" ng-model="license.license_number">
+					<br />
+					<b> реєстраційний № </b>
+					<input
+					ng-change="autoSave.fn_change_count()" type="text"
+					class="w3-border" ng-model="license.order_no">,
+					
 				<br /> <b class="w3-small">Орган що видав:</b> <input
 					ng-change="autoSave.fn_change_count()" type="text"
 					class="w3-border" ng-model="license.issued_by">
+					
+				<br /> <b class="w3-small">Що ліцензовано:</b> <input
+					ng-change="autoSave.fn_change_count()" type="text"
+					class="w3-border  am-width-100pr" ng-model="license.what_licensed">
+				
 				<div>
 					<span ng-repeat="kda in mvpAddress.config.edit.dates_license"
 						ng-init="d=mvpAddress.config.edit.date_types[kda]">

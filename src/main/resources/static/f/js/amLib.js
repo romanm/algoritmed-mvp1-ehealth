@@ -203,6 +203,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			$scope.last_registry_error = response.data;
 			$scope.last_registry_error.map = {};
 			console.log($scope.last_registry_error);
+			if($scope.last_registry_error.error)
 			angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
 				var entity_path = v.entry.split('.');
 //				console.log(entity_path)
@@ -215,11 +216,18 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 						if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]]){
 							$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = {};
 						}
-						$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = v;
+						if(entity_path[4]){
+//							console.log(entity_path[2]+'.'+entity_path[3]+'.'+entity_path[4])
+							if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]]){
+								$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = {};
+							}
+							$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]][entity_path[4]] = v;
+						}else
+							$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = v;
 					}else
-						$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = v;
+							$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = v;
 				}else
-						$scope.last_registry_error.map[entity_path[1]] = v;
+							$scope.last_registry_error.map[entity_path[1]] = v;
 			});
 			console.log($scope.last_registry_error);
 		});

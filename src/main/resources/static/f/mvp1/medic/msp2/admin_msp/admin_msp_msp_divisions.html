@@ -1,0 +1,67 @@
+<div class="w3-container">
+	<div class="w3-card">
+		<header class="w3-light-gray w3-small">
+			Лікувальний заклад: 
+			<b class="w3-large am-u">
+				{{api__legal_entities.name}} </b>
+			<div class="w3-right">
+				<a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
+					href="#" ng-click="mvpAddress.config.plusListElement(msp_divisions,'divisions');autoSave.fn_change_count();">+</a>
+					підрозділ
+			</div>
+		</header>
+		<div ng-repeat="division in msp_divisions.divisions">
+			<div class="w3-row"
+			ng-class="{'w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==$index}">
+
+				<div class="w3-threequarter">
+					<b>Підрозділ</b> <span class="w3-hover-gray"
+						ng-click="mvpAddress.config.toEditListElement('division', $index);">
+						<b>Назва:</b> {{division.name}} 
+						<!-- 
+						{{division}} 
+ -->
+
+					</span>
+				</div>
+				<div class="w3-quarter ">
+					<span class="w3-btn w3-border w3-red"
+						ng-if="mvpAddress.config['index_to_delete_division']==$index"
+						ng-click="mvpAddress.config.minusListElement(v.licenses, $index, 'licenses');autoSave.fn_change_count();"
+						title="Справді Видалити запис">-</span> <span class="w3-tooltip">
+						Реєстрація триває <span
+						class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+							<span class="w3-btn"
+							ng-click="mvpAddress.config.toMinusListElement('division', $index);"
+							title="Видалити запис">-</span>
+					</span>
+					</span>
+				</div>
+			</div>
+			<div ng-if="mvpAddress.config['index_to_edit_division']==$index"
+				class="w3-border w3-border-green w3-card-4">
+				<div>
+					<b>Назва:</b> <input ng-change="autoSave.fn_change_count()"
+						class="w3-input w3-border"
+						ng-model="msp_divisions.divisions[$index].name">
+				</div>
+				<div>
+					Адреси
+					<div ng-repeat="k in ['addresses']"
+						ng-init="v=msp_divisions.divisions[$index].addresses"
+						ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_addresses.html'"></div>
+				</div>
+
+			</div>
+		</div>
+		<div class="w3-row">
+			<div class="w3-threequarter">
+				<b>Підрозділ:</b>
+			</div>
+			<div class="w3-quarter ">
+<a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
+					href="#" ng-click="mvpAddress.config.plusListElement(msp_divisions,'divisions');autoSave.fn_change_count();">+</a>
+</div>
+		</div>
+	</div>
+</div>

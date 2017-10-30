@@ -25,6 +25,25 @@
 		<div class="w3-right">
 			<b
 			ng-class="{'w3-orange':last_registry_error.map.owner.tax_id}"
+			> Посада: </b>
+		</div>
+	</div>
+	<div class="w3-threequarter">
+	
+	<select ng-model="v.position"
+		ng-change="autoSave.fn_change_count()">
+		<option
+			ng-repeat="(k1,v1) in mvpAddress.config.selectDictionary('POSITION').values"
+			value="{{k1}}">{{v1}}</option>
+	</select>
+	
+	</div>
+</div>
+<div class="w3-row-padding">
+	<div class="w3-quarter ">
+		<div class="w3-right">
+			<b
+			ng-class="{'w3-orange':last_registry_error.map.owner.tax_id}"
 			> ід.нр. </b>
 		</div>
 	</div>
