@@ -6,27 +6,37 @@
 				{{api__legal_entities.name}} </b>
 			<div class="w3-right">
 				<a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
-					href="#" ng-click="mvpAddress.config.plusListElement(msp_divisions,'divisions');autoSave.fn_change_count();">+</a>
+					href="#" ng-click="msp_divisions.plusDivisionElement();
+					autoSave.fn_change_count();">+</a>
 					підрозділ
 			</div>
 		</header>
-		<div ng-repeat="division in msp_divisions.divisions">
+		<div ng-repeat="divisionElement in msp_divisions.divisions"
+			ng-init="divisionIndex=$index;
+			division=divisionElement.content;
+			autoSave=divisionElement.autoSave;
+			"
+		>
 			<div class="w3-row"
-			ng-class="{'w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==$index}">
+			ng-class="{'w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
 
 				<div class="w3-threequarter">
 					<b>Підрозділ</b> <span class="w3-hover-gray"
-						ng-click="mvpAddress.config.toEditListElement('division', $index);">
+						ng-click="mvpAddress.config.toEditListElement('division', divisionIndex);">
 						<b>Назва:</b> {{division.name}} 
-						<!-- 
+						<div>
+							Адреса: <span ng-repeat="address in division.addresses"
+								ng-include="'/f/mvp1/lib/address_text.html'"></span>
+						</div> <!-- 
+						a1
 						{{division}} 
- -->
-
+						a1
+						 -->
 					</span>
 				</div>
 				<div class="w3-quarter ">
 					<span class="w3-btn w3-border w3-red"
-						ng-if="mvpAddress.config['index_to_delete_division']==$index"
+						ng-if="mvpAddress.config['index_to_delete_division']==divisionIndex"
 						ng-click="mvpAddress.config.minusListElement(v.licenses, $index, 'licenses');autoSave.fn_change_count();"
 						title="Справді Видалити запис">-</span> <span class="w3-tooltip">
 						Реєстрація триває <span
@@ -48,7 +58,7 @@
 				<div>
 					Адреси
 					<div ng-repeat="k in ['addresses']"
-						ng-init="v=msp_divisions.divisions[$index].addresses"
+						ng-init="v=msp_divisions.divisions[divisionIndex].addresses"
 						ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_addresses.html'"></div>
 				</div>
 
@@ -60,7 +70,7 @@
 			</div>
 			<div class="w3-quarter ">
 <a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
-					href="#" ng-click="mvpAddress.config.plusListElement(msp_divisions,'divisions');autoSave.fn_change_count();">+</a>
+					href="#" ng-click="msp_divisions.plusDivisionElement();">+</a>
 </div>
 		</div>
 	</div>

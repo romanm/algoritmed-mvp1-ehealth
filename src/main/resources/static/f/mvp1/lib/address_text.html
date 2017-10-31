@@ -1,0 +1,7 @@
+<b> {{mvpAddress.config.type[address.type]}} </b>
+<span title="{{address.id}}"> {{address.area}} обл., <span
+	ng-if="address.region">{{address.region}} р-н.</span>
+	{{address.settlement_type=='CITY'?'м.'
+	:(address.settlement_type=='VILLAGE'?'с.':'')}}{{address.settlement}}
+	{{address.street_type=='STREET'?'вул.':''}}{{address.street}} дім
+	{{address.building}} 

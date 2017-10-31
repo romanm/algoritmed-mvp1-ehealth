@@ -416,9 +416,9 @@ initTestAddress = function($scope, $http, $filter){
 		//console.log($scope.mvpAddress.data.regions);
 		if(!newValue) return;
 		console.log(newValue);
-		console.log($scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address]);
-		var area = $scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].area;
-		console.log(area);
+//		console.log($scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address]);
+//		var area = $scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].area;
+//		console.log(area);
 		var url = $scope.mvpAddress.data.uri_prefix
 		+'/uaddresses/settlements?name='+newValue;
 //		if($scope.mvpAddress.data.region.name){

@@ -48,17 +48,19 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		);
 		return objToValidate.validToSave;
 	}
-	$scope.config_all.init = function(config_obj_key){
-		var config_obj = $scope[config_obj_key]
+	$scope.config_all.initObj = function(config_obj, config_obj_key){
 		var obj_autoSave = config_obj['autoSave'];
 		if(obj_autoSave){
 			var init_autoSave = {
 				change_count: 0
-				,fn_change_count : function() { this.change_count++; }
+				,fn_change_count : function() { 
+					this.change_count++; 
+					console.log(this.change_count);
+				}
 				,save_count:0
 				,fn_timeout_autoSave:null
 				,fn_autoSave : function() {
-//					console.log('--fn_auto_save-------------- ' + this.change_count);
+//						console.log('--fn_auto_save-------------- ' + this.change_count);
 					if(this.change_count > $scope.config_all.maxChangeForAutoSave){
 						this.fn_httpSave();//call fn to save
 						this.change_count = 0;
@@ -76,14 +78,19 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				}
 			};
 			for (var name in init_autoSave) { obj_autoSave[name] = init_autoSave[name]; }
-			var config_object_name = config_obj_key;
-			var config_object = $scope[config_obj_key];
+//			var config_object_name = config_obj_key;
+			//var config_object = $scope[config_obj_key];
+			var config_object = config_obj;
 			$scope.$watch(config_obj_key + '.autoSave.change_count', function(newValue){
-//				console.log(config_obj_key + '.autoSave.change_count = ' + newValue);
-//				$scope[obj_autoSave.config_object_name].autoSave.fn_autoSave();
+//					console.log(config_obj_key + '.autoSave.change_count = ' + newValue);
+//					$scope[obj_autoSave.config_object_name].autoSave.fn_autoSave();
 				config_object.autoSave.fn_autoSave();
 			});
 		}
+	}
+	$scope.config_all.init = function(config_obj_key){
+		var config_obj = $scope[config_obj_key]
+		$scope.config_all.initObj(config_obj, config_obj_key);
 	}
 	//autoSave block END
 	

@@ -27,7 +27,26 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		);
 	}
 
-	$scope.msp_divisions={};
+	$scope.msp_divisions={
+		divisions:[]
+		,plusDivisionElement:function(){
+			var divisionElement={};
+			for (var name in this.divisionElementTemplate) {
+				divisionElement[name] = this.divisionElementTemplate[name]; 
+			}
+			var config_obj_key = 'msp_divisions.divisions['+this.divisions.length+']';
+			this.divisions.push(divisionElement);
+			$scope.config_all.initObj(divisionElement, config_obj_key);
+		}
+		,divisionElementTemplate:{
+			content:{ addresses:[ { country:'UA'} ] }
+			,autoSave:{
+				fn_httpSave:function(clickSave){
+					console.log('-- msp_divisions.autoSave.fn_httpSave --');
+				}
+			}
+		}
+	};
 	$scope.config_msp_all={
 		opened_dialog:'назва відкритого віконця діалогу'
 		,fn_open_dialog:function(dialog_name){
