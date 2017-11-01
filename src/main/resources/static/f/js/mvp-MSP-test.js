@@ -301,6 +301,8 @@ initTestAddress = function($scope, $http, $filter){
 			}else{
 				this['index_to_edit_'+key]=index;
 			}
+			console.log(this)
+			console.log(this['index_to_edit_'+key])
 		}
 		,toMinusListElement:function(key, index){
 			if(this['index_to_delete_'+key]==index){
@@ -341,7 +343,6 @@ initTestAddress = function($scope, $http, $filter){
 		,template_specialities:{}
 		,template_qualifications:{}
 		,template_educations:{}
-		,template_divisions:{ addresses:[ { country:'UA'} ] }
 		,template_documents:{type:null, number:null}
 		,phone_template:{type:"MOBILE", number:""}
 		,phone_types:['LAND_LINE', 'MOBILE']

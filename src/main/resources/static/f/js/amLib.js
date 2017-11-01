@@ -55,7 +55,6 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				change_count: 0
 				,fn_change_count : function() { 
 					this.change_count++; 
-					console.log(this.change_count);
 				}
 				,save_count:0
 				,fn_timeout_autoSave:null
@@ -194,6 +193,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 
 	$scope.readMsp = function (msp_id) {
 //		console.log(msp_id)
+		$scope.msp_divisions.selectByMsp(msp_id);
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
 			console.log('$scope.api__legal_entities');

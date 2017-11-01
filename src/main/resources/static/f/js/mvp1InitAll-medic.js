@@ -28,22 +28,64 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}
 
 	$scope.msp_divisions={
-		divisions:[]
-		,plusDivisionElement:function(){
-			var divisionElement={};
-			for (var name in this.divisionElementTemplate) {
-				divisionElement[name] = this.divisionElementTemplate[name]; 
-			}
+		selectByMsp:function(msp_id){
+			$scope.commonDbRest.read_sql_with_param(
+			{sql:'sql.divisions.selectByMsp'
+			,msp_id:msp_id
+			},function(response) {
+				console.log(response.data)
+				$scope.msp_divisions.selectByMsp=response.data;
+				console.log($scope.msp_divisions.selectByMsp)
+				$scope.msp_divisions.selectByMsp.list.forEach(function(divisionFromDB){
+					console.log(divisionFromDB.docbody)
+					var divisionFromDB_content = JSON.parse(divisionFromDB.docbody);
+					console.log(divisionFromDB_content)
+					$scope.msp_divisions.addDivisionElement
+					({
+						content:divisionFromDB_content
+					});
+				});
+			});
+		}
+		,divisions:[]
+		,addDivisionElement:function(divisionElement){
+			divisionElement.autoSave = this.autoSave; 
 			var config_obj_key = 'msp_divisions.divisions['+this.divisions.length+']';
 			this.divisions.push(divisionElement);
 			$scope.config_all.initObj(divisionElement, config_obj_key);
 		}
-		,divisionElementTemplate:{
-			content:{ addresses:[ { country:'UA'} ] }
-			,autoSave:{
-				fn_httpSave:function(clickSave){
-					console.log('-- msp_divisions.autoSave.fn_httpSave --');
+		,plusDivisionElement:function(){
+			this.addDivisionElement
+			({
+				content:{ addresses:[ { country:'UA'} ] }
+			});
+		}
+		,autoSave:{
+			fn_httpSave:function(clickSave){
+				console.log('-- msp_divisions.autoSave.fn_httpSave --');
+				var index_to_edit_division = $scope.mvpAddress.config.index_to_edit_division;
+				var divisionElement = $scope.msp_divisions.divisions[index_to_edit_division];
+				console.log(divisionElement.content);
+				console.log($scope.api__legal_entities);
+				var data = {};
+				if(divisionElement.content.doc_id){//update
+					data = { sql:		'sql.docbody.update'
+						, docbodyMap:	divisionElement.content
+						, docbody_id:	divisionElement.content.doc_id
+					};
+				}else{//insert
+					data = { sql:		'sql.division.insert_declaration'
+						, docbodyMap:	divisionElement.content
+						, msp_id:		$scope.api__legal_entities.doc_id
+						, lotOfNewIds:	1
+					};
 				}
+				console.log(data);
+				$http.post('/r/update_sql_with_param', data).then(function(response) {
+					console.log(response.data);
+					if(!divisionElement.content.doc_id)
+						divisionElement.content.doc_id=response.data.nextDbId1;
+				});
 			}
 		}
 	};

@@ -19,11 +19,12 @@
 		>
 			<div class="w3-row"
 			ng-class="{'w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
-
-				<div class="w3-threequarter">
-					<b>Підрозділ</b> <span class="w3-hover-gray"
+				<div class="w3-threequarter w3-border-top">
+					<span> {{1 + $index}}. </span> 
+					<b> Підрозділ</b> <span
+						class="w3-hover-gray"
 						ng-click="mvpAddress.config.toEditListElement('division', divisionIndex);">
-						<b>Назва:</b> {{division.name}} 
+						<b>Назва:</b> {{division.name}}
 						<div>
 							Адреса: <span ng-repeat="address in division.addresses"
 								ng-include="'/f/mvp1/lib/address_text.html'"></span>
@@ -51,14 +52,15 @@
 			<div ng-if="mvpAddress.config['index_to_edit_division']==$index"
 				class="w3-border w3-border-green w3-card-4">
 				<div>
-					<b>Назва:</b> <input ng-change="autoSave.fn_change_count()"
+					<b>Назва:</b>
+					<input ng-change="autoSave.fn_change_count()"
 						class="w3-input w3-border"
-						ng-model="msp_divisions.divisions[$index].name">
+						ng-model="division.name">
 				</div>
 				<div>
 					Адреси
 					<div ng-repeat="k in ['addresses']"
-						ng-init="v=msp_divisions.divisions[divisionIndex].addresses"
+						ng-init="v=msp_divisions.divisions[divisionIndex].content.addresses"
 						ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_addresses.html'"></div>
 				</div>
 
