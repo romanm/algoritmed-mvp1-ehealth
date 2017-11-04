@@ -301,8 +301,8 @@ initTestAddress = function($scope, $http, $filter){
 			}else{
 				this['index_to_edit_'+key]=index;
 			}
-			console.log(this)
-			console.log(this['index_to_edit_'+key])
+//			console.log(this)
+//			console.log(this['index_to_edit_'+key])
 		}
 		,toMinusListElement:function(key, index){
 			if(this['index_to_delete_'+key]==index){
@@ -371,7 +371,7 @@ initTestAddress = function($scope, $http, $filter){
 			,science_degree:'наукова ступінь'
 		}
 		,initCCDictionaries:function(){
-			console.log('$scope.doc_dictionaries.data');
+//			console.log('$scope.doc_dictionaries.data');
 //			console.log($scope.doc_dictionaries.data);
 			$scope.doc_dictionaries.keys = {};
 			angular.forEach($scope.doc_dictionaries.data, function(v, k){
@@ -542,7 +542,6 @@ init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn){
-			console.log('params');
 //			console.log(params);
 			$http.get('/r/read_sql_with_param', {params:params}).then(fn);
 		}
@@ -1080,7 +1079,7 @@ console.log(dataJson)
 			var url_declaration = '/f/config/msp/declaration.json';
 			console.log(url_declaration);
 			$http.get(url_declaration).then(function(response){
-				console.log(response.data);
+				//console.log(response.data);
 				return
 				$scope.doc_declaration = response.data.data[0];
 				var ad = $scope.doc_declaration.legal_entity.addresses[0];

@@ -28,18 +28,30 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}
 
 	$scope.msp_divisions={
-		selectByMsp:function(msp_id){
+		remove_division:function(divisionIndex){
+			console.log(divisionIndex);
+			console.log(this.divisions[divisionIndex].content);
+			var data = { sql:'sql.doc.delete'
+					, doc_id:this.divisions[divisionIndex].content.doc_id
+				};
+			console.log(data);
+			$http.post('/r/update_sql_with_param', data).then(function(response) {
+				console.log(response.data);
+			});
+			$scope.mvpAddress.config.minusListElement(this.divisions, divisionIndex, 'division');
+		}
+		,read_selectByMsp:function(msp_id){
 			$scope.commonDbRest.read_sql_with_param(
 			{sql:'sql.divisions.selectByMsp'
 			,msp_id:msp_id
 			},function(response) {
-				console.log(response.data)
+//				console.log(response.data)
 				$scope.msp_divisions.selectByMsp=response.data;
-				console.log($scope.msp_divisions.selectByMsp)
+//				console.log($scope.msp_divisions.selectByMsp)
 				$scope.msp_divisions.selectByMsp.list.forEach(function(divisionFromDB){
-					console.log(divisionFromDB.docbody)
 					var divisionFromDB_content = JSON.parse(divisionFromDB.docbody);
-					console.log(divisionFromDB_content)
+					if(!divisionFromDB_content.doc_id)
+						divisionFromDB_content.doc_id = divisionFromDB.docbody_id
 					$scope.msp_divisions.addDivisionElement
 					({
 						content:divisionFromDB_content
@@ -64,7 +76,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			fn_httpSave:function(clickSave){
 				console.log('-- msp_divisions.autoSave.fn_httpSave --');
 				var index_to_edit_division = $scope.mvpAddress.config.index_to_edit_division;
+				console.log(index_to_edit_division);
 				var divisionElement = $scope.msp_divisions.divisions[index_to_edit_division];
+				console.log(divisionElement);
 				console.log(divisionElement.content);
 				console.log($scope.api__legal_entities);
 				var data = {};
@@ -138,7 +152,6 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					,fn_read_msp:function(){
 						var thisObj = this;
-						console.log(thisObj)
 						if($scope.param.doc_id){
 							$scope.readMsp($scope.param.doc_id);
 						}else{ 
@@ -459,6 +472,9 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.config_msp_all.opened_dialog='msp_signature';
 		$scope.config_msp_all.opened_dialog='msp_data_form';
 		$scope.config_msp_all.opened_dialog='msp_divisions';
+		if($scope.config_msp_all.admin_msp.dialogs[hash]){
+			$scope.config_msp_all.opened_dialog=hash;
+		}
 		if('msp_declaration'==$scope.config_msp_all.opened_dialog){
 			$scope.$watch('principal.user_msp', function(newValue){ if(!newValue) return;
 				//console.log($scope.principal.user_msp[0].msp_id);

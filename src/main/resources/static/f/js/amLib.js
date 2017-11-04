@@ -193,10 +193,11 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 
 	$scope.readMsp = function (msp_id) {
 //		console.log(msp_id)
-		$scope.msp_divisions.selectByMsp(msp_id);
+//		console.log($scope.msp_divisions)
+		$scope.msp_divisions.read_selectByMsp(msp_id);
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
-			console.log('$scope.api__legal_entities');
+//			console.log('$scope.api__legal_entities');
 //			console.log($scope.api__legal_entities);
 			$scope.config_msp.setRegistryMspFileName();
 //			console.log($scope.config_msp.registryMspFileName);
@@ -209,7 +210,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		$http.get(url_last_registry_error).then( function(response) {
 			$scope.last_registry_error = response.data;
 			$scope.last_registry_error.map = {};
-			console.log($scope.last_registry_error);
+//			console.log($scope.last_registry_error);
 			if($scope.last_registry_error.error)
 			angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
 				var entity_path = v.entry.split('.');
@@ -236,13 +237,13 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				}else
 							$scope.last_registry_error.map[entity_path[1]] = v;
 			});
-			console.log($scope.last_registry_error);
+//			console.log($scope.last_registry_error);
 		});
 		var url_employee = '/f/config/msp/employee.json';
 		console.log(url_employee);
 		$http.get(url_employee).then( function(response) {
 			$scope.doc_employee = response.data;
-			console.log($scope.doc_employee);
+//			console.log($scope.doc_employee);
 		});
 		read_dictionaries($scope, $http);
 	}
@@ -266,7 +267,7 @@ function read_principal($http, $scope, fn_o, fn_p) {
 		$http.get('/r/principal').then(function(response) {
 			if(!$scope.principal){
 				$scope.principal = response.data;
-				console.log($scope.principal);
+//				console.log($scope.principal);
 			}
 			if(fn_o&&fn_p) fn_o[fn_p]();
 		});
@@ -277,6 +278,9 @@ function read_principal($http, $scope, fn_o, fn_p) {
 }
 
 var parameters = {};
+console.log(window.location);
+var hash = window.location.hash.split('#!#')[1];
+console.log(hash);
 if(window.location.search){
 //	$.each(window.location.search.split("?")[1].split("&"), function(index, value){
 	angular.forEach(window.location.search.split("?")[1].split("&"), function(value, index){
