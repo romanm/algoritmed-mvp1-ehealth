@@ -209,9 +209,10 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		console.log(url_last_registry_error);
 		$http.get(url_last_registry_error).then( function(response) {
 			$scope.last_registry_error = response.data;
-			$scope.last_registry_error.map = {};
-//			console.log($scope.last_registry_error);
-			if($scope.last_registry_error.error)
+			if(!$scope.last_registry_error.error){
+				console.log($scope.last_registry_error.data.id);
+			}else{
+				$scope.last_registry_error.map = {};
 			angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
 				var entity_path = v.entry.split('.');
 //				console.log(entity_path)
@@ -238,6 +239,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 							$scope.last_registry_error.map[entity_path[1]] = v;
 			});
 //			console.log($scope.last_registry_error);
+			}
 		});
 		var url_employee = '/f/config/msp/employee.json';
 		console.log(url_employee);

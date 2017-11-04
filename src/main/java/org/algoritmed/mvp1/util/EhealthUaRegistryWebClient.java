@@ -46,13 +46,13 @@ public class EhealthUaRegistryWebClient {
 		return data;
 	}
 
-	public Map legal_entitiesPut(Map<String, Object> data) {
-		String readEntity_body = legal_entitiesPutStr(data);
+	public Map legal_entitiesPut(Map<String, Object> data, String uri) {
+		String readEntity_body = legal_entitiesPutStr(data, uri);
 		Map readValue_mapBody = strToMap(readEntity_body);
 		return readValue_mapBody;
 	}
 
-	public String legal_entitiesPutStr(Map<String, Object> data) {
+	public String legal_entitiesPutStr(Map<String, Object> data, String uri) {
 		String readEntity_body = null;
 		try {
 			String dataStr = mapper.writeValueAsString(data);
@@ -60,7 +60,8 @@ public class EhealthUaRegistryWebClient {
 //			System.err.println(dataStr);
 //			System.err.println(28);
 			Entity<String> dataJson = Entity.json(dataStr);
-			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
+			Builder wsClientInvocation = getInvocationBuilder(uri);
+//			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
 			Response response = wsClientInvocation.put(dataJson);
 			readEntity_body = response.readEntity(String.class);
 //			System.err.println(53);

@@ -752,20 +752,28 @@ initTestVariables = function($scope, $http, Blob){
 					}
 				});
 		}
-		, mspToSave:function(fileName){
+		, mspDivisionToSave:function(fileName, dataJson){
+			dataJson.legal_entity_id = $scope.last_registry_error.data.id;			
+			dataJson.external_id = dataJson.doc_id;			
+			console.log(dataJson);
+			this.fileToSave(fileName, dataJson);
+		}
+		, mspToSave:function(){
+			console.log(1)
+			var dataJson = $scope.api__legal_entities;
+			$scope.config_msp.cleanNoRegistryAttrubutes(dataJson);
+			console.log(dataJson)
+			this.fileToSave(this.registryMspFileName, dataJson);
+		}
+		, fileToSave:function(fileName, dataJson){
+			console.log(2)
 			var a = document.createElement("a");
 			document.body.appendChild(a);
 			a.style = "display: none";
 //			a.download = this.registryMspFileName();
-			if(fileName)
-				a.download = fileName;
-			else
-				a.download = this.registryMspFileName;
-			var dataJson = $scope.api__legal_entities;
-			$scope.config_msp.cleanNoRegistryAttrubutes(dataJson);
-console.log(dataJson)
+			a.download = fileName;
 			var json = JSON.stringify(dataJson),
-				blob = new Blob([json], {type: "octet/stream"}),
+			blob = new Blob([json], {type: "octet/stream"}),
 			url = window.URL.createObjectURL(blob);
 			a.href = url;
 			a.click();
