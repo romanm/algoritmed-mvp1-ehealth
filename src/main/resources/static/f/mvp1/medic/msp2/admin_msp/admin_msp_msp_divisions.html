@@ -44,17 +44,52 @@
 					</span>
 				</div>
 				<div class="w3-quarter ">
-					<span class="w3-btn w3-border w3-red"
-						ng-if="mvpAddress.config['index_to_delete_division']==divisionIndex"
-						ng-click="mvpAddress.config.minusListElement(v.licenses, $index, 'licenses');autoSave.fn_change_count();"
-						title="Справді Видалити запис">-</span> <span class="w3-tooltip">
-						Реєстрація триває <span
-						class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
-							<span class="w3-btn"
-							ng-click="mvpAddress.config.toMinusListElement('division', $index);"
-							title="Видалити запис">-</span>
-					</span>
-					</span>
+					<div class="w3-dropdown-hover" style="width: 100%">
+						Реєстрація триває
+						<div
+							class="w3-dropdown-content w3-card-2 w3-border w3-border-blue">
+							<div class="w3-bottombar w3-leftbar w3-border-blue">
+								<i 
+								title="вигрузити"
+								class="fa fa-sign-out ng-scope"></i>
+								<code class="w3-codespan">{{config_msp.getRegistryMspDivisionFileName(division.doc_id)}}</code>
+								<button class="w3-btn w3-blue" ng-click="config_msp.mspToSave(config_msp.getRegistryMspDivisionFileName(division.doc_id))">
+									файл реестрації</button>
+							</div>
+							<div class="w3-bottombar w3-rightbar w3-border-blue">
+								<div>Накласти підпис ЕЦП</div>
+								<a class="w3-btn"
+									onclick="window.open('https://czo.gov.ua/sign', '', 'width=950,height=800');">
+									<img src="/f/img/czo2.jpg" alt="Центральний завідуючий орган">
+								</a> <a 
+								class="w3-btn"
+								href="https://czo.gov.ua/sign" target="_blank"> <span
+									class="w3-blue"> <img src="/f/img/logotop2ds.png"
+										alt="ЕЦП">
+								</span>
+								</a>
+							</div>
+							<div class="w3-bottombar w3-leftbar w3-border-blue">
+								<form method="POST" enctype="multipart/form-data"
+									action="/r/msp_uploadP7sFile">
+									<label
+										title="Завантажити ЕЦП підписаний файл з даними
+										реєстрації. ">
+										<i 
+										title="загрузити"
+										class="fa fa-sign-in ng-scope"></i> <code
+											class="w3-codespan">{{config_msp.registryMspFileName}}.p7s</code>
+										: <br /> <input type="file" class="w3-btn w3-blue w3-border"
+										name="file" accept="*" /> <input type="hidden" name="doc_id"
+										value="{{api__legal_entities.doc_id}}">
+									</label> a1 {{api__legal_entities.doc_id}} a1
+									<button type="submit">OK</button>
+								</form>
+
+
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div ng-if="mvpAddress.config['index_to_edit_division']==$index"

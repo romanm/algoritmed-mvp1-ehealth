@@ -706,6 +706,11 @@ initTestVariables = function($scope, $http, Blob){
 			return fn;
 		}
 		, registryMspFileName:'registry_MSP_???'
+		, getRegistryMspDivisionFileName:function(division_id){
+			var m_fn = this.registryMspFileName.split('.');
+			var md_fn = m_fn[0]+'_'+division_id+'.'+m_fn[1];
+			return md_fn;
+		}
 		, setRegistryMspFileName:function(){
 			var msp_doc_id = '[msp_doc_id]';
 			if($scope.api__legal_entities)
@@ -747,12 +752,15 @@ initTestVariables = function($scope, $http, Blob){
 					}
 				});
 		}
-		, mspToSave:function(){
+		, mspToSave:function(fileName){
 			var a = document.createElement("a");
 			document.body.appendChild(a);
 			a.style = "display: none";
 //			a.download = this.registryMspFileName();
-			a.download = this.registryMspFileName;
+			if(fileName)
+				a.download = fileName;
+			else
+				a.download = this.registryMspFileName;
 			var dataJson = $scope.api__legal_entities;
 			$scope.config_msp.cleanNoRegistryAttrubutes(dataJson);
 console.log(dataJson)

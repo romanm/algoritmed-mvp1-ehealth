@@ -1,10 +1,13 @@
 <ol class="w3-u-l">
 	<li class="w3-hover-light-gray">Зберегти підготовлені для реєстрації дані в вигляді файла для
 		накладання ЕЦП <code class="w3-codespan">{{config_msp.registryMspFileName}}</code>
-		<button class="w3-btn w3-blue" ng-click="config_msp.mspToSave()">файл
+		<i class="fa fa-sign-out ng-scope"></i>
+		<button class="w3-btn w3-blue" ng-click="config_msp.mspToSave()">
+		файл
 			реестрації</button>
 	</li>
 	<li class="w3-hover-light-gray"><b>Накладання ЕЦП</b>: перейти на ЦЗО сайт і накласти ЕЦП на
+	<i ng-if="principal.principal.name" class="fa fa-sign-out ng-scope"></i>
 		файл реєстрації
 		<p>
 			<a href="http://czo.gov.ua/sign" target="_blank">ОНЛАЙН СЕРВІС
@@ -18,7 +21,9 @@
 		<form method="POST" enctype="multipart/form-data" action="/r/msp_uploadP7sFile">
 			<label>Завантажити ЕЦП підписаний файл з даними реєстрації. 
 				<code class="w3-codespan">{{config_msp.registryMspFileName}}.p7s</code>
-				: <br /> <input type="file"
+				: <br /> 
+				<i class="fa fa-sign-in ng-scope"></i>
+				<input type="file"
 				class="w3-btn w3-blue w3-border" name="file" accept="*" />
 				<input type="hidden" name="doc_id" value="{{api__legal_entities.doc_id}}">
 			</label>
