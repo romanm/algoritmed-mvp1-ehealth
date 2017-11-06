@@ -161,7 +161,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 				}
 				,msp_signature:{
-					name:'Реєстрація'
+					name:'Реєстрація ЛЗ'
 				}
 				,msp_divisions:{
 					name:'Підрозділи'

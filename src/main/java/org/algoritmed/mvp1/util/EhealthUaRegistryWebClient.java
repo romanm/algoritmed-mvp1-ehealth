@@ -56,13 +56,22 @@ public class EhealthUaRegistryWebClient {
 		String readEntity_body = null;
 		try {
 			String dataStr = mapper.writeValueAsString(data);
-//			System.err.println(26);
+			System.err.println(58);
+			System.err.println(uri);
+			System.err.println(uri.indexOf("divisions"));
+			System.err.println(uri.indexOf("divisions")>=0);
 //			System.err.println(dataStr);
 //			System.err.println(28);
 			Entity<String> dataJson = Entity.json(dataStr);
 			Builder wsClientInvocation = getInvocationBuilder(uri);
 //			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
-			Response response = wsClientInvocation.put(dataJson);
+			Response response ;
+			if(uri.indexOf("divisions")>=0) {
+				System.err.println(70);
+				response = wsClientInvocation.post(dataJson);
+			}else {
+				response = wsClientInvocation.put(dataJson);
+			}
 			readEntity_body = response.readEntity(String.class);
 //			System.err.println(53);
 //			System.err.println(readEntity_body);

@@ -48,6 +48,9 @@
 						<div
 							class="w3-dropdown-content w3-card-2 w3-border w3-border-blue">
 							<div class="w3-bottombar w3-leftbar w3-border-blue">
+							<span
+							class="w3-large am-b"
+							>1.</span>
 								<i 
 								title="вигрузити"
 								class="fa fa-sign-out ng-scope"></i>
@@ -58,7 +61,11 @@
 									файл реестрації</button>
 							</div>
 							<div class="w3-bottombar w3-rightbar w3-border-blue">
-								<div>Накласти підпис ЕЦП</div>
+								<div>
+								<span
+							class="w3-large am-b"
+							>2.</span>
+								Накласти підпис ЕЦП</div>
 								<a class="w3-btn"
 									onclick="window.open('https://czo.gov.ua/sign', '', 'width=950,height=800');">
 									<img src="/f/img/czo2.jpg" alt="Центральний завідуючий орган">
@@ -76,6 +83,9 @@
 									<label
 										title="Завантажити ЕЦП підписаний файл з даними
 										реєстрації. ">
+										<span
+							class="w3-large am-b"
+							>3.</span>
 										<i 
 										title="загрузити"
 										class="fa fa-sign-in ng-scope"></i> <code
@@ -87,8 +97,15 @@
 										value="{{api__legal_entities.doc_id}}">
 										<input type="hidden" name="uri_prop"
 										value="config.path_registry_msp_division">
-									</label> a1 {{api__legal_entities.doc_id}} a1
+									</label> 
+									<div>
+									<span
+							class="w3-large am-b"
+							>4.</span>
+									a1 {{api__legal_entities.doc_id}} 
+									a1
 									<button type="submit">OK</button>
+									</div>
 								</form>
 							</div>
 						</div>

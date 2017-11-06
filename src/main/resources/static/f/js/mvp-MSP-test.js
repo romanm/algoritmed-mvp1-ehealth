@@ -753,7 +753,7 @@ initTestVariables = function($scope, $http, Blob){
 				});
 		}
 		, mspDivisionToSave:function(fileName, dataJson){
-			dataJson.legal_entity_id = $scope.last_registry_error.data.id;			
+			dataJson.legal_entity_id = $scope.api__legal_entities.id;			
 			dataJson.external_id = dataJson.doc_id;			
 			console.log(dataJson);
 			this.fileToSave(fileName, dataJson);

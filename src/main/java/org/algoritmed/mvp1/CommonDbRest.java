@@ -2,7 +2,6 @@ package org.algoritmed.mvp1;
 
 import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;

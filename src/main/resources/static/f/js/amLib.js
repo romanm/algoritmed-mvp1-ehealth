@@ -197,7 +197,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		$scope.msp_divisions.read_selectByMsp(msp_id);
 		$http.get('/r/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
-//			console.log('$scope.api__legal_entities');
+			console.log('$scope.api__legal_entities');
 //			console.log($scope.api__legal_entities);
 			$scope.config_msp.setRegistryMspFileName();
 //			console.log($scope.config_msp.registryMspFileName);
@@ -211,35 +211,47 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			$scope.last_registry_error = response.data;
 			if(!$scope.last_registry_error.error){
 				console.log($scope.last_registry_error.data.id);
+				console.log($scope.api__legal_entities);
+				if($scope.api__legal_entities){
+					if(!$scope.api__legal_entities.id){
+						$scope.api__legal_entities.id = $scope.last_registry_error.data.id;
+						$scope.api__legal_entities.inserted_by = $scope.last_registry_error.data.inserted_by;
+						$scope.api__legal_entities.inserted_at = $scope.last_registry_error.data.inserted_at;
+						$scope.config_msp.autoSave.fn_httpSave();
+					}
+				}
 			}else{
 				$scope.last_registry_error.map = {};
-			angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
-				var entity_path = v.entry.split('.');
-//				console.log(entity_path)
-//				console.log(entity_path[1]+'/'+entity_path[2])
-				if(entity_path[2]){
-					if(!$scope.last_registry_error.map[entity_path[1]]){
-						$scope.last_registry_error.map[entity_path[1]] = {};
-					}
-					if(entity_path[3]){
-						if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]]){
-							$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = {};
+				angular.forEach($scope.last_registry_error.error.invalid, function(v, i){
+					var entity_path = v.entry.split('.');
+	//				console.log(entity_path)
+	//				console.log(entity_path[1]+'/'+entity_path[2])
+					if(entity_path[2]){
+						if(!$scope.last_registry_error.map[entity_path[1]]){
+							$scope.last_registry_error.map[entity_path[1]] = {};
 						}
-						if(entity_path[4]){
-//							console.log(entity_path[2]+'.'+entity_path[3]+'.'+entity_path[4])
-							if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]]){
-								$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = {};
+						if(entity_path[3]){
+							if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]]){
+								$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = {};
 							}
-							$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]][entity_path[4]] = v;
+							if(entity_path[4]){
+	//							console.log(entity_path[2]+'.'+entity_path[3]+'.'+entity_path[4])
+								if(!$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]]){
+									$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = {};
+								}
+								$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]][entity_path[4]] = v;
+							}else
+								$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = v;
 						}else
-							$scope.last_registry_error.map[entity_path[1]][entity_path[2]][entity_path[3]] = v;
+								$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = v;
 					}else
-							$scope.last_registry_error.map[entity_path[1]][entity_path[2]] = v;
-				}else
-							$scope.last_registry_error.map[entity_path[1]] = v;
-			});
-//			console.log($scope.last_registry_error);
+								$scope.last_registry_error.map[entity_path[1]] = v;
+				});
+	//			console.log($scope.last_registry_error);
 			}
+		}, function(response){
+			console.error(' :( Файл відповіді на реєстрацію не зчитується');
+			console.log(response);
 		});
 		var url_employee = '/f/config/msp/employee.json';
 		console.log(url_employee);

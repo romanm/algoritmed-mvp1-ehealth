@@ -9,7 +9,11 @@
 				{{api__legal_entities.name}}
 
 			</div>
-			<div class="w3-quarter ">Реєстрація триває</div>
+			<div class="w3-quarter ">
+				<div ng-if="api__legal_entities.id"
+					title="{{api__legal_entities.id}}">Зареєстрований</div>
+				<div ng-if="!api__legal_entities.id">Реєстрація триває</div>
+			</div>
 		</div>
 	</div>
 </div>

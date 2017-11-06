@@ -1,13 +1,17 @@
 package org.algoritmed.mvp1.medic;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.EhealthUaRegistryWebClient;
@@ -28,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class EhealthUaRegistryFileUploadRest extends DbAlgoritmed{
 
+	
 	@GetMapping(value = "/r/read_registry_response/{msp_id}")
 	public @ResponseBody Map<String, Object>  read_registry_response(@PathVariable String msp_id
 			, Principal userPrincipal
