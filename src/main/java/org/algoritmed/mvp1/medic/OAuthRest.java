@@ -1,8 +1,12 @@
 package org.algoritmed.mvp1.medic;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -18,6 +22,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class OAuthRest  extends DbAlgoritmed {
 	private static final Logger logger = LoggerFactory.getLogger(OAuthRest.class);
+
+	@GetMapping(value = "/r/ehealt_sing_in_redirect")
+	public String  ehealt_sing_in_redirect(HttpServletRequest request){
+		logger.info("---------------\n"
+				+ "/r/ehealt_sing_in_redirect"
+				+ "\n"
+				+ "\n" 
+				+ request.getHeader("Location")
+				);
+		while (request.getHeaderNames().hasMoreElements()) {
+			String headerName = (String) request.getHeaderNames().nextElement();
+			String header = request.getHeader(headerName);
+			System.err.println(headerName+": "+header);
+		}
+		return "redirect:/v/admin-msp";
+	}
 
 	@GetMapping(value = "/r/test_ask_owner_token")
 	public @ResponseBody Map<String, Object>  test_ask_owner_token() throws IOException {

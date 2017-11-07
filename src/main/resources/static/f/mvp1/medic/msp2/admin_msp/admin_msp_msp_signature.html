@@ -11,7 +11,23 @@
 			</div>
 			<div class="w3-quarter ">
 				<div ng-if="api__legal_entities.id"
-					title="{{api__legal_entities.id}}">Зареєстрований</div>
+					title="{{api__legal_entities.id}}">
+					Зареєстрований
+					<div class="w3-small w3-bottombar w3-topbar w3-border-blue
+					">
+					<!-- 
+					&scope=apps:create
+					 -->
+					<a
+					href="http://auth.demo.ehealth.world/sign-in
+					?client_id={{api__legal_entities.id}}
+					&response_type=code
+					&email=roman.mishchenko@gmail.com
+					&redirect_uri=https://medic.algoritmed.com/r/ehealt_sing_in_redirect"
+					>
+					Активуйте ваш eHealth логін для реєстрації підрозділів
+					</a></div>
+				</div>
 				<div ng-if="!api__legal_entities.id">Реєстрація триває</div>
 			</div>
 		</div>
