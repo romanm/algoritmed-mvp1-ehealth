@@ -28,8 +28,8 @@ public class OAuthRest  extends DbAlgoritmed {
 
 		Client client = ClientBuilder.newClient();
 		//config.uri_registry: https://demo.ehealth.world/api
-		String server = env.getProperty("config.uri_registry");
-		String uri = "http://auth.demo.ehealth.world"
+		String server = env.getProperty("config.uri_oauth2");
+		String uri = server
 				+ "/sign-in"
 				+ "?client_id=bf48fba2-e4e8-4a06-aeaa-345d8346d7bb"
 				+ "&redirect_url=https://medic.algoritmed.com/"

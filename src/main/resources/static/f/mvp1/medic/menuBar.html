@@ -26,6 +26,17 @@
 			<!-- 
 		{{config_msp_all.doctor_list[config_msp_all.doctor_index].name}}
 		 -->
+			<button class="w3-button w3-hover-deep-orange b w3-border-deep-orange w3-leftbar" ng-click="logEHealth=!logEHealth">
+			#eHealth
+			</button>
+			<div class="w3-dropdown-content w3-bar-block w3-card-4"
+				style="right: 0" ng-class="{'w3-show':logEHealth}">
+				Аутентифікація і Логін в ALGORITMED <br /> 
+				за допомогою #eHealth <br />
+				буде активований після завершення <br /> 
+				вашої реєстрації в
+				#eHealth
+			</div>
 			<button class="w3-button w3-hover-red" ng-click="logLog=!logLog">
 		<span class="w3-tiny">
 				<!-- 

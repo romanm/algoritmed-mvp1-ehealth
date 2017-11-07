@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CommonDbRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(CommonDbRest.class);
-	
+
 	@PostMapping("/r/update_sql_with_param")
 	public @ResponseBody Map<String, Object> update_sql_with_param(
 			@RequestBody Map<String, Object> data
