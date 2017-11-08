@@ -71,8 +71,9 @@ public class OAuthRest  extends DbAlgoritmed {
 				+ " declaration_request:write declaration_request:read employee:deactivate"
 				+ " otp:read otp:write ");
 		oauth_tokenMap.put("token", tokenMap);
+		String oauth_tokens_body = "";
 		try {
-			String oauth_tokens_body = mapper.writeValueAsString(oauth_tokenMap);
+			oauth_tokens_body = mapper.writeValueAsString(oauth_tokenMap);
 			System.err.println("oauth_tokens_body");
 			System.err.println(oauth_tokens_body);
 			System.err.println("oauth_tokens_body END");
@@ -99,7 +100,16 @@ public class OAuthRest  extends DbAlgoritmed {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		String bashCommand = "ls -l";
+		String bashCommand = "curl -X POST \\"
+				+ "https://api.ehealth.world/oauth/tokens/ \\"
+				+ "-H 'cache-control: no-cache' \\"
+				+ "-H 'content-type: application/json' \\"
+				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\"
+				+ "-d '"
+				+ oauth_tokens_body
+				+ "'"
+				+ "";
+		System.err.println(bashCommand);
 		runBashCommand(bashCommand);
 		return "redirect:/v/admin-msp";
 	}
