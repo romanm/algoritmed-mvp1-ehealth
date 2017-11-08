@@ -100,14 +100,14 @@ public class OAuthRest  extends DbAlgoritmed {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		String bashCommand = "curl -X POST \\"
-				+ "https://api.ehealth.world/oauth/tokens/ \\"
-				+ "-H 'cache-control: no-cache' \\"
-				+ "-H 'content-type: application/json' \\"
-				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\"
+		String bashCommand = "curl -X POST \\ \n"
+				+ "https://api.ehealth.world/oauth/tokens/ \\ \n"
+				+ "-H 'cache-control: no-cache' \\ \n"
+				+ "-H 'content-type: application/json' \\ \n"
+				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
 				+ "-d '"
 				+ oauth_tokens_body
-				+ "'"
+				+ "' \n"
 				+ "";
 		System.err.println(bashCommand);
 		runBashCommand(bashCommand);
