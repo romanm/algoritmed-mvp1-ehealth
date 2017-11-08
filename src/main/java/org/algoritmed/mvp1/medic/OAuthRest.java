@@ -1,6 +1,8 @@
 package org.algoritmed.mvp1.medic;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,7 +96,24 @@ public class OAuthRest  extends DbAlgoritmed {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+		String bashCommand = "ls -aF";
+		runBashCommand(bashCommand);
 		return "redirect:/v/admin-msp";
+	}
+
+	private void runBashCommand(String bashCommand) {
+		String s;
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec("ls -l");
+            BufferedReader br = new BufferedReader(
+                new InputStreamReader(p.getInputStream()));
+            while ((s = br.readLine()) != null)
+                System.out.println("line: " + s);
+            p.waitFor();
+            System.out.println ("exit: " + p.exitValue());
+            p.destroy();
+        } catch (Exception e) {}
 	}
 
 	@GetMapping(value = "/r/test_ask_owner_token")
