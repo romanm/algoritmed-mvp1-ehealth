@@ -52,6 +52,8 @@ public class OAuthRest  extends DbAlgoritmed {
 		String server = env.getProperty("config.uri_oauth2");
 		String uri = server	+ "/oauth/tokens";
 		System.err.println(uri);
+		uri = "https://api.ehealth.world/oauth/tokens/";
+		System.err.println(uri);
 		Response response = client.target(uri)
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("cache-control", "no-cache")
