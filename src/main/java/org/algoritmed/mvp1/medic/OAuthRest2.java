@@ -3,6 +3,8 @@ package org.algoritmed.mvp1.medic;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	@GetMapping(value = "/r/to_oauth_tokens2")
-	public String  to_oauth_tokens(@RequestParam("code") String code){
+	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
 		logger.info("---------------\n"
 				+ "/r/from_oauth_tokens2"
 				+ "\n" 
+				+ "\n" +response
+				+ "\n" +response.getHeaderNames()
 				);
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
