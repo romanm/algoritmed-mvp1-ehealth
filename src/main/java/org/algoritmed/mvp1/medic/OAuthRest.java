@@ -90,9 +90,9 @@ public class OAuthRest  extends DbAlgoritmed {
 			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437")
 					.post(payload);
 //				.header("content-type", "application/json")
-			System.out.println("status: " + response.getStatus());
-			System.out.println("headers: " + response.getHeaders());
-			System.out.println("body:" + response.readEntity(String.class));
+			System.out.println("\n status: " + response.getStatus());
+			System.out.println("\n headers: " + response.getHeaders());
+			System.out.println("\n body:" + response.readEntity(String.class));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
