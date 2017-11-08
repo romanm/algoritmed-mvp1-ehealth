@@ -96,7 +96,7 @@ public class OAuthRest  extends DbAlgoritmed {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		String bashCommand = "ls -aF";
+		String bashCommand = "ls -l";
 		runBashCommand(bashCommand);
 		return "redirect:/v/admin-msp";
 	}
@@ -105,7 +105,7 @@ public class OAuthRest  extends DbAlgoritmed {
 		String s;
         Process p;
         try {
-            p = Runtime.getRuntime().exec("ls -l");
+            p = Runtime.getRuntime().exec(bashCommand);
             BufferedReader br = new BufferedReader(
                 new InputStreamReader(p.getInputStream()));
             while ((s = br.readLine()) != null)
