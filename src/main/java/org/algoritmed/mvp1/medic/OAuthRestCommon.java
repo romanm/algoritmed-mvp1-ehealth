@@ -13,6 +13,11 @@ public class OAuthRestCommon {
 	String uri = "https://api.ehealth.world/oauth/tokens/";
 	protected String getBodyForOAuthTokenRequest(String code) {
 		Map oauth_tokenMap = getBodyMapForOAuthTokenRequest(code);
+		String oauth_tokens_body = mapToString(oauth_tokenMap);
+		return oauth_tokens_body;
+	}
+
+	protected String mapToString(Map oauth_tokenMap) {
 		String oauth_tokens_body = "";
 		try {
 			oauth_tokens_body = mapper.writeValueAsString(oauth_tokenMap);

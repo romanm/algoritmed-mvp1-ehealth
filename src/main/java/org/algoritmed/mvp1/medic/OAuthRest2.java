@@ -1,6 +1,8 @@
 package org.algoritmed.mvp1.medic;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +28,13 @@ public class OAuthRest2 extends OAuthRestCommon{
 				+ "/r/from_oauth_tokens2"
 				+ "\n" 
 				+ "\n" +response
-				+ "\n" +response.getHeaderNames()
 				);
+		Collection<String> headerNames = response.getHeaderNames();
+		for (Iterator iterator = headerNames.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+			System.err.println(string+":");
+			System.err.println(response.getHeader(string));
+		}
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    headers.add("cache-control", "no-cache");
@@ -39,6 +46,8 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println(31);
 	    System.err.println("bodyMapForOAuthTokenRequest");
 	    System.err.println(bodyMapForOAuthTokenRequest);
+	    System.err.println("---------------");
+	    System.err.println(mapToString(bodyMapForOAuthTokenRequest));
 	    
 	    Map postForObject = restTemplate.postForObject(uri, bodyMapForOAuthTokenRequest, Map.class);
 	    System.err.println(30);
