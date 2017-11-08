@@ -23,7 +23,7 @@ public class OAuthRest  extends DbAlgoritmed {
 	private static final Logger logger = LoggerFactory.getLogger(OAuthRest.class);
 	
 	@GetMapping(value = "/r/to_oauth_tokens")
-	public void  to_oauth_tokens(@RequestParam("code") String code){
+	public String  to_oauth_tokens(@RequestParam("code") String code){
 		Client client = ClientBuilder.newClient();
 		Entity payload = Entity.json("{  'token': "
 				+ "{"
@@ -52,7 +52,7 @@ public class OAuthRest  extends DbAlgoritmed {
 				System.out.println("status: " + response.getStatus());
 				System.out.println("headers: " + response.getHeaders());
 				System.out.println("body:" + response.readEntity(String.class));
-
+		return "redirect:/v/admin-msp";
 	}
 
 	@GetMapping(value = "/r/test_ask_owner_token")
