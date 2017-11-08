@@ -40,11 +40,14 @@ public class OAuthRest  extends DbAlgoritmed {
 				+ " otp:read otp:write'  "
 				+ "}}");
 		String server = env.getProperty("config.uri_oauth2");
-		Response response = client.target(server
-				+ "/oauth/tokens")
+		String uri = server	+ "/oauth/tokens";
+		System.err.println(uri);
+		Response response = client.target(uri)
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("cache-control", "no-cache")
+				.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
 				.post(payload);
+//				.header("content-type", "application/json")
 
 				System.out.println("status: " + response.getStatus());
 				System.out.println("headers: " + response.getHeaders());
