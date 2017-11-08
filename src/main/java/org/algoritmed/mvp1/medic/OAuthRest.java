@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -83,12 +84,14 @@ public class OAuthRest  extends DbAlgoritmed {
 //			System.err.println(uri);
 			String uri = "https://api.ehealth.world/oauth/tokens/";
 			System.err.println(uri);
-			Response response = client.target(uri)
+			Builder header = client.target(uri)
 					.request(MediaType.APPLICATION_JSON_TYPE)
-					.header("cache-control", "no-cache")
-			.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
-			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437")
-					.post(payload);
+					.header("cache-control", "no-cache");
+			System.err.println("header");
+			System.err.println(header);
+			Response response = header.post(payload);
+//			.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
+//			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437")
 //				.header("content-type", "application/json")
 			System.out.println("\n status: " + response.getStatus());
 			System.out.println("\n headers: " + response.getHeaders());
