@@ -27,7 +27,15 @@ public class OAuthRest2 extends OAuthRestCommon{
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    headers.add("cache-control", "no-cache");
+	    headers.add("Authorization", "Bearer c490c936651a0f6badeb426721076437");
+	    System.err.println(headers);
+	    System.err.println(headers.getETag());
 	    Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
+	    System.err.println(uri);
+	    System.err.println(31);
+	    System.err.println("bodyMapForOAuthTokenRequest");
+	    System.err.println(bodyMapForOAuthTokenRequest);
+	    
 	    Map postForObject = restTemplate.postForObject(uri, bodyMapForOAuthTokenRequest, Map.class);
 	    System.err.println(30);
 	    System.err.println("postForObject");
