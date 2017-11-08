@@ -18,12 +18,19 @@ public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	@GetMapping(value = "/r/to_oauth_tokens2")
 	public String  to_oauth_tokens(@RequestParam("code") String code){
+		logger.info("---------------\n"
+				+ "/r/from_oauth_tokens2"
+				+ "\n" 
+				);
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    headers.add("cache-control", "no-cache");
 	    Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
 	    Map postForObject = restTemplate.postForObject(uri, bodyMapForOAuthTokenRequest, Map.class);
+	    System.err.println(30);
+	    System.err.println("postForObject");
 	    System.err.println(postForObject);
+	    System.err.println("postForObject END");
 		return "redirect:/v/admin-msp";
 	}
 	
