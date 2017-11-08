@@ -84,8 +84,8 @@ public class OAuthRest  extends DbAlgoritmed {
 			Response response = client.target(uri)
 					.request(MediaType.APPLICATION_JSON_TYPE)
 					.header("cache-control", "no-cache")
-//			.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
-//			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
+			.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
+			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437")
 					.post(payload);
 //				.header("content-type", "application/json")
 			System.out.println("status: " + response.getStatus());
