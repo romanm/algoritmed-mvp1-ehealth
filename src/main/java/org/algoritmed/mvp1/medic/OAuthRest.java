@@ -39,13 +39,13 @@ public class OAuthRest  extends DbAlgoritmed {
 				+ ",    'code': '"+ code+ "'"
 				+ ",    'client_id': 'bf48fba2-e4e8-4a06-aeaa-345d8346d7bb'"
 				+ ",    'client_secret': 'ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09'"
-				+ ",    'redirect_uri': 'http://example.com/'"
+				+ ",    'redirect_uri': 'https://medic.algoritmed.com/r/from_oauth_tokens'"
 				+ ",    'scope': 'employee:read employee:write"
 				+ " employee_request:approve employee_request:read employee_request:write employee_request:reject"
 				+ " legal_entity:read"
 				+ " division:read division:write"
 				+ " declaration_request:write declaration_request:read employee:deactivate"
-				+ " otp:read otp:write'  "
+				+ " otp:read otp:write' "
 				+ "}}";
 		System.err.println(oauth_tokens_body);
 		Entity payload = Entity.json(oauth_tokens_body);
