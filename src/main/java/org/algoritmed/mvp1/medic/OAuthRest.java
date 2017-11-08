@@ -22,10 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class OAuthRest  extends DbAlgoritmed {
 	private static final Logger logger = LoggerFactory.getLogger(OAuthRest.class);
 	
+	@GetMapping(value = "/r/from_oauth_tokens")
+	public String  from_oauth_tokens(){
+		logger.info("---------------\n"
+				+ "/r/from_oauth_tokens"
+				+ "\n" 
+				);
+		return "redirect:/v/admin-msp";
+	}
 	@GetMapping(value = "/r/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code){
 		Client client = ClientBuilder.newClient();
-		Entity payload = Entity.json("{  'token': "
+		String oauth_tokens_body = "{  'token': "
 				+ "{"
 				+ "    'grant_type': 'authorization_code'"
 				+ ",    'code': '"+ code+ "'"
@@ -38,15 +46,17 @@ public class OAuthRest  extends DbAlgoritmed {
 				+ " division:read division:write"
 				+ " declaration_request:write declaration_request:read employee:deactivate"
 				+ " otp:read otp:write'  "
-				+ "}}");
+				+ "}}";
+		System.err.println(oauth_tokens_body);
+		Entity payload = Entity.json(oauth_tokens_body);
 		String server = env.getProperty("config.uri_oauth2");
 		String uri = server	+ "/oauth/tokens";
 		System.err.println(uri);
 		Response response = client.target(uri)
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("cache-control", "no-cache")
-				.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
 				.post(payload);
+//				.header("postman-token", "560ff187-848c-467a-d1b5-d4383ecfa911")
 //				.header("content-type", "application/json")
 
 				System.out.println("status: " + response.getStatus());
