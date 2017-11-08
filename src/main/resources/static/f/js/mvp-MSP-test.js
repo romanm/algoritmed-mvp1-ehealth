@@ -718,7 +718,8 @@ initTestVariables = function($scope, $http, Blob){
 			this.registryMspFileName='registry_MSP_'+msp_doc_id+ '.json';
 		}
 		, cleanNoRegistryAttrubutes:function(dataJson){
-			['doc_id','doctype','parent_id','created','docbody_id','updated','update_sql']
+			['doc_id','doctype','parent_id','created','docbody_id','updated','update_sql'
+				,'id','inserted_at','inserted_by']
 			.forEach(function(k){
 				delete dataJson[k]
 			});
