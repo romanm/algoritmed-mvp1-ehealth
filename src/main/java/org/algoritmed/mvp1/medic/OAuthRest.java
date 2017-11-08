@@ -72,23 +72,6 @@ public class OAuthRest  extends OAuthRestCommon {
 		return "redirect:/v/admin-msp";
 	}
 
-	private void runBashCommand(String bashCommand) {
-		String s;
-        Process p;
-        try {
-            p = Runtime.getRuntime().exec(bashCommand);
-            BufferedReader br = new BufferedReader(
-                new InputStreamReader(p.getInputStream()));
-            System.out.println("result");
-            while ((s = br.readLine()) != null)
-                System.out.println(s);
-            System.out.println("result END --------------------------");
-            p.waitFor();
-            System.out.println ("\n exit: " + p.exitValue());
-            p.destroy();
-        } catch (Exception e) {}
-	}
-
 	
 	@GetMapping(value = "/r/ehealt_sing_in_redirect")
 	public String  ehealt_sing_in_redirect(HttpServletRequest request){

@@ -1,5 +1,7 @@
 package org.algoritmed.mvp1.medic;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,4 +46,22 @@ public class OAuthRestCommon {
 		oauth_tokenMap.put("token", tokenMap);
 		return oauth_tokenMap;
 	}
+	
+	protected void runBashCommand(String bashCommand) {
+		String s;
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec(bashCommand);
+            BufferedReader br = new BufferedReader(
+                new InputStreamReader(p.getInputStream()));
+            System.out.println("result");
+            while ((s = br.readLine()) != null)
+                System.out.println(s);
+            System.out.println("result END --------------------------");
+            p.waitFor();
+            System.out.println ("\n exit: " + p.exitValue());
+            p.destroy();
+        } catch (Exception e) {}
+	}
+	
 }

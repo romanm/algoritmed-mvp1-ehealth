@@ -29,25 +29,38 @@ public class OAuthRest2 extends OAuthRestCommon{
 				+ "\n" 
 				+ "\n" +response
 				);
-		Collection<String> headerNames = response.getHeaderNames();
-		for (Iterator iterator = headerNames.iterator(); iterator.hasNext();) {
-			String string = (String) iterator.next();
-			System.err.println(string+":");
-			System.err.println(response.getHeader(string));
-		}
+		Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
+		
+		String oauth_tokens_body = mapToString(bodyMapForOAuthTokenRequest);
+		System.err.println("---------------");
+		System.err.println(oauth_tokens_body);
+		System.err.println("---------------");
+		String bashCommand = "curl -X POST "
+				+ uri
+				+ " -H 'cache-control: no-cache' "
+				+ " -H 'content-type: application/json' "
+				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
+				+ " -d '"
+				+ oauth_tokens_body
+				+ "' \n"
+				+ "";
+		
+		System.err.println("---------------");
+		System.err.println(bashCommand);
+		System.err.println("---------------");
+		runBashCommand(bashCommand);
+
+		
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    headers.add("cache-control", "no-cache");
 	    headers.add("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 	    System.err.println(headers);
 	    System.err.println(headers.getETag());
-	    Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
 	    System.err.println(uri);
 	    System.err.println(31);
 	    System.err.println("bodyMapForOAuthTokenRequest");
 	    System.err.println(bodyMapForOAuthTokenRequest);
-	    System.err.println("---------------");
-	    System.err.println(mapToString(bodyMapForOAuthTokenRequest));
 	    
 	    Map postForObject = restTemplate.postForObject(uri, bodyMapForOAuthTokenRequest, Map.class);
 	    System.err.println(30);
