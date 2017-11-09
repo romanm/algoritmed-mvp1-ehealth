@@ -1,8 +1,5 @@
 package org.algoritmed.mvp1.medic;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -59,11 +56,11 @@ public class OAuthRest  extends OAuthRestCommon {
 
 		String bashCommand = "curl -X POST "
 				+ uri_oauth2_code_grant
-				+ ""
-				+ "-H  'cache-control: no-cache' "
-				+ "-H 'content-type: application/json' "
+				+ " "
+				+ " -H  'cache-control: no-cache' "
+				+ " -H 'content-type: application/json' "
 				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
-				+ "-d '"
+				+ " -d '"
 				+ oauth_tokens_body
 				+ "'"
 				+ "";

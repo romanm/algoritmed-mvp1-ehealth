@@ -1,8 +1,6 @@
 package org.algoritmed.mvp1.medic;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
