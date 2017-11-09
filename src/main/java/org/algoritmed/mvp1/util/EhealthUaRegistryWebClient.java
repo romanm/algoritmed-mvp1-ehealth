@@ -28,16 +28,19 @@ public class EhealthUaRegistryWebClient {
 
 	public Map apiGet(Map<String, Object> data) {
 //		String path_uri = prefix_uri+data.get("add_uri");
-		String path_uri = (String) data.get("add_uri");
+		String path_uri = ""+data.get("add_uri");
 		if(data.containsKey("queryString"))
 			path_uri += "?"+data.get("queryString");
 		System.err.println(path_uri);
-		data.put("test_api_URL", uri_registry + path_uri);
+		String test_api_URL = domain_registry  + path_uri;
+		data.put("test_api_URL", test_api_URL);
 		logger.info(""
 				+ "\n"+36
 				+ "\n"+data.toString().replaceAll(", ", "\n , ")
+				+ "\n"+39
+				+ "\n"+uri_registry_legal_entities
 				);
-		Builder wsClientInvocation = getInvocationBuilder();
+		Builder wsClientInvocation = getInvocationBuilder(test_api_URL);
 //		Builder wsClientInvocation = getInvocationBuilder(path_uri);
 		Response response = wsClientInvocation.get();
 		String readEntity_body = response.readEntity(String.class);
@@ -64,8 +67,8 @@ public class EhealthUaRegistryWebClient {
 //			System.err.println(dataStr);
 //			System.err.println(28);
 			Entity<String> dataJson = Entity.json(dataStr);
-			Builder wsClientInvocation = getInvocationBuilder();
-//			Builder wsClientInvocation = getInvocationBuilder(uri);
+//			Builder wsClientInvocation = getInvocationBuilder();
+			Builder wsClientInvocation = getInvocationBuilder(uri);
 //			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
 			Response response ;
 			if(uri.indexOf("divisions")>=0) {
@@ -104,16 +107,19 @@ public class EhealthUaRegistryWebClient {
 config.uri_registry: http://demo.ehealth.world
 config.path_registry_msp: /api/legal_entities
 	 * */
-	private @Value("${config.uri_registry}")		String uri_registry;
-	private @Value("${config.path_registry_msp}")	String path_uri_registry_msp;
+	private @Value("${config.domain_registry}")				String domain_registry;
+	private @Value("${config.uri_registry_legal_entities}")	String uri_registry_legal_entities;
+	private @Value("${config.path_registry_msp}")			String path_uri_registry_msp;
+	private @Value("${config.token_bearer}")				String token_bearer;
 
-//	private Builder getInvocationBuilder(String path_uri) {
-	private Builder getInvocationBuilder() {
+	private Builder getInvocationBuilder(String path_uri) {
+//	private Builder getInvocationBuilder() {
 		Client client = ClientBuilder.newClient();
+		Builder header = client.target(path_uri)
 //		Builder header = client.target(uri_registry + path_uri)
-		Builder header = client.target(uri_registry)
+//		Builder header = client.target(uri_registry_legal_entities)
 			.request(MediaType.APPLICATION_JSON_TYPE)
-			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
+			.header("Authorization", "Bearer "+token_bearer);
 		//test token
 //		.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 		return header;

@@ -24,6 +24,7 @@ public class EhealtUaAddressRest {
 		logger.info(""
 				+ "\n"+21
 				+ "\n"+map
+				+ "\n"+request.getQueryString()
 				);
 		if(null!=request.getQueryString())
 			map.put("queryString", request.getQueryString());

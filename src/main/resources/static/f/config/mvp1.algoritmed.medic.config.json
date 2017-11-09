@@ -13,12 +13,19 @@
 }
 ,"info":{
 	"th_template":"mvp1-medic"
-	,"ng_template":"'/f/mvp1/medic/info.html'"
+	,"ng_template":"'/f/mvp1/medic/msp2/info/info.html'"
 	,"shortName2":"Інф."
 	,"shortName":"Інформація"
 	,"fa":"fa-life-ring"
 	,"parent":"home"
 	,"menuBar":true
+}
+,"test-cc":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/msp2/info/info_test_program_ehealth.html'"
+	,"shortName":"Інформація"
+	,"fa":"fa-life-ring"
+	,"parent":"info"
 }
 ,"moz-declaration":{
 	"th_template":"mvp1-medic"

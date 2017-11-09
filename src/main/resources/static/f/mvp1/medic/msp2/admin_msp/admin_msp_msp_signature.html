@@ -12,16 +12,26 @@
 			<div class="w3-quarter ">
 				<div ng-if="api__legal_entities.id"
 					title="{{api__legal_entities.id}}">
-					Зареєстрований
+					<div class="w3-display-container" style="height: 30px;">
+						<div class="w3-display-topright w3-tiny">
+							<a
+								href="https://medic.algoritmed.com/r/gcc/api/legal_entities/{{api__legal_entities.id}}">j</a>
+						</div>
+						Зареєстрований <img
+							src="http://auth.demo.ehealth.world/images/logo.svg" height="20"
+							style="margin-bottom: 0; margin-top: -14px;" alt="#eHealth"
+							title="#eHealth">
+					</div>
 					<div class="w3-small w3-bottombar w3-topbar w3-border-blue
-					">
+					w3-hover-gray
+					" title="{{principal.uri.uri_oauth2_sign_in}}">
 					<!-- 
+					class="w3-hover-gray"
 					&scope=apps:create
 					&redirect_uri=https://medic.algoritmed.com/r/to_oauth_tokens"
 					href="http://auth.demo.ehealth.world/sign-in
 					href="http://auth.demo.ehealth.world/sign-in
 					 -->
-					 {{principal.uri.uri_oauth2_sign_in}}
 					<a
 					href="{{principal.uri.uri_oauth2_sign_in}}
 					?client_id={{api__legal_entities.id}}
