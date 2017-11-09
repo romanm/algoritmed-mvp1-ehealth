@@ -2,11 +2,15 @@ package org.algoritmed.mvp1.medic;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,12 +23,12 @@ public class OAuthRestCommon {
 //	String uri = "https://demo.ehealth.world/api/oauth/tokens/";
 	
 	protected String getBodyForOAuthTokenRequest(String code) {
-		Map oauth_tokenMap = getBodyMapForOAuthTokenRequest(code);
+		Map<String, Object> oauth_tokenMap = getBodyMapForOAuthTokenRequest(code);
 		String oauth_tokens_body = mapToString(oauth_tokenMap);
 		return oauth_tokens_body;
 	}
 
-	protected String mapToString(Map oauth_tokenMap) {
+	protected String mapToString(Map<String, Object> oauth_tokenMap) {
 		String oauth_tokens_body = "";
 		try {
 			oauth_tokens_body = mapper.writeValueAsString(oauth_tokenMap);
@@ -34,9 +38,9 @@ public class OAuthRestCommon {
 		return oauth_tokens_body;
 	}
 
-	protected Map getBodyMapForOAuthTokenRequest(String code) {
-		Map oauth_tokenMap = new HashMap<>();
-		Map tokenMap = new HashMap<>();
+	protected Map<String, Object> getBodyMapForOAuthTokenRequest(String code) {
+		Map<String, Object> oauth_tokenMap = new HashMap<String, Object>();
+		Map<String, Object> tokenMap = new HashMap<String, Object>();
 		tokenMap.put("grant_type", "authorization_code");
 		tokenMap.put("code", code);
 		tokenMap.put("client_id", "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb");
@@ -69,4 +73,41 @@ public class OAuthRestCommon {
         } catch (Exception e) {}
 	}
 	
+	protected HttpHeaders getRestTemplateHeader() {
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    headers.add("cache-control", "no-cache");
+	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+		return headers;
+	}
+	@Autowired protected Environment env;
+	
+	protected void testCURL(String oauth_tokens_body) {
+		System.err.println("---------------");
+		String bashCommand = "curl -X POST "
+				+ uri_oauth2_code_grant
+				+ " -H 'cache-control: no-cache' "
+				+ " -H 'content-type: application/json' "
+				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
+				+ " -d '"
+				+ oauth_tokens_body
+				+ "' \n"
+				+ "";
+		
+		System.err.println("---------------");
+		System.err.println(bashCommand);
+		System.err.println("---------------");
+		runBashCommand(bashCommand);
+	}
+	
+	private String bashCommand = "curl -X POST "
+			+ uri_oauth2_code_grant
+			+ " "
+			+ " -H  'cache-control: no-cache' "
+			+ " -H 'content-type: application/json' "
+			//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
+			+ " -d '"
+//			+ oauth_tokens_body
+			+ "'"
+			+ "";
 }

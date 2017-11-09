@@ -26,7 +26,7 @@ public class EhealthUaRegistryWebClient {
 //	String prefix_uri = "/api";
 //	String prefix_uri = "";
 
-	public Map apiGet(Map<String, Object> data) {
+	public Map<String, Object> apiGet(Map<String, Object> data) {
 //		String path_uri = prefix_uri+data.get("add_uri");
 		String path_uri = ""+data.get("add_uri");
 		if(data.containsKey("queryString"))

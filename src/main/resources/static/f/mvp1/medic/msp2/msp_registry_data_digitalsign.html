@@ -10,10 +10,16 @@
 		ng-if="principal.principal.name" class="fa fa-sign-out ng-scope"></i>
 		файл реєстрації
 		<p>
-			<a href="http://czo.gov.ua/sign" target="_blank">ОНЛАЙН СЕРВІС
-				НАКЛАДАННЯ ЕЦП НА ЕЛЕКТРОННІ ДОКУМЕНТИ</a>
+			<a class="w3-btn am-u w3-border"
+			href="#"
+				onclick="window.open('https://czo.gov.ua/sign', '', 'width=950,height=800');">
+				ОНЛАЙН СЕРВІС НАКЛАДАННЯ ЕЦП НА ЕЛЕКТРОННІ ДОКУМЕНТИ </a>
 		</p> <img src="http://czo.gov.ua/images/head.jpg" alt="Lights"
-		class="w3-image"></li>
+		class="w3-image">
+		<div class="w3-tiny w3-right">
+			<a href="http://czo.gov.ua/sign" target="_blank"> Відкрити в
+				окремій закладці </a>
+		</div></li>
 	<li>
 		<form method="POST" enctype="multipart/form-data"
 			action="/r/msp_uploadP7sFile">

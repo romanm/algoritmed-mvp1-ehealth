@@ -1,6 +1,5 @@
 package org.algoritmed.mvp1.medic;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,28 +30,10 @@ public class OAuthRest2 extends OAuthRestCommon{
 		String oauth_tokens_body = mapToString(bodyMapForOAuthTokenRequest);
 		System.err.println("---------------");
 		System.err.println(oauth_tokens_body);
-		System.err.println("---------------");
-		String bashCommand = "curl -X POST "
-				+ uri_oauth2_code_grant
-				+ " -H 'cache-control: no-cache' "
-				+ " -H 'content-type: application/json' "
-				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
-				+ " -d '"
-				+ oauth_tokens_body
-				+ "' \n"
-				+ "";
+//		testCURL(oauth_tokens_body);
 		
-		System.err.println("---------------");
-		System.err.println(bashCommand);
-		System.err.println("---------------");
-		runBashCommand(bashCommand);
-		
-		HttpHeaders headers = new HttpHeaders();
-	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-	    headers.add("cache-control", "no-cache");
-	    headers.add("Authorization", "Bearer c490c936651a0f6badeb426721076437");
+		HttpHeaders headers = getRestTemplateHeader();
 	    System.err.println(headers);
-	    System.err.println(headers.getETag());
 	    System.err.println(uri_oauth2_code_grant);
 	    System.err.println(31);
 	    System.err.println("bodyMapForOAuthTokenRequest");
@@ -66,6 +46,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println("postForObject END");
 		return "redirect:/v/admin-msp";
 	}
+	
 	
 	protected @Autowired RestTemplate restTemplate;
 	private static final Logger logger = LoggerFactory.getLogger(OAuthRest2.class);

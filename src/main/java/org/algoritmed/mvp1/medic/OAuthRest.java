@@ -53,19 +53,8 @@ public class OAuthRest  extends OAuthRestCommon {
 		System.out.println("\n headers: " + response.getHeaders());
 		System.out.println("\n body:" + response.readEntity(String.class));
 		System.out.println("\n body: END --------------------------------------" );
-
-		String bashCommand = "curl -X POST "
-				+ uri_oauth2_code_grant
-				+ " "
-				+ " -H  'cache-control: no-cache' "
-				+ " -H 'content-type: application/json' "
-				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
-				+ " -d '"
-				+ oauth_tokens_body
-				+ "'"
-				+ "";
-		System.err.println(bashCommand);
-		runBashCommand(bashCommand);
+//		testCURL(oauth_tokens_body);
+		
 		return "redirect:/v/admin-msp";
 	}
 
