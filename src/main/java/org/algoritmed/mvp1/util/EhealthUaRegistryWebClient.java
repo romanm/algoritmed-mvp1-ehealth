@@ -37,7 +37,8 @@ public class EhealthUaRegistryWebClient {
 				+ "\n"+36
 				+ "\n"+data.toString().replaceAll(", ", "\n , ")
 				);
-		Builder wsClientInvocation = getInvocationBuilder(path_uri);
+		Builder wsClientInvocation = getInvocationBuilder();
+//		Builder wsClientInvocation = getInvocationBuilder(path_uri);
 		Response response = wsClientInvocation.get();
 		String readEntity_body = response.readEntity(String.class);
 //		System.err.println(readEntity_body);
@@ -63,7 +64,8 @@ public class EhealthUaRegistryWebClient {
 //			System.err.println(dataStr);
 //			System.err.println(28);
 			Entity<String> dataJson = Entity.json(dataStr);
-			Builder wsClientInvocation = getInvocationBuilder(uri);
+			Builder wsClientInvocation = getInvocationBuilder();
+//			Builder wsClientInvocation = getInvocationBuilder(uri);
 //			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
 			Response response ;
 			if(uri.indexOf("divisions")>=0) {
@@ -105,9 +107,11 @@ config.path_registry_msp: /api/legal_entities
 	private @Value("${config.uri_registry}")		String uri_registry;
 	private @Value("${config.path_registry_msp}")	String path_uri_registry_msp;
 
-	private Builder getInvocationBuilder(String path_uri) {
+//	private Builder getInvocationBuilder(String path_uri) {
+	private Builder getInvocationBuilder() {
 		Client client = ClientBuilder.newClient();
-		Builder header = client.target(uri_registry + path_uri)
+//		Builder header = client.target(uri_registry + path_uri)
+		Builder header = client.target(uri_registry)
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 		//test token

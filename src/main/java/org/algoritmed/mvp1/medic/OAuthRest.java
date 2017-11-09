@@ -26,14 +26,14 @@ public class OAuthRest  extends OAuthRestCommon {
 	public String  from_oauth_tokens(){
 		logger.info("---------------\n"
 				+ "/r/from_oauth_tokens"
-				+ "\n" 
+				+ "\n"
 				);
 		return "redirect:/v/admin-msp";
 	}
 	
 	@GetMapping(value = "/r/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code){
-		System.err.println(uri);
+		System.err.println(uri_oauth2_refresh_tokens);
 		String oauth_tokens_body = getBodyForOAuthTokenRequest(code);
 		System.err.println("oauth_tokens_body");
 		System.err.println(oauth_tokens_body);
@@ -43,7 +43,7 @@ public class OAuthRest  extends OAuthRestCommon {
 		System.err.println(payload);
 
 		Client client = ClientBuilder.newClient();
-		Builder invocationBuilder = client.target(uri)
+		Builder invocationBuilder = client.target(uri_oauth2_refresh_tokens)
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("cache-control", "no-cache")
 				;
@@ -57,15 +57,15 @@ public class OAuthRest  extends OAuthRestCommon {
 		System.out.println("\n body:" + response.readEntity(String.class));
 		System.out.println("\n body: END --------------------------------------" );
 
-		String bashCommand = "curl -X POST \\ \n"
-				+ uri
-				+ "\\ \n"
-				+ "-H  \\\"cache-control: no-cache\\\" \\ \n"
-				+ "-H \\\"content-type: application/json\\\" \\ \n"
+		String bashCommand = "curl -X POST "
+				+ uri_oauth2_refresh_tokens
+				+ ""
+				+ "-H  'cache-control: no-cache' "
+				+ "-H 'content-type: application/json' "
 				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
 				+ "-d '"
 				+ oauth_tokens_body
-				+ "' \n"
+				+ "'"
 				+ "";
 		System.err.println(bashCommand);
 		runBashCommand(bashCommand);

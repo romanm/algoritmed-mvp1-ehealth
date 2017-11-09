@@ -6,14 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class OAuthRestCommon {
 	@Autowired ObjectMapper mapper = new ObjectMapper();
+	@Value("${config.uri_oauth2_refresh_tokens}")
+	protected String uri_oauth2_refresh_tokens;
 //	String uri = "https://api.ehealth.world/oauth/tokens/";
-	String uri = "https://demo.ehealth.world/api/oauth/tokens/";
+//	String uri = "https://demo.ehealth.world/api/oauth/tokens/";
+	
 	protected String getBodyForOAuthTokenRequest(String code) {
 		Map oauth_tokenMap = getBodyMapForOAuthTokenRequest(code);
 		String oauth_tokens_body = mapToString(oauth_tokenMap);

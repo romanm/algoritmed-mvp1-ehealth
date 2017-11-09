@@ -229,7 +229,6 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	/**
 	 * Пошук пацієнтів в БД загальної медичної страховки
 	 * @return
-	 */
 	@GetMapping(value = "/r/seekPatientFromInsurance/{seekPatient}")
 	public @ResponseBody Map<String, Object>  medicalFromInsurancePatients(@PathVariable String seekPatient) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -242,9 +241,10 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		map.put("insurancePatients", insuranceSeekPatient.get("insurancePatients"));
 		return map;
 	}
+	 */
 
 	private @Autowired WebClient webClient;
-	private @Value("${config.insurance.server}") String configInsuranceServer;
+	//private @Value("${config.insurance.server}") String configInsuranceServer;
 	private @Value("${config.meddoc.server}") String configMeddocServer;
 
 }

@@ -18,9 +18,12 @@
 					<!-- 
 					&scope=apps:create
 					&redirect_uri=https://medic.algoritmed.com/r/to_oauth_tokens"
-					 -->
-					<a
 					href="http://auth.demo.ehealth.world/sign-in
+					href="http://auth.demo.ehealth.world/sign-in
+					 -->
+					 {{principal.uri.uri_oauth2_sign_in}}
+					<a
+					href="{{principal.uri.uri_oauth2_sign_in}}
 					?client_id={{api__legal_entities.id}}
 					&response_type=code
 					&email=roman.mishchenko@gmail.com
