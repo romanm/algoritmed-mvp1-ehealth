@@ -33,7 +33,7 @@ public class OAuthRest  extends OAuthRestCommon {
 	
 	@GetMapping(value = "/r/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code){
-		System.err.println(uri_oauth2_refresh_tokens);
+		System.err.println(uri_oauth2_code_grant);
 		String oauth_tokens_body = getBodyForOAuthTokenRequest(code);
 		System.err.println("oauth_tokens_body");
 		System.err.println(oauth_tokens_body);
@@ -43,7 +43,7 @@ public class OAuthRest  extends OAuthRestCommon {
 		System.err.println(payload);
 
 		Client client = ClientBuilder.newClient();
-		Builder invocationBuilder = client.target(uri_oauth2_refresh_tokens)
+		Builder invocationBuilder = client.target(uri_oauth2_code_grant)
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("cache-control", "no-cache")
 				;
@@ -58,7 +58,7 @@ public class OAuthRest  extends OAuthRestCommon {
 		System.out.println("\n body: END --------------------------------------" );
 
 		String bashCommand = "curl -X POST "
-				+ uri_oauth2_refresh_tokens
+				+ uri_oauth2_code_grant
 				+ ""
 				+ "-H  'cache-control: no-cache' "
 				+ "-H 'content-type: application/json' "

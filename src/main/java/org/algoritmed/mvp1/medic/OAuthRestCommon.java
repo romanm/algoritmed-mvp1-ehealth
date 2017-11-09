@@ -13,8 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class OAuthRestCommon {
 	@Autowired ObjectMapper mapper = new ObjectMapper();
-	@Value("${config.uri_oauth2_refresh_tokens}")
-	protected String uri_oauth2_refresh_tokens;
+	@Value("${config.uri_oauth2_code_grant}")		protected String uri_oauth2_code_grant;
+	@Value("${config.uri_oauth2_refresh_tokens}")	protected String uri_oauth2_refresh_tokens;
 //	String uri = "https://api.ehealth.world/oauth/tokens/";
 //	String uri = "https://demo.ehealth.world/api/oauth/tokens/";
 	

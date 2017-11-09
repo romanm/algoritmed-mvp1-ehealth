@@ -36,7 +36,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 		System.err.println(oauth_tokens_body);
 		System.err.println("---------------");
 		String bashCommand = "curl -X POST "
-				+ uri_oauth2_refresh_tokens
+				+ uri_oauth2_code_grant
 				+ " -H 'cache-control: no-cache' "
 				+ " -H 'content-type: application/json' "
 				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
@@ -56,12 +56,12 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    headers.add("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 	    System.err.println(headers);
 	    System.err.println(headers.getETag());
-	    System.err.println(uri_oauth2_refresh_tokens);
+	    System.err.println(uri_oauth2_code_grant);
 	    System.err.println(31);
 	    System.err.println("bodyMapForOAuthTokenRequest");
 	    System.err.println(bodyMapForOAuthTokenRequest);
 	    
-	    Map postForObject = restTemplate.postForObject(uri_oauth2_refresh_tokens, bodyMapForOAuthTokenRequest, Map.class);
+	    Map postForObject = restTemplate.postForObject(uri_oauth2_code_grant, bodyMapForOAuthTokenRequest, Map.class);
 	    System.err.println(30);
 	    System.err.println("postForObject");
 	    System.err.println(postForObject);
