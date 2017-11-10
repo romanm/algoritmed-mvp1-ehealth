@@ -1,16 +1,21 @@
 <div ng-repeat="address in v"
 	ng-init="error_address=last_registry_error.map[k]['['+$index+']']">
-	<a href="#"
+	<span class="w3-btn w3-border w3-red"
+		ng-if="mvpAddress.config['index_to_delete_address']==$index"
+		ng-click="mvpAddress.config.minusListElement(v, $index, 'address');autoSave.fn_change_count();"
+		title="Справді Видалити запис">-</span> <span class="w3-tooltip">
+	<span
+		class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+			<span class="w3-btn"
+			ng-click="mvpAddress.config.toMinusListElement('address', $index);"
+			title="Видалити Підрозділ">-</span>
+	</span> <a href="#"
 		ng-class="{'w3-border-top w3-border-left w3-border-right w3-border-green':mvpAddress.config.edit.address==$index}"
 		ng-click="mvpAddress.config.edit.openAddress($index)"
-		class="w3-hover-gray"> {{1+$index}}. 
-		
-<span
-ng-include="'/f/mvp1/lib/address_text.html'"
-></span>
-			
-	</span>
+		class="w3-hover-gray"> {{1+$index}}. <span
+			ng-include="'/f/mvp1/lib/address_text.html'"></span>
 	</a>
+	</span>
 	<div ng-if="mvpAddress.config.edit.address==$index"
 		class="w3-border w3-border-green w3-card-4 w3-display-container">
 
@@ -97,6 +102,7 @@ ng-include="'/f/mvp1/lib/address_text.html'"
 				<input
 					class="w3-input w3-border" type="text"
 					ng-class="{'w3-orange':error_address.street}"
+					ng-change="autoSave.fn_change_count();"
 					ng-model="mvpAddress.fn.seekStreet" placeholder="вулиця"> <!--
 					ng-model="address.street" placeholder="вулиця">
 					-->
@@ -115,15 +121,20 @@ ng-include="'/f/mvp1/lib/address_text.html'"
 					</div>
 				</span>
 			</div>
-			<div class="w3-col l1 m1">
-				<div class="w3-right"
+			<div class="w3-col l2 m2">
+				<span 
 			 ng-class="{'w3-orange':error_address.building}"
-				>дім.</div>
-			</div>
-			<div class="w3-col l1 m1"
-			>
-				<input class="w3-input w3-border" type="text"
+				>дім.</span>
+				<input class="w3-border" type="text"
+				ng-change="autoSave.fn_change_count();"
 					ng-model="address.building" placeholder="Nr">
+			</div>
+			<div class="w3-col l2 m2"
+			>
+			кв.
+				<input class="w3-border" type="text"
+				ng-change="autoSave.fn_change_count();"
+					ng-model="address.apartment" placeholder="Nr">
 			</div>
 		</div>
 

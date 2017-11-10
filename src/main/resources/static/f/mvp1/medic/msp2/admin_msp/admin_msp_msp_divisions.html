@@ -20,98 +20,34 @@
 			<div class="w3-row"
 			ng-class="{'w3-leftbar w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
 				<div class="w3-threequarter w3-border-top">
-				<span class="w3-btn w3-border w3-red"
-						ng-if="mvpAddress.config['index_to_delete_division']==divisionIndex"
-						ng-click="msp_divisions.remove_division(divisionIndex);"
-						title="Справді Видалити запис">-</span> <span class="w3-tooltip">
-						<div class="w3-hover-border-green w3-border w3-border-white"
-							ng-click="mvpAddress.config.toEditListElement('division', divisionIndex);">
+					<div class="w3-hover-border-green w3-border w3-border-white"
+						ng-click="mvpAddress.config.toEditListElement('division', divisionIndex);">
+						<span class="w3-btn w3-border w3-red"
+							ng-if="mvpAddress.config['index_to_delete_division']==divisionIndex"
+							ng-click="msp_divisions.remove_division(divisionIndex);"
+							title="Справді Видалити запис">-</span> 
+						<span class="w3-tooltip">
 							<span
-								ng-class="{'w3-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
-								{{1 + $index}}. </span> <b> Підрозділ</b> <b>Назва:</b>
-							{{division.name}} <span
-								class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
+							class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
 								<span class="w3-btn"
 								ng-click="mvpAddress.config.toMinusListElement('division', $index);"
 								title="Видалити Підрозділ">-</span>
 							</span>
-						</div>
-						<div>
-							Адреса: <span ng-repeat="address in division.addresses"
-								ng-include="'/f/mvp1/lib/address_text.html'"></span>
-						</div>
-					</span>
-				</div>
-				<div class="w3-quarter ">
-					<div class="w3-dropdown-hover" style="width: 100%">
-						Реєстрація триває
-						<div
-							class="w3-dropdown-content w3-card-2 w3-border w3-border-blue"
-							 style="right: 2px"
-							>
-							<div class="w3-bottombar w3-leftbar w3-border-blue">
 							<span
-							class="w3-large am-b"
-							>1.</span>
-								<i 
-								title="вигрузити"
-								class="fa fa-sign-out ng-scope"></i>
-								<code class="w3-codespan">{{config_msp.getRegistryMspDivisionFileName(division.doc_id)}}</code>
-								<button class="w3-btn w3-blue" 
-								ng-click="config_msp.mspDivisionToSave(config_msp.getRegistryMspDivisionFileName(division.doc_id), division)"
-								>
-									файл реестрації</button>
-							</div>
-							<div class="w3-bottombar w3-rightbar w3-border-blue">
-								<div>
-								<span
-							class="w3-large am-b"
-							>2.</span>
-								Накласти підпис ЕЦП</div>
-								<a class="w3-btn"
-									onclick="window.open('https://czo.gov.ua/sign', '', 'width=950,height=800');">
-									<img src="/f/img/czo2.jpg" alt="Центральний завідуючий орган">
-								</a> <a 
-								class="w3-btn"
-								href="https://czo.gov.ua/sign" target="_blank"> <span
-									class="w3-blue"> <img src="/f/img/logotop2ds.png"
-										alt="ЕЦП">
-								</span>
-								</a>
-							</div>
-							<div class="w3-bottombar w3-leftbar w3-border-blue">
-								<form method="POST" enctype="multipart/form-data"
-									action="/r/msp_uploadP7sFile">
-									<label
-										title="Завантажити ЕЦП підписаний файл з даними
-										реєстрації. ">
-										<span
-							class="w3-large am-b"
-							>3.</span>
-										<i 
-										title="загрузити"
-										class="fa fa-sign-in ng-scope"></i> <code
-											class="w3-codespan">{{config_msp.registryMspFileName}}.p7s</code>
-										: <br /> 
-										<input type="file" class="w3-btn w3-blue w3-border"
-										name="file" accept="*" /> 
-										<input type="hidden" name="doc_id"
-										value="{{api__legal_entities.doc_id}}">
-										<input type="hidden" name="uri_prop"
-										value="config.path_registry_msp_division">
-									</label> 
-									<div>
-									<span
-							class="w3-large am-b"
-							>4.</span>
-									a1 {{api__legal_entities.doc_id}} 
-									a1
-									<button type="submit">OK</button>
-									</div>
-								</form>
-							</div>
-						</div>
+							ng-class="{'w3-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
+								{{1 + $index}}. </span> <b> Підрозділ</b> <b>Назва:</b>
+							{{division.name}} 
+						</span>
 					</div>
+					<div>
+						Адреса: <span ng-repeat="address in division.addresses"> <span
+							ng-if="!$first"> <span ng-if="!$last">,</span> <br />
+						</span> <span ng-include="'/f/mvp1/lib/address_text.html'"></span>
+						</span>
+					</div>
+				</div>
+				<div class="w3-quarter">
+					<div ng-include="'/f/mvp1/medic/msp2/admin_msp/admin_msp_msp_divisions_registry.html'"></div>
 				</div>
 			</div>
 			<div ng-if="mvpAddress.config['index_to_edit_division']==$index"
@@ -126,7 +62,16 @@
 						class="w3-input w3-border"
 						ng-model="division.name">
 				</div>
-				<div>
+				<div class="w3-display-container">
+					<div class="w3-display-topright">
+						<a href="#" class="w3-btn"
+						ng-click="
+						mvpAddress.config.plusListElement(
+							msp_divisions.divisions[divisionIndex].content
+							,'addresses');
+						autoSave.fn_change_count();"
+						>+</a>
+					</div>
 					Адреси
 					<div ng-repeat="k in ['addresses']"
 						ng-init="v=msp_divisions.divisions[divisionIndex].content.addresses"

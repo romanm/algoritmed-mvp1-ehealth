@@ -339,6 +339,7 @@ initTestAddress = function($scope, $http, $filter){
 			var np = JSON.parse(JSON.stringify(this.phone_template));
 			o[k].push(np)
 		}
+		,template_addresses:{}
 		,template_licenses:{}
 		,template_specialities:{}
 		,template_qualifications:{}
@@ -403,6 +404,17 @@ initTestAddress = function($scope, $http, $filter){
 	$scope.$watch('mvpAddress.fn.seekStreet', function(newValue){
 		if(!newValue) return;
 		console.log(newValue);
+		var street = newValue.substring(0,1).toUpperCase() + newValue.substring(1);
+		/*
+		console.log($scope.mvpAddress.config.index_to_edit_division);
+		console.log($scope.mvpAddress.config.edit.address);
+		console.log($scope.msp_divisions.divisions[$scope.mvpAddress.config.index_to_edit_division]);
+		console.log($scope.msp_divisions.divisions[$scope.mvpAddress.config.index_to_edit_division].content.addresses[$scope.mvpAddress.config.edit.address]);
+		 * */
+		$scope.msp_divisions.divisions[$scope.mvpAddress.config.index_to_edit_division]
+			.content.addresses[$scope.mvpAddress.config.edit.address].street = street;
+		console.log($scope.mvpAddress.config.edit.address);
+		console.log($scope.api__legal_entities.addresses);
 		var settlement_id=$scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].settlement_id;
 		console.log(settlement_id);
 		var url = $scope.mvpAddress.data.uri_prefix
