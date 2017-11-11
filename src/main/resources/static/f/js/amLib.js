@@ -292,6 +292,9 @@ function read_principal($http, $scope, fn_o, fn_p) {
 	}else{
 		console.log('/r/principal непотрібно');
 		if(fn_o&&fn_p) fn_o[fn_p]();
+		if($scope.principal.uri){
+			$scope.security_prefix = $scope.principal.uri.security_prefix;
+		}
 	}
 }
 

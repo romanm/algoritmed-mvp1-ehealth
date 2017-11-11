@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @PropertySource("classpath:sql.properties")
 public class DbAlgoritmed {
-	private static final Logger logger = LoggerFactory.getLogger(DbAlgoritmed.class);
+	protected static final Logger logger = LoggerFactory.getLogger(DbAlgoritmed.class);
 	@Autowired protected Environment env;
 	
 	public enum DocType {
@@ -422,4 +422,9 @@ public class DbAlgoritmed {
 	 * SQL insert для запису UUID в БД
 	 */
 	private @Value("${sql.insertUUI}") String sqlInsertUUID;
+
+	private @Value("${config.tmpFolder}")			String tmpFolder;
+	protected String registry_response_file_name(String doc_id) {
+		return tmpFolder+"response_"+doc_id+".json";
+	}
 }

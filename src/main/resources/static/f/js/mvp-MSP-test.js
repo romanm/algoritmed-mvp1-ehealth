@@ -554,7 +554,10 @@ init_config_info = function($scope, $http){
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn){
 //			console.log(params);
-			$http.get($scope.security_prefix+'/read_sql_with_param', {params:params}).then(fn);
+			if($scope.principal.uri)
+				$scope.security_prefix = $scope.principal.uri.security_prefix;
+			var uri = $scope.security_prefix+'/read_sql_with_param';
+			$http.get(uri, {params:params}).then(fn);
 		}
 		,update_sql_with_param:function(data,fn){
 			//console.log(data);

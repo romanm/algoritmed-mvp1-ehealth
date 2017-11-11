@@ -41,7 +41,7 @@ public class CommonDbRest extends DbAlgoritmed{
 			) {
 		Map<String, Object> map = sqlParamToMap(sql, request);
 		logger.info("\n------46-------\n"
-				+ "/r/read_sql_with_param"
+				+ "/read_sql_with_param"
 				+ "\n" + map
 				);
 		read_select(map, env.getProperty(sql), null);
