@@ -30,9 +30,6 @@ function initAll ($http, $scope){
 				$scope.medicPatients = response.data.medicPatients;
 				console.log($scope.medicPatients);
 			}
-			, function(response) {
-				console.log(response);
-			}
 		);
 		
 	}

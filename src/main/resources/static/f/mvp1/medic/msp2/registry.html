@@ -10,7 +10,7 @@
 				ng-click="config_msp_all.registry_msp_dialog_open=!config_msp_all.registry_msp_dialog_open">_</span>
 		</header>
 		<div class="w3-red" ng-if="!fnPrincipal.hasAdminMSPRole()">
-		Регістрація лікувального закладу дозволена тільки з правами адміністратора
+		Реєстрація лікувального закладу дозволена тільки з правами адміністратора
 		</div>
 		<div ng-if="fnPrincipal.hasAdminMSPRole()">
 			<div ng-if="!config_msp_all.registry_msp_dialog_open">

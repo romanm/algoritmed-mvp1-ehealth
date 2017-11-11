@@ -15,7 +15,7 @@
 		ng-if="param.hid" href="/f/mvp1/meddoc/db/protocol.{{param.hid}}.json">
 			 модель даних
 		</a>
-		<a ng-if="param.dbId" href="/r/meddoc/dbProtocol/{{param.dbId}}">модель даних</a>
+		<a ng-if="param.dbId" href="{{security_prefix}}/meddoc/dbProtocol/{{param.dbId}}">модель даних</a>
 	</span>
 </div>
 <div ng-if="protocol.config.dd.openDatadictionaryDialog" class=" w3-card-2"
