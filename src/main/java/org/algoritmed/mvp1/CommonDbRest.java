@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonDbRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(CommonDbRest.class);
 
-	@PostMapping("/r/update_sql_with_param")
+	@PostMapping("/update_sql_with_param")
 	public @ResponseBody Map<String, Object> update_sql_with_param(
 			@RequestBody Map<String, Object> data
 			,HttpServletRequest request
@@ -34,7 +34,7 @@ public class CommonDbRest extends DbAlgoritmed{
 		return data;
 	}
 
-	@GetMapping("/r/read_sql_with_param")
+	@GetMapping("/read_sql_with_param")
 	public @ResponseBody Map<String, Object> read_sql_with_param(
 			@RequestParam(value = "sql", required = true) String sql
 			,HttpServletRequest request

@@ -196,7 +196,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 //		console.log(msp_id)
 //		console.log($scope.msp_divisions)
 		$scope.msp_divisions.read_selectByMsp(msp_id);
-		$http.get('/read_msp/'+msp_id).then( function(response) {
+		$http.get($scope.security_prefix+'/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
 			console.log('$scope.api__legal_entities');
 			console.log($scope.api__legal_entities);
@@ -207,7 +207,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			//$scope.closeMsp();
 		});
 //		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
-		var url_last_registry_error = '/read_registry_response/'+msp_id;
+		var url_last_registry_error = $scope.security_prefix+'/read_registry_response/'+msp_id;
 		console.log(url_last_registry_error);
 		$http.get(url_last_registry_error).then( function(response) {
 			$scope.last_registry_error = response.data;
@@ -283,9 +283,11 @@ function read_principal($http, $scope, fn_o, fn_p) {
 			if(!$scope.principal){
 				$scope.principal = response.data;
 //				console.log($scope.principal);
-				$scope.security_prefix = $scope.principal.uri.security_prefix;
 			}
 			if(fn_o&&fn_p) fn_o[fn_p]();
+			if($scope.principal.uri){
+				$scope.security_prefix = $scope.principal.uri.security_prefix;
+			}
 		});
 	}else{
 		console.log('/r/principal непотрібно');
