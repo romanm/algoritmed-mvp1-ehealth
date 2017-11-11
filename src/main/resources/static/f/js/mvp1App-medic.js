@@ -9,7 +9,6 @@
 	}]);
 
 	app.controller('Mvp1Ctrl', function($scope, $http, $filter, $timeout, Blob) {
-//		$compileProvider.debugInfoEnabled(false);
 		initAll($http, $scope, $filter, $timeout, Blob);
 	});
 

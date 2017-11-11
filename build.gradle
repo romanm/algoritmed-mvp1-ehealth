@@ -61,7 +61,10 @@ dependencies {
 	compile 'joda-time:joda-time'
 
 	//compile 'org.webjars:angularjs:1.6.0'
-	compile 'org.webjars:angularjs:1.6.4'
+	//compile 'org.webjars:angularjs:1.6.4'
+	//compile 'org.webjars:angularjs:1.6.6'
+	compile 'org.webjars:angularjs:1.6.6'
+	
 	compile 'org.webjars:font-awesome:4.7.0'
 	
 	//compile 'com.healthmarketscience.jackcess:jackcess:2.1.6'
