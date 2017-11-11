@@ -60,7 +60,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 			if(!$scope.icpc.icd10extension)
 				$scope.icpc.icd10extension = {};
 			if(!$scope.icpc.icd10extension[newIcd10]){
-				var url = '/r/meddoc/icd10InIcpc2/' + newIcd10;
+				var url = $scope.security_prefix+'/meddoc/icd10InIcpc2/' + newIcd10;
 				console.log(url);
 				$http.get(url).then(function(response) {
 					$scope.icpc.icd10extension[newIcd10] = response.data;
@@ -78,7 +78,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 				$scope.icpc.codeMouseOverDropdown = {'id':newIcpc2CodeValue};
 				if(!$scope.icpc.extension)
 					$scope.icpc.extension = {};
-				var url = '/r/meddoc/icpc2CodeExtention/' + newIcpc2CodeValue;
+				var url = $scope.security_prefix+'/meddoc/icpc2CodeExtention/' + newIcpc2CodeValue;
 				console.log(url);
 				$http.get(url).then(function(response) {
 					$scope.icpc.extension[newIcpc2CodeValue] = response.data;
@@ -100,7 +100,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 			newValue.protocolId = $scope.protocol.dbUuid.uuid_dbid;
 			console.log(newValue);
 			
-			var url = '/r/addDataDictionary';
+			var url = $scope.security_prefix+'/addDataDictionary';
 			console.log(url);
 			$http.post(url, newValue).then(function(response) {
 				console.log(response.data);
@@ -123,7 +123,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 		console.log(item);
 		if(item.icd_code.indexOf('-')<0){
 			$scope.icdConf.selectedItem = item;
-			var url = '/r/meddoc/icdChildren/' + item.icd_id;
+			var url = $scope.security_prefix+'/meddoc/icdChildren/' + item.icd_id;
 			$http.get(url).then( function(response) {
 				item.children = response.data.icdChildren;
 				console.log(item.children);
@@ -132,7 +132,6 @@ function initSeekAll($http, $scope, $filter, $timeout){
 	}
 	$scope.readIcdJson = function(){
 		if(!$scope.icd){
-	//		var url = '/r/meddoc/icd';
 			var url = '/f/mvp1/meddoc/db/icdUa.json';
 			$http.get(url).then(function(response){
 				$scope.icd = response.data.icd;
@@ -142,7 +141,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 	$scope.seekIcpc2Db = function(){
 		console.log($scope.icdConf);
 		if($scope.icdConf.search.length>1){
-			var url = '/r/meddoc/icpc2Code/'+$scope.icdConf.search;
+			var url = $scope.security_prefix+'/meddoc/icpc2Code/'+$scope.icdConf.search;
 			console.log(url);
 			$http.get(url).then( function(response) {
 				$scope.icpc2Db = response.data;
@@ -157,7 +156,7 @@ function initSeekAll($http, $scope, $filter, $timeout){
 	};
 	$scope.seekIcdDb = function(){
 		if($scope.icdConf.search.length>1){
-			var url = '/r/meddoc/icdCode/'+$scope.icdConf.search;
+			var url = $scope.security_prefix+'/meddoc/icdCode/'+$scope.icdConf.search;
 			console.log(url);
 			$http.get(url).then( function(response) {
 				$scope.icdDb = response.data;

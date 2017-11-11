@@ -45,7 +45,7 @@ public class OAuthRestCommon {
 		tokenMap.put("code", code);
 		tokenMap.put("client_id", "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb");
 		tokenMap.put("client_secret", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
-		tokenMap.put("redirect_uri", "https://medic.algoritmed.com/r/from_oauth_tokens");
+		tokenMap.put("redirect_uri", "https://medic.algoritmed.com"+env.getProperty("config.security_prefix")+"/from_oauth_tokens");
 		tokenMap.put("scope", "employee:read employee:write"
 				+ " employee_request:approve employee_request:read employee_request:write employee_request:reject"
 				+ " legal_entity:read"

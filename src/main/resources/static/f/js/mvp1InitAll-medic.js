@@ -15,7 +15,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	});
 	$scope.readCentralProtocols = function(){
 		console.log("readCentralProtocols");
-		var url = '/r/seekProtocolFromMeddoc/0';
+		var url = $scope.security_prefix+'/seekProtocolFromMeddoc/0';
 		$http.get(url).then(
 			function(response) {
 				console.log(response.data);
@@ -35,7 +35,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					, doc_id:this.divisions[divisionIndex].content.doc_id
 				};
 			console.log(data);
-			$http.post('/r/update_sql_with_param', data).then(function(response) {
+			$http.post($scope.security_prefix+'/update_sql_with_param', data).then(function(response) {
 				console.log(response.data);
 			});
 			$scope.mvpAddress.config.minusListElement(this.divisions, divisionIndex, 'division');
@@ -95,7 +95,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					};
 				}
 				console.log(data);
-				$http.post('/r/update_sql_with_param', data).then(function(response) {
+				$http.post($scope.security_prefix+'/update_sql_with_param', data).then(function(response) {
 					console.log(response.data);
 					if(!divisionElement.content.doc_id)
 						divisionElement.content.doc_id=response.data.nextDbId1;
@@ -182,7 +182,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					,msp_id_to_delete:null
 					,fn_remove_msp:function(){
 						console.log(this.msp_id_to_delete);
-						var url = '/r/remove_employee_msp';
+						var url = $scope.security_prefix+'/remove_employee_msp';
 						console.log(url);
 						$http.post(url, this.msp_id_to_delete).then( function(response) {
 							console.log(response.data);
@@ -198,7 +198,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						}
 					}
 					,fn_click_seek_msp:function(msp, add_o){
-						var url = '/r/add_employee_msp';
+						var url = $scope.security_prefix+'/add_employee_msp';
 						console.log(url);
 						msp.addAllPropertyFrom(add_o)
 						$http.post(url, msp).then( function(response) {
@@ -207,7 +207,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						});
 					}
 					,fn_seek_msp:function(){
-						var url = '/r/seek_msp/'+this.seek_msp;
+						var url = $scope.security_prefix+'/seek_msp/'+this.seek_msp;
 						$http.get(url).then( function(response) {
 							$scope.seek_msp = response.data;
 							console.log($scope.seek_msp);
@@ -221,7 +221,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 							return;
 						var person_id = $scope.principal.user.person_id; 
 						console.log('personal_data '+ person_id);
-						$scope.config_info.read_o('/r/read_docbody/'+person_id,'msp_employee_doc');
+						$scope.config_info.read_o($scope.security_prefix+'/read_docbody/'+person_id,'msp_employee_doc');
 					}
 				}
 		}	}
@@ -239,7 +239,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			}
 			,fn_minus_role:function(e, role){
 				console.log(role);
-				var url = '/r/update_sql_with_param';
+				var url = $scope.security_prefix+'/update_sql_with_param';
 				console.log(url);
 				var data = {sql:'sql.db1.user_role.delete_by_username_and_role', username:e.username, role:role.role_id};
 				console.log(data);
@@ -248,7 +248,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				});
 			}
 			,fn_add_login:function(e, role_id){
-				var url = '/r/add_user_role';
+				var url = $scope.security_prefix+'/add_user_role';
 				console.log(url);
 				var data = {username:e.username, role_id:role_id};
 				console.log(data);
@@ -307,7 +307,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						employee_id:{name:'Nr'}
 						,employee_info:{name:'картка лікаря'}
 					}
-					,url:'/r/employee_list'
+					,url:$scope.security_prefix+'/employee_list'
 					,open_dialog:function(){
 						if(!$scope.principal.user_msp
 						|| !$scope.principal.user_msp[0]
@@ -549,7 +549,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	if('protocol' == $scope.pagePath.last()){
 	console.log('----initAll-----------' + $scope.pagePath.last());
 		if($scope.param.cdbId){
-			var url = '/r/central/dbProtocol/' + $scope.param.cdbId;
+			var url = $scope.security_prefix+'/central/dbProtocol/' + $scope.param.cdbId;
 			console.log(url);
 			$http.get(url).then(
 				function(response) {
@@ -581,7 +581,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		var fnTimeoutAutoSaveHistory;
 		autoSaveHistory = function (ph, rightSave){
 			ph.docbody.autoSaveChangeCount=0;
-			var url = '/r/autoSaveHistory';
+			var url = $scope.security_prefix+'/autoSaveHistory';
 			console.log(url +"/" + rightSave);
 			$http.post(url, ph).then(function(response) {
 				console.log(response.data);
@@ -623,7 +623,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				if(!ph.toSave)
 					ph.toSave = {'doctype':doctypeList[doctype], 'docbody':{'html':''}, 'parent_id':ph.doc_id}
 				console.log(ph.toSave);
-				var url = '/r/addHistoryRecord';
+				var url = $scope.security_prefix+'/addHistoryRecord';
 				console.log(url);
 				$http.post(url, ph.toSave).then(function(response) {
 					if(!ph.children)
@@ -646,7 +646,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		};
 		$scope.savePatientHistoryRecord = function (ph){
 			console.log(ph);
-			var url = '/r/savePatientHistoryRecord';
+			var url = $scope.security_prefix+'/savePatientHistoryRecord';
 			console.log(url);
 			$http.post(url, ph).then( function(response) {
 				console.log(response.data);
@@ -654,7 +654,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		}
 		$scope.removePatientHistoryRecord = function (ph){
 			console.log(ph);
-			var url = '/r/removePatientHistoryRecord';
+			var url = $scope.security_prefix+'/removePatientHistoryRecord';
 			console.log(url);
 			var dbSaveObj = {'doc_id':ph.doc_id};
 			$http.post(url, dbSaveObj).then( function(response) {
@@ -682,7 +682,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		}
 		$scope.newPatientHistoryRecord = function (){
 			console.log($scope.param);
-			var url = '/r/newPatientHistoryRecord';
+			var url = $scope.security_prefix+'/newPatientHistoryRecord';
 			console.log(url);
 			var dbSaveObj = {'patientId':$scope.param.id};
 			console.log(dbSaveObj);
@@ -710,7 +710,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			console.log($scope.patient.patient_pib);
 			console.log($scope.patient.patient_pib.length);
 			if($scope.patient.patient_pib.length > 1){
-				$http.get('/r/seekPatientFromInsurance/' + $scope.patient.patient_pib).then(
+				$http.get($scope.security_prefix+'/seekPatientFromInsurance/' + $scope.patient.patient_pib).then(
 					function(response) {
 						console.log(response);
 //						$scope.dataInsurancePatients = response.data.insurancePatients;
@@ -728,7 +728,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.config_info.run_with_principal($scope.config_reception.seek_msp_patients);
 		$scope.config_info.run_with_principal(function(){
 			if(!$scope.principal.user){
-				$http.get('/r/medical/patients').then(
+				$http.get($scope.security_prefix+'/medical/patients').then(
 				function(response) {
 					$scope.medicPatients = response.data.medicPatients;
 					console.log($scope.medicPatients);
@@ -750,7 +750,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	}
 
 	if($scope.param.id){
-		var url = '/r/medical/patient/'+$scope.param.id;
+		var url = $scope.security_prefix+'/medical/patient/'+$scope.param.id;
 		console.log(url);
 		$http.get(url).then( function(response) {
 			$scope.patientById = response.data.patientById;

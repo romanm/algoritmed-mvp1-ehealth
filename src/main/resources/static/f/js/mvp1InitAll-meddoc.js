@@ -22,7 +22,7 @@ function initAll ($http, $scope, $filter, $timeout){
 	$scope.saveProtocolDialog = function(){
 //		console.log($scope.newProtocol);
 		console.log($scope.protocol);
-		var url = '/r/saveProtocol';
+		var url = $scope.security_prefix+'/saveProtocol';
 		console.log(url);
 //		$http.post(url, $scope.newProtocol).then(
 		$http.post(url, $scope.protocol).then(
@@ -49,14 +49,14 @@ function initAll ($http, $scope, $filter, $timeout){
 	if('protocol' == $scope.pagePath.last()){
 		$scope.amGenerateID = [];
 		$scope.getAmGenerateID = function(){
-			$http.get('/r/meddoc/amGenerateID').then(
+			$http.get($scope.security_prefix+'/meddoc/amGenerateID').then(
 				function(response) {
 					$scope.amGenerateID = $scope.amGenerateID.concat(response.data);
 			});
 		};
 		$scope.getAmGenerateID();
 		if($scope.param.dbId){
-			var url = '/r/meddoc/dbProtocol/' + $scope.param.dbId;
+			var url = $scope.security_prefix+'/meddoc/dbProtocol/' + $scope.param.dbId;
 			console.log(url);
 			$http.get(url).then( function(response) {
 				$scope.protocol = response.data;
@@ -78,7 +78,7 @@ function initAll ($http, $scope, $filter, $timeout){
 	else
 	if('protocols' == $scope.pagePath.last()){
 		console.log('----initAll------protocols---------');
-		var url = '/r/meddoc/dbProtocolListe';
+		var url = $scope.security_prefix+'/meddoc/dbProtocolListe';
 		$http.get(url).then(
 			function(response) {
 				console.log(response);
@@ -113,7 +113,7 @@ function initAll ($http, $scope, $filter, $timeout){
 			if($scope.codeItems[k2]){
 				$scope.codeItems[k2].open = !$scope.codeItems[k2].open;
 			}else{
-				var url = '/r/meddoc/openIcPc2SubGroup/' + k2;
+				var url = $scope.security_prefix+'/meddoc/openIcPc2SubGroup/' + k2;
 				console.log(url);
 				$http.get(url).then(function(response) {
 					console.log(response.data);
@@ -234,7 +234,7 @@ function initAll ($http, $scope, $filter, $timeout){
 					obj = obj[v]
 				});
 				console.log(obj);
-				var url = '/r/removeDataDictionary';
+				var url = $scope.security_prefix+'/removeDataDictionary';
 				console.log(url);
 				$http.post(url, item).then(function(response) {
 					console.log(response.data);

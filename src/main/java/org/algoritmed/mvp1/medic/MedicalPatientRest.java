@@ -13,19 +13,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST доступ для роботи медиків з пацієнтами.
  * @author roman
  *
  */
-@Controller
+@RestController
+@RequestMapping(value = "${config.security_prefix}")
 public class MedicalPatientRest  extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedicalPatientRest.class);
 
@@ -33,7 +35,7 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	 * Зчитування всіх пацієнтів медичної установи
 	 * @return Map об'єкт що містить всіх пацієнтів медіка
 	 */
-	@GetMapping(value = "/r/medical/patients")
+	@GetMapping(value = "/medical/patients")
 	public @ResponseBody Map<String, Object>  patients() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		/**
@@ -48,13 +50,13 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	private @Value("${sql.medical.selectPatientById}")	String sql_medical_selectPatientById;
 	private @Value("${sql.doc.children}")				String sql_doc_children;
 	private @Value("${sql.doc.children.children}")		String sql_doc_children_children;
-	@GetMapping(value = "/r/medical/patient/{patient_id}")
+	@GetMapping(value = "/medical/patient/{patient_id}")
 	public @ResponseBody Map<String, Object>  patient(@PathVariable Integer patient_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("patient_id", patient_id);
 		map.put("doc_id", patient_id);
 		logger.info("---------------\n"
-				+ "/r/medical/patient/{patient_id}"
+				+ "/medical/patient/{patient_id}"
 				+ "\n" + sql_medical_selectPatientById.replace(":patient_id", ""+patient_id)
 				+ "\n" + sql_doc_children.replace(":parent_id", ""+patient_id)
 				+ "\n" + map
@@ -93,13 +95,13 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		return map;
 	}
 
-	@PostMapping("/r/autoSaveHistory")
+	@PostMapping("/autoSaveHistory")
 	public @ResponseBody Map<String, Object> autoSaveHistory(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj).put("url", "/r/autoSaveHistory");
+		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj).put("url", "/autoSaveHistory");
 		logger.info("\n---------------\n"
-				+ "/r/autoSaveHistory"
+				+ "/autoSaveHistory"
 				+ "\n" + dbSaveObj2
 				);
 		//update docbody
@@ -107,13 +109,13 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		updateDocbody(dbSaveObj2 , docbodyMap);
 		return dbSaveObj2;
 	}
-	@PostMapping("/r/addHistoryRecord")
+	@PostMapping("/addHistoryRecord")
 	public @ResponseBody Map<String, Object> addHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		dbSaveObj.put("url", "/r/addHistoryRecord");
+		dbSaveObj.put("url", "/addHistoryRecord");
 		logger.info("\n---------------\n"
-				+ "/r/addHistoryRecord"
+				+ "/addHistoryRecord"
 				+ "\n" + dbSaveObj
 				);
 		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj);
@@ -134,14 +136,14 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 //		return dbSaveObj2;
 	}
 
-	@PostMapping("/r/savePatientHistoryRecord")
+	@PostMapping("/savePatientHistoryRecord")
 	public @ResponseBody Map<String, Object> savePatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj1
 			, Principal userPrincipal) {
 		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj1);
-		dbSaveObj2.put("hello", "/r/savePatientHistoryRecord");
+		dbSaveObj2.put("hello", "/savePatientHistoryRecord");
 		logger.info("\n---------------\n"
-				+ "/r/savePatientHistoryRecord"
+				+ "/savePatientHistoryRecord"
 				+ "\n" + sql_docbody_update
 				+ "\n" + dbSaveObj2
 				);
@@ -158,13 +160,13 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		return dbSaveObj2;
 	}
 
-	@PostMapping("/r/removePatientHistoryRecord")
+	@PostMapping("/removePatientHistoryRecord")
 	public @ResponseBody Map<String, Object> removePatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		dbSaveObj.put("hello", "/r/removePatientHistoryRecord");
+		dbSaveObj.put("hello", "/removePatientHistoryRecord");
 		logger.info("---------------\n"
-				+ "/r/removePatientHistoryRecord"
+				+ "/removePatientHistoryRecord"
 				+ "\n" + dbSaveObj);
 		//delete doc - first level child by patient
 		int numberOfDeletedChildrenRows = db1ParamJdbcTemplate.update(sql_doc_delete_children, dbSaveObj);
@@ -174,13 +176,13 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 	}
 	@Value("${sql.doc.delete.children}") protected				String sql_doc_delete_children;
 
-	@PostMapping("/r/newPatientHistoryRecord")
+	@PostMapping("/newPatientHistoryRecord")
 	public @ResponseBody Map<String, Object> newPatientHistoryRecord(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		dbSaveObj.put("hello", "/r/newPatientHistoryRecord");
+		dbSaveObj.put("hello", "/newPatientHistoryRecord");
 		logger.info("\n---------------\n"
-				+ "/r/newPatientHistoryRecord"
+				+ "/newPatientHistoryRecord"
 				+ "\n" + dbSaveObj);
 		//insert doc parent patientId doctype:thing
 		//insert doctimestamp
@@ -199,49 +201,33 @@ public class MedicalPatientRest  extends DbAlgoritmed{
 		return dbSaveObj;
 	}
 
-	@GetMapping(value = "/r/medical/patient2/{patient_id}")
+	@GetMapping(value = "/medical/patient2/{patient_id}")
 	public @ResponseBody Map<String, Object>  patient2(@PathVariable Integer patient_id) {
 		Map<String, Object> map = null;
 		return map;
 	}
-	@GetMapping(value = "/r/central/dbProtocol/{cdbId}")
+	@GetMapping(value = "/central/dbProtocol/{cdbId}")
 	public @ResponseBody Map<String, Object> cdbProtocol(@PathVariable Integer cdbId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("cdbId", cdbId);
 		String url = configMeddocServer + 
-			"/r/meddoc/dbProtocol/" + cdbId
+			"/meddoc/dbProtocol/" + cdbId
 			;
 		map.put("url", url);
 		Map<String, Object> protocol = webClient.getFromUrl(url);
 		map.put("protocol", protocol);
 		return map;
 	}
-	@GetMapping(value = "/r/seekProtocolFromMeddoc/{seekProtocol}")
+	@GetMapping(value = "/seekProtocolFromMeddoc/{seekProtocol}")
 	public @ResponseBody Map<String, Object>  protocolFromMeddocPatients(@PathVariable String seekProtocol) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("seekProtocol", seekProtocol);
-		String url = configMeddocServer + "/r/meddoc/dbProtocolListe";
+		String url = configMeddocServer + "/meddoc/dbProtocolListe";
 		map.put("url", url);
 		Map<String, Object> protocolBourse = webClient.getFromUrl(url);
 		map.put("protocolBourse", protocolBourse);
 		return map;
 	}
-	/**
-	 * Пошук пацієнтів в БД загальної медичної страховки
-	 * @return
-	@GetMapping(value = "/r/seekPatientFromInsurance/{seekPatient}")
-	public @ResponseBody Map<String, Object>  medicalFromInsurancePatients(@PathVariable String seekPatient) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("seekPatient", seekPatient);
-		logger.info("---------------\n"
-				+ "/r/medicalFromInsurance/patients/{seekPatient} " + map);
-		Map<String, Object> insuranceSeekPatient = webClient.getFromUrl(configInsuranceServer + "/r/insurance/seekPatient/"
-				+ seekPatient);
-		logger.info(" ---------------\n " + insuranceSeekPatient);
-		map.put("insurancePatients", insuranceSeekPatient.get("insurancePatients"));
-		return map;
-	}
-	 */
 
 	private @Autowired WebClient webClient;
 	//private @Value("${config.insurance.server}") String configInsuranceServer;

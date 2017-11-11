@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "${config.security_prefix}")
 public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
@@ -27,17 +29,17 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	
 	private @Value("${sql.msp_employee.list}")			String sql_msp_employee_list;
 	private @Value("${sql.msp_employee.role.list}")		String sql_msp_employee_role_list;
-	@GetMapping(value = "/r/read_msp_employee/{msp_id}")
+	@GetMapping(value = "/read_msp_employee/{msp_id}")
 	public @ResponseBody Map<String, Object>  msp_employee_list(@PathVariable Integer msp_id
 			, Principal userPrincipal
 		) {
 		logger.info("---------------\n"
-				+ "/r/read_msp_employee/{msp_id}"
+				+ "/read_msp_employee/{msp_id}"
 				+ "\n" + userPrincipal
 				);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msp_id", msp_id);
-		System.err.println("/r/read_msp_employee/{msp_id} "+msp_id);
+		System.err.println("/read_msp_employee/{msp_id} "+msp_id);
 		System.err.println("sql.msp_employee.list");
 		System.err.println(sql_msp_employee_list.replace(":msp_id",""+msp_id));
 		System.err.println("sql.msp_employee.role.list");
@@ -60,7 +62,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	}
 
 	private @Value("${sql.msp.seek}")				String sql_msp_seek;
-	@GetMapping(value = "/r/seek_msp/{seek_msp}")
+	@GetMapping(value = "/seek_msp/{seek_msp}")
 	public @ResponseBody Map<String, Object>  seek_msp(@PathVariable String seek_msp) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String seek_msp2 = "%"+seek_msp+"%";
@@ -72,14 +74,14 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	}
 
 	private @Value("${sql.docbody.byId}")				String sql_docbody_byId;
-	@GetMapping(value = "/r/read_docbody/{doc_id}")
+	@GetMapping(value = "/read_docbody/{doc_id}")
 	public @ResponseBody Map<String, Object>  read_docbody(@PathVariable Integer doc_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		readDocbody(doc_id, map);
 		return map;
 	}
 
-	@GetMapping(value = "/r/read_msp/{msp_id}")
+	@GetMapping(value = "/read_msp/{msp_id}")
 	public @ResponseBody Map<String, Object>  read_msp(@PathVariable Integer msp_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msp_id", msp_id);
@@ -94,7 +96,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	}
 	
 	private @Value("${sql.employee.list}")				String sql_employee_list;
-	@GetMapping(value = "/r/employee_list")
+	@GetMapping(value = "/employee_list")
 	public @ResponseBody Map<String, Object>  employee_list() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Map<String, Object>> list = db1JdbcTemplate.queryForList(sql_employee_list);
@@ -103,23 +105,23 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	}
 	
 	
-	@PostMapping("/r/saveDeclaration")
+	@PostMapping("/saveDeclaration")
 	public @ResponseBody Map<String, Object> saveDeclaration(
 			 @RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
 		logger.info("\n-----110----------\n"
-				+ "/r/saveDeclaration"
+				+ "/saveDeclaration"
 				+ "\n" + data
 				);
 		return data;
 	}
 
-	@PostMapping("/r/savePatient")
+	@PostMapping("/savePatient")
 	public @ResponseBody Map<String, Object> savePatient(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
 		logger.info("\n-----------104----\n"
-				+ "/r/savePatient"
+				+ "/savePatient"
 				+ "\n" + data
 				+ "\n" + Integer.MAX_VALUE
 				);
@@ -145,12 +147,12 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	private @Value("${sql.msp.update}")				String sql_msp_update;
 	private @Value("${sql.msp.insert}")				String sql_msp_insert;
 	
-	@PostMapping("/r/saveMsp")
+	@PostMapping("/saveMsp")
 	public @ResponseBody Map<String, Object> saveMsp(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
 		logger.info("\n---76------------\n"
-				+ "/r/saveMsp"
+				+ "/saveMsp"
 				+ "\n" + data
 				+ "\n" + userPrincipal
 				);
@@ -188,12 +190,12 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 		}
 	}
 
-	@PostMapping("/r/legal_entities")
+	@PostMapping("/legal_entities")
 	public @ResponseBody Map<String, Object> legal_entities(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
 		logger.info("\n---------------\n"
-				+ "/r/legal_entities"
+				+ "/legal_entities"
 				+ "\n" + data
 				);
 		String uri = env.getProperty("config.path_registry_msp");

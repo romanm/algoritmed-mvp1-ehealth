@@ -15,7 +15,7 @@
 					<div class="w3-display-container" style="height: 30px;">
 						<div class="w3-display-topright w3-tiny">
 							<a
-								href="https://medic.algoritmed.com/r/gcc/api/legal_entities/{{api__legal_entities.id}}">j</a>
+								href="https://medic.algoritmed.com{{principal.uri.security_prefix}}/eh1cc/api/legal_entities/{{api__legal_entities.id}}">j</a>
 						</div>
 						Зареєстрований <img
 							src="http://auth.demo.ehealth.world/images/logo.svg" height="20"
@@ -28,7 +28,7 @@
 					<!-- 
 					class="w3-hover-gray"
 					&scope=apps:create
-					&redirect_uri=https://medic.algoritmed.com/r/to_oauth_tokens"
+					&redirect_uri=https://medic.algoritmed.com{{principal.uri.security_prefix}}/to_oauth_tokens"
 					href="http://auth.demo.ehealth.world/sign-in
 					href="http://auth.demo.ehealth.world/sign-in
 					 -->
@@ -37,7 +37,7 @@
 					?client_id={{api__legal_entities.id}}
 					&response_type=code
 					&email=roman.mishchenko@gmail.com
-					&redirect_uri=https://medic.algoritmed.com/r/to_oauth_tokens2"
+					&redirect_uri=https://medic.algoritmed.com{{principal.uri.security_prefix}}/to_oauth_tokens2"
 					>
 					Активуйте ваш eHealth логін для реєстрації підрозділів
 					</a></div>

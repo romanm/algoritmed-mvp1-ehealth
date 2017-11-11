@@ -1,5 +1,6 @@
 function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	$scope.param = parameters;
+	$scope.security_prefix = '/r';
 	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
 
@@ -195,7 +196,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 //		console.log(msp_id)
 //		console.log($scope.msp_divisions)
 		$scope.msp_divisions.read_selectByMsp(msp_id);
-		$http.get('/r/read_msp/'+msp_id).then( function(response) {
+		$http.get('/read_msp/'+msp_id).then( function(response) {
 			$scope.api__legal_entities = response.data.docbody;
 			console.log('$scope.api__legal_entities');
 			console.log($scope.api__legal_entities);
@@ -206,7 +207,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			//$scope.closeMsp();
 		});
 //		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
-		var url_last_registry_error = '/r/read_registry_response/'+msp_id;
+		var url_last_registry_error = '/read_registry_response/'+msp_id;
 		console.log(url_last_registry_error);
 		$http.get(url_last_registry_error).then( function(response) {
 			$scope.last_registry_error = response.data;
@@ -270,7 +271,7 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 }
 
 function read_msp_list($http, $scope) {
-	$http.get('/r/msp_list').then( function(response) {
+	$http.get($scope.security_prefix+'/msp_list').then( function(response) {
 		$scope.msp_list = response.data.msp_list;
 		console.log($scope.msp_list);
 	});
@@ -278,11 +279,11 @@ function read_msp_list($http, $scope) {
 
 function read_principal($http, $scope, fn_o, fn_p) {
 	if(!$scope.principal){
-//		console.log('/r/principal');
-		$http.get('/r/principal').then(function(response) {
+		$http.get($scope.security_prefix+'/principal').then(function(response) {
 			if(!$scope.principal){
 				$scope.principal = response.data;
 //				console.log($scope.principal);
+				$scope.security_prefix = $scope.principal.uri.security_prefix;
 			}
 			if(fn_o&&fn_p) fn_o[fn_p]();
 		});

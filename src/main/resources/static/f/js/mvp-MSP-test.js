@@ -394,7 +394,7 @@ initTestAddress = function($scope, $http, $filter){
 
 	$scope.mvpAddress.config.date.initYearsLists();
 
-	$scope.mvpAddress.data = {choose:{}, uri_prefix:'/r/gcc'};
+	$scope.mvpAddress.data = {choose:{}, uri_prefix:$scope.security_prefix+'/gcc'};
 	$scope.$watch('mvpAddress.fn.kveds.kvedToEdit', function(newValue){
 		if(!newValue) return;
 		console.log(newValue);
@@ -516,7 +516,7 @@ initTestAddress = function($scope, $http, $filter){
 					$scope.mvpAddress.data.choose.region.index = region_index;
 					delete $scope.mvpAddress.data.choose.region.district;
 				}
-				var url = '/r/gcc/uaddresses/details/region/'+region.id+'/districts';
+				var url = $scope.security_prefix+'/gcc/uaddresses/details/region/'+region.id+'/districts';
 				console.log(url+'  - '+!region.districts);
 				if(!region.districts){
 					$http.get(url).then( function(response) {
@@ -528,8 +528,7 @@ initTestAddress = function($scope, $http, $filter){
 				$scope.mvpAddress.config.listOpen.regions
 					= !$scope.mvpAddress.config.listOpen.regions;
 				if(!$scope.mvpAddress.data.regions){
-//					var url = '/r/gcc/uaddresses/search/regions';
-					var url = '/r/gcc/uaddresses/regions?limit=30';
+					var url = $scope.security_prefix+'/gcc/uaddresses/regions?limit=30';
 					console.log(url)
 					$http.get(url).then( function(response) {
 						$scope.mvpAddress.data.regions = response.data.response.data;
@@ -555,16 +554,16 @@ init_config_info = function($scope, $http){
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn){
 //			console.log(params);
-			$http.get('/r/read_sql_with_param', {params:params}).then(fn);
+			$http.get($scope.security_prefix+'/read_sql_with_param', {params:params}).then(fn);
 		}
 		,update_sql_with_param:function(data,fn){
 			//console.log(data);
-			$http.post('/r/update_sql_with_param', data).then(fn);
+			$http.post($scope.security_prefix+'/update_sql_with_param', data).then(fn);
 		}
 	}
 	$scope.config_info = {
 		is_msp_selected:function(msp){return this.is_o_selected('msp_table_selected', msp);}
-		,read_msp_employee:function(msp_id){this.read_o('/r/read_msp_employee/'+msp_id, 'msp_employee');}
+		,read_msp_employee:function(msp_id){this.read_o($scope.security_prefix+'/read_msp_employee/'+msp_id, 'msp_employee');}
 		,read_msp0_doctors:function(){
 			if(!$scope.principal.user_msp || !$scope.principal.user_msp[0]) return;
 			var msp_id = $scope.principal.user_msp[0].msp_id;
@@ -578,12 +577,12 @@ init_config_info = function($scope, $http){
 		}
 		,click_msp:function(msp){
 			this.click_o(
-				'msp_table_selected', msp, '/r/read_msp_employee/'+msp.msp_id, 'msp_employee');
+				'msp_table_selected', msp, $scope.security_prefix+'/read_msp_employee/'+msp.msp_id, 'msp_employee');
 		}
 		,is_msp_employee_selected:function(me){return this.is_o_selected('msp_employee_selected', me);}
 		,run_with_principal:function(run_fn){
 			if(!$scope.principal){
-				$http.get('/r/principal').then(function(response) {
+				$http.get($scope.security_prefix+'/principal').then(function(response) {
 					if(!$scope.principal)
 						$scope.principal = response.data;
 					run_fn();
@@ -596,7 +595,7 @@ init_config_info = function($scope, $http){
 		}
 		,click_msp_employee:function(msp_employee){
 			this.click_o(
-				'msp_employee_selected', msp_employee, '/r/read_docbody/'+msp_employee.person_id, 'msp_employee_doc');
+				'msp_employee_selected', msp_employee, $scope.security_prefix+'/read_docbody/'+msp_employee.person_id, 'msp_employee_doc');
 			$scope.commonDbRest.read_sql_with_param(
 			{sql:'sql.db1.user.msp'
 				, user_id:msp_employee.person_id
@@ -674,7 +673,7 @@ initTestVariables = function($scope, $http, Blob){
 			}
 		}
 		, legal_entities:function(data){
-			$http.post('/r/legal_entities', data).then(function(response) {
+			$http.post($scope.security_prefix+'/legal_entities', data).then(function(response) {
 				console.log("legal_entities-----Реєстрація OK");
 				$scope.response__legal_entities = response.data;
 				console.log($scope.response__legal_entities);
@@ -797,7 +796,7 @@ initTestVariables = function($scope, $http, Blob){
 		,autoSave:{
 			fn_httpSave:function(){
 				console.log('--autoSave.fn_httpSave--------------');
-				$http.post('/r/saveMsp', $scope.api__legal_entities).then(function(response) {
+				$http.post($scope.security_prefix+'/saveMsp', $scope.api__legal_entities).then(function(response) {
 					console.log(response.data);
 					if(!$scope.api__legal_entities.doc_id){
 						$scope.api__legal_entities.doc_id = response.data.doc_id
@@ -864,7 +863,7 @@ initTestVariables = function($scope, $http, Blob){
 					}
 				}
 				if($scope.config_personRegistry.data.template.username){
-					$http.post('/r/checkUsername'
+					$http.post($scope.security_prefix+'/checkUsername'
 					, $scope.config_personRegistry.data.template.username).then(function(response) {
 						$scope.config_personRegistry.data.error.checkUsername = response.data;
 					});
@@ -880,7 +879,7 @@ initTestVariables = function($scope, $http, Blob){
 				console.log('--config_personRegistry.autoSave.fn_httpSave--------------');
 				console.log($scope.config_personRegistry.data.template);
 				if(this.fn_validToSave()){
-					$http.post('/r/savePersonRegistry', $scope.config_personRegistry.data.template)
+					$http.post($scope.security_prefix+'/savePersonRegistry', $scope.config_personRegistry.data.template)
 					.then(function(response) {
 						console.log(response.data);
 						if(!$scope.config_personRegistry.data.template.doc_id){
@@ -892,65 +891,6 @@ initTestVariables = function($scope, $http, Blob){
 		}
 	}
 	$scope.config_all.init('config_personRegistry');
-	/*
-	$scope.config_personregistry = {
-		data_template:{party:{}}
-		,autoSave:{
-			fn_httpSave:function(){
-				console.log('--config_personregistry.autoSave.fn_httpSave--------------');
-				var data_template = $scope.config_personregistry.data_template;
-				var validToSave = this.fn_validToSave(data_template);
-				if(validToSave){
-					$http.post('/r/savePersonRegistry', data_template).then(function(response) {
-						console.log(response.data);
-						if(!data_template.doc_id){
-							data_template.doc_id = response.data.doc_id
-						}
-					});
-				}
-			}
-			,requiredField:['username', 'password']
-			,requiredPartField:['first_name','last_name','second_name']
-			,error:{requiredField:{},requiredPartField:{}}
-			,fn_validToSave:function(data){
-				var validToSave = true;
-				var thisError = this.error;
-				angular.forEach(this.requiredField, function(v, i){
-					console.log(v + ' / ' + data[v]);
-					console.log(!data[v]);
-					if(!data[v]){
-						validToSave = false;
-						thisError.requiredField[v]={empty:true};
-					}else{
-						thisError.requiredField[v]={empty:false};
-					}
-				});
-				console.log(this.error);
-				if(data.password_control){
-					console.log(data.password_control);
-					console.log(data.password);
-					if(data.password_control==data.password){
-						thisError.false_password_control = false;
-					}else{
-						thisError.false_password_control = true;
-					}
-				}
-				if(data.username){
-					$http.post('/r/checkUsername', data.username).then(function(response) {
-						thisError.checkUsername = response.data;
-						console.log(thisError);
-					});
-				}
-				if(validToSave){
-					add_employee_info(data, data);
-				}
-				console.log(data);
-				return validToSave;
-			}
-		}
-	}
-	$scope.config_all.init('config_personregistry');
-	 * */
 
 	$scope.config_reception = {
 		queue:{
@@ -1062,7 +1002,7 @@ initTestVariables = function($scope, $http, Blob){
 							+' '+$scope.config_reception.patient_data.second_name
 						});
 					console.log(patient_data);
-					$http.post('/r/savePatient', patient_data).then(function(response) {
+					$http.post($scope.security_prefix+'/savePatient', patient_data).then(function(response) {
 						console.log(response.data);
 						console.log($scope.config_reception.patient_data);
 						$scope.config_reception.patient_data=response.data;
@@ -1154,8 +1094,7 @@ initTestVariables = function($scope, $http, Blob){
 					};
 				}
 				console.log(data);
-				//$http.post('/r/saveDeclaration', data).then(function(response) {
-				$http.post('/r/update_sql_with_param', data).then(function(response) {
+				$http.post($scope.security_prefix+'/update_sql_with_param', data).then(function(response) {
 					console.log(response.data);
 					console.log(response.data.nextDbId1);
 				console.log($scope.db_doc_declaration);
@@ -1219,7 +1158,7 @@ initTestVariables = function($scope, $http, Blob){
 				//var docbodyData = $scope.doc_employee.docbody; 
 				var docbodyData = $scope.doc_employee; 
 				add_employee_info(docbodyData.party, $scope.doc_employee);
-				$http.post('/r/saveEmployee', $scope.doc_employee).then(function(response){
+				$http.post($scope.security_prefix+'/saveEmployee', $scope.doc_employee).then(function(response){
 					console.log(response.data);
 					if(!$scope.doc_employee.doc_id){
 						$scope.doc_employee.doc_id = response.data.doc_id

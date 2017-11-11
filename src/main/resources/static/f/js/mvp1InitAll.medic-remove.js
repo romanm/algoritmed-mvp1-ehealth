@@ -13,7 +13,7 @@ function initAll ($http, $scope){
 			console.log($scope.patient.patient_pib);
 			console.log($scope.patient.patient_pib.length);
 			if($scope.patient.patient_pib.length > 1){
-				$http.get('/r/seekPatientFromInsurance/' + $scope.patient.patient_pib).then(
+				$http.get($scope.security_prefix+'/seekPatientFromInsurance/' + $scope.patient.patient_pib).then(
 					function(response) {
 						console.log(response);
 //						$scope.dataInsurancePatients = response.data.insurancePatients;
@@ -25,7 +25,7 @@ function initAll ($http, $scope){
 			}
 		}
 
-		$http.get('/r/medical/patients').then(
+		$http.get($scope.security_prefix+'/medical/patients').then(
 			function(response) {
 				$scope.medicPatients = response.data.medicPatients;
 				console.log($scope.medicPatients);

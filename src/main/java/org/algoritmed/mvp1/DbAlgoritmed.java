@@ -364,12 +364,13 @@ public class DbAlgoritmed {
 			uriMap.put("uri_oauth2_sign_in", env.getProperty("config.uri_oauth2_sign_in"));
 			uriMap.put("uri_oauth2_code_grant", env.getProperty("config.uri_oauth2_code_grant"));
 			uriMap.put("uri_oauth2_refresh_tokens", env.getProperty("config.uri_oauth2_refresh_tokens"));
+			uriMap.put("security_prefix", env.getProperty("config.security_prefix"));
 			map.put("uri", uriMap);
 		}
 		return map;
 	}
 
-	private void read_user_msp(Map<String, Object> map, Integer user_id) {//as samples for use throws /r/read_sql_with_param
+	private void read_user_msp(Map<String, Object> map, Integer user_id) {//as samples for use throws /read_sql_with_param
 		map.put("user_id", user_id);
 		List l = db1ParamJdbcTemplate.queryForList(sql_user_msp, map);
 		map.put("user_msp", l);

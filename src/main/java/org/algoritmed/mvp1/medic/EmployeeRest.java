@@ -11,14 +11,17 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
+@RequestMapping(value = "${config.security_prefix}")
 public class EmployeeRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(EhealthUaRegistryRest.class);
 
-	@PostMapping("/r/remove_employee_msp")
+	@PostMapping("/remove_employee_msp")
 	public @ResponseBody Map<String, Object> remove_employee_msp(
 			@RequestBody Integer msp_id
 			, Principal userPrincipal) {
@@ -26,7 +29,7 @@ public class EmployeeRest extends DbAlgoritmed{
 		map.put("msp_id",msp_id);
 		map.put("doc_id",msp_id);
 		logger.info("\n---------------\n"
-				+ "/r/remove_employee_msp"
+				+ "/remove_employee_msp"
 				+ "\n" + msp_id
 				+ "\n" + map
 				+ "\n" + userPrincipal
@@ -35,12 +38,12 @@ public class EmployeeRest extends DbAlgoritmed{
 		return map;
 	}
 
-	@PostMapping("/r/add_employee_msp")
+	@PostMapping("/add_employee_msp")
 	public @ResponseBody Map<String, Object> add_employee_msp(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
 		logger.info("\n------42---------\n"
-				+ "/r/add_employee_msp"
+				+ "/add_employee_msp"
 				+ "\n" + data
 				+ "\n" + userPrincipal
 				);
@@ -56,12 +59,12 @@ public class EmployeeRest extends DbAlgoritmed{
 		return data;
 	}
 
-	@PostMapping("/r/saveEmployee")
+	@PostMapping("/saveEmployee")
 	public @ResponseBody Map<String, Object> saveEmployee(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
 		logger.info("\n-------61--------\n"
-				+ "/r/saveEmployee"
+				+ "/saveEmployee"
 				+ "\n" + data
 				+ "\n employee_info = " + data.get("employee_info")
 				);
@@ -82,13 +85,13 @@ public class EmployeeRest extends DbAlgoritmed{
 		return data;
 	}
 	
-	@PostMapping("/r/add_user_role")
+	@PostMapping("/add_user_role")
 	public @ResponseBody Map<String, Object> add_user_role(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal
 			) {
 		logger.info("\n---------------\n"
-				+ "/r/add_user_role"
+				+ "/add_user_role"
 				+ "\n" + data
 				);
 //		addUserRole(data, doc_id, "ROLE_WAITING_FOR_CONFIRMATION");// as example
@@ -109,13 +112,13 @@ public class EmployeeRest extends DbAlgoritmed{
 		int update = db1ParamJdbcTemplate.update(sql_user_role_insert, data);
 	}
 
-	@PostMapping("/r/savePersonRegistry")
+	@PostMapping("/savePersonRegistry")
 	public @ResponseBody Map<String, Object> savePersonRegistry(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal
 			) {
 		logger.info("\n---------------\n"
-				+ "/r/savePersonRegistry"
+				+ "/savePersonRegistry"
 				+ "\n" + data
 				);
 		boolean isToSave=true;
@@ -158,10 +161,10 @@ public class EmployeeRest extends DbAlgoritmed{
 
 	private @Value("${sql.db1.users.checkUsername}")		String sql_checkUsername;
 	
-	@PostMapping("/r/checkUsername")
+	@PostMapping("/checkUsername")
 	public @ResponseBody Map<String, Object> checkUsername(@RequestBody String username) {
 		logger.info("\n---------------\n"
-				+ "/r/checkUsername"
+				+ "/checkUsername"
 				+ "\n" + username
 				);
 		Map<String, Object> map = new HashMap<String, Object>();

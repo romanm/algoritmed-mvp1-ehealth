@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.HashMap2;
@@ -17,24 +16,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping(value = "${config.security_prefix}")
 public class MedDocRest extends DbAlgoritmed{
 	private static final Logger logger = LoggerFactory.getLogger(MedDocRest.class);
 	@Autowired
 	protected NamedParameterJdbcTemplate db1ParamJdbcTemplate;
 	
-	@PostMapping("/r/removeDataDictionary")
+	@PostMapping("/removeDataDictionary")
 	public @ResponseBody Map<String, Object> removeDataDictionary(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
-		logger.info("\n ---- " + "/r/removeDataDictionary"
+		logger.info("\n ---- " + "/removeDataDictionary"
 				+ "\n" + dbSaveObj 
 				);
 		removeDocElement(dbSaveObj);
@@ -43,13 +44,13 @@ public class MedDocRest extends DbAlgoritmed{
 	}
 	private @Value("${sql.meddoc.protocoldd2icd10.insert}") String sqlMeddocProtocoldd2icd10Insert;
 	private @Value("${sql.meddoc.protocol.datadictionary.icd10}") String sqlMeddocProtocolDatadictionaryIcd10;
-	@PostMapping("/r/addDataDictionary")
+	@PostMapping("/addDataDictionary")
 	public @ResponseBody Map<String, Object> addDataDictionary(
 			@RequestBody Map<String, Object> dbSaveObj
 			, Principal userPrincipal) {
 		if(dbSaveObj.containsKey("childs"))
 			dbSaveObj.remove("childs");
-		logger.info("\n ---- " + "/r/addDataDictionary"
+		logger.info("\n ---- " + "/addDataDictionary"
 				+ "\n" + dbSaveObj 
 				);
 		Integer parentId = (Integer) dbSaveObj.get("protocolId");
@@ -79,12 +80,12 @@ public class MedDocRest extends DbAlgoritmed{
 	}
 
 	private @Value("${sql.meddoc.protocol.name.update}") String sqlMeddocProtocolNameUpdate;
-	@PostMapping("/r/saveProtocol")
+	@PostMapping("/saveProtocol")
 	public @ResponseBody Map<String, Object> saveProtocol(
 			@RequestBody Map<String, Object> dbSaveObj1
 			, Principal userPrincipal) {
 		HashMap2 dbSaveObj2 = new HashMap2(dbSaveObj1);
-		logger.info("\n --1--111-- " + "/r/saveProtocol"
+		logger.info("\n --1--111-- " + "/saveProtocol"
 				+ "\n" + dbSaveObj2 
 				+ "\n" + dbSaveObj2.contains("dbUuid.uuid_dbid") 
 				);
@@ -96,7 +97,7 @@ public class MedDocRest extends DbAlgoritmed{
 			map.put("dbId", dbId);
 			setShortName(dbSaveObj2, dbId, map);
 			protocolToString(dbSaveObj2, map);
-			logger.info("\n ----3-- " + "/r/saveProtocol"
+			logger.info("\n ----3-- " + "/saveProtocol"
 					+ "\n" + map 
 					+ "\n" + dbSaveObj2 
 					);
@@ -111,7 +112,7 @@ public class MedDocRest extends DbAlgoritmed{
 				dbSaveObj2.put("name", "Long name: " + dbSaveObj2.getString("title.shortName"));
 			dbSaveObj2.put("dbUuid", dbUuid);
 			protocolToString(dbSaveObj2, map);
-			logger.info("\n ----2-- " + "/r/saveProtocol"
+			logger.info("\n ----2-- " + "/saveProtocol"
 					+ "\n" + map 
 					+ "\n" + dbSaveObj2 
 					);
@@ -120,7 +121,7 @@ public class MedDocRest extends DbAlgoritmed{
 		Map<String, Object> protocol = dbProtocol(dbId);
 //		map.put("protocol", protocol);
 
-		logger.info("\n ----3-- " + "/r/saveProtocol"
+		logger.info("\n ----3-- " + "/saveProtocol"
 				+ "\n" + map 
 				+ "\n" + protocol 
 				);
@@ -143,12 +144,12 @@ public class MedDocRest extends DbAlgoritmed{
 
 	private @Value("${sql.meddoc.protocol.insert}") String sqlMeddocProtocolInsert;
 	private @Value("${sql.meddoc.protocol.byId}") String sqlMeddocProtocolById;
-	@GetMapping(value = "/r/meddoc/dbProtocol/{dbId}")
+	@GetMapping(value = "/meddoc/dbProtocol/{dbId}")
 	public @ResponseBody Map<String, Object> dbProtocol(@PathVariable Integer dbId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dbId", dbId);
 		logger.info("\n"
-				+ "/r/meddoc/dbProtocol/{dbid}"
+				+ "/meddoc/dbProtocol/{dbid}"
 				+ "\n" + map
 				);
 		String protocolDoc = db1ParamJdbcTemplate.queryForObject(sqlMeddocProtocolById, map, String.class);
@@ -168,12 +169,12 @@ public class MedDocRest extends DbAlgoritmed{
 	private @Value("${sql.meddoc.icdCodeP1}") String sqlMeddocIcdCodeP1;
 	private @Value("${sql.meddoc.icdChildren}") String sqlMeddocIcdChildren;
 	
-	@GetMapping(value = "/r/meddoc/icdChildren/{parentId}")
+	@GetMapping(value = "/meddoc/icdChildren/{parentId}")
 	public @ResponseBody Map<String, Object> dbMeddocIcdChildren(@PathVariable Integer parentId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("parentId", parentId);
 		logger.info("\n"
-				+ "/r/meddoc/icdChildren/{parentId}"
+				+ "/meddoc/icdChildren/{parentId}"
 				+ "\n" + map
 				);
 		List<Map<String, Object>> icdChildren = db1ParamJdbcTemplate.queryForList(sqlMeddocIcdChildren, map);
@@ -181,13 +182,13 @@ public class MedDocRest extends DbAlgoritmed{
 		return map;
 	}
 
-	@GetMapping(value = "/r/meddoc/icpc2CodeExtention/{icpc2Code}")
+	@GetMapping(value = "/meddoc/icpc2CodeExtention/{icpc2Code}")
 	public @ResponseBody Map<String, Object> icpc2CodeExtention(@PathVariable String icpc2Code) {
 		Map<String, Object> map = seekMap(icpc2Code);
-		map.put("url", "/r/meddoc/icpc2CodeExtention/"+icpc2Code);
+		map.put("url", "/meddoc/icpc2CodeExtention/"+icpc2Code);
 		map.put("icpc2", icpc2Code);
 		logger.info("\n"
-				+ "/r/meddoc/icpc2CodeExtention/{icpc2Code}"
+				+ "/meddoc/icpc2CodeExtention/{icpc2Code}"
 				+ "\n" + map
 				);
 		List<Map<String, Object>> icd10 = db1ParamJdbcTemplate.queryForList(sqlIcpc2CodeIcd10, map);
@@ -202,16 +203,16 @@ public class MedDocRest extends DbAlgoritmed{
 		return map;
 	}
 
-	@GetMapping(value = "/r/meddoc/icd10InIcpc2/{icd10Code}")
+	@GetMapping(value = "/meddoc/icd10InIcpc2/{icd10Code}")
 	public @ResponseBody Map<String, Object> icpc2CodeIcd10Code(@PathVariable String icd10Code) {
 		Map<String, Object> map = seekMap(icd10Code);
-		map.put("url", "/r/meddoc/icpc2CodeIcd10Code/"+icd10Code);
+		map.put("url", "/meddoc/icpc2CodeIcd10Code/"+icd10Code);
 		map.put("icd10Code", icd10Code);
 //		String icd_code = icd10Code.split(".")[0];
 		String icd_code = icd10Code;
 		map.put("icd_code", icd_code+"%");
 		logger.info("\n"
-				+ "/r/meddoc/icpc2CodeIcd10Code/{icd10Code}"
+				+ "/meddoc/icpc2CodeIcd10Code/{icd10Code}"
 				+ "\n" + map
 				);
 		List<Map<String, Object>> icd10InIcpc2 = db1ParamJdbcTemplate.queryForList(sqlIcd10InIcpc2, map);
@@ -228,12 +229,12 @@ public class MedDocRest extends DbAlgoritmed{
 	private @Value("${sql.meddoc.icpc2Code.limit}") String sqlMeddocIcpc2CodeLimit;
 	private @Value("${sql.meddoc.icpc2Code.count}") String sqlMeddocIcpc2CodeCount;
 
-	@GetMapping(value = "/r/meddoc/icpc2Code/{seekStr}")
+	@GetMapping(value = "/meddoc/icpc2Code/{seekStr}")
 	public @ResponseBody Map<String, Object> seekIcpc2(@PathVariable String seekStr) {
 		seekStr = "%"+seekStr+"%";
 		Map<String, Object> map = seekMap(seekStr);
 		logger.info("\n"
-				+ "/r/meddoc/icpc2Code/{seekIcd}"
+				+ "/meddoc/icpc2Code/{seekIcd}"
 				+ "\n" + map
 				+ "\n" + sqlMeddocIcpc2CodeLimit.replace(":seekStr", "'"+seekStr+"'")
 				+ "\n" + sqlMeddocIcpc2CodeCount.replace(":seekStr", "'"+seekStr+"'")
@@ -248,12 +249,12 @@ public class MedDocRest extends DbAlgoritmed{
 	}
 
 	int limit = 20;
-	@GetMapping(value = "/r/meddoc/icdCode/{seekStr}")
+	@GetMapping(value = "/meddoc/icdCode/{seekStr}")
 	public @ResponseBody Map<String, Object> seekIcd10(@PathVariable String seekStr) {
 		seekStr = "%"+seekStr+"%";
 		Map<String, Object> map = seekMap(seekStr);
 		logger.info("\n"
-				+ "/r/meddoc/icdCode/{seekIcd}"
+				+ "/meddoc/icdCode/{seekIcd}"
 				+ "\n" + map
 				+ "\n" + sqlMeddocIcdCodeLimit.replace(":seekIcd", "'"+seekStr+"'")
 				+ "\n" + sqlMeddocIcdCodeCount.replace(":seekIcd", "'"+seekStr+"'")
@@ -285,11 +286,11 @@ public class MedDocRest extends DbAlgoritmed{
 		return map;
 	}
 
-	@GetMapping(value = "/r/meddoc/icd")
+	@GetMapping(value = "/meddoc/icd")
 	public @ResponseBody Map<String, Object> dbMeddocIcd() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		logger.info("\n"
-				+ "/r/meddoc/icd"
+				+ "/meddoc/icd"
 				+ "\n" + map
 				);
 //		List<Map<String, Object>> dbMeddocIcd = db1JdbcTemplate.queryForList(sqlMeddocIcd);
@@ -323,7 +324,7 @@ public class MedDocRest extends DbAlgoritmed{
 			}
 		}
 		logger.info("\n"
-				+ "/r/meddoc/icd"
+				+ "/meddoc/icd"
 //				+ "\n" + map
 				);
 		return map;
@@ -349,11 +350,11 @@ public class MedDocRest extends DbAlgoritmed{
 			listPath.set(icd_level, mapIcdItem);
 	}
 	
-	@GetMapping(value = "/r/meddoc/dbProtocolListe")
+	@GetMapping(value = "/meddoc/dbProtocolListe")
 	public @ResponseBody Map<String, Object> dbProtocolListe() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		logger.info("\n"
-				+ "/r/meddoc/dbProtocolListe"
+				+ "/meddoc/dbProtocolListe"
 				+ "\n" + map
 				);
 		List<Map<String, Object>> dbProtocolListe = db1JdbcTemplate.queryForList(sqlMeddocProtocolSelect);
@@ -361,12 +362,12 @@ public class MedDocRest extends DbAlgoritmed{
 		return map;
 	}
 
-	@GetMapping(value = "/r/meddoc/openIcPc2SubGroup/{code}")
+	@GetMapping(value = "/meddoc/openIcPc2SubGroup/{code}")
 	public @ResponseBody Map<String, Object> openIcPc2SubGroup(@PathVariable String code) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", code);
 		logger.info("---------------\n"
-				+ "/r/meddoc/openIcPc2SubGroup/{code}"
+				+ "/meddoc/openIcPc2SubGroup/{code}"
 				+ "\n" + map
 				+ "\n" + sqlMeddocDemoIcpc2UaExclusion.replace(":code", code)
 				);
@@ -384,7 +385,7 @@ public class MedDocRest extends DbAlgoritmed{
 	String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int ID_LENGTH = 4;
 
-	@GetMapping(value = "/r/meddoc/amGenerateID")
+	@GetMapping(value = "/meddoc/amGenerateID")
 	public @ResponseBody List<String> amGenerateID() {
 		ArrayList<String> list = new ArrayList<>();
 		for (int j = 0; j < 10; j++) {
@@ -399,13 +400,13 @@ public class MedDocRest extends DbAlgoritmed{
 		return list;
 	}
 
-	@GetMapping(value = "/r/meddoc/icpc2util")
+	@GetMapping(value = "/meddoc/icpc2util")
 	public @ResponseBody ResponseEntity<String> icpc2util() throws URISyntaxException {
 //		public @ResponseBody Map<String, Object> icpc2util() {
 		Map<String, Object> map = new HashMap<>();
 		map.put("util", "icpc2");
 		StringBuffer stringBuffer = icpc2consider(map);
-		return ResponseEntity.created(new URI("/r/meddoc/icpc2util")).body(stringBuffer.toString());
+		return ResponseEntity.created(new URI("/meddoc/icpc2util")).body(stringBuffer.toString());
 //		return map;
 	}
 

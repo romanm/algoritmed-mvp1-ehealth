@@ -13,14 +13,17 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST медична страховака
  * @author roman
  *
  */
-@Controller
+@RestController
+@RequestMapping(value = "${config.security_prefix}")
 public class InsuranceRest {
 	private static final Logger logger = LoggerFactory.getLogger(InsuranceRest.class);
 	/**
@@ -42,7 +45,7 @@ public class InsuranceRest {
 	 * Зчитування всіх пацієнтів медичної страховки
 	 * @return Map об'єкт що містить всіх пацієнтів медіка
 	 */
-	@GetMapping(value = "/r/insurance/patients")
+	@GetMapping(value = "/insurance/patients")
 	public @ResponseBody Map<String, Object>  patients() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Map<String, Object>> insurancePatients = db1JdbcTemplate.queryForList(sqlSelectPatients);
@@ -58,12 +61,12 @@ public class InsuranceRest {
 	 * Пошук пацієнтів в БД загальної медичної страховки
 	 * @return
 	 */
-	@GetMapping(value = "/r/insurance/seekPatient/{seekPatient}")
+	@GetMapping(value = "/insurance/seekPatient/{seekPatient}")
 	public @ResponseBody Map<String, Object> insuranceSeekPatient(@PathVariable String seekPatient) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("seekPatient", "%" + seekPatient +"%");
 		logger.info("---------------\n"
-				+ "/r/insurance/seekPatient/{seekPatient}" + map);
+				+ "/insurance/seekPatient/{seekPatient}" + map);
 		List<Map<String, Object>> insurancePatients = db1ParamJdbcTemplate.queryForList(sqlSeekPatients, map);
 		map.put("insurancePatients", insurancePatients);
 		return map;
