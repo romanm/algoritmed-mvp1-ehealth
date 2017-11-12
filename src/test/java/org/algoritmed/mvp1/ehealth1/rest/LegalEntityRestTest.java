@@ -11,8 +11,9 @@ public class LegalEntityRestTest {
 //	@Test
 	public void legal_entities_by_id() {
 		RestTemplate restTemplate = new RestTemplate();
-		String string = "http://localhost:8090/r/eh1cc/api/legal_entities/bf48fba2-e4e8-4a06-aeaa-345d8346d7bb";
-		ResponseEntity<Map> exchange = restTemplate.exchange(string, HttpMethod.GET
+		String uri = "http://localhost:8090/eh1cc/api/legal_entities/bf48fba2-e4e8-4a06-aeaa-345d8346d7bb";
+		System.err.println(uri);
+		ResponseEntity<Map> exchange = restTemplate.exchange(uri, HttpMethod.GET
 				, null, Map.class);
 		System.err.println("Hello World "+exchange.getBody());
 	}

@@ -8,14 +8,32 @@
 				<b>Лікувальний заклад:</b> {{api__legal_entities.name}}
 				<div class="w3-row">
 					<div class="w3-quarter">
-						<div class="w3-right">Веріфікований: &nbsp;</div>
+						<div class="w3-right">Верифікація: &nbsp;</div>
 					</div>
 					<div class="w3-threequarter">
-						<div>МІСом
-						{{api__legal_entities.mis_verified}}
+						<div>
+							<label class="w3-btn"> <input type="checkbox"
+								ng-click="api__legal_entities.mis_verified_verify
+								= api__legal_entities.mis_verified_verify=='VERIFIED'?'NOT_VERIFIED':'VERIFIED'">
+								Верифікація провайдера медичних послуг МІСом
+							</label>
+							<button
+								ng-if="api__legal_entities.mis_verified_verify=='VERIFIED'"
+								ng-click="config_msp.mis_verified_verify()"
+								class="w3-btn w3-blue">
+								Відправка "веріфіковано МІСом" в <img
+									src="http://auth.demo.ehealth.world/images/logo.svg"
+									style="margin-bottom: 0; margin-top: -14px;" alt="#eHealth"
+									title="#eHealth" height="20">
+							</button>
 						</div>
-						<div>НСЗ
-						{{api__legal_entities.nhs_verified}}
+						<div class="w3-container">
+							<div ng-if="!api__legal_entities.nhs_verified"
+								class="w3-border w3-border-red w3-container">Верифікація НСЗ відсутня</div>
+							<div ng-if="api__legal_entities.nhs_verified"
+								class="w3-border w3-border-green w3-container">Верифіковано НСЗ:
+								підтверджена</div>
+							<br />
 						</div>
 					</div>
 				</div>

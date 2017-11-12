@@ -773,6 +773,9 @@ initTestVariables = function($scope, $http, Blob){
 			console.log(dataJson);
 			this.fileToSave(fileName, dataJson);
 		}
+		, mis_verified_verify:function(){
+			console.log('mis_verified_verify')
+		}
 		, mspToSave:function(){
 			console.log(1)
 			var dataJson = $scope.api__legal_entities;
