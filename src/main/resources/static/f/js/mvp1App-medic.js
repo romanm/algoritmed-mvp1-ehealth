@@ -2,9 +2,7 @@
 	'use strict';
 
 	var app = angular.module('mvp1App', ['ngSanitize', 'ngFileSaver']);
-	/**/
 	app.config(['$compileProvider', function ($compileProvider) {
-//		$compileProvider.debugInfoEnabled(true);
 	  $compileProvider.debugInfoEnabled(false);
 	}]);
 
