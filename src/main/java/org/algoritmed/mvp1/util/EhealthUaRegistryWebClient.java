@@ -107,7 +107,7 @@ public class EhealthUaRegistryWebClient {
 config.uri_registry: http://demo.ehealth.world
 config.path_registry_msp: /api/legal_entities
 	 * */
-	private @Value("${config.domain_registry}")				String domain_registry;
+	private @Value("${config.domain_registry0}")			String domain_registry;
 	private @Value("${config.uri_registry_legal_entities}")	String uri_registry_legal_entities;
 	private @Value("${config.path_registry_msp}")			String path_uri_registry_msp;
 	private @Value("${config.token_bearer}")				String token_bearer;
