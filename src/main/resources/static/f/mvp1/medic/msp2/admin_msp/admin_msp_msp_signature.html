@@ -5,9 +5,20 @@
 			центральному реєстрі </header>
 		<div class="w3-row">
 			<div class="w3-threequarter">
-				<b>Лікувальний заклад:</b> 
-				{{api__legal_entities.name}}
-
+				<b>Лікувальний заклад:</b> {{api__legal_entities.name}}
+				<div class="w3-row">
+					<div class="w3-quarter">
+						<div class="w3-right">Веріфікований: &nbsp;</div>
+					</div>
+					<div class="w3-threequarter">
+						<div>МІСом
+						{{api__legal_entities.mis_verified}}
+						</div>
+						<div>НСЗ
+						{{api__legal_entities.nhs_verified}}
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="w3-quarter ">
 				<div ng-if="api__legal_entities.id"

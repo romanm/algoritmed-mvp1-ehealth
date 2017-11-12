@@ -200,11 +200,20 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			$scope.api__legal_entities = response.data.docbody;
 			console.log('$scope.api__legal_entities');
 			console.log($scope.api__legal_entities);
-			console.log($scope.api__legal_entities.id);
 			$scope.config_msp.setRegistryMspFileName();
 //			console.log($scope.config_msp.registryMspFileName);
 			$scope.mvpAddress.config.date.initDates();
 			//$scope.closeMsp();
+			if($scope.api__legal_entities.id){
+				var msp_cc_uri = '/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id;
+				$http.get(msp_cc_uri).then( function(response) {
+					console.log(response.data.data);
+					$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
+					$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
+				},function(){
+					console.log('фальшивий id номер')
+				})
+			}
 		});
 //		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
 		var url_last_registry_error = $scope.security_prefix+'/read_registry_response/'+msp_id;
