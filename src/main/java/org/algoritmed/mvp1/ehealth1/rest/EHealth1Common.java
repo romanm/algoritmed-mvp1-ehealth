@@ -12,9 +12,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 public class EHealth1Common {
+	
 	protected Map<String, Object> getResponseBody(String uri) {
 		ResponseEntity<Map> personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getRestTemplateHeader()), Map.class);
 		return (Map<String, Object>) personEntity.getBody();
@@ -22,12 +24,33 @@ public class EHealth1Common {
 	protected HttpHeaders getRestTemplateHeader() {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//	    addNoCache(headers);
 	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
 		return headers;
 	}
 	private void addNoCache(HttpHeaders headers) {
 		headers.add("cache-control", "no-cache");
+	}
+	protected HttpHeaders getPatchRestTemplateHeader() {
+		HttpHeaders headers = new HttpHeaders();
+		MediaType mediaType = new MediaType("application", "merge-patch+json");
+		headers.setContentType(mediaType);
+		headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+		return headers;
+	}
+	RestTemplate getPatchRestTemplate() {
+		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+		RestTemplate restTemplate = new RestTemplate(requestFactory);
+		return restTemplate;
+	}
+	RestTemplate getRestTemplate1() {
+		RestTemplate restTemplate = new RestTemplate();
+		int TIMEOUT = 10;
+		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+		requestFactory.setConnectTimeout(TIMEOUT);
+		requestFactory.setReadTimeout(TIMEOUT);
+
+		restTemplate.setRequestFactory(requestFactory);
+		return restTemplate;
 	}
 	protected @Autowired RestTemplate restTemplate;
 	@Autowired protected Environment env;

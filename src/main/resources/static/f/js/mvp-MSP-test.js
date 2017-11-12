@@ -775,6 +775,13 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		, mis_verified_verify:function(){
 			console.log('mis_verified_verify')
+			if($scope.api__legal_entities){
+				var uri = '/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id+'/actions/mis_verify';
+				console.log(uri)
+				$http.patch(uri, {mis_verified:'VERIFIED'}).then(function(response) {
+					console.log(response)
+				});
+			}
 		}
 		, mspToSave:function(){
 			console.log(1)

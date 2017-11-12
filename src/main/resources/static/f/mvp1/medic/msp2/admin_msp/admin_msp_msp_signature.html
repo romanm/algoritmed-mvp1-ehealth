@@ -11,11 +11,19 @@
 						<div class="w3-right">Верифікація: &nbsp;</div>
 					</div>
 					<div class="w3-threequarter">
-						<div>
+						<div class="w3-border-bottom w3-border-top">
+							<div class="w3-container">
+								<div ng-if="api__legal_entities.mis_verified=='NOT_VERIFIED'"
+									class="w3-border w3-border-red w3-container">Верифікація
+									МІСом відсутня</div>
+								<div ng-if="api__legal_entities.mis_verified=='VERIFIED'"
+									class="w3-border w3-border-red w3-container">
+									Верифікований МІСом</div>
+							</div>
 							<label class="w3-btn"> <input type="checkbox"
 								ng-click="api__legal_entities.mis_verified_verify
 								= api__legal_entities.mis_verified_verify=='VERIFIED'?'NOT_VERIFIED':'VERIFIED'">
-								Верифікація провайдера медичних послуг МІСом
+								Верифікувати провайдера медичних послуг МІСом
 							</label>
 							<button
 								ng-if="api__legal_entities.mis_verified_verify=='VERIFIED'"
@@ -29,10 +37,11 @@
 						</div>
 						<div class="w3-container">
 							<div ng-if="!api__legal_entities.nhs_verified"
-								class="w3-border w3-border-red w3-container">Верифікація НСЗ відсутня</div>
+								class="w3-border w3-border-red w3-container">Верифікація
+								НСЗ відсутня</div>
 							<div ng-if="api__legal_entities.nhs_verified"
-								class="w3-border w3-border-green w3-container">Верифіковано НСЗ:
-								підтверджена</div>
+								class="w3-border w3-border-green w3-container">Верифіковано
+								НСЗ: підтверджена</div>
 							<br />
 						</div>
 					</div>
