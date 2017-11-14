@@ -23,7 +23,7 @@ public class ProtocolProcessing extends DbAlgoritmed{
 	private @Value("${sql.docchecked.checked}")	String sqlDoccheckedChecked;
 	private @Value("${sql.docchecked.insert}")	String sqlDoccheckedInsert;
 	
-	@Scheduled(fixedRate = 15000)
+//	@Scheduled(fixedRate = 15000)
 	private void reportCurrentTime(){
 		List<Map<String, Object>> listDocToCheck = db1JdbcTemplate.queryForList(sqlDocToCheck);
 		if(listDocToCheck.size()>0){
