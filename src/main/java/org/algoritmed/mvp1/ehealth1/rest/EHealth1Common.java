@@ -24,6 +24,7 @@ public class EHealth1Common {
 	protected HttpHeaders getRestTemplateHeader() {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
 	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
 		return headers;
 	}

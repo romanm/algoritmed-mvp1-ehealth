@@ -205,13 +205,14 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			$scope.mvpAddress.config.date.initDates();
 			//$scope.closeMsp();
 			if($scope.api__legal_entities.id){
-				var msp_cc_uri = '/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id;
+				var msp_cc_uri = $scope.security_prefix+'/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id;
+				console.log(msp_cc_uri);
 				$http.get(msp_cc_uri).then( function(response) {
 					console.log(response.data.data);
 					$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
 					$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
 				},function(){
-					console.log('фальшивий id номер')
+					console.log('фальшивий id номер, або uri '+msp_cc_uri)
 				})
 			}
 		});

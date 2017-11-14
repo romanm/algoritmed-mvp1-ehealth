@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -110,19 +111,19 @@ config.path_registry_msp: /api/legal_entities
 	private @Value("${config.domain_registry0}")			String domain_registry;
 	private @Value("${config.uri_registry_legal_entities}")	String uri_registry_legal_entities;
 	private @Value("${config.path_registry_msp}")			String path_uri_registry_msp;
-	private @Value("${config.token_bearer}")				String token_bearer;
 
 	private Builder getInvocationBuilder(String path_uri) {
 //	private Builder getInvocationBuilder() {
 		Client client = ClientBuilder.newClient();
-		Builder header = client.target(path_uri)
 //		Builder header = client.target(uri_registry + path_uri)
 //		Builder header = client.target(uri_registry_legal_entities)
+		Builder header = client.target(path_uri)
 			.request(MediaType.APPLICATION_JSON_TYPE)
-			.header("Authorization", "Bearer "+token_bearer);
+			.header("api-key", env.getProperty("config.mis_client_secret_client_id"))
+			.header("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
 		//test token
 //		.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 		return header;
 	}
-
+	@Autowired protected Environment env;
 }

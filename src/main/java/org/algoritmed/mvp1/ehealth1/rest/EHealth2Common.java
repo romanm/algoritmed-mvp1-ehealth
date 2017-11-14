@@ -21,6 +21,7 @@ public class EHealth2Common {
 		Client client = ClientBuilder.newClient();
 		Builder header = client.target(uri)
 				.request(MediaType.APPLICATION_JSON_TYPE)
+				.header("api-key", env.getProperty("config.mis_client_secret_client_id"))
 				.header("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
 		return header;
 	}
