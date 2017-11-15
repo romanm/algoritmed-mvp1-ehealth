@@ -20,13 +20,15 @@ public class EHealth1Common {
 	
 	protected Map<String, Object> getResponseBody(String uri) {
 		ResponseEntity<Map> personEntity = null;
+		Map<String, Object> body = null;
 		try {
 			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getRestTemplateHeader()), Map.class);
+			body = (Map<String, Object>) personEntity.getBody();
 		} catch (HttpClientErrorException e) {
 			System.err.println(e.getMessage());
 			System.err.println(e.getLocalizedMessage());
 		}
-		return (Map<String, Object>) personEntity.getBody();
+		return body;
 	}
 	protected HttpHeaders getRestTemplateHeader() {
 		HttpHeaders headers = new HttpHeaders();
