@@ -343,6 +343,7 @@ public class DbAlgoritmed {
 		map.put("principal", principal);
 		logger.info(" --------- \n"
 				+ "/v/principal \n" + map);
+		Map<String, Object> uriMap = new HashMap<String, Object>();
 		if(null!=principal) {
 			String name = principal.getName();
 			System.err.println("name = "+name);
@@ -359,14 +360,13 @@ public class DbAlgoritmed {
 				Map<String, Object> msp_list = msp_list();
 				map.put("user_msp", msp_list.get("msp_list"));
 			}
-			Map<String, Object> uriMap = new HashMap<String, Object>();
 			uriMap.put("uri_registry", env.getProperty("config.uri_registry"));
 			uriMap.put("uri_oauth2_sign_in", env.getProperty("config.uri_oauth2_sign_in"));
 			uriMap.put("uri_oauth2_code_grant", env.getProperty("config.uri_oauth2_code_grant"));
 			uriMap.put("uri_oauth2_refresh_tokens", env.getProperty("config.uri_oauth2_refresh_tokens"));
-			uriMap.put("security_prefix", env.getProperty("config.security_prefix"));
-			map.put("uri", uriMap);
 		}
+		uriMap.put("security_prefix", env.getProperty("config.security_prefix"));
+		map.put("uri", uriMap);
 		return map;
 	}
 

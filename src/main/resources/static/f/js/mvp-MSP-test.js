@@ -885,6 +885,8 @@ initTestVariables = function($scope, $http, Blob){
 					add_employee_info($scope.config_personRegistry.data.template.party
 					, $scope.config_personRegistry.data.template);
 				}
+				var cf_personRegistry = JSON.parse(JSON.stringify($scope.config_personRegistry.data.template));				
+				$scope.config_personRegistry.data.password = null;
 				console.log($scope.config_personRegistry.data.template);
 				return $scope.config_personRegistry.validToSave;
 			}
