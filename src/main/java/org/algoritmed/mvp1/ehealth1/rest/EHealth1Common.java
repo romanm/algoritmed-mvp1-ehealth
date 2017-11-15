@@ -1,6 +1,7 @@
 package org.algoritmed.mvp1.ehealth1.rest;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class EHealth1Common {
 		} catch (HttpClientErrorException e) {
 			System.err.println(uri);
 			System.err.println(e.getLocalizedMessage());
+			body = new HashMap<String, Object>();
 		}
 		return body;
 	}

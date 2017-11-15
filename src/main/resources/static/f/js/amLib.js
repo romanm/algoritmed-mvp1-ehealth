@@ -208,14 +208,24 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				var msp_cc_uri = $scope.security_prefix+'/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id;
 				console.log(msp_cc_uri);
 				$http.get(msp_cc_uri).then( function(response) {
+					console.log(response.data);
 					console.log(response.data.data);
-					$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
-					$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
-					$scope.api__legal_entities.read_legal_entities_id = true; 
+					eH_le_not_read();
+					if(response.data.data){
+						$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
+						$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
+						$scope.api__legal_entities.read_legal_entities_id = true; 
+					}else{
+						eH_le_not_read();
+					}
 				},function(){
-					console.log('фальшивий id номер, або uri '+msp_cc_uri)
-					$scope.api__legal_entities.read_legal_entities_id = false; 
+					eH_le_not_read();
 				})
+			}
+			var eH_le_not_read = function(){
+				console.log('-------eH_le_not_read----------------')
+				console.log('фальшивий id номер, або uri '+msp_cc_uri)
+				$scope.api__legal_entities.read_legal_entities_id = false; 
 			}
 		});
 //		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
