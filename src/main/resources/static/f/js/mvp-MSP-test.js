@@ -886,8 +886,8 @@ initTestVariables = function($scope, $http, Blob){
 					, $scope.config_personRegistry.data.template);
 				}
 				var cf_personRegistry = JSON.parse(JSON.stringify($scope.config_personRegistry.data.template));				
-				$scope.config_personRegistry.data.password = null;
-				console.log($scope.config_personRegistry.data.template);
+				cf_personRegistry.password = null;
+				console.log(cf_personRegistry);
 				return $scope.config_personRegistry.validToSave;
 			}
 			,fn_httpSave:function(){
