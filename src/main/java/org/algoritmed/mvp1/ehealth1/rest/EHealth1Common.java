@@ -25,7 +25,7 @@ public class EHealth1Common {
 			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getRestTemplateHeader()), Map.class);
 			body = (Map<String, Object>) personEntity.getBody();
 		} catch (HttpClientErrorException e) {
-			System.err.println(e.getMessage());
+			System.err.println(uri);
 			System.err.println(e.getLocalizedMessage());
 		}
 		return body;
