@@ -13,12 +13,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 public class EHealth1Common {
 	
 	protected Map<String, Object> getResponseBody(String uri) {
-		ResponseEntity<Map> personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getRestTemplateHeader()), Map.class);
+		ResponseEntity<Map> personEntity = null;
+		try {
+			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getRestTemplateHeader()), Map.class);
+		} catch (HttpClientErrorException e) {
+			System.err.println(e.getMessage());
+			System.err.println(e.getLocalizedMessage());
+		}
 		return (Map<String, Object>) personEntity.getBody();
 	}
 	protected HttpHeaders getRestTemplateHeader() {

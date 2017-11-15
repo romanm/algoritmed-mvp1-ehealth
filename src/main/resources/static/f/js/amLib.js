@@ -211,8 +211,10 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 					console.log(response.data.data);
 					$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
 					$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
+					$scope.api__legal_entities.read_legal_entities_id = true; 
 				},function(){
 					console.log('фальшивий id номер, або uri '+msp_cc_uri)
+					$scope.api__legal_entities.read_legal_entities_id = false; 
 				})
 			}
 		});

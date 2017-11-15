@@ -30,8 +30,8 @@ public class OAuthRest  extends OAuthRestCommon {
 		return "redirect:/v/admin-msp";
 	}
 	
-	@GetMapping(value = "/to_oauth_tokens")
-	public String  to_oauth_tokens(@RequestParam("code") String code){
+	@GetMapping(value = "/to_oauth_tokens__go_to_2")
+	public String  to_oauth_tokens__go_to_2(@RequestParam("code") String code){
 		System.err.println(uri_oauth2_code_grant);
 		String oauth_tokens_body = getBodyForOAuthTokenRequest(code);
 		System.err.println("oauth_tokens_body");

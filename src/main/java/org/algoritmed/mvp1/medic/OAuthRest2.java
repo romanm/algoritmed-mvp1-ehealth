@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping(value = "${config.security_prefix}")
 public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
-	@GetMapping(value = "/to_oauth_tokens2")
+	@GetMapping(value = "/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
 		logger.info("---------------\n"
 				+ "/from_oauth_tokens2"

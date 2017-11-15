@@ -50,7 +50,8 @@
 			<div class="w3-quarter ">
 				<div ng-if="api__legal_entities.id"
 					title="{{api__legal_entities.id}}">
-					<div class="w3-display-container" style="height: 30px;">
+					<!--  style="height: 30px;" -->
+					<div class="w3-display-container">
 						<div class="w3-display-topright w3-tiny">
 							<a
 								href="https://medic.algoritmed.com{{security_prefix}}/eh1cc/api/legal_entities/{{api__legal_entities.id}}">j</a>
@@ -59,6 +60,10 @@
 							src="http://auth.demo.ehealth.world/images/logo.svg" height="20"
 							style="margin-bottom: 0; margin-top: -14px;" alt="#eHealth"
 							title="#eHealth">
+						<div ng-if="api__legal_entities.read_legal_entities_id==false">
+							<div class="w3-red w3-small">Зареєстований ЛЗ не
+								читається</div>
+						</div>
 					</div>
 					<div class="w3-small w3-bottombar w3-topbar w3-border-blue
 					w3-hover-gray
