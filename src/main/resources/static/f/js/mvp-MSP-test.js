@@ -733,7 +733,7 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		, cleanNoRegistryAttrubutes:function(dataJson){
 			['doc_id','doctype','parent_id','created','docbody_id','updated','update_sql'
-				,'id','inserted_at','inserted_by']
+			,'read_legal_entities_id','id','inserted_at','inserted_by']
 			.forEach(function(k){
 				delete dataJson[k]
 			});
