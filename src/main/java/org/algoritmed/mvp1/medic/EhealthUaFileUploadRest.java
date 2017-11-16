@@ -36,8 +36,10 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 			map.put("signed_content_encoding", "base64");
 //			String uri = env.getProperty("config.path_registry_msp");
 			String uri = env.getProperty(uri_prop);
+			System.err.println("uri_prop");
 			System.err.println(uri_prop);
 			System.err.println(64);
+			System.err.println("uri");
 			System.err.println(uri);
 			String legal_entitiesPutStr = registryWebClient.legal_entitiesPutStr(map, uri);
 			
