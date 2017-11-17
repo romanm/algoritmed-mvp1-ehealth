@@ -81,19 +81,28 @@ public class OAuthRestCommon {
 	}
 	
 	protected HttpHeaders getRestTemplateHeader() {
-		String token = env.getProperty("config.token_bearer");
-		return getRestTemplateHeader(token);
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+	    //client_secret
+	    headers.add("api-key", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
+	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+		return headers;
 	}
-
 	protected HttpHeaders getRestTemplateHeader(String token) {
 		HttpHeaders headers = new HttpHeaders();
 //	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 //	    headers.add("cache-control", "no-cache");
 		headers.add("Content-Type", "application/json");
-	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
+		headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
 		headers.add("Authorization", "Bearer "+token);
 		return headers;
 	}
+	
+	protected HttpHeaders getRestTemplateHeader2() {
+		String token = env.getProperty("config.token_bearer");
+		return getRestTemplateHeader(token);
+	}
+
 	@Autowired protected Environment env;
 	@Autowired protected MapUtil mapUtil;
 	
