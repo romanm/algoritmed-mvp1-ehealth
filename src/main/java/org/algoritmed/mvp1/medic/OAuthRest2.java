@@ -61,7 +61,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    		, HttpMethod.POST, new HttpEntity(bodyMapForRefreshAccessTokenRequest, headers), Map.class);
 	    Map accessTokenBody = accessTokenEntity.getBody();
 	    System.err.println("accessTokenBody");
-	    System.err.println(accessTokenBody);
+	    System.err.println(mapToString(accessTokenBody));
 	    /*
 	    String uri_oauth2_refresh_tokens = env.getProperty("config.uri_oauth2_refresh_tokens");
 	     * */
