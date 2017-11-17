@@ -44,10 +44,10 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    String refresh_token = mapUtil.getString(oauthTokenEntity, "data","details","refresh_token");
 	    System.err.println("refresh_token");
 	    System.err.println(refresh_token);
-	    /*
 	    Map<String, Object> bodyMapForRefreshAccessTokenRequest = getBodyMapForRefreshAccessTokenRequest(refresh_token);
 	    System.err.println("bodyMapForRefreshAccessTokenRequest");
 	    System.err.println(mapToString(bodyMapForRefreshAccessTokenRequest));
+	    /*
 	    oauthTokenEntity = restTemplate.postForObject(uri_oauth2_code_grant
 	    		, bodyMapForRefreshAccessTokenRequest, Map.class);
 	    System.err.println("response");
@@ -58,7 +58,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println("headers");
 	    System.err.println(headers);
 	    ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(uri_oauth_token
-	    		, HttpMethod.POST, new HttpEntity(headers), Map.class);
+	    		, HttpMethod.POST, new HttpEntity(bodyMapForOAuthTokenRequest, headers), Map.class);
 	    Map accessTokenBody = accessTokenEntity.getBody();
 	    System.err.println("accessTokenBody");
 	    System.err.println(accessTokenBody);
