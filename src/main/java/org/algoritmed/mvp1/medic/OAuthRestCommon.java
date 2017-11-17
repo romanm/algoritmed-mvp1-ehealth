@@ -41,7 +41,6 @@ public class OAuthRestCommon {
 		tokenMap.put("grant_type", "authorization_code");
 		tokenMap.put("client_secret", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
 		tokenMap.put("refresh_token", refresh_token);
-		tokenMap.put("redirect_uri", "https://medic.algoritmed.com"+env.getProperty("config.security_prefix")+"/to_oauth_tokens");
 		oauth_tokenMap.put("token", tokenMap);
 		return oauth_tokenMap;
 	}
