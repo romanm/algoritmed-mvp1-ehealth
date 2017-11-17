@@ -84,7 +84,7 @@ public class OAuthRestCommon {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    //client_secret
-	    headers.add("api-key", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
+	    headers.add("api-key", env.getProperty("config.mis_api_key"));
 	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
 		return headers;
 	}
