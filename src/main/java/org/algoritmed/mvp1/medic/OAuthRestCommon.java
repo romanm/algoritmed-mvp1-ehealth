@@ -87,8 +87,9 @@ public class OAuthRestCommon {
 
 	protected HttpHeaders getRestTemplateHeader(String token) {
 		HttpHeaders headers = new HttpHeaders();
-	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-	    headers.add("cache-control", "no-cache");
+//	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//	    headers.add("cache-control", "no-cache");
+		headers.add("Content-Type", "application/json");
 	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
 		headers.add("Authorization", "Bearer "+token);
 		return headers;
