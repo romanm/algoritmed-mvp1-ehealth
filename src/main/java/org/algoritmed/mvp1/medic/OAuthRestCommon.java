@@ -38,7 +38,7 @@ public class OAuthRestCommon {
 		Map<String, Object> oauth_tokenMap = new HashMap<String, Object>();
 		Map<String, Object> tokenMap = new HashMap<String, Object>();
 		tokenMap.put("client_id", "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb");
-		tokenMap.put("grant_type", "authorization_code");
+		tokenMap.put("grant_type", "refresh_token");
 		tokenMap.put("client_secret", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
 		tokenMap.put("refresh_token", refresh_token);
 		oauth_tokenMap.put("token", tokenMap);
