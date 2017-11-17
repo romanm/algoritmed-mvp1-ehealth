@@ -35,15 +35,16 @@ public class OAuthRest2 extends OAuthRestCommon{
 
 		Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
 		
-	    String uri_oauth2_code_grant = env.getProperty("config.uri_oauth2_code_grant");
-	    System.err.println(uri_oauth2_code_grant);
+	    String uri_oauth_token = env.getProperty("config.uri_oauth2_code_grant");
+	    System.err.println(uri_oauth_token);
 	    System.err.println("bodyMapForOAuthTokenRequest");
 	    System.err.println(mapToString(bodyMapForOAuthTokenRequest));
-		Map oauthTokenEntity = restTemplate.postForObject(uri_oauth2_code_grant
+		Map oauthTokenEntity = restTemplate.postForObject(uri_oauth_token
 	    		, bodyMapForOAuthTokenRequest, Map.class);
 	    String refresh_token = mapUtil.getString(oauthTokenEntity, "data","details","refresh_token");
 	    System.err.println("refresh_token");
 	    System.err.println(refresh_token);
+	    /*
 	    Map<String, Object> bodyMapForRefreshAccessTokenRequest = getBodyMapForRefreshAccessTokenRequest(refresh_token);
 	    System.err.println("bodyMapForRefreshAccessTokenRequest");
 	    System.err.println(mapToString(bodyMapForRefreshAccessTokenRequest));
@@ -51,16 +52,18 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    		, bodyMapForRefreshAccessTokenRequest, Map.class);
 	    System.err.println("response");
 	    System.err.println(oauthTokenEntity);
-	    /*
-	    HttpHeaders headers = getRestTemplateHeader(refresh_token);
+	     * */
+//	    HttpHeaders headers = getRestTemplateHeader(refresh_token);
+	    HttpHeaders headers = getRestTemplateHeader();
 	    System.err.println("headers");
 	    System.err.println(headers);
-	    String uri_oauth2_refresh_tokens = env.getProperty("config.uri_oauth2_refresh_tokens");
-		ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(uri_oauth2_code_grant
+	    ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(uri_oauth_token
 	    		, HttpMethod.POST, new HttpEntity(headers), Map.class);
 	    Map accessTokenBody = accessTokenEntity.getBody();
 	    System.err.println("accessTokenBody");
 	    System.err.println(accessTokenBody);
+	    /*
+	    String uri_oauth2_refresh_tokens = env.getProperty("config.uri_oauth2_refresh_tokens");
 	     * */
 		return "redirect:/v/admin-msp";
 		
