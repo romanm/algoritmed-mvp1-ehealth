@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.algoritmed.mvp1.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,10 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class OAuthRestCommon {
 	@Autowired ObjectMapper mapper = new ObjectMapper();
-//	@Value("${config.uri_oauth2_code_grant}")		protected String uri_oauth2_code_grant;
-	@Value("${config.uri_oauth2_refresh_tokens}")	protected String uri_oauth2_refresh_tokens;
-//	String uri = "https://api.ehealth.world/oauth/tokens/";
-//	String uri = "https://demo.ehealth.world/api/oauth/tokens/";
 	
 	protected String getBodyForOAuthTokenRequest(String code) {
 		Map<String, Object> oauth_tokenMap = getBodyMapForOAuthTokenRequest(code);
@@ -39,6 +34,17 @@ public class OAuthRestCommon {
 		return oauth_tokens_body;
 	}
 
+	protected Map<String, Object> getBodyMapForRefreshAccessTokenRequest(String refresh_token) {
+		Map<String, Object> oauth_tokenMap = new HashMap<String, Object>();
+		Map<String, Object> tokenMap = new HashMap<String, Object>();
+		tokenMap.put("client_id", "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb");
+		tokenMap.put("grant_type", "authorization_code");
+		tokenMap.put("client_secret", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
+		tokenMap.put("refresh_token", refresh_token);
+		tokenMap.put("redirect_uri", "https://medic.algoritmed.com"+env.getProperty("config.security_prefix")+"/to_oauth_tokens");
+		oauth_tokenMap.put("token", tokenMap);
+		return oauth_tokenMap;
+	}
 	protected Map<String, Object> getBodyMapForOAuthTokenRequest(String code) {
 		Map<String, Object> oauth_tokenMap = new HashMap<String, Object>();
 		Map<String, Object> tokenMap = new HashMap<String, Object>();

@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@RestController
+//@RestController redirect:* not work
 @Controller
 @RequestMapping(value = "${config.security_prefix}")
 public class OAuthRest2 extends OAuthRestCommon{
@@ -35,12 +35,23 @@ public class OAuthRest2 extends OAuthRestCommon{
 
 		Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
 		
-		String oauth_tokens_body = mapToString(bodyMapForOAuthTokenRequest);
-	    
 	    String uri_oauth2_code_grant = env.getProperty("config.uri_oauth2_code_grant");
-		Map grantTokenEntity = restTemplate.postForObject(uri_oauth2_code_grant
+	    System.err.println(uri_oauth2_code_grant);
+	    System.err.println("bodyMapForOAuthTokenRequest");
+	    System.err.println(mapToString(bodyMapForOAuthTokenRequest));
+		Map oauthTokenEntity = restTemplate.postForObject(uri_oauth2_code_grant
 	    		, bodyMapForOAuthTokenRequest, Map.class);
-	    String refresh_token = mapUtil.getString(grantTokenEntity, "data","details","refresh_token");
+	    String refresh_token = mapUtil.getString(oauthTokenEntity, "data","details","refresh_token");
+	    System.err.println("refresh_token");
+	    System.err.println(refresh_token);
+	    Map<String, Object> bodyMapForRefreshAccessTokenRequest = getBodyMapForRefreshAccessTokenRequest(refresh_token);
+	    System.err.println("bodyMapForRefreshAccessTokenRequest");
+	    System.err.println(mapToString(bodyMapForRefreshAccessTokenRequest));
+	    oauthTokenEntity = restTemplate.postForObject(uri_oauth2_code_grant
+	    		, bodyMapForRefreshAccessTokenRequest, Map.class);
+	    System.err.println("response");
+	    System.err.println(oauthTokenEntity);
+	    /*
 	    HttpHeaders headers = getRestTemplateHeader(refresh_token);
 	    System.err.println("headers");
 	    System.err.println(headers);
@@ -50,6 +61,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    Map accessTokenBody = accessTokenEntity.getBody();
 	    System.err.println("accessTokenBody");
 	    System.err.println(accessTokenBody);
+	     * */
 		return "redirect:/v/admin-msp";
 		
 	}
