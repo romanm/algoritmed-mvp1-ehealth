@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.algoritmed.mvp1.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class OAuthRestCommon {
 	@Autowired ObjectMapper mapper = new ObjectMapper();
-	@Value("${config.uri_oauth2_code_grant}")		protected String uri_oauth2_code_grant;
+//	@Value("${config.uri_oauth2_code_grant}")		protected String uri_oauth2_code_grant;
 	@Value("${config.uri_oauth2_refresh_tokens}")	protected String uri_oauth2_refresh_tokens;
 //	String uri = "https://api.ehealth.world/oauth/tokens/";
 //	String uri = "https://demo.ehealth.world/api/oauth/tokens/";
@@ -75,19 +76,25 @@ public class OAuthRestCommon {
 	}
 	
 	protected HttpHeaders getRestTemplateHeader() {
+		String token = env.getProperty("config.token_bearer");
+		return getRestTemplateHeader(token);
+	}
+
+	protected HttpHeaders getRestTemplateHeader(String token) {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    headers.add("cache-control", "no-cache");
 	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
-	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+		headers.add("Authorization", "Bearer "+token);
 		return headers;
 	}
 	@Autowired protected Environment env;
+	@Autowired protected MapUtil mapUtil;
 	
 	protected void testCURL(String oauth_tokens_body) {
 		System.err.println("---------------");
 		String bashCommand = "curl -X POST "
-				+ uri_oauth2_code_grant
+//				+ uri_oauth2_code_grant
 				+ " -H 'cache-control: no-cache' "
 				+ " -H 'content-type: application/json' "
 				//				+ "-H 'postman-token: 560ff187-848c-467a-d1b5-d4383ecfa911' \\ \n"
@@ -102,7 +109,7 @@ public class OAuthRestCommon {
 	}
 	
 	private String bashCommand = "curl -X POST "
-			+ uri_oauth2_code_grant
+//			+ uri_oauth2_code_grant
 			+ " "
 			+ " -H  'cache-control: no-cache' "
 			+ " -H 'content-type: application/json' "

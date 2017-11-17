@@ -2,9 +2,6 @@ package org.algoritmed.mvp1.ehealth1.rest;
 
 import java.util.Map;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping(value = "${config.security_prefix}/eh1cc/api/legal_entities")

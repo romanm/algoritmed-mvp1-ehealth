@@ -32,7 +32,7 @@ public class OAuthRest  extends OAuthRestCommon {
 	
 	@GetMapping(value = "/to_oauth_tokens__go_to_2")
 	public String  to_oauth_tokens__go_to_2(@RequestParam("code") String code){
-		System.err.println(uri_oauth2_code_grant);
+//		System.err.println(uri_oauth2_code_grant);
 		String oauth_tokens_body = getBodyForOAuthTokenRequest(code);
 		System.err.println("oauth_tokens_body");
 		System.err.println(oauth_tokens_body);
@@ -42,7 +42,7 @@ public class OAuthRest  extends OAuthRestCommon {
 		System.err.println(payload);
 
 		Client client = ClientBuilder.newClient();
-		Builder invocationBuilder = client.target(uri_oauth2_code_grant)
+		Builder invocationBuilder = client.target("uri_oauth2_code_grant")
 				.request(MediaType.APPLICATION_JSON_TYPE)
 				.header("cache-control", "no-cache")
 				;

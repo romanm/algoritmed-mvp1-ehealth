@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,25 +36,20 @@ public class OAuthRest2 extends OAuthRestCommon{
 		Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
 		
 		String oauth_tokens_body = mapToString(bodyMapForOAuthTokenRequest);
-		System.err.println("---------------");
-		System.err.println("oauth_tokens_body");
-		System.err.println(oauth_tokens_body);
-//		testCURL(oauth_tokens_body);
-		
-		HttpHeaders headers = getRestTemplateHeader();
-		System.err.println("headers");
-	    System.err.println(headers);
-	    System.err.println("uri_oauth2_code_grant");
-	    System.err.println(uri_oauth2_code_grant);
-	    System.err.println(31);
-	    System.err.println("bodyMapForOAuthTokenRequest");
-	    System.err.println(bodyMapForOAuthTokenRequest);
 	    
-	    Map postForObject = restTemplate.postForObject(uri_oauth2_code_grant, bodyMapForOAuthTokenRequest, Map.class);
-	    System.err.println("postForObject");
-	    System.err.println(mapToString(postForObject));
-	    System.err.println("postForObject END");
+	    Map grantTokenEntity = restTemplate.postForObject(env.getProperty("config.uri_oauth2_code_grant")
+	    		, bodyMapForOAuthTokenRequest, Map.class);
+	    String refresh_token = mapUtil.getString(grantTokenEntity, "data","details","refresh_token");
+	    HttpHeaders headers = getRestTemplateHeader(refresh_token);
+	    System.err.println("headers");
+	    System.err.println(headers);
+	    ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(env.getProperty("config.uri_oauth2_refresh_tokens")
+	    		, HttpMethod.POST, new HttpEntity(headers), Map.class);
+	    Map accessTokenBody = accessTokenEntity.getBody();
+	    System.err.println("accessTokenBody");
+	    System.err.println(accessTokenBody);
 		return "redirect:/v/admin-msp";
+		
 	}
 	
 	
