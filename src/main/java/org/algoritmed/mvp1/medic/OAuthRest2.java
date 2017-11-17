@@ -48,9 +48,8 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println(bodyMapForOAuthTokenRequest);
 	    
 	    Map postForObject = restTemplate.postForObject(uri_oauth2_code_grant, bodyMapForOAuthTokenRequest, Map.class);
-	    System.err.println(30);
 	    System.err.println("postForObject");
-	    System.err.println(postForObject);
+	    System.err.println(mapToString(postForObject));
 	    System.err.println("postForObject END");
 		return "redirect:/v/admin-msp";
 	}

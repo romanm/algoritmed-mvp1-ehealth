@@ -95,7 +95,6 @@ public class OAuthRestCommon {
 				+ oauth_tokens_body
 				+ "' \n"
 				+ "";
-		
 		System.err.println("---------------");
 		System.err.println(bashCommand);
 		System.err.println("---------------");
