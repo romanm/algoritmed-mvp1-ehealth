@@ -61,16 +61,8 @@ public class EhealthUaRegistryWebClient {
 		String readEntity_body = null;
 		try {
 			String dataStr = mapper.writeValueAsString(data);
-			System.err.println(58);
-			System.err.println(uri);
-			System.err.println(uri.indexOf("divisions"));
-			System.err.println(uri.indexOf("divisions")>=0);
-//			System.err.println(dataStr);
-//			System.err.println(28);
 			Entity<String> dataJson = Entity.json(dataStr);
-//			Builder wsClientInvocation = getInvocationBuilder();
 			Builder wsClientInvocation = getInvocationBuilder(uri);
-//			Builder wsClientInvocation = getInvocationBuilder(path_uri_registry_msp);
 			Response response ;
 			if(uri.indexOf("divisions")>=0) {
 				System.err.println(70);
@@ -79,10 +71,6 @@ public class EhealthUaRegistryWebClient {
 				response = wsClientInvocation.put(dataJson);
 			}
 			readEntity_body = response.readEntity(String.class);
-//			System.err.println(53);
-//			System.err.println(readEntity_body);
-//			System.err.println(readEntity_body.length());
-//			System.err.println(55);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +83,6 @@ public class EhealthUaRegistryWebClient {
 			try {
 				readValue_mapBody = mapper.readValue(readEntity_body, Map.class);
 				String writeValueAsString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(readValue_mapBody);
-//				System.err.println(writeValueAsString);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -113,16 +100,11 @@ config.path_registry_msp: /api/legal_entities
 	private @Value("${config.path_registry_msp}")			String path_uri_registry_msp;
 
 	private Builder getInvocationBuilder(String path_uri) {
-//	private Builder getInvocationBuilder() {
 		Client client = ClientBuilder.newClient();
-//		Builder header = client.target(uri_registry + path_uri)
-//		Builder header = client.target(uri_registry_legal_entities)
 		Builder header = client.target(path_uri)
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.header("api-key", env.getProperty("config.mis_client_secret_client_id"))
 			.header("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
-		//test token
-//		.header("Authorization", "Bearer c490c936651a0f6badeb426721076437");
 		return header;
 	}
 	@Autowired protected Environment env;

@@ -31,6 +31,7 @@ public class DbAlgoritmed {
 	public enum DocType {
 		PATIENT(1)
 		, MSP(12)
+		, MSP_EHEALT_RESPONSE(48)
 		, EMPLOYEE(13)
 		, DECLARATION(14)
 		;
@@ -89,8 +90,10 @@ public class DbAlgoritmed {
 				|| "DELETE".equals(first_word)
 				){
 					if("docbody".equals(split[1])) {
-						String docbody = objectToString(data.get("docbodyMap"));
-						data.put("docbody", docbody);
+						if(data.containsKey("docbodyMap")) {
+							String docbody = objectToString(data.get("docbodyMap"));
+							data.put("docbody", docbody);
+						}
 					}
 					int update = db1ParamJdbcTemplate.update(sql_command, data);
 					data.put("update"+i, update);
