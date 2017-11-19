@@ -552,12 +552,17 @@ read_dictionaries = function($scope, $http) {
 init_config_info = function($scope, $http){
 	read_dictionaries($scope, $http);
 	$scope.commonDbRest = {
-		read_sql_with_param:function(params,fn){
-//			console.log(params);
+		read_sql_with_param:function(params,fn, fn_error){
+			console.log(params);
 			if($scope.principal.uri)
 				$scope.security_prefix = $scope.principal.uri.security_prefix;
 			var uri = $scope.security_prefix+'/read_sql_with_param';
-			$http.get(uri, {params:params}).then(fn);
+			console.log(uri);
+			if(!fn_error){
+				$http.get(uri, {params:params}).then(fn);
+			}else{
+				$http.get(uri, {params:params}).then(fn, fn_error);
+			}
 		}
 		,update_sql_with_param:function(data,fn){
 			//console.log(data);

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
-import org.algoritmed.mvp1.DbAlgoritmed.DocType;
 import org.algoritmed.mvp1.util.EhealthUaRegistryWebClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

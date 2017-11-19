@@ -228,11 +228,10 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				$scope.api__legal_entities.read_legal_entities_id = false; 
 			}
 		});
-//		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
-		var url_last_registry_error = $scope.security_prefix+'/read_registry_response/'+msp_id;
-		console.log(url_last_registry_error);
-		$http.get(url_last_registry_error).then( function(response) {
-			$scope.last_registry_error = response.data;
+		
+		var fn_read_registry_response = function(response_docbody) {
+			$scope.last_registry_error = response_docbody;
+			console.log($scope.last_registry_error);
 			if(!$scope.last_registry_error.error){
 				console.log($scope.last_registry_error.data.id);
 				console.log($scope.api__legal_entities);
@@ -273,10 +272,35 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 				});
 	//			console.log($scope.last_registry_error);
 			}
+		}
+
+		$scope.commonDbRest.read_sql_with_param(
+		{sql:'sql.msp.msp_ehealth_response.select'
+		, msp_id:msp_id
+		, MSP_EHEALT_RESPONSE_type:48
+		},function(response) {
+			console.log(response.data);
+			var response_docbody = JSON.parse(response.data.list[0].docbody);
+			fn_read_registry_response(response_docbody);
 		}, function(response){
 			console.error(' :( Файл відповіді на реєстрацію не зчитується');
 			console.log(response);
 		});
+		
+//		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
+		/*
+		var url_last_registry_error = $scope.security_prefix+'/read_registry_response/'+msp_id;
+		console.log(url_last_registry_error);
+		$http.get(url_last_registry_error).then( 
+				function(response) {
+					var response_docbody = response.data;
+					fn_read_registry_response(response_docbody);
+				}
+		, function(response){
+			console.error(' :( Файл відповіді на реєстрацію не зчитується');
+			console.log(response);
+		});
+		 * */
 		var url_employee = '/f/config/msp/employee.json';
 		console.log(url_employee);
 		$http.get(url_employee).then( function(response) {
