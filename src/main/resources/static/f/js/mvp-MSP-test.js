@@ -793,6 +793,7 @@ initTestVariables = function($scope, $http, Blob){
 		, mspToSave:function(){
 			console.log(1)
 			var dataJson = $scope.api__legal_entities;
+			dataJson = JSON.parse(JSON.stringify(dataJson));
 			$scope.config_msp.cleanNoRegistryAttrubutes(dataJson);
 			console.log(dataJson)
 			this.fileToSave(this.registryMspFileName, dataJson);
