@@ -225,8 +225,8 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 					})
 				}
 				var eH_le_not_read = function(){
-					console.log('-------eH_le_not_read----------------')
-					console.log('фальшивий id номер, або uri '+msp_cc_uri)
+					console.error(':( -------eH_le_not_read----------------')
+					console.error('фальшивий id номер, або uri '+msp_cc_uri)
 					$scope.api__legal_entities.read_legal_entities_id = false; 
 				}
 			}, function(response){
@@ -284,12 +284,14 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		$scope.config_info.run_with_principal(function(){
 			$scope.commonDbRest.read_sql_with_param(
 				{sql:'sql.msp.msp_ehealth_response.select'
-					, msp_id:msp_id
-					, MSP_EHEALT_RESPONSE_type:48
+				, msp_id:msp_id
+				, MSP_EHEALT_RESPONSE_type:48
 				},function(response) {
 					console.log(response.data);
-					var response_docbody = JSON.parse(response.data.list[0].docbody);
-					fn_read_registry_response(response_docbody);
+					if(response.data.list.length >0){
+						var response_docbody = JSON.parse(response.data.list[0].docbody);
+						fn_read_registry_response(response_docbody);
+					}
 				}, function(response){
 					console.error(' :( Файл відповіді на реєстрацію не зчитується');
 //					console.log(response);
