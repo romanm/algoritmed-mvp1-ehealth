@@ -41,22 +41,24 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			$scope.mvpAddress.config.minusListElement(this.divisions, divisionIndex, 'division');
 		}
 		,read_selectByMsp:function(msp_id){
-			$scope.commonDbRest.read_sql_with_param(
-			{sql:'sql.divisions.selectByMsp'
-			,msp_id:msp_id
-			},function(response) {
-//				console.log(response.data)
-				$scope.msp_divisions.selectByMsp=response.data;
-//				console.log($scope.msp_divisions.selectByMsp)
-				$scope.msp_divisions.selectByMsp.list.forEach(function(divisionFromDB){
-					var divisionFromDB_content = JSON.parse(divisionFromDB.docbody);
-					if(!divisionFromDB_content.doc_id)
-						divisionFromDB_content.doc_id = divisionFromDB.docbody_id
-					$scope.msp_divisions.addDivisionElement
-					({
-						content:divisionFromDB_content
+			$scope.config_info.run_with_principal(function(){
+				$scope.commonDbRest.read_sql_with_param(
+					{sql:'sql.divisions.selectByMsp'
+					, msp_id:msp_id
+					},function(response) {
+						//				console.log(response.data)
+						$scope.msp_divisions.selectByMsp=response.data;
+						//				console.log($scope.msp_divisions.selectByMsp)
+						$scope.msp_divisions.selectByMsp.list.forEach(function(divisionFromDB){
+							var divisionFromDB_content = JSON.parse(divisionFromDB.docbody);
+							if(!divisionFromDB_content.doc_id)
+								divisionFromDB_content.doc_id = divisionFromDB.docbody_id
+								$scope.msp_divisions.addDivisionElement
+								({
+									content:divisionFromDB_content
+								});
+						});
 					});
-				});
 			});
 		}
 		,divisions:[]

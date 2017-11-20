@@ -196,37 +196,39 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 //		console.log(msp_id)
 //		console.log($scope.msp_divisions)
 		$scope.msp_divisions.read_selectByMsp(msp_id);
-		$http.get($scope.security_prefix+'/read_msp/'+msp_id).then( function(response) {
-			$scope.api__legal_entities = response.data.docbody;
-			console.log('$scope.api__legal_entities');
-			console.log($scope.api__legal_entities);
-			$scope.config_msp.setRegistryMspFileName();
+		$scope.config_info.run_with_principal(function(){
+			$http.get($scope.security_prefix+'/read_msp/'+msp_id).then( function(response) {
+				$scope.api__legal_entities = response.data.docbody;
+				console.log('$scope.api__legal_entities');
+				console.log($scope.api__legal_entities);
+				$scope.config_msp.setRegistryMspFileName();
 //			console.log($scope.config_msp.registryMspFileName);
-			$scope.mvpAddress.config.date.initDates();
-			//$scope.closeMsp();
-			if($scope.api__legal_entities.id){
-				var msp_cc_uri = $scope.security_prefix+'/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id;
-				console.log(msp_cc_uri);
-				$http.get(msp_cc_uri).then( function(response) {
-					console.log(response.data);
-					console.log(response.data.data);
-					eH_le_not_read();
-					if(response.data.data){
-						$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
-						$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
-						$scope.api__legal_entities.read_legal_entities_id = true; 
-					}else{
+				$scope.mvpAddress.config.date.initDates();
+				//$scope.closeMsp();
+				if($scope.api__legal_entities.id){
+					var msp_cc_uri = $scope.security_prefix+'/eh1cc/api/legal_entities/'+$scope.api__legal_entities.id;
+					console.log(msp_cc_uri);
+					$http.get(msp_cc_uri).then( function(response) {
+						console.log(response.data);
+						console.log(response.data.data);
 						eH_le_not_read();
-					}
-				},function(){
-					eH_le_not_read();
-				})
-			}
-			var eH_le_not_read = function(){
-				console.log('-------eH_le_not_read----------------')
-				console.log('фальшивий id номер, або uri '+msp_cc_uri)
-				$scope.api__legal_entities.read_legal_entities_id = false; 
-			}
+						if(response.data.data){
+							$scope.api__legal_entities.nhs_verified = response.data.data.nhs_verified; 
+							$scope.api__legal_entities.mis_verified = response.data.data.mis_verified; 
+							$scope.api__legal_entities.read_legal_entities_id = true; 
+						}else{
+							eH_le_not_read();
+						}
+					},function(){
+						eH_le_not_read();
+					})
+				}
+				var eH_le_not_read = function(){
+					console.log('-------eH_le_not_read----------------')
+					console.log('фальшивий id номер, або uri '+msp_cc_uri)
+					$scope.api__legal_entities.read_legal_entities_id = false; 
+				}
+			});
 		});
 		
 		var fn_read_registry_response = function(response_docbody) {
@@ -274,17 +276,21 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			}
 		}
 
-		$scope.commonDbRest.read_sql_with_param(
-		{sql:'sql.msp.msp_ehealth_response.select'
-		, msp_id:msp_id
-		, MSP_EHEALT_RESPONSE_type:48
-		},function(response) {
-			console.log(response.data);
-			var response_docbody = JSON.parse(response.data.list[0].docbody);
-			fn_read_registry_response(response_docbody);
-		}, function(response){
-			console.error(' :( Файл відповіді на реєстрацію не зчитується');
-			console.log(response);
+		console.log("msp_id-----------------------------------------");
+		console.log(msp_id);
+		$scope.config_info.run_with_principal(function(){
+			$scope.commonDbRest.read_sql_with_param(
+					{sql:'sql.msp.msp_ehealth_response.select'
+						, msp_id:msp_id
+						, MSP_EHEALT_RESPONSE_type:48
+					},function(response) {
+						console.log(response.data);
+						var response_docbody = JSON.parse(response.data.list[0].docbody);
+						fn_read_registry_response(response_docbody);
+					}, function(response){
+						console.error(' :( Файл відповіді на реєстрацію не зчитується');
+						console.log(response);
+					});
 		});
 		
 //		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';

@@ -554,7 +554,7 @@ init_config_info = function($scope, $http){
 	$scope.commonDbRest = {
 		read_sql_with_param:function(params,fn, fn_error){
 			console.log(params);
-			if($scope.principal.uri)
+			if($scope.principal && $scope.principal.uri)
 				$scope.security_prefix = $scope.principal.uri.security_prefix;
 			var uri = $scope.security_prefix+'/read_sql_with_param';
 			console.log(uri);
@@ -593,6 +593,7 @@ init_config_info = function($scope, $http){
 				$http.get($scope.security_prefix+'/principal').then(function(response) {
 					if(!$scope.principal)
 						$scope.principal = response.data;
+					$scope.security_prefix = $scope.principal.uri.security_prefix;
 					run_fn();
 				});
 			}else
