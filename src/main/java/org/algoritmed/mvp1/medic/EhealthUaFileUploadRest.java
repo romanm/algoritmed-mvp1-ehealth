@@ -46,15 +46,15 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 	private void saveResponse(String legal_entities_response_body, String doc_id) {
 		System.err.println("--------------46-----------------");
 		System.err.println(doc_id);
-		System.err.println(legal_entities_response_body);
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("MSP_EHEALT_RESPONSE_type", DocType.MSP_EHEALT_RESPONSE.id());
 		paramMap.put("msp_id", doc_id);
-		paramMap.put("docbody", legal_entities_response_body);
-		Integer MSP_EHEALT_RESPONSE_id;
-		String sql;
+		System.err.println(paramMap);
 		List<Map<String, Object>> mspEhalethResponseList = 
 				db1ParamJdbcTemplate.queryForList(env.getProperty("sql.msp.msp_ehealth_response.select"), paramMap);
+		System.err.println(mspEhalethResponseList);
+		Integer MSP_EHEALT_RESPONSE_id;
+		String sql;
 		if(mspEhalethResponseList.size()>0){//update
 			Map<String, Object> map = mspEhalethResponseList.get(0);
 			MSP_EHEALT_RESPONSE_id = (Integer) map.get("doc_id");
@@ -68,6 +68,8 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 			paramMap.put("sql", "sql.msp.msp_ehealth_response.insert");
 		}
 		System.err.println(paramMap);
+		paramMap.put("docbody", legal_entities_response_body);
+		System.err.println(legal_entities_response_body);
 		update_sql_script(paramMap);
 	}
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;

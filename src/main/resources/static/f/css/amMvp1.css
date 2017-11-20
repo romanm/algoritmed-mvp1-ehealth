@@ -11,6 +11,7 @@ html{
 }
 
 .w3-border-deep-orange,.w3-hover-border-deep-orange:hover{border-color:#ff5722!important}
+.w3-top,.w3-bottom{max-width:1000px;}
 
 textarea{width:100%;}
 .b{
