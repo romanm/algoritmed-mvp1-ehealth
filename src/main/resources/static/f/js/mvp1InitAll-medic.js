@@ -58,6 +58,8 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 									content:divisionFromDB_content
 								});
 						});
+					}, function(response){
+						console.error(':( -- sql.divisions.selectByMsp')
 					});
 			});
 		}

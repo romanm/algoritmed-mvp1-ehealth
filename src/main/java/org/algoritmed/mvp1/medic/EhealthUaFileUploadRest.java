@@ -24,6 +24,10 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 			@RequestParam("doc_id") String doc_id,
 			@RequestParam("uri_prop") String uri_prop,
 			RedirectAttributes redirectAttributes) {
+		logger.info("--------27-----------"
+				+ "\n" + "/msp_uploadP7sFile" 
+				+ "\n doc_id=" + doc_id
+				+ "\n" + file);
 		redirectAttributes.addAttribute("doc_id", doc_id);
 		Map<String, Object> map = new HashMap<>();
 		try {

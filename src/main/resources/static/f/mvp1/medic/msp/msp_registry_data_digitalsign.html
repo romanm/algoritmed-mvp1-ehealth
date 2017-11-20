@@ -31,11 +31,18 @@
 	<li class="w3-hover-light-gray">
 	{{api__legal_entities.doc_id}}
 		<form method="POST" enctype="multipart/form-data" action="{{security_prefix}}/msp_uploadP7sFile">
+		------------------------------
 			<label>Завантажити ЕЦП підписаний файл з даними реєстрації. 
 				<code class="w3-codespan">{{config_msp.registryMspFileName()}}.p7s</code>
 				: <br /> <input type="file"
 				class="w3-btn w3-blue w3-border" name="file" accept="*" />
 				<input type="hidden" name="doc_id" value="{{api__legal_entities.doc_id}}">
+				
+									api__legal_entities.doc_id
+					=
+					{{api__legal_entities.doc_id}}
+				
+				
 				<!-- 
 				 -->
 				<input type="hidden" name="uri_prop" value="config.uri_registry_legal_entities">

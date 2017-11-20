@@ -197,7 +197,8 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 //		console.log($scope.msp_divisions)
 		$scope.msp_divisions.read_selectByMsp(msp_id);
 		$scope.config_info.run_with_principal(function(){
-			$http.get($scope.security_prefix+'/read_msp/'+msp_id).then( function(response) {
+			var uri = $scope.security_prefix+'/read_msp/'+msp_id;
+			$http.get(uri).then( function(response) {
 				$scope.api__legal_entities = response.data.docbody;
 				console.log('$scope.api__legal_entities');
 				console.log($scope.api__legal_entities);
@@ -228,6 +229,8 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 					console.log('фальшивий id номер, або uri '+msp_cc_uri)
 					$scope.api__legal_entities.read_legal_entities_id = false; 
 				}
+			}, function(response){
+				console.error(':( -- error read uri -- '+uri)
 			});
 		});
 		
@@ -280,17 +283,17 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 		console.log(msp_id);
 		$scope.config_info.run_with_principal(function(){
 			$scope.commonDbRest.read_sql_with_param(
-					{sql:'sql.msp.msp_ehealth_response.select'
-						, msp_id:msp_id
-						, MSP_EHEALT_RESPONSE_type:48
-					},function(response) {
-						console.log(response.data);
-						var response_docbody = JSON.parse(response.data.list[0].docbody);
-						fn_read_registry_response(response_docbody);
-					}, function(response){
-						console.error(' :( Файл відповіді на реєстрацію не зчитується');
-						console.log(response);
-					});
+				{sql:'sql.msp.msp_ehealth_response.select'
+					, msp_id:msp_id
+					, MSP_EHEALT_RESPONSE_type:48
+				},function(response) {
+					console.log(response.data);
+					var response_docbody = JSON.parse(response.data.list[0].docbody);
+					fn_read_registry_response(response_docbody);
+				}, function(response){
+					console.error(' :( Файл відповіді на реєстрацію не зчитується');
+//					console.log(response);
+				});
 		});
 		
 //		var url_last_registry_error = '/f/tmp/response_'+msp_id+'.json';
