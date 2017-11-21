@@ -63,7 +63,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    Map accessTokenBody = accessTokenEntity.getBody();
 	    System.err.println("accessTokenBody-------------64--------");
 	    System.err.println(mapToString(accessTokenBody));
-	    String access_token = mapUtil.getString(oauthTokenEntity, "data","details","id");
+	    String access_token = mapUtil.getString(oauthTokenEntity, "data","id");
 	    System.err.println("-------------66-------- access_token = " + access_token);
 	    /*
 	    String uri_oauth2_refresh_tokens = env.getProperty("config.uri_oauth2_refresh_tokens");
