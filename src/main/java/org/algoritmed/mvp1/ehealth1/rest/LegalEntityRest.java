@@ -76,8 +76,8 @@ public class LegalEntityRest extends EHealth1Common{
 		String uri = uri_registry_legal_entities+"/"+legal_entities_id;
 		logger.info("---------------\n"
 				+ "/eh1cc/api/legal_entities/{legal_entities_id}"
-				+ "\n" +uri
-				+ "\n" +legal_entities_id
+				+ "\n uri = " +uri
+				+ "\n legal_entities_id = " +legal_entities_id
 				);
 		return getResponseBody(uri);
 	}

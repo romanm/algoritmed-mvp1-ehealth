@@ -23,8 +23,13 @@ public class EHealth1Common {
 		ResponseEntity<Map> personEntity = null;
 		Map<String, Object> body = null;
 		try {
-			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(getRestTemplateHeader()), Map.class);
+			System.err.println("---------27-----------------");
+			HttpHeaders restTemplateHeader = getRestTemplateHeader();
+			System.err.println(restTemplateHeader);
+			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(restTemplateHeader), Map.class);
+			System.err.println("---------30-----------------");
 			body = (Map<String, Object>) personEntity.getBody();
+			System.err.println(body);
 		} catch (HttpClientErrorException e) {
 			System.err.println(uri);
 			System.err.println(e.getLocalizedMessage());
