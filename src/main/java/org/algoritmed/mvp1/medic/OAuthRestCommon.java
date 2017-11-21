@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -15,7 +16,7 @@ import org.springframework.http.MediaType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class OAuthRestCommon {
+public class OAuthRestCommon  extends DbAlgoritmed{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	
 	protected String getBodyForOAuthTokenRequest(String code) {

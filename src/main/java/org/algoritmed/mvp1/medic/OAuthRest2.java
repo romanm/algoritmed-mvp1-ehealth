@@ -1,7 +1,9 @@
 package org.algoritmed.mvp1.medic;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -25,11 +27,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	@GetMapping(value = "/to_oauth_tokens")
-	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
+	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletRequest request){
+		String msp_id = request.getParameter("msp_id");
 		logger.info("\n ------29--+++---------\n"
 				+ "/to_oauth_tokens"
 				+ "\n" 
-				+ "\n" +response
+				+ "\n" +request
+				+ "\n" +msp_id
+				+ "\n" 
 				+ "\n ------------------" 
 				);
 
@@ -65,7 +70,12 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println(mapToString(accessTokenBody));
 	    String access_token = mapUtil.getString(oauthTokenEntity, "data","id");
 	    System.err.println("-------------66-------- access_token = " + access_token);
+	    Map<String, Object> data = new HashMap<String, Object>();
+	    data.put("msp_id", msp_id);
+	    System.err.println("-------------71-------- " );
+	    System.err.println(data );
 	    /*
+		update_sql_script(data);
 	    String uri_oauth2_refresh_tokens = env.getProperty("config.uri_oauth2_refresh_tokens");
 	     * */
 		return "redirect:/v/admin-msp";
