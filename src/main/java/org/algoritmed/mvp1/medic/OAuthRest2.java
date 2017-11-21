@@ -14,7 +14,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -26,15 +25,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping(value = "${config.security_prefix}")
 public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
-	@GetMapping(value = "/to_{{msp_id}}_oauth_tokens")
-	public String  to_oauth_tokens(@RequestParam("code") String code, @PathVariable Integer msp_id, HttpServletResponse response){
+	@GetMapping(value = "/to_oauth_tokens")
+	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
 		logger.info("\n ------29--+++---------\n"
 				+ "/to_oauth_tokens"
 				+ "\n" 
 				+ "\n" +response
-				+ "\n" 
-				+ "\n" +msp_id
-				+ "\n" 
 				+ "\n ------------------" 
 				);
 
