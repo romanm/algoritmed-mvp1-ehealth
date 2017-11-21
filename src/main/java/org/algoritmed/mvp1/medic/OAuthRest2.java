@@ -27,11 +27,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	@GetMapping(value = "/to_oauth_tokens_{{msp_id}}")
-	public String  to_oauth_tokens(@RequestParam("code") String code, @PathVariable String msp_id, HttpServletResponse response){
+	public String  to_oauth_tokens(@RequestParam("code") String code, @PathVariable Integer msp_id, HttpServletResponse response){
 		logger.info("\n ------29--+++---------\n"
 				+ "/to_oauth_tokens"
 				+ "\n" 
 				+ "\n" +response
+				+ "\n" 
+				+ "\n" +msp_id
+				+ "\n" 
 				+ "\n ------------------" 
 				);
 
