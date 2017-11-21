@@ -26,7 +26,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	@GetMapping(value = "/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
-		logger.info("------29--+++---------\n"
+		logger.info("\n ------29--+++---------\n"
 				+ "/to_oauth_tokens"
 				+ "\n" 
 				+ "\n" +response
@@ -41,6 +41,7 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println(mapToString(bodyMapForOAuthTokenRequest));
 		Map oauthTokenEntity = restTemplate.postForObject(uri_oauth_token
 	    		, bodyMapForOAuthTokenRequest, Map.class);
+		// :-) xPath: /data/details/@refresh_token
 	    String refresh_token = mapUtil.getString(oauthTokenEntity, "data","details","refresh_token");
 	    System.err.println("refresh_token------45--------");
 	    System.err.println(refresh_token);
@@ -60,8 +61,10 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(uri_oauth_token
 	    		, HttpMethod.POST, new HttpEntity(bodyMapForRefreshAccessTokenRequest, headers), Map.class);
 	    Map accessTokenBody = accessTokenEntity.getBody();
-	    System.err.println("accessTokenBody");
+	    System.err.println("accessTokenBody-------------64--------");
 	    System.err.println(mapToString(accessTokenBody));
+	    String access_token = mapUtil.getString(oauthTokenEntity, "data","details","id");
+	    System.err.println("-------------66-------- access_token = " + access_token);
 	    /*
 	    String uri_oauth2_refresh_tokens = env.getProperty("config.uri_oauth2_refresh_tokens");
 	     * */
