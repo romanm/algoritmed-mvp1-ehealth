@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.algoritmed.mvp1.DbAlgoritmed.DocType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ public class OAuthRest2 extends OAuthRestCommon{
 	@GetMapping(value = "/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
 		logger.info("\n ------29--+++---------\n"
-				+ "/to_oauth_tokens"
-				+ "\n" 
-				+ "\n" +response
-				+ "\n ------------------" 
+		+ "/to_oauth_tokens"
+		+ "\n" 
+		+ "\n" +response
+		+ "\n ------------------" 
 				);
-
+ 
 		Map bodyMapForOAuthTokenRequest = getBodyMapForOAuthTokenRequest(code);
 		
 	    String uri_oauth_token = env.getProperty("config.uri_oauth2_code_grant");
@@ -64,10 +65,29 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    Map accessTokenBody = accessTokenEntity.getBody();
 	    System.err.println("accessTokenBody-------------64--------");
 	    System.err.println(mapToString(accessTokenBody));
-	    String access_token = mapUtil.getString(oauthTokenEntity, "data","id");
+	    String access_token = mapUtil.getString(accessTokenBody, "data","id");
 	    System.err.println("-------------66-------- access_token = " + access_token);
 	    Map<String, Object> data = new HashMap<String, Object>();
 	    System.err.println("-------------71-------- " );
+		Map<String, Object> paramMap = new HashMap<>();
+
+		paramMap.put("sql", "sql.msp.msp_access_token.init");
+		String msp_client_id = mapUtil.getString(accessTokenBody,"data","details","client_id");
+		paramMap.put("msp_client_id", msp_client_id);
+		update_sql_script(paramMap);
+
+		paramMap.put("sql", "sql.doc.doc_docbody_node.insert");
+		paramMap.put("doc_id", nextDbId());
+		paramMap.put("doctype", DocType.msp_access_token_body.id());
+		paramMap.put("docbody", mapToString(accessTokenBody));
+		update_sql_script(paramMap);
+		
+		paramMap.put("doc_id", nextDbId());
+		paramMap.put("doctype", DocType.msp_access_token.id());
+		paramMap.put("docbody", access_token);
+		update_sql_script(paramMap);
+		
+
 	    /*
 	    data.put("msp_id", msp_id)
 		update_sql_script(data);

@@ -33,10 +33,12 @@ public class DbAlgoritmed {
 	public enum DocType {
 		PATIENT(1)
 		, MSP(12)
-		, MSP_EHEALT_RESPONSE(48)
-		, MSP_CLIENT_ID(50)
 		, EMPLOYEE(13)
 		, DECLARATION(14)
+		, MSP_EHEALT_RESPONSE(48)
+		, MSP_CLIENT_ID(50)
+		, msp_access_token_body(54)
+		, msp_access_token(55)
 		;
 		
 		public int id() {
@@ -60,8 +62,6 @@ public class DbAlgoritmed {
 		data.put(sql, sql_from_env);
 		logger.info("\n-----40--------\n"
 				+ "\n" + data
-				+ "\n" + data.get("physician_id")
-				+ "\n" + data.get("patient_id")
 				+ "\n" + sql_from_env
 				);
 		if(sql_from_env.contains(";")) {
@@ -100,6 +100,8 @@ public class DbAlgoritmed {
 					}
 					int update = db1ParamJdbcTemplate.update(sql_command, data);
 					data.put("update"+i, update);
+				}else if(sql_command.split("_var_").length>1) {
+					update_vars(data, sql_command);
 				}else if("SELECT".equals(first_word)) {
 					read_select(data, sql_command, i);
 				}
@@ -108,6 +110,18 @@ public class DbAlgoritmed {
 			int update = db1ParamJdbcTemplate.update(sql_from_env, data);
 			data.put("update", update);
 		}
+	}
+
+	private void update_vars(Map<String, Object> data, String sql_command) {
+		List<Map<String, Object>> varsList = db1ParamJdbcTemplate.queryForList(sql_command, data);
+		Map<String, Object> varsMap = varsList.get(0);
+		String[] vars = sql_command.split("_var_");
+		for (int i = 1; i < vars.length; i++) {
+			String varName = vars[i].split(" ")[0];
+			System.err.println(varName);
+			data.put(varName, varsMap.get("_var_"+varName));
+		}
+
 	}
 	
 	protected void read_select(Map<String, Object> data, String sql_command, Integer i) {
