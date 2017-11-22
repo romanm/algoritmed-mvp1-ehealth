@@ -105,7 +105,6 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 	}
 
 	@Autowired protected Environment env;
-	@Autowired protected MapUtil mapUtil;
 	
 	protected void testCURL(String oauth_tokens_body) {
 		System.err.println("---------------");

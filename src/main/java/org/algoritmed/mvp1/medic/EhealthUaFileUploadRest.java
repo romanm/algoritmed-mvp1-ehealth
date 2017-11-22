@@ -1,6 +1,5 @@
 package org.algoritmed.mvp1.medic;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.EhealthUaRegistryWebClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,15 +36,16 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 			System.err.println(uri_prop+" = "+uri);
 			String legal_entities_response_body = registryWebClient.legal_entitiesPutStr(map, uri);
 			
-			String registry_response_file_name = registry_response_file_name(doc_id);
 			saveResponse(legal_entities_response_body, doc_id);
-			FileCopyUtils.copy(legal_entities_response_body.getBytes(), new File(registry_response_file_name));
+//			String registry_response_file_name = registry_response_file_name(doc_id);
+//			FileCopyUtils.copy(legal_entities_response_body.getBytes(), new File(registry_response_file_name));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		logger.info("---------40-----------\n" + "/msp_uploadP7sFile" + "\n" + file);
 		return "redirect:/v/admin-msp";
 	}
+
 	private void saveResponse(String legal_entities_response_body, String doc_id) {
 		System.err.println("--------------46-----------------");
 		System.err.println(doc_id);
@@ -60,22 +59,31 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 		Integer MSP_EHEALT_RESPONSE_id;
 		String sql;
 		if(mspEhalethResponseList.size()>0){//update
+			paramMap.put("sql", "sql.msp.msp_ehealth_response.update");
 			Map<String, Object> map = mspEhalethResponseList.get(0);
 			MSP_EHEALT_RESPONSE_id = (Integer) map.get("doc_id");
-			paramMap.put("sql", "sql.msp.msp_ehealth_response.update");
 		}else{//insert
+			paramMap.put("sql", "sql.msp.msp_ehealth_response.insert");
 			MSP_EHEALT_RESPONSE_id = nextDbId();
 			paramMap.put("doc_id", MSP_EHEALT_RESPONSE_id);
 			paramMap.put("doctype", DocType.MSP_EHEALT_RESPONSE.id());
 			paramMap.put("parent_id", doc_id);
 			paramMap.put("docbody_id", MSP_EHEALT_RESPONSE_id);
-			paramMap.put("sql", "sql.msp.msp_ehealth_response.insert");
+			
+			paramMap.put("MSP_CLIENT_ID_type", DocType.MSP_CLIENT_ID.id());
+			Integer MSP_CLIENT_ID_doc_id = nextDbId();
+			paramMap.put("MSP_CLIENT_ID_doc_id", MSP_CLIENT_ID_doc_id);
+			Map<String, Object> legal_entities_response_map = stringToMap(legal_entities_response_body);
+			String msp_client_id = mapUtil.getString(legal_entities_response_map, "urgent", "security", "client_id");
+			System.err.println("-----78-----------msp_client_id = "+msp_client_id);
+			paramMap.put("msp_client_id", msp_client_id);
 		}
 		System.err.println(paramMap);
 		paramMap.put("docbody", legal_entities_response_body);
 		System.err.println(legal_entities_response_body);
 		update_sql_script(paramMap);
 	}
+
 	private @Autowired EhealthUaRegistryWebClient registryWebClient;
 
 }

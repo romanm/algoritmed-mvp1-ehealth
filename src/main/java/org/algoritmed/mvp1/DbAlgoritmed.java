@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.algoritmed.mvp1.util.MapUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class DbAlgoritmed {
 	protected static final Logger logger = LoggerFactory.getLogger(DbAlgoritmed.class);
 	@Autowired protected Environment env;
+	@Autowired protected MapUtil mapUtil;
 	
 	public enum DocType {
 		PATIENT(1)
 		, MSP(12)
 		, MSP_EHEALT_RESPONSE(48)
+		, MSP_CLIENT_ID(50)
 		, EMPLOYEE(13)
 		, DECLARATION(14)
 		;
@@ -281,6 +284,7 @@ public class DbAlgoritmed {
 	protected Timestamp now() {
 		return new Timestamp(Calendar.getInstance().getTimeInMillis());
 	}
+
 	protected Map<String, Object> stringToMap(String protocolDoc) {
 		Map map = null;
 		try {
@@ -292,6 +296,7 @@ public class DbAlgoritmed {
 			map = new HashMap<>();
 		return map;
 	}
+
 	@Autowired
 	protected	ObjectMapper objectMapper;
 	protected String objectToString(Object dbSaveObj) {
