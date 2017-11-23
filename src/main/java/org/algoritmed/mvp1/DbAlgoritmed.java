@@ -379,7 +379,12 @@ public class DbAlgoritmed {
 			Integer user_id = (Integer) user.get("user_id");
 			
 			read_user_msp(map, user_id);
-
+			System.err.println("----382-------------------");
+			System.err.println(map.get("user_msp"));
+			System.err.println(map);
+			String msp_id = mapUtil.getString(map, "user_msp[0]","msp_id");
+			System.err.println("----383-------------------msp_id");
+			System.err.println(msp_id);
 			if("admin".equals(name)) {
 				Map<String, Object> msp_list = msp_list();
 				map.put("user_msp", msp_list.get("msp_list"));
