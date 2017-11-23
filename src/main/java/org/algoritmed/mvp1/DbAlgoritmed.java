@@ -84,7 +84,7 @@ public class DbAlgoritmed {
 				System.err.print(sql_command);
 				if(sql_command.length()==0)
 					continue;
-				System.err.print("-"+i+"->");
+				System.err.print(" - "+i+"->");
 				String[] split = sql_command.split(" ");
 				String first_word = split[0];
 				System.err.println(first_word);

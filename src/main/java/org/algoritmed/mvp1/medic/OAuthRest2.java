@@ -77,12 +77,16 @@ public class OAuthRest2 extends OAuthRestCommon{
 		update_sql_script(paramMap);
 
 		paramMap.put("sql", "sql.doc.doc_docbody_node.insert");
-		paramMap.put("doc_id", nextDbId());
+		Integer nextDbId = nextDbId();
+		paramMap.put("doc_id", nextDbId);
+		paramMap.put("docbody_id", nextDbId);
 		paramMap.put("doctype", DocType.msp_access_token_body.id());
 		paramMap.put("docbody", mapToString(accessTokenBody));
 		update_sql_script(paramMap);
 		
-		paramMap.put("doc_id", nextDbId());
+		nextDbId = nextDbId();
+		paramMap.put("doc_id", nextDbId);
+		paramMap.put("docbody_id", nextDbId);
 		paramMap.put("doctype", DocType.msp_access_token.id());
 		paramMap.put("docbody", access_token);
 		update_sql_script(paramMap);
