@@ -59,11 +59,11 @@ public class DbAlgoritmed {
 	protected void update_sql_script(Map<String, Object> data) {
 		String sql = (String) data.get("sql");
 		String sql_from_env = env.getProperty(sql);
-		data.put(sql, sql_from_env);
 		logger.info("\n-----40--------\n"
 				+ "\n" + data
 				+ "\n" + sql_from_env
 				);
+//		data.put(sql, sql_from_env);
 		if(sql_from_env.contains(";")) {
 			if(data.containsKey("docbodyMap")) {
 				Map<String,Object> docbodyMap = (Map<String, Object>) data.get("docbodyMap");
@@ -113,6 +113,8 @@ public class DbAlgoritmed {
 	}
 
 	private void update_vars(Map<String, Object> data, String sql_command) {
+		System.err.println("-------116---------------");
+		System.err.println(sql_command);
 		List<Map<String, Object>> varsList = db1ParamJdbcTemplate.queryForList(sql_command, data);
 		Map<String, Object> varsMap = varsList.get(0);
 		String[] vars = sql_command.split("_var_");
