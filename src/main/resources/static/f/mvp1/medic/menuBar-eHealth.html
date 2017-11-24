@@ -8,10 +8,21 @@
 	class="w3-dropdown-content w3-bar-block w3-card-4 w3-border w3-border-deep-orange"
 	style="right: 10px" ng-class="{'w3-show':logEHealth}">
 	<div>
-		Автентифікáція і Логін в <br /> <img alt="ALGORITMED"
-			src="/f/img/logo-algoritmed.png" height="20" class="w3-border">
-		<br /> за допомогою #eHealth <br /> буде активований після
-		завершення <br /> вашої реєстрації в <span
+		Автентифікáція і Логін в <span
 			class="b w3-border-deep-orange w3-bottombar"> #eHealth </span>
+		<div ng-if="principal.msp_access_token_body.data.details.scope">
+		<b>
+			права доступу:
+		</b>
+			<div ng-repeat="rw in principal.msp_access_token_body.data.details.scope.split(' ')">
+			{{rw}}
+			</div>
+		</div>
+		<div ng-if="!principal.msp_access_token_body.data.details.scope">
+			<br /> за допомогою <img alt="ALGORITMED"
+				src="/f/img/logo-algoritmed.png" height="20" class="w3-border">
+			<br /> буде активований після завершення <br /> вашої реєстрації в
+			<span class="b w3-border-deep-orange w3-bottombar"> #eHealth </span>
+		</div>
 	</div>
 </div>

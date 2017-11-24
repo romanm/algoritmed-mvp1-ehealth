@@ -379,10 +379,17 @@ public class DbAlgoritmed {
 			Integer user_id = (Integer) user.get("user_id");
 			
 			read_user_msp(map, user_id);
-			System.err.println("----382-------------------");
-			System.err.println(map.get("user_msp"));
-			System.err.println(map);
 			String msp_id = mapUtil.getString(map, "user_msp[0]","msp_id");
+			Map<String, Object> paramMap = new HashMap();
+			map.put("msp_id", msp_id);
+			for (Map<String, Object> map2 : db1ParamJdbcTemplate.queryForList(
+					env.getProperty("sql.msp.msp_access_token.read"), map)) {
+				String doctype = (String) map2.get("doctype");
+				if("msp_access_token_body".equals(doctype))
+					map.put(doctype, stringToMap((String) map2.get("docbody")));
+				else 
+					map.put(doctype, map2.get("docbody"));
+			}
 			System.err.println("----383-------------------msp_id");
 			System.err.println(msp_id);
 			if("admin".equals(name)) {
