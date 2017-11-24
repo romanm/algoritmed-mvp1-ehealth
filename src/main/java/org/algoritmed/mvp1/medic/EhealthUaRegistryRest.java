@@ -199,7 +199,8 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 				+ "\n" + data
 				);
 		String uri = env.getProperty("config.path_registry_msp");
-		Map<String, Object> legal_entitiesPut = registryWebClient.legal_entitiesPut(data, uri);
+		String token_bearer = env.getProperty("config.token_bearer");
+		Map<String, Object> legal_entitiesPut = registryWebClient.legal_entitiesPut(data, uri, token_bearer);
 		if(legal_entitiesPut!= null)
 			return legal_entitiesPut;
 		return data;

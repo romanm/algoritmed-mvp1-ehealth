@@ -1,10 +1,15 @@
 package org.algoritmed.mvp1.medic;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.Response;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
 import org.algoritmed.mvp1.util.EhealthUaRegistryWebClient;
@@ -15,26 +20,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Controller
 public class EhealthUaFileUploadRest  extends DbAlgoritmed{
+	@PostMapping("/msp_upload_division_P7sFile")
+	public String handleDivisionFileUpload(@RequestParam("file") MultipartFile file,
+			@RequestParam("doc_id") String doc_id,
+			@RequestParam("uri_prop") String uri_prop,
+			Principal principal,
+			RedirectAttributes redirectAttributes) {
+		String uri = env.getProperty(uri_prop);
+		logger.info("--------27-----------"
+				+ "\n" + "/msp_upload_division_P7sFile" 
+				+ "\n doc_id = " + doc_id
+				+ "\n uri_prop = " + uri_prop
+				+ "\n uri = " + uri
+				+ "\n" + file);
+
+		Map<String, Object> principalMap = super.principal(principal);
+		System.err.println(principalMap);
+		String msp_access_token = ""+principalMap.get("msp_access_token");
+
+		System.err.println("-----45------------------------");
+		System.err.println(msp_access_token);
+
+		try {
+			Map<String, Object> map = prepareFile(file, uri_prop, uri);
+			String dataStr = mapper.writeValueAsString(map);
+			Entity<String> dataJson = Entity.json(dataStr);
+			Builder wsClientInvocation = registryWebClient.getInvocationBuilder(uri, msp_access_token);
+			Response response = wsClientInvocation.post(dataJson);
+			
+			System.err.println("--------74-------------");
+			System.err.println("status " + response.getStatus());
+			String readEntity_body = response.readEntity(String.class);
+			System.err.println(readEntity_body);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/v/admin-msp";
+	}
+	
+	@Autowired ObjectMapper mapper = new ObjectMapper();
+	
 	@PostMapping("/msp_uploadP7sFile")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
 			@RequestParam("doc_id") String doc_id,
 			@RequestParam("uri_prop") String uri_prop,
+			Principal principal,
 			RedirectAttributes redirectAttributes) {
-		logger.info("--------27-----------"
+		String uri = env.getProperty(uri_prop);
+		logger.info("--------44-----------"
 				+ "\n" + "/msp_uploadP7sFile" 
-				+ "\n doc_id=" + doc_id
+				+ "\n doc_id = " + doc_id
+				+ "\n uri_prop = " + uri_prop
+				+ "\n uri = " + uri
 				+ "\n" + file);
 		redirectAttributes.addAttribute("doc_id", doc_id);
-		Map<String, Object> map = new HashMap<>();
 		try {
-			String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
-			map.put("signed_legal_entity_request", encodeToString);
-			map.put("signed_content_encoding", "base64");
-			String uri = env.getProperty(uri_prop);
-			System.err.println(uri_prop+" = "+uri);
-			String legal_entities_response_body = registryWebClient.legal_entitiesPutStr(map, uri);
+			Map<String, Object> map = prepareFile(file, uri_prop, uri);
+			String token_bearer = env.getProperty("config.token_bearer");
+			String legal_entities_response_body = registryWebClient.legal_entitiesPutStr(map, uri, token_bearer);
 			
 			saveResponse(legal_entities_response_body, doc_id);
 //			String registry_response_file_name = registry_response_file_name(doc_id);
@@ -44,6 +93,14 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 		}
 		logger.info("---------40-----------\n" + "/msp_uploadP7sFile" + "\n" + file);
 		return "redirect:/v/admin-msp";
+	}
+	private Map<String, Object> prepareFile(MultipartFile file, String uri_prop, String uri) throws IOException {
+		Map<String, Object> map = new HashMap<>();
+		String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
+		map.put("signed_legal_entity_request", encodeToString);
+		map.put("signed_content_encoding", "base64");
+		System.err.println(uri_prop+" = "+uri);
+		return map;
 	}
 
 	private void saveResponse(String legal_entities_response_body, String doc_id) {

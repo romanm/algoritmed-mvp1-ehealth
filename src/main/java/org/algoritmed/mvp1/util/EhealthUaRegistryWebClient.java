@@ -41,7 +41,8 @@ public class EhealthUaRegistryWebClient {
 				+ "\n"+39
 				+ "\n"+uri_registry_legal_entities
 				);
-		Builder wsClientInvocation = getInvocationBuilder(test_api_URL);
+		String token_bearer = env.getProperty("config.token_bearer");
+		Builder wsClientInvocation = getInvocationBuilder(test_api_URL, token_bearer);
 //		Builder wsClientInvocation = getInvocationBuilder(path_uri);
 		Response response = wsClientInvocation.get();
 		String readEntity_body = response.readEntity(String.class);
@@ -51,18 +52,18 @@ public class EhealthUaRegistryWebClient {
 		return data;
 	}
 
-	public Map legal_entitiesPut(Map<String, Object> data, String uri) {
-		String readEntity_body = legal_entitiesPutStr(data, uri);
+	public Map legal_entitiesPut(Map<String, Object> data, String uri, String token_bearer) {
+		String readEntity_body = legal_entitiesPutStr(data, uri, token_bearer);
 		Map readValue_mapBody = strToMap(readEntity_body);
 		return readValue_mapBody;
 	}
 
-	public String legal_entitiesPutStr(Map<String, Object> data, String uri) {
+	public String legal_entitiesPutStr(Map<String, Object> data, String uri, String token_bearer) {
 		String readEntity_body = null;
 		try {
 			String dataStr = mapper.writeValueAsString(data);
 			Entity<String> dataJson = Entity.json(dataStr);
-			Builder wsClientInvocation = getInvocationBuilder(uri);
+			Builder wsClientInvocation = getInvocationBuilder(uri, token_bearer);
 			Response response ;
 			if(uri.indexOf("divisions")>=0) {
 				System.err.println(70);
@@ -70,7 +71,11 @@ public class EhealthUaRegistryWebClient {
 			}else {
 				response = wsClientInvocation.put(dataJson);
 			}
+			
+			System.err.println("--------74-------------");
+			System.err.println("status " + response.getStatus());
 			readEntity_body = response.readEntity(String.class);
+			System.err.println(readEntity_body);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -99,12 +104,12 @@ config.path_registry_msp: /api/legal_entities
 	private @Value("${config.uri_registry_legal_entities}")	String uri_registry_legal_entities;
 	private @Value("${config.path_registry_msp}")			String path_uri_registry_msp;
 
-	private Builder getInvocationBuilder(String path_uri) {
+	public Builder getInvocationBuilder(String path_uri, String token_bearer) {
 		Client client = ClientBuilder.newClient();
 		Builder header = client.target(path_uri)
 			.request(MediaType.APPLICATION_JSON_TYPE)
 			.header("api-key", env.getProperty("config.mis_client_secret_client_id"))
-			.header("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+			.header("Authorization", "Bearer "+token_bearer);
 		return header;
 	}
 	@Autowired protected Environment env;
