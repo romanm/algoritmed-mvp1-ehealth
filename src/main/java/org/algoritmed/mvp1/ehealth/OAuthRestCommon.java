@@ -1,4 +1,4 @@
-package org.algoritmed.mvp1.medic;
+package org.algoritmed.mvp1.ehealth;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -104,6 +104,8 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 	    headers.add("api-key", env.getProperty("config.mis_api_key"));
 //		headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
 		headers.add("Authorization", "Bearer "+token_bearer);
+	    System.err.println("headers--------------107---------------");
+	    System.err.println(headers);
 		return headers;
 	}
 	

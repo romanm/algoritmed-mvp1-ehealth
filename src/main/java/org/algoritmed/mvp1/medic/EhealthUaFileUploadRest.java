@@ -70,7 +70,7 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 	
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	
-	@PostMapping("/msp_uploadP7sFile")
+	@PostMapping("/msp_uploadP7sFile__to_delete")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
 			@RequestParam("doc_id") String doc_id,
 			@RequestParam("uri_prop") String uri_prop,

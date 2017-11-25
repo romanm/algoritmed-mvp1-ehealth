@@ -64,7 +64,8 @@ public class EhealthUaRegistryWebClient {
 			String dataStr = mapper.writeValueAsString(data);
 			Entity<String> dataJson = Entity.json(dataStr);
 			Builder wsClientInvocation = getInvocationBuilder(uri, token_bearer);
-			Response response ;
+			Response response;
+
 			if(uri.indexOf("divisions")>=0) {
 				System.err.println(70);
 				response = wsClientInvocation.post(dataJson);

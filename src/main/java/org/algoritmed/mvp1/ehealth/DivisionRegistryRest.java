@@ -1,9 +1,7 @@
-package org.algoritmed.mvp1.medic;
+package org.algoritmed.mvp1.ehealth;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Base64;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -44,7 +42,7 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 			String mapToString = byteToBase64String(fileBytes);
 			ResponseEntity<String> divisionRegistryEntity = restTemplate.exchange(uri
 					, HttpMethod.POST, new HttpEntity(mapToString, headers), String.class);
-			System.err.println("-----------------50---------divisionRegistryEntity------");
+			System.err.println("-----------------45---------divisionRegistryEntity------");
 			System.err.println(divisionRegistryEntity.getStatusCode());
 			System.err.println(divisionRegistryEntity.getStatusCodeValue());
 			System.err.println(divisionRegistryEntity.getBody());

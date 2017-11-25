@@ -1,4 +1,4 @@
-package org.algoritmed.mvp1.medic;
+package org.algoritmed.mvp1.ehealth;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;

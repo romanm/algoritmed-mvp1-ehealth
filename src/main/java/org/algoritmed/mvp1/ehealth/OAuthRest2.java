@@ -1,4 +1,4 @@
-package org.algoritmed.mvp1.medic;
+package org.algoritmed.mvp1.ehealth;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,8 +52,6 @@ public class OAuthRest2 extends OAuthRestCommon {
 //	    HttpHeaders headers = getRestTemplateHeader(refresh_token);
 	    String token_bearer = env.getProperty("config.token_bearer");
 	    HttpHeaders headers = getRestTemplateHeader(token_bearer);
-	    System.err.println("headers");
-	    System.err.println(headers);
 	    ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(uri_oauth_token
 	    		, HttpMethod.POST, new HttpEntity(bodyMapForRefreshAccessTokenRequest, headers), Map.class);
 	    Map accessTokenBody = accessTokenEntity.getBody();
