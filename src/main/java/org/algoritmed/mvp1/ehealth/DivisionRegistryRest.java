@@ -31,7 +31,7 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 		System.err.println(principalMap);
 		String msp_access_token = ""+principalMap.get("msp_access_token");
 
-		System.err.println("-----45------------------------");
+		System.err.println("----34--------------msp_access_token----------");
 		System.err.println(msp_access_token);
 	    HttpHeaders headers = getRestTemplateHeader(msp_access_token);
 	    System.err.println("headers");
