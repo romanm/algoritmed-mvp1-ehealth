@@ -365,8 +365,7 @@ public class DbAlgoritmed {
 	public Map<String, Object> principal(Principal principal) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("principal", principal);
-		logger.info(" --------- \n"
-				+ "/v/principal \n" + map);
+		logger.info("-------update---principal-----" );
 		Map<String, Object> uriMap = new HashMap<String, Object>();
 		if(null!=principal) {
 			String name = principal.getName();
