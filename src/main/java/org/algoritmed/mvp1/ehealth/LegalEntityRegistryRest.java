@@ -58,7 +58,7 @@ public class LegalEntityRegistryRest extends OAuthRestCommon {
 	}
 	
 	private void saveResponse(String legal_entities_response_body, String doc_id) {
-		System.err.println("--------------46-----------------");
+		System.err.println("--------------46-----------saveResponse------");
 		System.err.println(doc_id);
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("MSP_EHEALT_RESPONSE_type", DocType.MSP_EHEALT_RESPONSE.id());

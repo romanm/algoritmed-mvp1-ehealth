@@ -42,7 +42,7 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 		System.err.println(principalMap);
 		String msp_access_token = ""+principalMap.get("msp_access_token");
 
-		System.err.println("-----45------------------------");
+		System.err.println("-----4-5------------------------");
 		System.err.println(msp_access_token);
 
 		try {

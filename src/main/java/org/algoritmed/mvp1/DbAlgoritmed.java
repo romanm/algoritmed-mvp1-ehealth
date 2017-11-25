@@ -59,7 +59,7 @@ public class DbAlgoritmed {
 	protected void update_sql_script(Map<String, Object> data) {
 		String sql = (String) data.get("sql");
 		String sql_from_env = env.getProperty(sql);
-		logger.info("\n-----40--------\n"
+		logger.info("\n-----40------update_sql_script--\n"
 				+ "\n" + data
 				+ "\n" + sql_from_env
 				);
@@ -370,7 +370,7 @@ public class DbAlgoritmed {
 		Map<String, Object> uriMap = new HashMap<String, Object>();
 		if(null!=principal) {
 			String name = principal.getName();
-			System.err.println("name = "+name);
+			//System.err.println("name = "+name);
 			map.put("username", name);
 			Map<String, Object> user = db1ParamJdbcTemplate.queryForMap(sqlDb1UsersFromUsername, map);
 			user.remove("password");
@@ -390,8 +390,8 @@ public class DbAlgoritmed {
 				else 
 					map.put(doctype, map2.get("docbody"));
 			}
-			System.err.println("----383-------------------msp_id");
-			System.err.println(msp_id);
+			//System.err.println("----383-------------------msp_id");
+			//System.err.println(msp_id);
 			if("admin".equals(name)) {
 				Map<String, Object> msp_list = msp_list();
 				map.put("user_msp", msp_list.get("msp_list"));
