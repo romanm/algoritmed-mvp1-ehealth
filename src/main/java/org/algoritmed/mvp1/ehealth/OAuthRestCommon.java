@@ -98,8 +98,8 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 	}
 	protected HttpHeaders getRestTemplateHeader(String token_bearer) {
 		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Content-Type", "application/json");
-	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.add("Content-Type", "application/json");
+//	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 //	    headers.add("cache-control", "no-cache");
 	    headers.add("api-key", env.getProperty("config.mis_api_key"));
 //		headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
