@@ -23,13 +23,13 @@ public class EHealth1Common {
 		ResponseEntity<Map> personEntity = null;
 		Map<String, Object> body = null;
 		try {
-			System.err.println("---------27-----------------");
 			HttpHeaders restTemplateHeader = getRestTemplateHeader();
-			System.err.println(restTemplateHeader);
+//			System.err.println("---------27-----------------");
+//			System.err.println(restTemplateHeader);
 			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(restTemplateHeader), Map.class);
-			System.err.println("---------30-----------------");
 			body = (Map<String, Object>) personEntity.getBody();
-			System.err.println(body);
+//			System.err.println("---------30-----------------");
+//			System.err.println(body);
 		} catch (HttpClientErrorException e) {
 			System.err.println(uri);
 			System.err.println(e.getLocalizedMessage());
@@ -40,8 +40,12 @@ public class EHealth1Common {
 	protected HttpHeaders getRestTemplateHeader() {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
+//	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
+	    headers.add("api-key", env.getProperty("config.mis_api_key"));
 	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+	    System.err.println("headers------------46--------------");
+	    System.err.println(headers);
+
 		return headers;
 	}
 	private void addNoCache(HttpHeaders headers) {
