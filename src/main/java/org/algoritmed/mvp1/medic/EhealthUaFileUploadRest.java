@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class EhealthUaFileUploadRest  extends DbAlgoritmed{
-	@PostMapping("/msp_upload_division_P7sFile")
+	@PostMapping("/msp_upload_division_P7sFile_to_delete")
 	public String handleDivisionFileUpload(@RequestParam("file") MultipartFile file,
 			@RequestParam("doc_id") String doc_id,
 			@RequestParam("uri_prop") String uri_prop,

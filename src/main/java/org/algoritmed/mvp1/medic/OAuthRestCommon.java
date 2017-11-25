@@ -3,21 +3,27 @@ package org.algoritmed.mvp1.medic;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
-import org.algoritmed.mvp1.util.MapUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class OAuthRestCommon  extends DbAlgoritmed{
+	protected static final Logger logger = LoggerFactory.getLogger(OAuthRestCommon.class);
+
 	@Autowired ObjectMapper mapper = new ObjectMapper();
+	protected @Autowired RestTemplate restTemplate;
 	
 	protected String getBodyForOAuthTokenRequest(String code) {
 		Map<String, Object> oauth_tokenMap = getBodyMapForOAuthTokenRequest(code);
@@ -48,10 +54,10 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 	protected Map<String, Object> getBodyMapForOAuthTokenRequest(String code) {
 		Map<String, Object> oauth_tokenMap = new HashMap<String, Object>();
 		Map<String, Object> tokenMap = new HashMap<String, Object>();
-		tokenMap.put("grant_type", "authorization_code");
-		tokenMap.put("code", code);
 		tokenMap.put("client_id", "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb");
 		tokenMap.put("client_secret", "ZHdqTTVGWjYrMFRRa0hoYmpGVTFldz09");
+		tokenMap.put("grant_type", "authorization_code");
+		tokenMap.put("code", code);
 //		tokenMap.put("redirect_uri", "https://medic.algoritmed.com"+env.getProperty("config.security_prefix")+"/from_oauth_tokens");
 		tokenMap.put("redirect_uri", "https://medic.algoritmed.com"+env.getProperty("config.security_prefix")+"/to_oauth_tokens");
 		tokenMap.put("scope", "employee:read employee:write"
@@ -81,25 +87,36 @@ public class OAuthRestCommon  extends DbAlgoritmed{
         } catch (Exception e) {}
 	}
 	
-	protected HttpHeaders getRestTemplateHeader() {
+	protected HttpHeaders getRestTemplateHeader2() {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    //client_secret
 	    headers.add("api-key", env.getProperty("config.mis_api_key"));
-	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
+	    String token_bearer = env.getProperty("config.token_bearer");
+		headers.add("Authorization", "Bearer "+token_bearer);
 		return headers;
 	}
-	protected HttpHeaders getRestTemplateHeader(String token) {
+	protected HttpHeaders getRestTemplateHeader(String token_bearer) {
 		HttpHeaders headers = new HttpHeaders();
-//	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//		headers.add("Content-Type", "application/json");
+	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 //	    headers.add("cache-control", "no-cache");
-		headers.add("Content-Type", "application/json");
-		headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
-		headers.add("Authorization", "Bearer "+token);
+	    headers.add("api-key", env.getProperty("config.mis_api_key"));
+//		headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
+		headers.add("Authorization", "Bearer "+token_bearer);
 		return headers;
 	}
 	
-	protected HttpHeaders getRestTemplateHeader2() {
+	protected String byteToBase64String(byte[] fileBytes) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("signed_content_encoding", "base64");
+		String encodeToString = Base64.getEncoder().encodeToString(fileBytes);
+		map.put("signed_legal_entity_request", encodeToString);
+		String mapToString = mapToString(map);
+		return mapToString;
+	}
+	
+	protected HttpHeaders getRestTemplateHeader_to_delete() {
 		String token = env.getProperty("config.token_bearer");
 		return getRestTemplateHeader(token);
 	}

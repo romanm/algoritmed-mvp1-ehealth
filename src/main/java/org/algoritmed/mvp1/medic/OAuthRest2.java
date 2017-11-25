@@ -5,10 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.algoritmed.mvp1.DbAlgoritmed.DocType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,15 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 //@RestController redirect:* not work
 @Controller
 @RequestMapping(value = "${config.security_prefix}")
-public class OAuthRest2 extends OAuthRestCommon{
-	@Autowired ObjectMapper mapper = new ObjectMapper();
+public class OAuthRest2 extends OAuthRestCommon {
+
 	@GetMapping(value = "/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code, HttpServletResponse response){
 		logger.info("\n ------29--+++---------\n"
@@ -57,7 +50,8 @@ public class OAuthRest2 extends OAuthRestCommon{
 	    System.err.println(oauthTokenEntity);
 	     * */
 //	    HttpHeaders headers = getRestTemplateHeader(refresh_token);
-	    HttpHeaders headers = getRestTemplateHeader();
+	    String token_bearer = env.getProperty("config.token_bearer");
+	    HttpHeaders headers = getRestTemplateHeader(token_bearer);
 	    System.err.println("headers");
 	    System.err.println(headers);
 	    ResponseEntity<Map> accessTokenEntity = restTemplate.exchange(uri_oauth_token
@@ -101,7 +95,4 @@ public class OAuthRest2 extends OAuthRestCommon{
 		
 	}
 	
-	
-	protected @Autowired RestTemplate restTemplate;
-	private static final Logger logger = LoggerFactory.getLogger(OAuthRest2.class);
 }
