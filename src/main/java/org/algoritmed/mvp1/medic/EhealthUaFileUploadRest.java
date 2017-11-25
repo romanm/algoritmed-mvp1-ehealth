@@ -49,7 +49,8 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 			Map<String, Object> map = prepareFile(file, uri_prop, uri);
 			String dataStr = mapper.writeValueAsString(map);
 			Entity<String> dataJson = Entity.json(dataStr);
-			Builder wsClientInvocation = registryWebClient.getInvocationBuilder(uri, msp_access_token);
+			Builder wsClientInvocation = registryWebClient.getInvocationBuilder(uri
+					, msp_access_token);
 			Response response = wsClientInvocation.post(dataJson);
 			
 			System.err.println("--------74-------------");

@@ -194,7 +194,7 @@ public class EhealthUaRegistryRest extends DbAlgoritmed{
 	public @ResponseBody Map<String, Object> legal_entities(
 			@RequestBody Map<String, Object> data
 			, Principal userPrincipal) {
-		logger.info("\n---------------\n"
+		logger.info("\n --------------- \n"
 				+ "/legal_entities"
 				+ "\n" + data
 				);
