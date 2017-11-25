@@ -41,7 +41,7 @@ public class LegalEntityRegistryRest extends OAuthRestCommon {
 			byte[] fileBytes = file.getBytes();
 			String mapToString = byteToBase64String(fileBytes);
 			ResponseEntity<String> legalEntityRegistryEntity = restTemplate.exchange(uri
-					, HttpMethod.POST, new HttpEntity(mapToString, headers), String.class);
+					, HttpMethod.PUT, new HttpEntity(mapToString, headers), String.class);
 			System.err.println("-----------------42-------legalEntityRegistryEntity------");
 			System.err.println(legalEntityRegistryEntity.getStatusCode());
 			System.err.println(legalEntityRegistryEntity.getStatusCodeValue());
