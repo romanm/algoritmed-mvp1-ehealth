@@ -51,6 +51,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 						//				console.log($scope.msp_divisions.selectByMsp)
 						$scope.msp_divisions.selectByMsp.list.forEach(function(divisionFromDB){
 							var divisionFromDB_content = JSON.parse(divisionFromDB.docbody);
+							console.log(divisionFromDB_content);
 							if(!divisionFromDB_content.doc_id)
 								divisionFromDB_content.doc_id = divisionFromDB.docbody_id
 								$scope.msp_divisions.addDivisionElement

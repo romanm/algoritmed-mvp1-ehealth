@@ -39,14 +39,13 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 				+ "\n" + file);
 
 		Map<String, Object> principalMap = super.principal(principal);
-		System.err.println(principalMap);
+//		System.err.println(principalMap);
 		String msp_access_token = ""+principalMap.get("msp_access_token");
 
 		System.err.println("-----4-5------------------------");
 		System.err.println(msp_access_token);
 
 		try {
-
 			Map<String, Object> map = prepareFile(file, uri_prop, uri);
 			String dataStr = mapper.writeValueAsString(map);
 			Entity<String> dataJson = Entity.json(dataStr);

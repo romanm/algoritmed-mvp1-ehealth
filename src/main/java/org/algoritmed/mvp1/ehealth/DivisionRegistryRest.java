@@ -28,14 +28,12 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 				+ "\n uri = " + uri
 				+ "\n" + file);
 		Map<String, Object> principalMap = super.principal(principal);
-		System.err.println(principalMap);
+//		System.err.println(principalMap);
 		String msp_access_token = ""+principalMap.get("msp_access_token");
 
 		System.err.println("----34--------------msp_access_token----------");
 		System.err.println(msp_access_token);
 	    HttpHeaders headers = getRestTemplateHeader(msp_access_token);
-	    System.err.println("headers");
-	    System.err.println(headers);
 
 		try {
 //			byte[] fileBytes = file.getBytes();
