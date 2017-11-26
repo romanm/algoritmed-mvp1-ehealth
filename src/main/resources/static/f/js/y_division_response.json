@@ -1,0 +1,25 @@
+{
+	"meta": {
+		"url": "http://api.ehealth.world/api/divisions",
+		"type": "object",
+		"request_id": "4n514s8dtqdukpeaeur8948ni1gu6rpk",
+		"code": 422
+	},
+	"error": {
+		"type": "validation_failed",
+		"message": "Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors.",
+		"invalid": [
+			{
+				"rules": [
+					{
+						"rule": "invalid",
+						"params": [],
+						"description": "one and only one registration address is required"
+					}
+				],
+				"entry_type": "json_data_property",
+				"entry": "$.addresses"
+			}
+		]
+	}
+}

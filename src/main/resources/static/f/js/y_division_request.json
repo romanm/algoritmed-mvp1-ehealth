@@ -1,0 +1,28 @@
+{
+	"addresses": [
+		{
+		"type": "RESIDENCE",
+			"country": "UA",
+			"area": "ХМЕЛЬНИЦЬКА",
+			"region": "ХМЕЛЬНИЦЬКИЙ",
+			"settlement": "ХМЕЛЬНИЦЬКИЙ",
+			"settlement_type": "CITY",
+			"settlement_id": "cf312385-7788-4dde-ba22-f549462c17a0",
+			"street_type": "STREET",
+			"building": "13",
+			"apartment": "44",
+			"street": "Стеапана Бандери",
+			"zip": "29000"
+		}
+	],
+ "phones": [
+    {
+      "type": "MOBILE",
+      "number": "+380503410870"
+    }
+  ],
+	"name": "Філія А12323",
+	"email": "email@example.com",
+	"type": "CLINIC",
+	"external_id": "734"
+}
