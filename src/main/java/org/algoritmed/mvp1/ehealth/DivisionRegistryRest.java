@@ -1,6 +1,7 @@
 package org.algoritmed.mvp1.ehealth;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 //			String fileToSaveAsString = byteToBase64String(fileBytes);
 //			Map<String, Object> fileToSaveAsMap = stringToMap(fileToSaveAsString);
 //			String string = fileBytes.toString();
-			String string = new String(file.getBytes());
+			String string = new String(file.getBytes(), StandardCharsets.UTF_8);
 			logger.info("--------43-----------"
 					+ "\n" + string);
 			Map<String, Object> fileToSaveAsMap = stringToMap(string);
