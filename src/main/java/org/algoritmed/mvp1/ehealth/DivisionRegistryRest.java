@@ -39,7 +39,11 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 			byte[] fileBytes = file.getBytes();
 //			String fileToSaveAsString = byteToBase64String(fileBytes);
 //			Map<String, Object> fileToSaveAsMap = stringToMap(fileToSaveAsString);
-			Map<String, Object> fileToSaveAsMap = stringToMap(fileBytes.toString());
+//			String string = fileBytes.toString();
+			String string = new String(file.getBytes());
+			logger.info("--------43-----------"
+					+ "\n" + string);
+			Map<String, Object> fileToSaveAsMap = stringToMap(string);
 			ResponseEntity<Map> divisionRegistryEntity = restTemplate.exchange(uri
 					, HttpMethod.POST, new HttpEntity(fileToSaveAsMap, headers), Map.class);
 //			String mapToString = file.getBytes().toString();
