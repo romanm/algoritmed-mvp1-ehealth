@@ -59,7 +59,7 @@ public class DbAlgoritmed {
 	protected void update_sql_script(Map<String, Object> data) {
 		String sql = (String) data.get("sql");
 		String sql_from_env = env.getProperty(sql);
-		logger.info("\n-----40------update_sql_script--\n"
+		logger.info("\n-----62------update_sql_script-- \n"
 				+ "\n" + data
 				+ "\n" + sql_from_env
 				);
@@ -113,15 +113,19 @@ public class DbAlgoritmed {
 	}
 
 	private void update_vars(Map<String, Object> data, String sql_command) {
-		System.err.println("-------116---------------");
-		System.err.println(sql_command);
+//		System.err.println("-------116---------------");
+//		System.err.println(sql_command);
 		List<Map<String, Object>> varsList = db1ParamJdbcTemplate.queryForList(sql_command, data);
 		Map<String, Object> varsMap = varsList.get(0);
 		String[] vars = sql_command.split("_var_");
 		for (int i = 1; i < vars.length; i++) {
 			String varName = vars[i].split(" ")[0];
 			System.err.println(varName);
-			data.put(varName, varsMap.get("_var_"+varName));
+			Object val = varsMap.get("_var_"+varName);
+			data.put(varName, val);
+			logger.info("----126------- \n"
+					+ "\n: " + varName+"="+val
+					);
 		}
 
 	}
