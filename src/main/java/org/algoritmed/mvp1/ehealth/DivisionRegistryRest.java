@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -53,6 +54,15 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 			System.err.println(divisionRegistryEntity.getStatusCode());
 			System.err.println(divisionRegistryEntity.getStatusCodeValue());
 			System.err.println(divisionRegistryEntity.getBody());
+
+		} catch (HttpClientErrorException ce) {
+			System.err.println("-----59------HttpClientErrorException---------------");
+			System.err.println(ce.getStatusCode());
+			System.err.println(ce.getRawStatusCode());
+			System.err.println(ce.getStatusText());
+			System.err.println(ce.getMessage());
+			String legal_entities_response_body = ce.getResponseBodyAsString();
+			System.err.println(legal_entities_response_body);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
