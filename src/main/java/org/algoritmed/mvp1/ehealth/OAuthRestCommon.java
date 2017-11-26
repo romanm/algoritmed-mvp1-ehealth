@@ -1,6 +1,7 @@
 package org.algoritmed.mvp1.ehealth;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Base64;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.algoritmed.mvp1.DbAlgoritmed;
+import org.algoritmed.mvp1.util.EhealthUaRegistryWebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -107,6 +110,17 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 		logger.info("---------107-------headers------"
 	    		+ "\n "+headers);
 		return headers;
+	}
+	
+	protected @Autowired EhealthUaRegistryWebClient registryWebClient;
+	
+	protected Map<String, Object> prepareFile(MultipartFile file, String uri_prop, String uri) throws IOException {
+		Map<String, Object> map = new HashMap<>();
+		String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
+		map.put("signed_legal_entity_request", encodeToString);
+		map.put("signed_content_encoding", "base64");
+		System.err.println(uri_prop+" = "+uri);
+		return map;
 	}
 	
 	protected String byteToBase64String(byte[] fileBytes) {

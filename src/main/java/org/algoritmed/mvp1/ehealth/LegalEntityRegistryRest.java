@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 //@RestController redirect:* not work
@@ -35,6 +36,17 @@ public class LegalEntityRegistryRest extends OAuthRestCommon {
 				+ "\n uri = " + uri
 				+ "\n" + file);
 		String token_bearer = env.getProperty("config.token_bearer");
+		
+		// not correct work with 4xx http code, no body
+		restTemplate(file, doc_id, uri, token_bearer);
+		
+
+		
+		
+		return "redirect:/v/admin-msp";
+	}
+
+	private void restTemplate(MultipartFile file, String doc_id, String uri, String token_bearer) {
 		HttpHeaders headers = getRestTemplateHeader(token_bearer);
 		
 		try {
@@ -50,11 +62,19 @@ public class LegalEntityRegistryRest extends OAuthRestCommon {
 			
 			saveResponse(legal_entities_response_body, doc_id);
 
+		} catch (HttpClientErrorException ce) {
+			System.err.println(ce.getStatusCode());
+			System.err.println(ce.getRawStatusCode());
+			System.err.println(ce.getStatusText());
+			System.err.println(ce.getMessage());
+			System.err.println("-----70----------------------");
+			String legal_entities_response_body = ce.getResponseBodyAsString();
+			System.err.println(legal_entities_response_body);
+			saveResponse(legal_entities_response_body, doc_id);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/v/admin-msp";
 	}
 	
 	private void saveResponse(String legal_entities_response_body, String doc_id) {

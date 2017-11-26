@@ -83,9 +83,9 @@ public class EhealthUaFileUploadRest  extends DbAlgoritmed{
 				+ "\n uri = " + uri
 				+ "\n" + file);
 		redirectAttributes.addAttribute("doc_id", doc_id);
+		String token_bearer = env.getProperty("config.token_bearer");
 		try {
 			Map<String, Object> map = prepareFile(file, uri_prop, uri);
-			String token_bearer = env.getProperty("config.token_bearer");
 			String legal_entities_response_body = registryWebClient.legal_entitiesPutStr(map, uri, token_bearer);
 			
 			saveResponse(legal_entities_response_body, doc_id);
