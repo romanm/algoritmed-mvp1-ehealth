@@ -3,8 +3,6 @@ package org.algoritmed.mvp1.ehealth;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -86,7 +84,6 @@ public class OAuthRest2 extends OAuthRestCommon {
 		paramMap.put("doctype", DocType.msp_access_token.id());
 		paramMap.put("docbody", access_token);
 		update_sql_script(paramMap);
-		
 
 	    /*
 	    data.put("msp_id", msp_id)

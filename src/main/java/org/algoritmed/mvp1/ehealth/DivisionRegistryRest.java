@@ -38,8 +38,9 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 	    System.err.println(headers);
 
 		try {
-			byte[] fileBytes = file.getBytes();
-			String mapToString = byteToBase64String(fileBytes);
+//			byte[] fileBytes = file.getBytes();
+//			String mapToString = byteToBase64String(fileBytes);
+			String mapToString = file.getBytes().toString();
 			ResponseEntity<String> divisionRegistryEntity = restTemplate.exchange(uri
 					, HttpMethod.POST, new HttpEntity(mapToString, headers), String.class);
 			System.err.println("-----------------45---------divisionRegistryEntity------");
