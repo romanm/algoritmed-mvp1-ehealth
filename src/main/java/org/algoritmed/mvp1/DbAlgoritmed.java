@@ -128,8 +128,8 @@ public class DbAlgoritmed {
 	
 	protected void read_select(Map<String, Object> data, String sql_command, Integer i) {
 		String nr = null==i?"":(""+i);
-		System.err.println(sql_command);
-		System.err.println(sql_command.indexOf("SELECT 'docbody' datatype"));
+//		System.err.println(sql_command);
+//		System.err.println(sql_command.indexOf("SELECT 'docbody' datatype"));
 		if(sql_command.indexOf("SELECT 'docbody' datatype")==0) {
 			List<Map<String, Object>> docbodyList = db1ParamJdbcTemplate.queryForList(sql_command, data);
 			if(docbodyList.size()>0) {
@@ -365,7 +365,7 @@ public class DbAlgoritmed {
 	public Map<String, Object> principal(Principal principal) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("principal", principal);
-		logger.info("-------update---principal-----" );
+		logger.info("-------update---principal-----");
 		Map<String, Object> uriMap = new HashMap<String, Object>();
 		if(null!=principal) {
 			String name = principal.getName();

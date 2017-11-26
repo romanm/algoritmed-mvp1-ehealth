@@ -74,11 +74,7 @@ public class LegalEntityRest extends EHealth1Common{
 	@GetMapping(value = "/{legal_entities_id}")
 	public @ResponseBody Map<String, Object>  legal_entities_by_id(@PathVariable String legal_entities_id) {
 		String uri = uri_registry_legal_entities+"/"+legal_entities_id;
-		logger.info("---------------\n"
-				+ "/eh1cc/api/legal_entities/{legal_entities_id}"
-				+ "\n uri = " +uri
-				+ "\n legal_entities_id = " +legal_entities_id
-				);
+		logger.info("---77--legal_entities_by_id----------\n uri = " +uri);
 		return getResponseBody(uri);
 	}
 	

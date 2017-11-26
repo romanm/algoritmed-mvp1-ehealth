@@ -104,8 +104,8 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 	    headers.add("api-key", env.getProperty("config.mis_api_key"));
 //		headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
 		headers.add("Authorization", "Bearer "+token_bearer);
-	    System.err.println("headers--------------107---------------");
-	    System.err.println(headers);
+		logger.info("---------107-------headers------"
+	    		+ "\n "+headers);
 		return headers;
 	}
 	

@@ -40,8 +40,7 @@ public class CommonDbRest extends DbAlgoritmed{
 			,HttpServletRequest request
 			) {
 		Map<String, Object> map = sqlParamToMap(sql, request);
-		logger.info("\n------46-------\n"
-				+ "/read_sql_with_param"
+		logger.info("------43------/read_sql_with_param"
 				+ "\n" + map
 				);
 		read_select(map, env.getProperty(sql), null);
@@ -55,16 +54,16 @@ public class CommonDbRest extends DbAlgoritmed{
 		String sql_from_env = env.getProperty(sql);
 		map.put(sql, sql_from_env);
 		Map<String, String[]> parameterMap = request.getParameterMap();
-		System.err.println("---93--------");
-		System.err.println(parameterMap.keySet());
+//		System.err.println("---93--------");
+//		System.err.println(parameterMap.keySet());
 		map.put("parameterMap", parameterMap);
 		for (String key : parameterMap.keySet()) {
 			String[] v = parameterMap.get(key);
 			String val = v[0];
-			System.err.print(" & "+key+"/"+val);
+//			System.err.print(" & "+key+" ="+val);
 			map.put(key, val);
 		}
-		System.err.println();
+//		System.err.println();
 		return map;
 	}
 

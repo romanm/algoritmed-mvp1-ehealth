@@ -26,7 +26,8 @@ public class EHealth1Common {
 			HttpHeaders restTemplateHeader = getRestTemplateHeader();
 //			System.err.println("---------27-----------------");
 //			System.err.println(restTemplateHeader);
-			personEntity = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity(restTemplateHeader), Map.class);
+			personEntity = restTemplate.exchange(uri, HttpMethod.GET
+					, new HttpEntity(restTemplateHeader), Map.class);
 			body = (Map<String, Object>) personEntity.getBody();
 //			System.err.println("---------30-----------------");
 //			System.err.println(body);
@@ -43,9 +44,8 @@ public class EHealth1Common {
 //	    headers.add("api-key", env.getProperty("config.mis_client_secret_client_id"));
 	    headers.add("api-key", env.getProperty("config.mis_api_key"));
 	    headers.add("Authorization", "Bearer "+env.getProperty("config.token_bearer"));
-	    System.err.println("headers------------46--------------");
-	    System.err.println(headers);
-
+	    logger.info("------------46--------headers------"
+	    		+ "\n "+headers);
 		return headers;
 	}
 	private void addNoCache(HttpHeaders headers) {

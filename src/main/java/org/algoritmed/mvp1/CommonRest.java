@@ -24,19 +24,10 @@ public class CommonRest  extends DbAlgoritmed{
 	public String viewPage1(@PathVariable String page1, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("page1", page1);
-		logger.info(" --------- \n"
-				+ "/v/{page1}"
-				+ "\n" + map
-				+ "\n" + model
-				);
 		setModelAtribute(model, page1, "ng_template");
 		String th_template = (String) 
 				setModelAtribute(model, page1, "th_template");
-		logger.info(" --------- \n"
-				+ "/v/{page1}"
-				+ "\n" + map
-				+ "\n" + model
-				);
+		logger.info(" ----30---viewPage1-- /v/{page1} "+page1);
 		return th_template;
 	}
 
