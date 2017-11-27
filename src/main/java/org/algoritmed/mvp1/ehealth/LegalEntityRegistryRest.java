@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 //@RestController redirect:* not work
 @Controller
 @RequestMapping(value = "${config.security_prefix}")
-public class LegalEntityRegistryRest extends OAuthRestCommon {
+public class LegalEntityRegistryRest extends RestTemplateCommon {
 
 	@PostMapping("/msp_uploadP7sFile")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,

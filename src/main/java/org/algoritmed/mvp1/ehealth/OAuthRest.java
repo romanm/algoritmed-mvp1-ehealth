@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "${config.security_prefix}")
-public class OAuthRest  extends OAuthRestCommon {
+public class OAuthRest  extends RestTemplateCommon {
 //	public class OAuthRest  extends DbAlgoritmed {
 	private static final Logger logger = LoggerFactory.getLogger(OAuthRest.class);
 	

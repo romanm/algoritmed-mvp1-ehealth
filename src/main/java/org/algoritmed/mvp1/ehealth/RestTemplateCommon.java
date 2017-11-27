@@ -22,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class OAuthRestCommon  extends DbAlgoritmed{
-	protected static final Logger logger = LoggerFactory.getLogger(OAuthRestCommon.class);
+public class RestTemplateCommon  extends DbAlgoritmed{
+	protected static final Logger logger = LoggerFactory.getLogger(RestTemplateCommon.class);
 
 	@Autowired ObjectMapper mapper = new ObjectMapper();
 	protected @Autowired RestTemplate restTemplate;
@@ -112,17 +112,6 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 		return headers;
 	}
 	
-	protected @Autowired EhealthUaRegistryWebClient registryWebClient;
-	
-	protected Map<String, Object> prepareFile(MultipartFile file, String uri_prop, String uri) throws IOException {
-		Map<String, Object> map = new HashMap<>();
-		String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
-		map.put("signed_legal_entity_request", encodeToString);
-		map.put("signed_content_encoding", "base64");
-		System.err.println(uri_prop+" = "+uri);
-		return map;
-	}
-	
 	protected String byteToBase64String(byte[] fileBytes) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("signed_content_encoding", "base64");
@@ -166,4 +155,19 @@ public class OAuthRestCommon  extends DbAlgoritmed{
 //			+ oauth_tokens_body
 			+ "'"
 			+ "";
+	
+
+	protected @Autowired EhealthUaRegistryWebClient registryWebClient;
+	
+	protected Map<String, Object> prepareFile(MultipartFile file, String uri_prop, String uri) throws IOException {
+		Map<String, Object> map = new HashMap<>();
+		String encodeToString = Base64.getEncoder().encodeToString(file.getBytes());
+		map.put("signed_legal_entity_request", encodeToString);
+		map.put("signed_content_encoding", "base64");
+		System.err.println(uri_prop+" = "+uri);
+		return map;
+	}
+	
+	
 }
+

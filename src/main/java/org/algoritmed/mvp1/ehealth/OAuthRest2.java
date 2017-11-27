@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //@RestController redirect:* not work
 @Controller
 @RequestMapping(value = "${config.security_prefix}")
-public class OAuthRest2 extends OAuthRestCommon {
+public class OAuthRest2 extends RestTemplateCommon {
 
 	@GetMapping(value = "/to_oauth_tokens")
 	public String  to_oauth_tokens(@RequestParam("code") String code){

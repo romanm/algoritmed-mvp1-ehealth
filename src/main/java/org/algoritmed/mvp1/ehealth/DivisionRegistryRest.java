@@ -16,7 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class DivisionRegistryRest extends OAuthRestCommon {
+public class DivisionRegistryRest extends RestTemplateCommon {
 	@PostMapping("/msp_upload_division_P7sFile")
 	public String handleDivisionFileUpload(@RequestParam("file") MultipartFile file,
 			@RequestParam("doc_id") String doc_id,
@@ -55,7 +55,6 @@ public class DivisionRegistryRest extends OAuthRestCommon {
 			System.err.println(divisionRegistryEntity.getStatusCode());
 			System.err.println(divisionRegistryEntity.getStatusCodeValue());
 			System.err.println(divisionRegistryEntity.getBody());
-
 		} catch (HttpClientErrorException ce) {
 			System.err.println("-----59------HttpClientErrorException---------------");
 			System.err.println(ce.getStatusCode());
