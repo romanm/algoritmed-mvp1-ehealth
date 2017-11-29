@@ -417,7 +417,8 @@ initTestAddress = function($scope, $http, $filter){
 		console.log($scope.api__legal_entities.addresses);
 		var settlement_id=$scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].settlement_id;
 		console.log(settlement_id);
-		var url = $scope.mvpAddress.data.uri_prefix
+//		var url = $scope.mvpAddress.data.uri_prefix
+		var url = '/gcc/api'
 		+'/uaddresses/streets?settlement_id='+settlement_id+'&name='+newValue;
 		console.log(url);
 		$http.get(url).then( function(response) {
@@ -432,8 +433,8 @@ initTestAddress = function($scope, $http, $filter){
 //		console.log($scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address]);
 //		var area = $scope.api__legal_entities.addresses[$scope.mvpAddress.config.edit.address].area;
 //		console.log(area);
-		var url = $scope.mvpAddress.data.uri_prefix
-		+'/uaddresses/settlements?name='+newValue;
+//		var url = $scope.mvpAddress.data.uri_prefix
+		var url = '/gcc/api/uaddresses/settlements?name='+newValue;
 //		if($scope.mvpAddress.data.region.name){
 		if($scope.mvpAddress.data.region){
 			console.log(1);
@@ -731,7 +732,7 @@ initTestVariables = function($scope, $http, Blob){
 			var md_fn = m_fn[0]+'_'+division_id+'.'+m_fn[1];
 			return md_fn;
 		}
-		, setRegistryMspFileName:function(){
+		, setRegistryMspFileName:function() {
 			var msp_doc_id = '[msp_doc_id]';
 			if($scope.api__legal_entities)
 				msp_doc_id = $scope.api__legal_entities.doc_id;
@@ -773,6 +774,13 @@ initTestVariables = function($scope, $http, Blob){
 						o[k1]=v1.split('T')[0];
 					}
 				});
+		}
+		, mspDivisionToEHealth:function(data){
+			console.log(data);
+			$http.post('/mspDivisionToEHealth', data).then(function(response) {
+				$scope.mspDivisionToEHealth = response.data;
+				console.log($scope.mspDivisionToEHealth);
+			});
 		}
 		, mspDivisionToSave:function(fileName, dataJson){
 			dataJson.legal_entity_id = $scope.api__legal_entities.id;			

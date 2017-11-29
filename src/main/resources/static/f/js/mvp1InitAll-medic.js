@@ -498,6 +498,18 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		}else
 		if('msp_divisions'==$scope.config_msp_all.opened_dialog){
 				$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
+				console.log('/eh/api/divisions');
+				$http.get('/eh/api/divisions').then( function(response) {
+					console.log('/eh/api/divisions');
+					$scope.eh_divisions = response.data.response;
+					console.log($scope.eh_divisions);
+					$scope.eh_divisions.division_ids = {};
+					angular.forEach($scope.eh_divisions.data, function(v, i){
+						$scope.eh_divisions.division_ids[v.external_id] = i;
+					});
+				},function(){
+					console.error(':( ---not ready----/eh/api/divisions-----c')
+				})
 		}else
 		if('msp_data_form'==$scope.config_msp_all.opened_dialog){
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();

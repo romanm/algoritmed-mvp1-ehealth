@@ -5,13 +5,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,28 +33,55 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 				+ "\n uri_prop = " + uri_prop
 				+ "\n uri = " + uri
 				+ "\n" + file);
-		Map<String, Object> principalMap = super.principal(principal);
-//		System.err.println(principalMap);
-		String msp_access_token = ""+principalMap.get("msp_access_token");
-
-		System.err.println("----34--------------msp_access_token----------");
-		System.err.println(msp_access_token);
-	    HttpHeaders headers = getRestTemplateHeader(msp_access_token);
-
-		try {
+		Map<String, Object> fileToSaveAsMap =  null;
+	    try {
 			byte[] fileBytes = file.getBytes();
-//			String fileToSaveAsString = byteToBase64String(fileBytes);
-//			Map<String, Object> fileToSaveAsMap = stringToMap(fileToSaveAsString);
-//			String string = fileBytes.toString();
 			String string = new String(file.getBytes(), StandardCharsets.UTF_8);
 			logger.info("--------43-----------"
 					+ "\n" + string);
-			Map<String, Object> fileToSaveAsMap = stringToMap(string);
+			fileToSaveAsMap = stringToMap(string);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+	    if(fileToSaveAsMap !=  null && !fileToSaveAsMap.isEmpty()) {
+	    	registryDivisionInEHealth(uri, principal, fileToSaveAsMap);
+	    }
+		
+		return "redirect:/v/admin-msp";
+	}
+	
+	@PostMapping("/mspDivisionToEHealth")
+	public @ResponseBody Map<String, Object> mspDivisionToEHealth(
+			@RequestBody Map<String, Object> data
+			,HttpServletRequest request
+			,Principal principal
+		) {
+		logger.info("\n-------60-----\n"
+				+ "/mspDivisionToEHealth"
+				+ "\n"+data
+				);
+		return data;
+	}
+
+	private void registryDivisionInEHealth(String uri, Principal principal, Map<String, Object> fileToSaveAsMap) {
+		Map<String, Object> principalMap = super.principal(principal);
+//		System.err.println(principalMap);
+		String msp_access_token = ""+principalMap.get("msp_access_token");
+		
+		System.err.println("----34--------------msp_access_token----------");
+		System.err.println(msp_access_token);
+		HttpHeaders headers = getRestTemplateHeader(msp_access_token);
+		
+		try {
+			//			String fileToSaveAsString = byteToBase64String(fileBytes);
+			//			Map<String, Object> fileToSaveAsMap = stringToMap(fileToSaveAsString);
+			//			String string = fileBytes.toString();
 			ResponseEntity<Map> divisionRegistryEntity = restTemplate.exchange(uri
 					, HttpMethod.POST, new HttpEntity(fileToSaveAsMap, headers), Map.class);
-//			String mapToString = file.getBytes().toString();
-//			ResponseEntity<String> divisionRegistryEntity = restTemplate.exchange(uri
-//					, HttpMethod.POST, new HttpEntity(fileToSaveAsString, headers), String.class);
+			//			String mapToString = file.getBytes().toString();
+			//			ResponseEntity<String> divisionRegistryEntity = restTemplate.exchange(uri
+			//					, HttpMethod.POST, new HttpEntity(fileToSaveAsString, headers), String.class);
 			System.err.println("-----------------45---------divisionRegistryEntity------");
 			System.err.println(divisionRegistryEntity.getStatusCode());
 			System.err.println(divisionRegistryEntity.getStatusCodeValue());
@@ -63,11 +94,7 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 			System.err.println(ce.getMessage());
 			String legal_entities_response_body = ce.getResponseBodyAsString();
 			System.err.println(legal_entities_response_body);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		
-		return "redirect:/v/admin-msp";
 	}
 
 }
