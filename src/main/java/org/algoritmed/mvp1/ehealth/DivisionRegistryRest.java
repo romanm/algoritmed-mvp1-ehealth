@@ -3,6 +3,7 @@ package org.algoritmed.mvp1.ehealth;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 			@RequestParam("uri_prop") String uri_prop,
 			Principal principal) {
 		String uri = env.getProperty(uri_prop);
+		
 		logger.info("--------27-----------"
 				+ "\n" + "/msp_upload_division_P7sFile" 
 				+ "\n doc_id = " + doc_id
@@ -60,11 +62,22 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 		logger.info("\n-------60-----\n"
 				+ "/mspDivisionToEHealth"
 				+ "\n"+data
+				+ "\n"+data.get("id")
 				);
-		return data;
+		
+		Map<String, Object> registryDivisionInEHealth = new HashMap<String, Object>();
+		
+		if(data.containsKey("id")) {//update
+			System.err.println("update");
+		}else {//insert
+			String uri = env.getProperty("config.path_registry_msp_division");
+			System.err.println("insert "+uri);
+			registryDivisionInEHealth = registryDivisionInEHealth(uri, principal, data);
+		}
+		return registryDivisionInEHealth;
 	}
 
-	private void registryDivisionInEHealth(String uri, Principal principal, Map<String, Object> fileToSaveAsMap) {
+	private Map<String, Object> registryDivisionInEHealth(String uri, Principal principal, Map<String, Object> fileToSaveAsMap) {
 		Map<String, Object> principalMap = super.principal(principal);
 //		System.err.println(principalMap);
 		String msp_access_token = ""+principalMap.get("msp_access_token");
@@ -73,6 +86,7 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 		System.err.println(msp_access_token);
 		HttpHeaders headers = getRestTemplateHeader(msp_access_token);
 		
+		Map<String, Object> division_ehealth_response;
 		try {
 			//			String fileToSaveAsString = byteToBase64String(fileBytes);
 			//			Map<String, Object> fileToSaveAsMap = stringToMap(fileToSaveAsString);
@@ -85,16 +99,18 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 			System.err.println("-----------------45---------divisionRegistryEntity------");
 			System.err.println(divisionRegistryEntity.getStatusCode());
 			System.err.println(divisionRegistryEntity.getStatusCodeValue());
-			System.err.println(divisionRegistryEntity.getBody());
+			division_ehealth_response = divisionRegistryEntity.getBody();
 		} catch (HttpClientErrorException ce) {
 			System.err.println("-----59------HttpClientErrorException---------------");
 			System.err.println(ce.getStatusCode());
 			System.err.println(ce.getRawStatusCode());
 			System.err.println(ce.getStatusText());
 			System.err.println(ce.getMessage());
-			String legal_entities_response_body = ce.getResponseBodyAsString();
-			System.err.println(legal_entities_response_body);
+			String division_response_body = ce.getResponseBodyAsString();
+			System.err.println(division_response_body);
+			division_ehealth_response = stringToMap(division_response_body);
 		}
+		return division_ehealth_response;
 	}
 
 }

@@ -775,8 +775,11 @@ initTestVariables = function($scope, $http, Blob){
 					}
 				});
 		}
-		, mspDivisionToEHealth:function(data){
+		, mspDivisionToEHealth:function(data, id_eHealth_division){
 			console.log(data);
+			if(id_eHealth_division){
+				data.id = id_eHealth_division;
+			}
 			$http.post('/mspDivisionToEHealth', data).then(function(response) {
 				$scope.mspDivisionToEHealth = response.data;
 				console.log($scope.mspDivisionToEHealth);

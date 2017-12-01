@@ -1,12 +1,23 @@
 <div class="w3-dropdown-hover" style="width: 100%">
-	Реєстрація триває
+	<span ng-if="!(eh_divisions.division_ids[division.doc_id]>=0)">
+		Реєстрація триває </span> 
+	<div ng-if="eh_divisions.division_ids[division.doc_id]>=0">
+		Зареєстровано 
+		
+		<div class="w3-tiny">
+		{{eh_divisions.data[eh_divisions.division_ids[division.doc_id]].id}}
+		</div>
+		</div>
 	<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue"
 		style="right: 2px">
-		a1
 		<button class="w3-btn w3-blue"
-				ng-click="config_msp.mspDivisionToEHealth(division)">
-				реестрації в #eHealth</button>
-		a2
+			ng-click="config_msp.mspDivisionToEHealth(division
+			, eh_divisions.data[eh_divisions.division_ids[division.doc_id]].id)">
+			<span ng-if="!(eh_divisions.division_ids[division.doc_id]>=0)">
+				Реестрація </span>
+			<span ng-if="eh_divisions.division_ids[division.doc_id]>=0">
+				Доповненя реестрації </span>  в #eHealth
+		</button>
 		<!-- 
 		<div class="w3-bottombar w3-leftbar w3-border-blue">
 			<span class="w3-large am-b">1.</span> <i title="вигрузити"
