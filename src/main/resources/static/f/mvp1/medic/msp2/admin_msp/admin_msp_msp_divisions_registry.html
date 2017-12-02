@@ -1,13 +1,13 @@
 <div class="w3-dropdown-hover" style="width: 100%">
-	<span ng-if="!(eh_divisions.division_ids[division.doc_id]>=0)">
-		Реєстрація триває </span> 
+	<div ng-if="!(eh_divisions.division_ids[division.doc_id]>=0)">
+		Реєстрація триває </div>
 	<div ng-if="eh_divisions.division_ids[division.doc_id]>=0">
-		Зареєстровано 
-		
+		Зареєстровано
+
 		<div class="w3-tiny">
-		{{eh_divisions.data[eh_divisions.division_ids[division.doc_id]].id}}
+			{{eh_divisions.data[eh_divisions.division_ids[division.doc_id]].id}}
 		</div>
-		</div>
+	</div>
 	<div class="w3-dropdown-content w3-card-2 w3-border w3-border-blue"
 		style="right: 2px">
 		<button class="w3-btn w3-blue"
@@ -18,52 +18,13 @@
 			<span ng-if="eh_divisions.division_ids[division.doc_id]>=0">
 				Доповненя реестрації </span>  в #eHealth
 		</button>
-		<!-- 
-		<div class="w3-bottombar w3-leftbar w3-border-blue">
-			<span class="w3-large am-b">1.</span> <i title="вигрузити"
-				class="fa fa-sign-out ng-scope"></i>
-			<code class="w3-codespan">{{config_msp.getRegistryMspDivisionFileName(
-			division.doc_id)}}</code>
-			<button class="w3-btn w3-blue"
-				ng-click="config_msp.mspDivisionToSave(config_msp.getRegistryMspDivisionFileName(division.doc_id), division)">
-				файл реестрації</button>
-		</div>
-		<div class="w3-bottombar w3-rightbar w3-border-blue">
-			<div>
-				<span class="w3-large am-b">2.</span> Накласти підпис ЕЦП
-			</div>
-			<a class="w3-btn"
-				onclick="window.open('https://czo.gov.ua/sign', '', 'width=950,height=800');">
-				<img src="/f/img/czo2.jpg" alt="Центральний завідуючий орган">
-			</a> <a class="w3-btn" href="https://czo.gov.ua/sign" target="_blank">
-				<span class="w3-blue"> <img src="/f/img/logotop2ds.png"
-					alt="ЕЦП">
-			</span>
-			</a>
-		</div>
-		<div class="w3-bottombar w3-leftbar w3-border-blue">
-			<form method="POST" enctype="multipart/form-data"
-				action="/msp_upload_division_P7sFile">
-				<label
-					title="Завантажити ЕЦП підписаний файл з даними
-										реєстрації. ">
-					<span class="w3-large am-b">3.</span> <i title="загрузити"
-					class="fa fa-sign-in ng-scope"></i> <code class="w3-codespan">{{config_msp.registryMspFileName}}.p7s</code>
-					: <br /> <input type="file" class="w3-btn w3-blue w3-border"
-					name="file" accept="*" /> <input type="hidden" name="doc_id"
-					value="{{api__legal_entities.doc_id}}"> 
-					api__legal_entities.doc_id
-					=
-					{{api__legal_entities.doc_id}}
-					<input type="hidden" name="uri_prop" value="config.path_registry_msp_division">
-				</label>
-				<div>
-					<span class="w3-large am-b">4.</span> a1
-					{{api__legal_entities.doc_id}} a1
-					<button type="submit">OK</button>
-				</div>
-			</form>
-		</div>
-		 -->
 	</div>
+</div>
+<div ng-if="division.mspDivisionToEHealth.error">
+	Помилки:
+	<div ng-repeat="error in division.mspDivisionToEHealth.error.invalid">
+		{{$index}})
+		{{error.entry}}
+		
+		</div>
 </div>

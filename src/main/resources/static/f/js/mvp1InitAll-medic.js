@@ -101,7 +101,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				}
 				console.log(data);
 				$http.post($scope.security_prefix+'/update_sql_with_param', data).then(function(response) {
-					console.log(response.data);
+					//console.log(response.data);
 					if(!divisionElement.content.doc_id)
 						divisionElement.content.doc_id=response.data.nextDbId1;
 				});

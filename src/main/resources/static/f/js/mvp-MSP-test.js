@@ -228,8 +228,12 @@ initTestAddress = function($scope, $http, $filter){
 			,openAddress:function(index){
 				if(this.address==index) this.address=-1;
 				else this.address=index;
-			}
-			,clickAddressArea:function(vNew, a){
+			},clickStreet:function(street, address){
+				address.street=street.name;
+				address.street_type=street.type;
+				console.log(street);
+				console.log(address);
+			},clickAddressArea:function(vNew, a){
 				console.log(vNew);
 				console.log(a);
 				var keyToKey = {
@@ -242,12 +246,7 @@ initTestAddress = function($scope, $http, $filter){
 					console.log(k+'='+v+'/'+a[k]+'/'+vNew[v]);
 					a[k] = vNew[v];
 				});
-			},clickStreet:function(street, address){
-				address.street=street.name;
-				address.street_type=street.type;
-				console.log(street);
-				console.log(address);
-			},clickAddress:function(vNew, a){
+			},clickAddress:function(vNew, address){
 				/*
 				'region':'region'
 					,'district':'district'
@@ -268,13 +267,18 @@ initTestAddress = function($scope, $http, $filter){
 					,'settlement_id':'id'
 					,'id':'id'
 				}
-				this.setAddressParamaters(vNew, a, keyToKey);
+				this.setAddressParamaters(vNew, address, keyToKey);
 				console.log('------------------');
-				console.log(a);
+				console.log(address.region);
+				console.log(vNew.region);
+				if(!address.region){
+					address.region = vNew.region;
+				}
+				console.log(address);
 				/*
 				var keysToChange = ['region', 'settlement', 'settlement_type', 'settlement_id'];
 				console.log('------------------');
-				angular.forEach(a, function(v, k){
+				angular.forEach(address, function(v, k){
 					if(keysToChange.indexOf(k)>=0){
 						console.log(k+'='+v+'/'+vNew[k]);
 					}else{
@@ -780,9 +784,19 @@ initTestVariables = function($scope, $http, Blob){
 			if(id_eHealth_division){
 				data.id = id_eHealth_division;
 			}
+			//delete attribute that is not for save in eHEalth
+			angular.forEach(data.addresses , function(address, index){
+				if(address.id){
+					delete address.id
+				}
+				console.log(address);
+			})
+			if(data.mspDivisionToEHealth){
+				delete data.mspDivisionToEHealth;
+			}
 			$http.post('/mspDivisionToEHealth', data).then(function(response) {
-				$scope.mspDivisionToEHealth = response.data;
-				console.log($scope.mspDivisionToEHealth);
+				data.mspDivisionToEHealth = response.data;
+				console.log(data.mspDivisionToEHealth.error.invalid);
 			});
 		}
 		, mspDivisionToSave:function(fileName, dataJson){
