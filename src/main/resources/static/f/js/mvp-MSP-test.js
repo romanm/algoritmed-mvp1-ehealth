@@ -781,20 +781,15 @@ initTestVariables = function($scope, $http, Blob){
 		}
 		, mspDivisionToEHealth:function(data, id_eHealth_division){
 			console.log(data);
-			if(id_eHealth_division){
-				data.id = id_eHealth_division;
-			}
+			var dataEHealth = JSON.parse(JSON.stringify(data));
 			//delete attribute that is not for save in eHEalth
-			angular.forEach(data.addresses , function(address, index){
-				if(address.id){
-					delete address.id
-				}
-				console.log(address);
+			angular.forEach(dataEHealth.addresses , function(address, index){
+				if(address.id)				delete address.id
 			})
-			if(data.mspDivisionToEHealth){
-				delete data.mspDivisionToEHealth;
-			}
-			$http.post('/mspDivisionToEHealth', data).then(function(response) {
+			if(dataEHealth.mspDivisionToEHealth)	delete dataEHealth.mspDivisionToEHealth;
+			if(dataEHealth.doc_id)					delete dataEHealth.doc_id;
+			if(id_eHealth_division)					data.id = id_eHealth_division;
+			$http.post('/mspDivisionToEHealth', dataEHealth).then(function(response) {
 				data.mspDivisionToEHealth = response.data;
 				console.log(data.mspDivisionToEHealth.error.invalid);
 			});

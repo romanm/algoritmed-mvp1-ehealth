@@ -1,9 +1,11 @@
 <div class="w3-dropdown-hover" style="width: 100%">
 	<div ng-if="!(eh_divisions.division_ids[division.doc_id]>=0)">
-		Реєстрація триває </div>
+		<i class="fa fa-bars" aria-hidden="true"></i>
+		Реєстрація триває 
+	</div>
 	<div ng-if="eh_divisions.division_ids[division.doc_id]>=0">
-		Зареєстровано
-
+		<i class="fa fa-bars" aria-hidden="true"></i>
+		Зареєстровано 
 		<div class="w3-tiny">
 			{{eh_divisions.data[eh_divisions.division_ids[division.doc_id]].id}}
 		</div>
@@ -14,9 +16,9 @@
 			ng-click="config_msp.mspDivisionToEHealth(division
 			, eh_divisions.data[eh_divisions.division_ids[division.doc_id]].id)">
 			<span ng-if="!(eh_divisions.division_ids[division.doc_id]>=0)">
-				Реестрація </span>
-			<span ng-if="eh_divisions.division_ids[division.doc_id]>=0">
-				Доповненя реестрації </span>  в #eHealth
+				Реестрація </span> <span
+				ng-if="eh_divisions.division_ids[division.doc_id]>=0">
+				Доповненя реестрації </span> в #eHealth
 		</button>
 	</div>
 </div>

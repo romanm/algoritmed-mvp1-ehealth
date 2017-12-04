@@ -20,7 +20,11 @@
 			<div class="w3-row"
 			ng-class="{'w3-leftbar w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
 				<div class="w3-threequarter w3-border-top">
-					<div class="w3-hover-border-green w3-border w3-border-white"
+					<div class="w3-hover-gray w3-border w3-border-white "
+							ng-class="{
+							'w3-green':mvpAddress.config['index_to_edit_division']==divisionIndex,
+							'w3-light-gray':mvpAddress.config['index_to_edit_division']!=divisionIndex
+							}"
 						ng-click="mvpAddress.config.toEditListElement('division', divisionIndex);">
 						<span class="w3-btn w3-border w3-red"
 							ng-if="mvpAddress.config['index_to_delete_division']==divisionIndex"
@@ -35,7 +39,11 @@
 							</span>
 							<span
 							ng-class="{'w3-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
-								{{1 + $index}}. </span> <b> Підрозділ</b> <b>Назва:</b>
+								{{1 + $index}}. </span> <b> Підрозділ
+								<!-- 
+								</b> <b>Назва
+								 -->
+								:</b>
 							{{division.name}} 
 						</span>
 					</div>
@@ -45,8 +53,10 @@
 						</span> <span ng-include="'/f/mvp1/lib/address_text.html'"></span>
 						</span>
 					</div>
-					
-			<div ng-if="mvpAddress.config['index_to_edit_division']==$index"
+					Телефон: <span ng-repeat="phone in division.phones">
+						{{phone.number}}{{!$last?',':''}} </span>
+
+					<div ng-if="mvpAddress.config['index_to_edit_division']==$index"
 				class="w3-border w3-border-green w3-card-4
 				w3-bottombar
 				w3-rightbar w3-border-green
@@ -57,6 +67,9 @@
 						class="w3-input w3-border"
 						ng-model="division.name">
 				</div>
+				<div class="w3-row-padding"
+						ng-init="phoneList_o=division;phoneList_k='phones'"
+						ng-include="'/f/mvp1/lib/phone_dialog_row.html'"></div>
 				<div class="w3-display-container">
 					<div class="w3-display-topright">
 						<a href="#" class="w3-btn"
@@ -81,6 +94,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 
 		<div class="w3-row">
 			<div class="w3-threequarter">
 				<b>Підрозділ:</b>
@@ -90,5 +104,6 @@
 					href="#" ng-click="msp_divisions.plusDivisionElement();">+</a>
 			</div>
 		</div>
+		 -->
 	</div>
 </div>

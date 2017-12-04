@@ -3,8 +3,8 @@
 	ng-if="address.region">{{address.region}} р-н.</span>
 	{{address.settlement_type=='CITY'?'м.'
 	:(address.settlement_type=='VILLAGE'?'с.':'')}}{{address.settlement}}
-	{{address.street_type=='STREET'?'вул.':''}}{{address.street}} 
-	дім.{{address.building}}
-	<span ng-if="address.apartment">
-	кв.{{address.apartment}}
-	</span>
+	{{address.street_type=='STREET'?'вул.':''}}{{address.street}}
+	<div>
+		дім.{{address.building}} <span ng-if="address.apartment">
+			кв.{{address.apartment}} </span>
+	</div>

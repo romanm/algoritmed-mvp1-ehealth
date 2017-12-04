@@ -85,7 +85,7 @@
 		</div>
 
 		<div class="w3-row">
-			<div class="w3-col l2 m2">
+			<div class="w3-col l3 m3">
 				<div class="w3-right">
 					<select ng-model="address.street_type"
 						ng-change="autoSave.fn_change_count()">
@@ -97,7 +97,7 @@
 					</select> 
 				</div>
 			</div>
-			<div class="w3-col l5 m5">
+			<div class="w3-col l9 m9">
 				<span class="w3-dropdown-hover" style="width: 100%"> 
 				<input
 					class="w3-input w3-border" type="text"
@@ -121,22 +121,23 @@
 					</div>
 				</span>
 			</div>
+			<!-- 
 			<div class="w3-col l2 m2">
+			</div>
+			<div class="w3-col l2 m2">
+			</div>
+			 -->
+		</div>
 				<span 
 			 ng-class="{'w3-orange':error_address.building}"
 				>дім.</span>
 				<input class="w3-border" type="text"
 				ng-change="autoSave.fn_change_count();"
 					ng-model="address.building" placeholder="Nr">
-			</div>
-			<div class="w3-col l2 m2"
-			>
 			кв.
 				<input class="w3-border" type="text"
 				ng-change="autoSave.fn_change_count();"
 					ng-model="address.apartment" placeholder="Nr">
-			</div>
-		</div>
 
 <p>
 <div class="w3-display-bottomright">
