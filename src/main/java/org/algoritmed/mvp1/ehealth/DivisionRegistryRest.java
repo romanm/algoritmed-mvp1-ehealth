@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +54,17 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 		
 		return "redirect:/v/admin-msp";
 	}
+	
+
+	@PatchMapping(value = "/mspDivisionToEHealth/deactivate/{division_id}")
+	public @ResponseBody Map<String, Object>  mis_division_deactivate(@PathVariable String division_id) {
+		logger.info("---------------\n"
+				+ "/mspDivisionToEHealth/deactivate/{division_id}"
+				+ "\n" +division_id
+				);
+		return null;
+	}
+
 	
 	@PostMapping("/mspDivisionToEHealth")
 	public @ResponseBody Map<String, Object> mspDivisionToEHealth(

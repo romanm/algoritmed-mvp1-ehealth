@@ -279,8 +279,6 @@ function initAllAlgoritmed($http, $scope, $filter, $timeout){
 			}
 		}
 
-		console.log("msp_id-----------------------------------------");
-		console.log(msp_id);
 		$scope.config_info.run_with_principal(function(){
 			$scope.commonDbRest.read_sql_with_param(
 				{sql:'sql.msp.msp_ehealth_response.select'
@@ -356,9 +354,9 @@ function read_principal($http, $scope, fn_o, fn_p) {
 }
 
 var parameters = {};
-console.log(window.location);
+//console.log(window.location);
 var hash = window.location.hash.split('#!#')[1];
-console.log(hash);
+//console.log(hash);
 if(window.location.search){
 //	$.each(window.location.search.split("?")[1].split("&"), function(index, value){
 	angular.forEach(window.location.search.split("?")[1].split("&"), function(value, index){

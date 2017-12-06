@@ -6,11 +6,31 @@
 				{{api__legal_entities.name}} </b>
 			<div class="w3-right">
 				<a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
+					ng-class="{'w3-green':msp_divisions.showRegisteredInEHEalth}"
+					href="#" ng-click="msp_divisions.showRegisteredInEHEalth=!msp_divisions.showRegisteredInEHEalth">Зареєстровані</a>
+					&nbsp;
+				<a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
 					href="#" ng-click="msp_divisions.plusDivisionElement();
 					autoSave.fn_change_count();">+</a>
-					підрозділ
+					підрозділ 
 			</div>
 		</header>
+		<div ng-if="msp_divisions.showRegisteredInEHEalth">
+			{{msp_divisions.showRegisteredInEHEalth}}
+			
+			<div ng-repeat="division in eh_divisions.data">
+				{{division.name}}
+				--
+				{{division.id}}
+				--
+				<a title="Деактивація підрозділу" class="w3-btn w3-hover-gray"
+					href="#" ng-click="msp_divisions.minusDivisionInEHealth(division.id)">-</a>
+				<div class="w3-tiny">
+				{{division}}
+				</div>
+				</div>
+		</div>
+		<div ng-if="!msp_divisions.showRegisteredInEHEalth">
 		<div ng-repeat="divisionElement in msp_divisions.divisions track by $index"
 			ng-init="divisionIndex=$index;
 			division=divisionElement.content;
@@ -18,7 +38,7 @@
 			"
 		>
 			<div class="w3-row"
-			ng-class="{'w3-leftbar w3-rightbar w3-topbar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
+			ng-class="{'w3-leftbar w3-rightbar w3-topbar w3-bottombar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
 				<div class="w3-threequarter w3-border-top">
 					<div class="w3-hover-gray w3-border w3-border-white "
 							ng-class="{
@@ -29,7 +49,7 @@
 						<span class="w3-btn w3-border w3-red"
 							ng-if="mvpAddress.config['index_to_delete_division']==divisionIndex"
 							ng-click="msp_divisions.remove_division(divisionIndex);"
-							title="Справді Видалити запис">-</span> 
+							title="Справді Видалити запис">-</span>
 						<span class="w3-tooltip">
 							<span
 							class="w3-light-gray w3-border w3-text w3-tag am-tooltip-text">
@@ -39,11 +59,15 @@
 							</span>
 							<span
 							ng-class="{'w3-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
-								{{1 + $index}}. </span> <b> Підрозділ
-								<!-- 
-								</b> <b>Назва
-								 -->
-								:</b>
+								{{1 + $index}}. </span> 
+								<b ng-if="division.type"
+								title="{{doc_dictionaries.data[doc_dictionaries.keys.DIVISION_TYPE]
+								.values[division.type]}}"
+								>
+								{{doc_dictionaries.data[doc_dictionaries.keys.DIVISION_TYPE]
+								.values[division.type].split(' ')[0]}}: </b> 
+								<b ng-if="!division.type">
+								 Підрозділ:</b>
 							{{division.name}} 
 						</span>
 					</div>
@@ -53,23 +77,37 @@
 						</span> <span ng-include="'/f/mvp1/lib/address_text.html'"></span>
 						</span>
 					</div>
-					Телефон: <span ng-repeat="phone in division.phones">
-						{{phone.number}}{{!$last?',':''}} </span>
+					<div>
+						Телефон: <span ng-repeat="phone in division.phones">
+							{{phone.number}},</span> <i class="fa fa-envelope-o"
+							aria-hidden="true"></i> {{division.email}}
+					</div>
 
 					<div ng-if="mvpAddress.config['index_to_edit_division']==$index"
 				class="w3-border w3-border-green w3-card-4
 				w3-bottombar
 				w3-rightbar w3-border-green
 				">
-				<div>
-					<b>Назва:</b>
-					<input ng-change="autoSave.fn_change_count()"
-						class="w3-input w3-border"
-						ng-model="division.name">
+					<div>
+						<b>Підрозділ:</b> <select ng-model="division.type"
+							ng-change="autoSave.fn_change_count()">
+							<option
+								ng-repeat="(k1,v1) in mvpAddress.config.selectDictionary('DIVISION_TYPE').values"
+								value="{{k1}}">{{v1}}</option>
+						</select> <b>Назва:</b> <input ng-change="autoSave.fn_change_count()"
+							class="w3-input w3-border" ng-model="division.name">
+					</div>
+
+						<div>
+					Емайл <input ng-change="autoSave.fn_change_count()"
+						placeholder="Емайл" class="w3-border"
+						ng-model="division.email">
 				</div>
+
 				<div class="w3-row-padding"
 						ng-init="phoneList_o=division;phoneList_k='phones'"
 						ng-include="'/f/mvp1/lib/phone_dialog_row.html'"></div>
+
 				<div class="w3-display-container">
 					<div class="w3-display-topright">
 						<a href="#" class="w3-btn"
@@ -85,14 +123,13 @@
 						ng-init="v=msp_divisions.divisions[divisionIndex].content.addresses"
 						ng-include="'/f/mvp1/medic/msp2/msp_registry_data_data_addresses.html'"></div>
 				</div>
-
 			</div>
-					
 				</div>
 				<div class="w3-quarter">
 					<div ng-include="'/f/mvp1/medic/msp2/admin_msp/admin_msp_msp_divisions_registry.html'"></div>
 				</div>
 			</div>
+		</div>
 		</div>
 		<!-- 
 		<div class="w3-row">

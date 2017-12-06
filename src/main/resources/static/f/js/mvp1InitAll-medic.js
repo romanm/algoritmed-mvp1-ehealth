@@ -71,6 +71,14 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			this.divisions.push(divisionElement);
 			$scope.config_all.initObj(divisionElement, config_obj_key);
 		}
+		,minusDivisionInEHealth:function(division_id){
+			console.log(division_id);
+			var uri = '/mspDivisionToEHealth/deactivate/'+division_id;
+			console.log(uri)
+			$http.patch(uri).then(function(response) {
+				console.log(response)
+			});
+		}
 		,plusDivisionElement:function(){
 			this.addDivisionElement
 			({
@@ -84,27 +92,29 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				console.log(index_to_edit_division);
 				var divisionElement = $scope.msp_divisions.divisions[index_to_edit_division];
 				console.log(divisionElement);
-				console.log(divisionElement.content);
-				console.log($scope.api__legal_entities);
-				var data = {};
-				if(divisionElement.content.doc_id){//update
-					data = { sql:		'sql.docbody.update'
-						, docbodyMap:	divisionElement.content
-						, docbody_id:	divisionElement.content.doc_id
-					};
-				}else{//insert
-					data = { sql:		'sql.division.insert_declaration'
-						, docbodyMap:	divisionElement.content
-						, msp_id:		$scope.api__legal_entities.doc_id
-						, lotOfNewIds:	1
-					};
+				if(divisionElement){
+					console.log(divisionElement.content);
+					console.log($scope.api__legal_entities);
+					var data = {};
+					if(divisionElement.content.doc_id){//update
+						data = { sql:		'sql.docbody.update'
+							, docbodyMap:	divisionElement.content
+							, docbody_id:	divisionElement.content.doc_id
+						};
+					}else{//insert
+						data = { sql:		'sql.division.insert_declaration'
+							, docbodyMap:	divisionElement.content
+							, msp_id:		$scope.api__legal_entities.doc_id
+							, lotOfNewIds:	1
+						};
+					}
+					console.log(data);
+					$http.post($scope.security_prefix+'/update_sql_with_param', data).then(function(response) {
+						//console.log(response.data);
+						if(!divisionElement.content.doc_id)
+							divisionElement.content.doc_id=response.data.nextDbId1;
+					});
 				}
-				console.log(data);
-				$http.post($scope.security_prefix+'/update_sql_with_param', data).then(function(response) {
-					//console.log(response.data);
-					if(!divisionElement.content.doc_id)
-						divisionElement.content.doc_id=response.data.nextDbId1;
-				});
 			}
 		}
 	};
@@ -512,6 +522,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 		}else
 		if('msp_divisions'==$scope.config_msp_all.opened_dialog){
+			read_dictionaries($scope, $http);
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_msp();
 			$scope.config_msp_all.admin_msp.dialogs.msp_data_form.fn_read_eh_api_divisions_msp();
 		}else

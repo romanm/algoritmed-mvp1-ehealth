@@ -791,7 +791,8 @@ initTestVariables = function($scope, $http, Blob){
 			if(id_eHealth_division)					data.id = id_eHealth_division;
 			$http.post('/mspDivisionToEHealth', dataEHealth).then(function(response) {
 				data.mspDivisionToEHealth = response.data;
-				console.log(data.mspDivisionToEHealth.error.invalid);
+				console.log(data.mspDivisionToEHealth);
+//				console.log(data.mspDivisionToEHealth.error.invalid);
 			});
 		}
 		, mspDivisionToSave:function(fileName, dataJson){

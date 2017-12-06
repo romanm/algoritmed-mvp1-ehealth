@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "${config.security_prefix}/eh1cc/api/legal_entities")
 public class LegalEntityRest extends EHealth1Common{
-	
+
 	@PatchMapping(value = "/{legal_entities_id}/actions/mis_verify")
 	public @ResponseBody Map<String, Object>  mis_verified(@PathVariable String legal_entities_id) {
 		String uri = env.getProperty("config.uri_registry_legal_entities")
