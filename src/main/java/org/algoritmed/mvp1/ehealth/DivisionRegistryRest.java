@@ -1,6 +1,7 @@
 package org.algoritmed.mvp1.ehealth;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -57,12 +60,28 @@ public class DivisionRegistryRest extends RestTemplateCommon {
 	
 
 	@PatchMapping(value = "/mspDivisionToEHealth/deactivate/{division_id}")
-	public @ResponseBody Map<String, Object>  mis_division_deactivate(@PathVariable String division_id) {
+	public @ResponseBody Map<String, Object>  mis_division_deactivate(@PathVariable String division_id
+			,Principal principal
+			) {
 		logger.info("---------------\n"
 				+ "/mspDivisionToEHealth/deactivate/{division_id}"
 				+ "\n" +division_id
 				);
-		return null;
+		
+		Map<String, Object> principalMap = super.principal(principal);
+		String msp_access_token = ""+principalMap.get("msp_access_token");
+		HttpHeaders headers = getRestTemplateHeader(msp_access_token);
+		String api_uri = env.getProperty("config.path_registry_msp_division_deactivate");
+		System.err.println(api_uri);
+		api_uri = api_uri.replace("{id}", division_id);
+		System.err.println(api_uri);
+
+//		ResponseEntity<Map> responseEntity = restTemplate.exchange(api_uri
+RestTemplate rest = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+		ResponseEntity<Map> responseEntity = rest.exchange(api_uri
+				, HttpMethod.PATCH, new HttpEntity(headers), Map.class);
+		Map<String, Object> body = responseEntity.getBody();
+		return body;
 	}
 
 	

@@ -49,6 +49,7 @@ public class ReadEHealthRest extends RestTemplateCommon{
 		
 		return map;
 	}
+	
 	private @Value("${config.domain_registry0}")			String domain_registry;
 	@GetMapping(value = "/{u1}/{u2}/{u3}")
 	public @ResponseBody Map<String, Object>  u3(
