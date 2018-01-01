@@ -20,6 +20,13 @@
 	,"parent":"home"
 	,"menuBar":true
 }
+,"sample002":{
+	"th_template":"mvp1-medic"
+	,"ng_template":"'/f/mvp1/medic/msp2/info/sample002.html'"
+	,"shortName":"Інформація"
+	,"fa":"fa-life-ring"
+	,"parent":"info"
+}
 ,"test-cc":{
 	"th_template":"mvp1-medic"
 	,"ng_template":"'/f/mvp1/medic/msp2/info/info_test_program_ehealth.html'"

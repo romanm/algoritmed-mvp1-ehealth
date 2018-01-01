@@ -1,0 +1,42 @@
+{
+	"D_AM1": {
+		"text": "медичний словник v.0.0.1",
+		"day_of_illness":{
+			"text":"день хвороби"
+		},
+		"body_temperature": {
+			"text": "температура тіла",
+			"value": {
+				"subfebrile": {
+					"text": "субфебрильна"
+				},
+				"febrile": {
+					"text": "фебрильна"
+				}
+			}
+		},
+		"sore_throat": {
+			"text": "хворе горло"
+		},
+		"rhinorrhea": {
+			"text": "ринорея"
+		},
+		"nasal_congestion": {
+			"text": "закладеність носа"
+		},
+		"headache": {
+			"text": "головний біль"
+		},
+		"cough": {
+			"text": "кашель",
+			"value": {
+				"dry": {
+					"text": "сухий"
+				},
+				"wet": {
+					"text": "вологий"
+				}
+			}
+		}
+	}
+}

@@ -1094,6 +1094,7 @@ initTestVariables = function($scope, $http, Blob){
 			$http.get(url_declaration).then(function(response){
 				//console.log(response.data);
 				return
+				/*
 				$scope.doc_declaration = response.data.data[0];
 				var ad = $scope.doc_declaration.legal_entity.addresses[0];
 				$scope.doc_declaration.person.address = JSON.parse(JSON.stringify(ad));
@@ -1103,6 +1104,7 @@ initTestVariables = function($scope, $http, Blob){
 //				console.log($scope.doc_declaration.person.registry);
 				console.log($scope.doc_declaration);
 				console.log($scope.doc_declaration.person);
+				 * */
 			});
 			if(!$scope.patientById){
 				$scope.$watch('patientById', function(newValue){

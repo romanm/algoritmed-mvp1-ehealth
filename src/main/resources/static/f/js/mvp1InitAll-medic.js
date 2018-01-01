@@ -4,6 +4,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 	
 	var url = '/f/config/mvp1.algoritmed.medic.config.json';
 	$http.get(url).then( function(response) {
+		console.log(response.data.sample002)
 		initConfig($scope, response);
 		$scope.menuHomeIndex = [];
 		angular.forEach($scope.config, function(v, i){
@@ -725,6 +726,16 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 				$scope.patientById.children.splice(0,0,response.data.newPatientHistoryRecord);
 			});
 		}
+	}else if('sample002' == $scope.pagePath.last()){
+		$scope.sample002 = {}
+		console.log($scope)
+		console.log('----read 2CP & D_AM1--------------------')
+		$http.get('/f/mvp1/medic/msp2/info/sample002/D_AM1.json').then(
+		function(response) {
+			if(!$scope.md) $scope.md = {};
+			$scope.md.D_AM1 = response.data;
+			console.log($scope.md);
+		});
 	}else if('cabinet' == $scope.pagePath.last()){
 		console.log($scope.param);
 		if($scope.param.physician_id){

@@ -1,7 +1,6 @@
 package org.algoritmed.mvp1.ehealth;
 
 import java.io.IOException;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.HashMap;
