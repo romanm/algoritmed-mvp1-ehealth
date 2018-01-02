@@ -727,14 +727,19 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 			});
 		}
 	}else if('sample002' == $scope.pagePath.last()){
-		$scope.sample002 = {}
-		console.log($scope)
-		console.log('----read 2CP & D_AM1--------------------')
-		$http.get('/f/mvp1/medic/msp2/info/sample002/D_AM1.json').then(
-		function(response) {
-			if(!$scope.md) $scope.md = {};
-			$scope.md.D_AM1 = response.data;
-			console.log($scope.md);
+		$scope.sample002 = {};
+		console.log($scope);
+		console.log('----read 2CP & D_AM1--------------------');
+		if(!$scope.md) $scope.cpmd = {};
+		var uri = '/f/mvp1/medic/msp2/info/sample002/D_AM1.json';
+		$http.get(uri).then(function(response) {
+			$scope.cpmd.D_AM1 = response.data;
+			console.log($scope.cpmd);
+		});
+		var uri = '/f/mvp1/medic/msp2/info/sample002/CP_URTI_001.json';
+		$http.get(uri).then(function(response) {
+			$scope.cpmd.CP_URTI_001 = response.data;
+			console.log($scope.cpmd);
 		});
 	}else if('cabinet' == $scope.pagePath.last()){
 		console.log($scope.param);
