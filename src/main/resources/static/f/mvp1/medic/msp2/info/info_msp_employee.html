@@ -40,6 +40,12 @@
 							{{config_msp_all.human_resources_department.fn_opened_card_name()}}
 						</span>
 					</button>
+						a1
+						<a href="#employee={{e.person_id}}"
+						ng-click="config_msp_all.fn_open_dialog('opened_card')"
+						class="w3-btn w3-border">
+						{{e.person_id}}
+						</a>
 				</div>
 			</td>
 			<td>
@@ -58,7 +64,6 @@
 					<a class="w3-btn w3-hover-gray"
 						title="Додати інші ролі і права доступу" href="#"
 						ng-click="config_msp_all.human_resources_department.fn_click_extendRoles()">+/-</a>
-						a1
 					<div ng-if="config_msp_all.human_resources_department.extendRoles">
 						<i class="w3-small"> Після +/- ролі, потрібна перезагрузка
 							сторінки. </i>

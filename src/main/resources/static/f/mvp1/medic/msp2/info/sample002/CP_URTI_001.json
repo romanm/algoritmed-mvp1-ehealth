@@ -2,23 +2,40 @@
 	"code": "CP_URTI_001",
 	"CP_URTI_001": {
 		"B001": {
-			"text":"Ключові симптоми"
-			,"height":30
+			"text":"Симптоми"
+			,"height":20
 			,"include":{
-				"list":[""]
+				"list":[
+				"D_AM1.nasal_congestion"
+				,"D_AM1.rhinorrhea"
+				,"D_AM1.cough"
+				,"D_AM1.sore_throat"
+				,"D_AM1.body_temperature"
+				]
 			}
 			,"next": "R002"
 		},
 		"R002": {
 			"text":"Якщо: субфибрильна, більше трьох грипозних симптомів і неважкий стан - грип, інакше: не грип"
-			,"height":120
-			,"nexts": [{"B004":{}}]
+			,"height":15
+			,"next":{
+				"B004":{}
+				,"B999":{}
+			}
 		},
 		"A003": {
-			"text":"Лікування грипу"
+			"text":"лист призначень грипу"
 			,"height":10
 			,"B004": {
 				"text":"перелік ліків по лікуванню грипу"	
+				,"height":20
+				,"prescription_list":[
+					{"drug":{"substance":"ацетилсалицилова к-та"
+					,"dose":"0,5г 2р/д 3-4 дні"
+					}}
+					,{"recommendation":"постільний режим"}
+					,{"recommendation":"гарячі напої в великій кількості"}
+				]
 			}
 		}
 		,"B999": {

@@ -385,6 +385,7 @@ public class DbAlgoritmed {
 			String msp_id = mapUtil.getString(map, "user_msp[0]","msp_id");
 			Map<String, Object> paramMap = new HashMap();
 			map.put("msp_id", msp_id);
+			logger.info(" 388 msp_id = \n"+msp_id);
 			for (Map<String, Object> map2 : db1ParamJdbcTemplate.queryForList(
 					env.getProperty("sql.msp.msp_access_token.read"), map)) {
 				String doctype = (String) map2.get("doctype");

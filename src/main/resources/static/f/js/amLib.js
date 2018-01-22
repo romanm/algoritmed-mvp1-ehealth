@@ -1,5 +1,6 @@
 function initAllAlgoritmed($http, $scope, $filter, $timeout){
 	$scope.param = parameters;
+	console.log($scope.param);
 	$scope.security_prefix = '/r';
 	$scope.pagePath = window.location.href.split('?')[0].split('/').splice(4);
 	if($scope.pagePath.last() && $scope.pagePath.last().length==0) $scope.pagePath.pop();
@@ -356,7 +357,13 @@ function read_principal($http, $scope, fn_o, fn_p) {
 var parameters = {};
 //console.log(window.location);
 var hash = window.location.hash.split('#!#')[1];
-//console.log(hash);
+console.log(hash);
+if(hash){
+	angular.forEach(hash.split("&"), function(value, index){
+		var par = value.split("=");
+		parameters[par[0]] = par[1];
+	});
+}
 if(window.location.search){
 //	$.each(window.location.search.split("?")[1].split("&"), function(index, value){
 	angular.forEach(window.location.search.split("?")[1].split("&"), function(value, index){

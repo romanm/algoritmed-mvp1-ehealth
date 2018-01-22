@@ -11,10 +11,12 @@
 					&nbsp;
 				<a title="Додати ще один підрозділ" class="w3-btn w3-hover-gray"
 					href="#" ng-click="msp_divisions.plusDivisionElement();
-					autoSave.fn_change_count();">+</a>
+					autoSave.fn_change_count();">+
 					підрозділ 
+					</a>
 			</div>
 		</header>
+
 		<div ng-if="msp_divisions.showRegisteredInEHEalth">
 			{{msp_divisions.showRegisteredInEHEalth}}
 			
@@ -30,6 +32,7 @@
 				</div>
 				</div>
 		</div>
+
 		<div ng-if="!msp_divisions.showRegisteredInEHEalth">
 		<div ng-repeat="divisionElement in msp_divisions.divisions track by $index"
 			ng-init="divisionIndex=$index;
@@ -37,6 +40,11 @@
 			autoSave=divisionElement.autoSave;
 			"
 		>
+		
+				a1---------------------
+				{{divisionElement.content.type}}
+				a2
+				{{divisionElement.keySet()}}
 			<div class="w3-row"
 			ng-class="{'w3-leftbar w3-rightbar w3-topbar w3-bottombar w3-border-green':mvpAddress.config['index_to_edit_division']==divisionIndex}">
 				<div class="w3-threequarter w3-border-top">

@@ -10,6 +10,11 @@
 		initAll($http, $scope, $filter, $timeout, Blob);
 	});
 
+console.log("-----for-----ForInitCtrl-----");
+
+	app.controller('ForInitCtrl', function ($scope) {
+		console.log("-----in-----ForInitCtrl-----");
+	});
 
 	app.controller('AccordionCtrl', function ($scope) {
 		this.expandItem = function (o){

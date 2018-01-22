@@ -1,5 +1,4 @@
 function initAll ($http, $scope, $filter, $timeout, Blob){
-
 	initAllAlgoritmed($http, $scope, $filter, $timeout);
 	
 	var url = '/f/config/mvp1.algoritmed.medic.config.json';
@@ -168,8 +167,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 					}
 					,fn_read_eh_api_divisions_msp:function(){
 						console.log('/eh/api/divisions');
-						$http.get('/eh/api/divisions').then(
-						function(response) {
+						$http.get('/eh/api/divisions').then(function(response) {
 							console.log('/eh/api/divisions');
 							$scope.eh_divisions = response.data.response;
 							console.log($scope.eh_divisions);
@@ -346,7 +344,13 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 							return;
 						}
 						var msp_id = $scope.principal.user_msp[0].msp_id; 
+						console.log(msp_id)
 						$scope.config_info.read_msp_employee(msp_id);
+						console.log($scope.param)
+						if($scope.param.employee){
+							console.log($scope.config_info);
+							console.log($scope.config_info.msp_employee);
+						}
 				}	}
 				,new_doctor:{
 					name:'Зареєструвати нового співробітника'
@@ -467,6 +471,7 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 
 
 	console.log('---initAll---	' + $scope.pagePath.last());
+
 	if('testMvpPatient' == $scope.pagePath.last()){
 		$scope.ehealthapi1 = {
 			keys:{
@@ -557,13 +562,17 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		initMSPtest($http, $scope, $filter, $timeout, Blob);
 //		$scope.config_msp_all.opened_dialog='new_doctor';
 		$scope.config_msp_all.opened_dialog='doctors_cards';
+
+		console.log($scope.param);
+		console.log($scope.param.employee);
+		console.log($scope.config_msp_all);
 		if('doctors_cards'==$scope.config_msp_all.opened_dialog){
-			if(!$scope.principal){ 
-				read_principal($http, $scope
-				, $scope.config_msp_all.human_resources_department.dialogs.doctors_cards, 'open_dialog');
-			}else{
-				$scope.config_msp_all.human_resources_department.dialogs.doctors_cards.open_dialog();
-			}
+		}
+		if(!$scope.principal){ 
+			read_principal($http, $scope
+					, $scope.config_msp_all.human_resources_department.dialogs.doctors_cards, 'open_dialog');
+		}else{
+			$scope.config_msp_all.human_resources_department.dialogs.doctors_cards.open_dialog();
 		}
 	}else
 	if('testMvpMedic' == $scope.pagePath.last()
@@ -730,7 +739,19 @@ function initAll ($http, $scope, $filter, $timeout, Blob){
 		$scope.sample002 = {};
 		console.log($scope);
 		console.log('----read 2CP & D_AM1--------------------');
-		if(!$scope.md) $scope.cpmd = {};
+		if(!$scope.cpmd) 
+			$scope.cpmd = {
+				mdPathObject:function(path){
+					var pathList = path.split('.');
+					if($scope.cpmd[pathList[0]]){
+						var mdObj = $scope.cpmd[pathList[0]][pathList[0]]; 
+						for (var i = 1; i < pathList.length; i++) {
+							mdObj = mdObj[pathList[i]]
+						}
+						return mdObj;
+					}
+				}
+			};
 		var uri = '/f/mvp1/medic/msp2/info/sample002/D_AM1.json';
 		$http.get(uri).then(function(response) {
 			$scope.cpmd.D_AM1 = response.data;

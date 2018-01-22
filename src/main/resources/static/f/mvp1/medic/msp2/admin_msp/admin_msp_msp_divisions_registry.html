@@ -27,6 +27,8 @@
 	<div ng-repeat="error in division.mspDivisionToEHealth.error.invalid">
 		{{$index}})
 		{{error.entry}}
-		
-		</div>
+		<br/>
+		{{error}}
+	</div>
+	{{division.mspDivisionToEHealth.error.invalid}}
 </div>
