@@ -1169,7 +1169,14 @@ initTestVariables = function($scope, $http, Blob){
 		,list_index_specialities:-1
 		,list_index_qualifications:-1
 		,list_index_educations:-1
-		,fn_opened_index:function(index, list_name){
+		,fn_mspEmployeeToEHealth:function(a5){
+			console.log("-----1173------------------");
+			console.log(a5);
+			$http.post('/mspEmployeeToEHealth', a5).then(function(response) {
+				$scope.a5 = response.data;
+				console.log($scope.a5);
+			});
+		},fn_opened_index:function(index, list_name){
 			if(this['list_index_'+list_name]==index) this['list_index_'+list_name]=-1;
 			else this['list_index_'+list_name]=index;
 			console.log(this['list_index_'+list_name]);

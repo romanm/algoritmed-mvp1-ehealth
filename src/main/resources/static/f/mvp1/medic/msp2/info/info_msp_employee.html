@@ -34,18 +34,21 @@
 		<tr ng-if="config_info.msp_employee_doc.doc_id==e.person_id">
 			<td>
 				<div ng-if="fnPrincipal.hasHumanResourcesRole()">
+					<!-- 
 					<button ng-click="config_msp_all.fn_open_dialog('opened_card')"
 						class="w3-btn w3-border">
 						Відкрити картку: <span class="w3-small">
 							{{config_msp_all.human_resources_department.fn_opened_card_name()}}
 						</span>
 					</button>
-						a1
-						<a href="#employee={{e.person_id}}"
+					 -->
+					<a href="#employee={{e.person_id}}"
 						ng-click="config_msp_all.fn_open_dialog('opened_card')"
-						class="w3-btn w3-border">
-						{{e.person_id}}
-						</a>
+						class="w3-btn w3-border"> Відкрити картку: <span
+						class="w3-small">
+							{{config_msp_all.human_resources_department.fn_opened_card_name()}}
+					</span>
+					</a>
 				</div>
 			</td>
 			<td>
