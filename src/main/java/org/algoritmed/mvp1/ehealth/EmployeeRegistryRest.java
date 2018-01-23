@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class EmployeeRegistryRest {
+public class EmployeeRegistryRest  extends RestTemplateCommon {
 	@PostMapping("/mspEmployeeToEHealth")
 	public @ResponseBody Map<String, Object> mspDivisionToEHealth(
 			@RequestBody Map<String, Object> data

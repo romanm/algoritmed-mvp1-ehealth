@@ -1169,8 +1169,37 @@ initTestVariables = function($scope, $http, Blob){
 		,list_index_specialities:-1
 		,list_index_qualifications:-1
 		,list_index_educations:-1
+		,fn_init_eh_employee:function(a5){
+//			delete a5.employee_request;
+			a5.to_eHealth = {
+				employee_request:{
+					position:a5.position
+					,employee_type:a5.employee_type
+					,party:{
+						first_name:a5.party.first_name
+						,last_name:a5.party.last_name
+						,second_name:a5.party.second_name
+						,gender:a5.party.gender
+						,email:a5.party.email
+						,no_tax_id:a5.party.no_tax_id
+						,tax_id:a5.party.tax_id
+						,documents:a5.party.documents
+						,phones:a5.party.phones
+					}
+					,doctor:{
+						educations:a5.doctor.educations
+						,qualifications:a5.doctor.qualifications
+						,science_degree:a5.doctor.science_degree
+					}
+				}
+			};
+			angular.forEach(a5.party.documents , function(v, k){
+				
+			})
+		}
 		,fn_mspEmployeeToEHealth:function(a5){
 			console.log("-----1173------------------");
+			this.fn_init_eh_employee(a5);
 			console.log(a5);
 			$http.post('/mspEmployeeToEHealth', a5).then(function(response) {
 				$scope.a5 = response.data;
