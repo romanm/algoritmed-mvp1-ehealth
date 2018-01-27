@@ -533,7 +533,8 @@ initTestAddress = function($scope, $http, $filter){
 				$scope.mvpAddress.config.listOpen.regions
 					= !$scope.mvpAddress.config.listOpen.regions;
 				if(!$scope.mvpAddress.data.regions){
-					var url = $scope.security_prefix+'/gcc/uaddresses/regions?limit=30';
+//					var url = $scope.security_prefix+'/gcc/api/uaddresses/regions?limit=30';
+					var url = $scope.security_prefix+'/gcc/api/uaddresses/regions?page_size=30';
 					console.log(url)
 					$http.get(url).then( function(response) {
 						$scope.mvpAddress.data.regions = response.data.response.data;
@@ -1173,7 +1174,12 @@ initTestVariables = function($scope, $http, Blob){
 //			delete a5.employee_request;
 			a5.to_eHealth = {
 				employee_request:{
-					position:a5.position
+					division_id:'8ed8a42e-66ff-4711-ba60-45c3d572a42a'
+					,legal_entity_id:'bf48fba2-e4e8-4a06-aeaa-345d8346d7bb'
+					,position:a5.position
+				    ,start_date:'2017-03-02T10:45:16.000Z'
+				    ,end_date:'2018-03-02T10:45:16.000Z'
+				    ,status:'NEW'
 					,employee_type:a5.employee_type
 					,party:{
 						first_name:a5.party.first_name
@@ -1193,17 +1199,94 @@ initTestVariables = function($scope, $http, Blob){
 					}
 				}
 			};
-			angular.forEach(a5.party.documents , function(v, k){
-				
-			})
+			/*
+			 * */
+
+			a5.to_eHealth.employee_request = {
+		    "division_id": "8ed8a42e-66ff-4711-ba60-45c3d572a42a",
+		    "legal_entity_id": "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb",
+		    "position": "P8",
+		    "start_date": "2017-03-02T10:45:16.000Z",
+		    "end_date": "2018-03-02T10:45:16.000Z",
+		    "status": "NEW",
+		    "employee_type": "DOCTOR",
+		    "party": {
+		      "first_name": "Петро",
+		      "last_name": "Іванов",
+		      "second_name": "Миколайович",
+		      "birth_date": "1991-08-19T00:00:00.000Z",
+		      "gender": "MALE",
+		      "no_tax_id": false,
+		      "tax_id": "3126509816",
+		      "email": "email@example.com",
+		      "documents": [
+		        {
+		          "type": "PASSPORT",
+		          "number": "120518"
+		        }
+		      ],
+		      "phones": [
+		        {
+		          "type": "MOBILE",
+		          "number": "+380503410870"
+		        }
+		      ]
+		    },
+		    "doctor": {
+		      "educations": [
+		        {
+		          "country": "UA",
+		          "city": "Київ",
+		          "institution_name": "Академія Богомольця",
+		          "issued_date": "2017",
+		          "diploma_number": "DD123543",
+		          "degree": "MASTER",
+		          "speciality": "Педіатр"
+		        }
+		      ],
+		      "qualifications": [
+		        {
+		          "type": "SPECIALIZATION",
+		          "institution_name": "Академія Богомольця",
+		          "speciality": "Педіатр",
+		          "issued_date": "2017",
+		          "certificate_number": "2017",
+		          "valid_to": "2017",
+		          "additional_info": "додаткова інофрмація"
+		        }
+		      ],
+		      "specialities": [
+		        {
+		          "speciality": "THERAPIST",
+		          "speciality_officio": true,
+		          "level": "FIRST",
+		          "qualification_type": "AWARDING",
+		          "attestation_name": "Академія Богомольця",
+		          "attestation_date": "2017",
+		          "valid_to_date": "2020",
+		          "certificate_number": "AB/21331"
+		        }
+		      ],
+		      "science_degree": {
+		        "country": "UA",
+		        "city": "Київ",
+		        "degree": "",
+		        "institution_name": "Академія Богомольця",
+		        "diploma_number": "DD123543",
+		        "speciality": "Педіатр",
+		        "issued_date": "2017"
+		      }
+		    }
+		};
+						 
 		}
 		,fn_mspEmployeeToEHealth:function(a5){
 			console.log("-----1173------------------");
 			this.fn_init_eh_employee(a5);
-			console.log(a5);
+			console.log(a5.to_eHealth);
 			$http.post('/mspEmployeeToEHealth', a5).then(function(response) {
-				$scope.a5 = response.data;
-				console.log($scope.a5);
+				var a6 = response.data;
+				console.log(a6);
 			});
 		},fn_opened_index:function(index, list_name){
 			if(this['list_index_'+list_name]==index) this['list_index_'+list_name]=-1;
@@ -1498,4 +1581,3 @@ add_employee_info = function(party_o, target_o){
 }
 
 }
-

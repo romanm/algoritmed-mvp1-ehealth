@@ -1,0 +1,27 @@
+{
+	"employee_request": {
+		"division_id": "8ed8a42e-66ff-4711-ba60-45c3d572a42a",
+		"legal_entity_id": "bf48fba2-e4e8-4a06-aeaa-345d8346d7bb",
+		"position": "P9",
+		"start_date": "2017-03-02T10:45:16.000Z",
+		"end_date": "2018-03-02T10:45:16.000Z",
+		"status": "NEW",
+		"employee_type": "DOCTOR",
+		"party": {
+			"first_name": "Один",
+			"last_name": "Лікар",
+			"second_name": "q",
+			"gender": "MALE",
+			"email": "x@y.z",
+			"documents": [
+				{
+					"type": "PASSPORT",
+					"number": "12345"
+				}
+			]
+		},
+		"doctor": {
+			
+		}
+	}
+}
